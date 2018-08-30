@@ -1,4 +1,4 @@
-package com.xinzhu.xuezhibao.immodule.pickerimage.utils;
+package com.xinzhu.xuezhibao.immodule.utils;
 
 import android.content.Context;
 import android.os.Environment;

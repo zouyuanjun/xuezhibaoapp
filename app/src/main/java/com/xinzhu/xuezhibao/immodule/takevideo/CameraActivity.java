@@ -17,12 +17,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.immodule.pickerimage.utils.RequestCode;
 import com.xinzhu.xuezhibao.immodule.takevideo.camera.CameraManager;
 import com.xinzhu.xuezhibao.immodule.takevideo.camera.CameraProgressBar;
 import com.xinzhu.xuezhibao.immodule.takevideo.camera.CameraView;
 import com.xinzhu.xuezhibao.immodule.takevideo.camera.MediaPlayerManager;
 import com.xinzhu.xuezhibao.immodule.takevideo.utils.FileUtils;
+import com.xinzhu.xuezhibao.immodule.utils.RequestCode;
 
 import java.io.File;
 import java.util.concurrent.TimeUnit;

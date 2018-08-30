@@ -3,7 +3,6 @@ package com.xinzhu.xuezhibao.immodule.filter;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.text.Spannable;
-import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.sj.emoji.EmojiDisplayListener;

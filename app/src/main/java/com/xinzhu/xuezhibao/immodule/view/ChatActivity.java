@@ -3,8 +3,6 @@ package com.xinzhu.xuezhibao.immodule.view;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -33,22 +31,15 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bravin.btoast.BToast;
 import com.sj.emoji.EmojiBean;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.imagepicker.bean.ImageItem;
 import com.xinzhu.xuezhibao.immodule.ChattingListAdapter;
 import com.xinzhu.xuezhibao.immodule.DropDownListView;
 import com.xinzhu.xuezhibao.immodule.bean.Event;
 import com.xinzhu.xuezhibao.immodule.bean.EventType;
-import com.xinzhu.xuezhibao.immodule.pickerimage.PickImageActivity;
-import com.xinzhu.xuezhibao.immodule.pickerimage.utils.Extras;
-import com.xinzhu.xuezhibao.immodule.pickerimage.utils.RequestCode;
-import com.xinzhu.xuezhibao.immodule.pickerimage.utils.SendImageHelper;
 import com.xinzhu.xuezhibao.immodule.takevideo.CameraActivity;
-import com.xinzhu.xuezhibao.immodule.utils.IdHelper;
 import com.xinzhu.xuezhibao.immodule.ImageEvent;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.SharePreferenceManager;
@@ -58,18 +49,15 @@ import com.xinzhu.xuezhibao.immodule.keyboard.interfaces.EmoticonClickListener;
 import com.xinzhu.xuezhibao.immodule.keyboard.utils.EmoticonsKeyboardUtils;
 import com.xinzhu.xuezhibao.immodule.keyboard.widget.EmoticonsEditText;
 import com.xinzhu.xuezhibao.immodule.keyboard.widget.FuncLayout;
+import com.xinzhu.xuezhibao.immodule.utils.RequestCode;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.SimpleCommonUtils;
-import com.xinzhu.xuezhibao.view.activity.MainActivity;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zou.fastlibrary.utils.Log;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,11 +68,9 @@ import cn.jpush.im.android.api.callback.GetGroupInfoCallback;
 import cn.jpush.im.android.api.content.EventNotificationContent;
 import cn.jpush.im.android.api.content.FileContent;
 import cn.jpush.im.android.api.content.ImageContent;
-import cn.jpush.im.android.api.content.LocationContent;
 import cn.jpush.im.android.api.content.TextContent;
 import cn.jpush.im.android.api.enums.ContentType;
 import cn.jpush.im.android.api.enums.ConversationType;
-import cn.jpush.im.android.api.enums.MessageDirect;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.event.MessageReceiptStatusChangeEvent;
 import cn.jpush.im.android.api.event.MessageRetractEvent;
@@ -95,7 +81,6 @@ import cn.jpush.im.android.api.model.Message;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.android.api.options.MessageSendingOptions;
 import cn.jpush.im.android.eventbus.EventBus;
-import cn.jpush.im.api.BasicCallback;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -134,7 +119,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
     public static final String TARGET_ID = "targetId";
     public static final String TARGET_APP_KEY = "targetAppKey";
     private static final String DRAFT = "draft";
-    private ArrayList<ImageItem> selImageList; //当前选择的所有图片
+
     public static final int REQUEST_CODE_SELECT = 100;
     private ChatView mChatView;
     private boolean mIsSingle = true;
@@ -748,7 +733,6 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
         Intent intent;
         switch (event.getFlag()) {
             case JGApplication.IMAGE_MESSAGE:
-                int from = PickImageActivity.FROM_LOCAL;
                 int requestCode = RequestCode.PICK_IMAGE;
                 if (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -942,9 +926,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
      */
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        int from = PickImageActivity.FROM_LOCAL;
-        PickImageActivity.start(ChatActivity.this, requestCode, from, tempFile(), true, 9,
-                true, false, 0, 0);
+
     }
 
     /**

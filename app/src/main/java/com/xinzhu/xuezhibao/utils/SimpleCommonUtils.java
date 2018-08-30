@@ -23,8 +23,6 @@ import com.xinzhu.xuezhibao.immodule.keyboard.adpater.PageSetAdapter;
 import com.xinzhu.xuezhibao.immodule.keyboard.data.EmoticonEntity;
 import com.xinzhu.xuezhibao.immodule.keyboard.data.EmoticonPageEntity;
 import com.xinzhu.xuezhibao.immodule.keyboard.data.EmoticonPageSetEntity;
-import com.xinzhu.xuezhibao.immodule.keyboard.data.PageEntity;
-import com.xinzhu.xuezhibao.immodule.keyboard.data.PageSetEntity;
 import com.xinzhu.xuezhibao.immodule.keyboard.interfaces.EmoticonClickListener;
 import com.xinzhu.xuezhibao.immodule.keyboard.interfaces.EmoticonDisplayListener;
 import com.xinzhu.xuezhibao.immodule.keyboard.interfaces.PageViewInstantiateListener;

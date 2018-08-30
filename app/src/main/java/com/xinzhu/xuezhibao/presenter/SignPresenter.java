@@ -1,19 +1,14 @@
 package com.xinzhu.xuezhibao.presenter;
 
-import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.bean.SignBean;
-import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.SignActivity;
 import com.xinzhu.xuezhibao.view.interfaces.SignInterface;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
-
-import java.io.File;
 
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;

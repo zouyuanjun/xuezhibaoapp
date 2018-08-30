@@ -1,4 +1,4 @@
-package com.xinzhu.xuezhibao.immodule.pickerimage.utils;
+package com.xinzhu.xuezhibao.immodule.utils;
 
 public class RequestCode {
     public final static int CAPTURE_VIDEO = 1;// 拍摄视频

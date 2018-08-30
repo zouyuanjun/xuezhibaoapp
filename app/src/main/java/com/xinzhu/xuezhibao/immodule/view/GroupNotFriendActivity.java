@@ -1,6 +1,5 @@
 package com.xinzhu.xuezhibao.immodule.view;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;

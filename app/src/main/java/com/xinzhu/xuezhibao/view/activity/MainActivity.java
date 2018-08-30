@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xinzhu.xuezhibao.view.fragment.HomeFragemt;
-import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.activity.BaseTabActivity;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.xinzhu.xuezhibao.immodule.pickerimage.utils;
+package com.xinzhu.xuezhibao.immodule.utils;
 
 import android.content.Context;
 import android.os.Build;
@@ -57,8 +57,6 @@ public class StorageUtil {
 	public static boolean isExternalStorageExist() {
 		return ExternalStorage.getInstance().isSdkStorageReady();
 	}
-
-
     /**
      * 判断外部存储是否存在，以及是否有足够空间保存指定类型的文件
      *

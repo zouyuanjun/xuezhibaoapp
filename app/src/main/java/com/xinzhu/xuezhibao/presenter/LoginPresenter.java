@@ -3,7 +3,6 @@ package com.xinzhu.xuezhibao.presenter;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.tencent.mm.opensdk.modelmsg.SendAuth;

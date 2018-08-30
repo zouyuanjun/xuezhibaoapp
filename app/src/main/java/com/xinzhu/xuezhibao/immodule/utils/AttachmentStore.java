@@ -1,5 +1,5 @@
 
-package com.xinzhu.xuezhibao.immodule.pickerimage.utils;
+package com.xinzhu.xuezhibao.immodule.utils;
 
 import android.graphics.Bitmap;
 import android.text.TextUtils;

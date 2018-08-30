@@ -21,7 +21,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -34,10 +33,11 @@ import com.squareup.picasso.Picasso;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.IMBaseActivity;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
-import com.xinzhu.xuezhibao.immodule.pickerimage.utils.AttachmentStore;
-import com.xinzhu.xuezhibao.immodule.pickerimage.utils.StorageUtil;
+
+import com.xinzhu.xuezhibao.immodule.utils.AttachmentStore;
 import com.xinzhu.xuezhibao.immodule.utils.BitmapLoader;
 import com.xinzhu.xuezhibao.immodule.utils.NativeImageLoader;
+import com.xinzhu.xuezhibao.immodule.utils.StorageUtil;
 
 import java.io.File;
 import java.lang.ref.WeakReference;

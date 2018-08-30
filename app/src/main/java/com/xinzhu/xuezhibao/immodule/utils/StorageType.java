@@ -1,4 +1,4 @@
-package com.xinzhu.xuezhibao.immodule.pickerimage.utils;
+package com.xinzhu.xuezhibao.immodule.utils;
 
 public enum StorageType {
     TYPE_LOG(DirectoryName.LOG_DIRECTORY_NAME),
