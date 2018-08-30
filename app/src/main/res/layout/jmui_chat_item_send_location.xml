@@ -79,7 +79,6 @@
             android:visibility="gone"/>
 
         <TextView
-            android:id="@+id/jmui_send_status_tv"
             style="@style/jmui_chat_text_name_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

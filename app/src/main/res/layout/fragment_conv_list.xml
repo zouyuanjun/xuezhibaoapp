@@ -12,7 +12,6 @@
         android:background="@color/blue_sky">
 
         <TextView
-            android:id="@+id/main_title_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
