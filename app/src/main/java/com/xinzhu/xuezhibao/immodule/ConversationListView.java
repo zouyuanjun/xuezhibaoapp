@@ -48,15 +48,15 @@ public class ConversationListView {
         mCreateGroup = (ImageButton) mConvListFragment.findViewById(R.id.create_group_btn);
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mHeader = (LinearLayout) inflater.inflate(R.layout.conv_list_head_view, mConvListView, false);
-        mSearchHead = (LinearLayout) inflater.inflate(R.layout.conversation_head_view, mConvListView, false);
+       // mSearchHead = (LinearLayout) inflater.inflate(R.layout.conversation_head_view, mConvListView, false);
         mLoadingHeader = (RelativeLayout) inflater.inflate(R.layout.jmui_drop_down_list_header, mConvListView, false);
         mLoadingIv = (ImageView) mLoadingHeader.findViewById(R.id.jmui_loading_img);
         mLoadingTv = (LinearLayout) mLoadingHeader.findViewById(R.id.loading_view);
-        mSearch = (LinearLayout) mSearchHead.findViewById(R.id.search_title);
+     //   mSearch = (LinearLayout) mSearchHead.findViewById(R.id.search_title);
         mNull_conversation = (TextView) mConvListFragment.findViewById(R.id.null_conversation);
     //    mAllUnReadMsg = (TextView) mFragment.getActivity().findViewById(R.id.all_unread_number);
         mConvListView.addHeaderView(mLoadingHeader);
-        mConvListView.addHeaderView(mSearchHead);
+      //  mConvListView.addHeaderView(mSearchHead);
         mConvListView.addHeaderView(mHeader);
     }
 
@@ -66,7 +66,7 @@ public class ConversationListView {
 
 
     public void setListener(View.OnClickListener onClickListener) {
-        mSearch.setOnClickListener(onClickListener);
+     //   mSearch.setOnClickListener(onClickListener);
         mCreateGroup.setOnClickListener(onClickListener);
     }
 

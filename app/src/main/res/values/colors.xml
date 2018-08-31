@@ -16,14 +16,8 @@
     <color name="btn_send_textcolor">@color/white</color>
     <color name="transparent">#00000000</color>
     <color name="blue">#33b5e5</color>
-    <color name="theme_body">#cc22292c</color>
-    <color name="color_grey_999999">#999999</color>
-    <color name="color_activity_blue_bg">#f7389fff</color>
-    <color name="color_b3b3b3">#b3b3b3</color>
 
     <color name="black">#000000</color>
-    <color name="color_black_333333">#333333</color>
-    <color name="color_split_line_d9d9d9">#d9d9d9</color>
     <color name="spilt_line">#CFCFCF</color>
 
     <color name="chat_item_file_size">#989898</color>

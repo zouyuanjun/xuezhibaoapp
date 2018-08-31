@@ -23,7 +23,7 @@
             android:layout_marginTop="12.9dp"
             android:text="会话置顶"
             android:textColor="#2C2C2C"
-            android:textSize="@dimen/text_medium_size"/>
+            android:textSize="20sp"/>
     </LinearLayout>
 
     <LinearLayout
@@ -39,9 +39,9 @@
             android:layout_marginBottom="11.43dp"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="12.9dp"
-            android:text="删除该聊天"
+            android:text="删除该会话"
             android:textColor="#2C2C2C"
-            android:textSize="@dimen/text_medium_size"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 </LinearLayout>

@@ -79,12 +79,6 @@ public class ConversationListAdapter extends BaseAdapter {
                 mConversationListView.setNullConversation(true);
             }
         });
-//        ThreadUtil.runInUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                mConversationListView.setNullConversation(true);
-//            }
-//        });
 
         //如果是旧的会话
         for (Conversation conversation : mDatas) {

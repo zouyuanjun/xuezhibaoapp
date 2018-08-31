@@ -1,14 +1,21 @@
 package com.xinzhu.xuezhibao.immodule;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.immodule.utils.IdHelper;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
+import com.zou.fastlibrary.utils.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -104,7 +111,7 @@ public class ConversationListController implements View.OnClickListener,
         Intent intent = new Intent();
         if (position > 0) {
             //这里-3是减掉添加的三个headView
-            Conversation conv = mDatas.get(position - 3);
+            Conversation conv = mDatas.get(position - 2);
             intent.putExtra(JGApplication.CONV_TITLE, conv.getTitle());
             //群聊
             if (conv.getType() == ConversationType.group) {
@@ -140,7 +147,9 @@ public class ConversationListController implements View.OnClickListener,
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-        final Conversation conv = mDatas.get(position - 3);
+
+        Log.d("会话列表长按事件");
+        final Conversation conv = mDatas.get(position - 2);
         if (conv != null) {
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
@@ -164,7 +173,7 @@ public class ConversationListController implements View.OnClickListener,
                             } else {
                                 JMessageClient.deleteSingleConversation(((UserInfo) conv.getTargetInfo()).getUserName());
                             }
-                            mDatas.remove(position - 3);
+                            mDatas.remove(position - 2);
                             if (mDatas.size() > 0) {
                                 mConvListView.setNullConversation(true);
                             } else {
@@ -179,10 +188,34 @@ public class ConversationListController implements View.OnClickListener,
 
                 }
             };
-//            mDialog = DialogCreator.createDelConversationDialog(mContext, listener, TextUtils.isEmpty(conv.getExtra()));
-//            mDialog.show();
-//            mDialog.getWindow().setLayout((int) (0.8 * mWidth), WindowManager.LayoutParams.WRAP_CONTENT);
+            mDialog = createDelConversationDialog(mContext, listener, TextUtils.isEmpty(conv.getExtra()));
+            mDialog.show();
+            mDialog.getWindow().setLayout((int) (0.8 * mWidth), WindowManager.LayoutParams.WRAP_CONTENT);
         }
         return true;
+    }
+
+    public static Dialog createDelConversationDialog(Context context,
+                                                     View.OnClickListener listener, boolean isTop) {
+        Dialog dialog = new Dialog(context, IdHelper.getStyle(context, "jmui_default_dialog_style"));
+        View v = LayoutInflater.from(context).inflate(
+                IdHelper.getLayout(context, "jmui_dialog_delete_conv"), null);
+        dialog.setContentView(v);
+        final LinearLayout deleteLl = (LinearLayout) v.findViewById(IdHelper
+                .getViewID(context, "jmui_delete_conv_ll"));
+        final LinearLayout top = (LinearLayout) v.findViewById(IdHelper
+                .getViewID(context, "jmui_top_conv_ll"));
+        TextView tv_top = (TextView) v.findViewById(IdHelper.getViewID(context, "tv_conv_top"));
+        if (isTop) {
+            tv_top.setText("会话置顶");
+        } else {
+            tv_top.setText("取消置顶");
+        }
+
+        deleteLl.setOnClickListener(listener);
+        top.setOnClickListener(listener);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        return dialog;
     }
 }
