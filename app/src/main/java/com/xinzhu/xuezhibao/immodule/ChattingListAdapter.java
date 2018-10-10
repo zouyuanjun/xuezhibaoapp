@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -744,7 +745,7 @@ public class ChattingListAdapter extends BaseAdapter {
                     public void gotResult(final int status, String desc) {
                         holder.progressTv.setVisibility(View.GONE);
                         //此方法是api21才添加的如果低版本会报错找不到此方法.升级api或者使用ContextCompat.getDrawable
-                        holder.contentLl.setBackground(mContext.getDrawable(R.drawable.jmui_msg_send_bg));
+                        holder.contentLl.setBackground(ContextCompat.getDrawable(mContext,R.drawable.jmui_msg_send_bg));
                         if (status != 0) {
                             HandleResponseCode.onHandle(mContext, status, false);
                             holder.resend.setVisibility(View.VISIBLE);

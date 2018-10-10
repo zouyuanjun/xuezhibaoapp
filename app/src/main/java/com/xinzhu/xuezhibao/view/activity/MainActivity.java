@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xinzhu.xuezhibao.view.fragment.HomeFragemt;
+import com.xinzhu.xuezhibao.view.fragment.UserCentreFragment;
 import com.zou.fastlibrary.activity.BaseTabActivity;
 
 import java.util.ArrayList;
@@ -18,13 +19,17 @@ public class MainActivity extends BaseTabActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fresco.initialize(this.getApplicationContext());
-        tabTextlist.add("我的基金");
-        tabTextlist.add("排行");
-        tabTextlist.add("对比");
+        tabTextlist.add("学科");
+        tabTextlist.add("学宝");
+        tabTextlist.add("直播");
+        tabTextlist.add("家教");
+        tabTextlist.add("我的");
         creatOnlyTextTab(tabTextlist);
         fragmentList.add(new HomeFragemt());
         fragmentList.add(new HomeFragemt());
         fragmentList.add(new HomeFragemt());
+        fragmentList.add(new HomeFragemt());
+        fragmentList.add(new UserCentreFragment());
         setViewPagerAdaptr(fragmentList);
 
     }

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.io.File;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,7 +101,12 @@ public class StringUtil {
 
 	//获取string,为null时返回"" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-
+//获取36位的UUID
+	public static String get36UUID() {
+		UUID uuid = UUID.randomUUID();
+		String uniqueId = uuid.toString();
+		return uniqueId;
+	}
 
 
 

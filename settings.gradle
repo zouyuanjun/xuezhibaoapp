@@ -1,1 +1,1 @@
-include ':app', 'zoulibrary','com.jakewharton.butterknife'
+include ':app', 'zoulibrary','com.jakewharton.butterknife','takephoto_library'

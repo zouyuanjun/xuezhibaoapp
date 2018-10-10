@@ -31,6 +31,7 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bravin.btoast.BToast;
 import com.sj.emoji.EmojiBean;
@@ -51,10 +52,12 @@ import com.xinzhu.xuezhibao.immodule.keyboard.widget.EmoticonsEditText;
 import com.xinzhu.xuezhibao.immodule.keyboard.widget.FuncLayout;
 import com.xinzhu.xuezhibao.immodule.utils.RequestCode;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.Glide4Engine;
 import com.xinzhu.xuezhibao.utils.SimpleCommonUtils;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zou.fastlibrary.utils.Log;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
@@ -194,6 +197,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
         mTargetId = intent.getStringExtra(TARGET_ID);
         mTargetAppKey = intent.getStringExtra(TARGET_APP_KEY);
         mTitle = intent.getStringExtra(JGApplication.CONV_TITLE);
+        Log.d("id"+mTargetId+"名字"+mTitle);
         mMyInfo = JMessageClient.getMyInfo();
         if (!TextUtils.isEmpty(mTargetId)) {
             //单聊
@@ -271,7 +275,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
         }
 
         mChatView.setChatListAdapter(mChatAdapter);
-//        mChatAdapter.initMediaPlayer();
+     //  mChatAdapter.initMediaPlayer();
         mChatView.getListView().setOnDropDownListener(new DropDownListView.OnDropDownListener() {
             @Override
             public void onDropDown() {
@@ -328,7 +332,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
             }
         });
     }
-
+    //初始化表情键盘
     private void initEmoticonsKeyBoardBar() {
         ekBar.setAdapter(SimpleCommonUtils.getCommonAdapter(this, emoticonClickListener));
         ekBar.addOnFuncKeyBoardListener(this);
@@ -746,7 +750,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                             .gridExpectedSize(400)
                             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                             .thumbnailScale(0.85f) // 缩略图的比例
-                            .imageEngine(new GlideEngine()) // 使用的图片加载引擎
+                            .imageEngine(new Glide4Engine()) // 使用的图片加载引擎
                             .forResult(requestCode); // 设置作为标记的请求码
                 }
 
@@ -764,6 +768,20 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                     startActivityForResult(intent, RequestCode.TAKE_PHOTO);
                 }
                 break;
+//            case JGApplication.FILE_MESSAGE:
+//                if (ContextCompat.checkSelfPermission(this,
+//                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                        != PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(this, "请在应用管理中打开“读写存储”访问权限！", Toast.LENGTH_LONG).show();
+//
+//                } else {
+//                    intent = new Intent(mContext, SendFileActivity.class);
+//                    intent.putExtra(JGApplication.TARGET_ID, mTargetId);
+//                    intent.putExtra(JGApplication.TARGET_APP_KEY, mTargetAppKey);
+//                    intent.putExtra(JGApplication.GROUP_ID, mGroupId);
+//                    startActivityForResult(intent, JGApplication.REQUEST_CODE_SEND_FILE);
+//                }
+//                break;
             case JGApplication.TACK_VIDEO:
             case JGApplication.TACK_VOICE:
             //    ToastUtil.shortToast(mContext, "该功能正在添加中");

@@ -3,6 +3,8 @@ package com.zou.fastlibrary.utils;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+
+import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -38,8 +40,6 @@ public class Network {
                 .build();//创建OkHttpClient对象。
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");//数据类型为json格式，
         RequestBody formBody = new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart(key,value).build();
-
-
         Request request = new Request.Builder()
                 .url(url)
                 .post(formBody)
@@ -78,9 +78,13 @@ public class Network {
     }
 
 
-
-
-
+    /**
+     * post提交Json数据
+     * @param date   要提交的数据
+     * @param url   访问地址
+     * @param handler  回调handler
+     * @param i   请求标志
+     */
     public void postJson(String date , String url, final Handler handler, final int i){
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(10, TimeUnit.SECONDS)
@@ -126,6 +130,52 @@ public class Network {
             }
         });
     }
+
+
+
+    public void uploadimg(String url, File file, final Handler handler){
+        OkHttpClient mOkHttpClent = new OkHttpClient();
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("img", "HeadPortrait.jpg",
+                        RequestBody.create(MediaType.parse("image/png"), file));
+
+        RequestBody requestBody = builder.build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        Call call = mOkHttpClent.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                if (e instanceof SocketTimeoutException) {
+                    //判断超时异常
+                    Message message=new Message();
+                    String s="{\"message\":\"请求超时\",\"code\":-200,\"data\":[{}]}";
+                    message.obj=s;
+                    handler.sendMessage(message);
+                    Log.d("555","请求超时");
+                }
+                if (e instanceof ConnectException) {
+                    ////判断连接异常，
+                    Message message=new Message();
+                    String s="{\"message\":\"连接异常\",\"code\":-100,\"data\":[{}]}";
+                    message.obj=s;
+                    handler.sendMessage(message);
+                    Log.d("555","连接异常");
+                }
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                com.zou.fastlibrary.utils.Log.d("上传成功"+response.body().string());
+            }
+        });
+    }
+
+
 
     /**
      * 发送请求头的连接

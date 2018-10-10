@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/blue_sky">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sd_myphoto_big"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/ic_empty_dracula"/>
+
+    <Button
+        android:id="@+id/bt_changephoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="更换头像"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="300dp" />
+
+</LinearLayout>

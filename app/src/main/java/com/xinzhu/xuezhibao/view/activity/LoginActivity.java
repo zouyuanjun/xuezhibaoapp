@@ -48,9 +48,6 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
         login=new LoginPresenter(this);
     }
 
-
-
-
     @OnClick({ R.id.bt_login,R.id.bt_sign, R.id.imb_wxsign, R.id.bt_forgetpassword})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -66,6 +63,10 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
                     BToast.error(context).target(edPassword).animate(true).text("请输入密码").show();
                     break;
                 }
+                if (password.length()<6){
+                    BToast.error(context).target(edPassword).animate(true).text("密码长度必须大于6位").show();
+                    break;
+                }
                 login.phonelogin(phone,password);
                 break;
             case R.id.bt_sign:
@@ -74,6 +75,7 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
             case R.id.imb_wxsign:
                 break;
             case R.id.bt_forgetpassword:
+                startActivity(new Intent(context,ForgetPasswordActivity.class));
                 break;
         }
     }
@@ -93,7 +95,7 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
     @Override
     public void loginsuccessful() {
         finish();
-        startActivity(new Intent(this,ConversationListActivity.class));
+        startActivity(new Intent(this,MainActivity.class));
     }
 
     @Override

@@ -13,11 +13,10 @@ import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
+import android.os.Environment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
-import android.support.v4.content.res.ResourcesCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -27,14 +26,8 @@ import android.webkit.MimeTypeMap;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bravin.btoast.BToast;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.squareup.picasso.Picasso;
-import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.immodule.utils.FileHelper;
-import com.xinzhu.xuezhibao.immodule.utils.FileUtils;
-import com.xinzhu.xuezhibao.immodule.view.BrowserViewPagerActivity;
-import com.xinzhu.xuezhibao.utils.SimpleCommonUtils;
 
 import java.io.File;
 import java.io.FileDescriptor;
@@ -73,7 +66,16 @@ import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.android.api.options.MessageSendingOptions;
 import cn.jpush.im.api.BasicCallback;
 
+import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.ChattingListAdapter.ViewHolder;
+import com.xinzhu.xuezhibao.immodule.utils.BitmapDecoder;
+import com.xinzhu.xuezhibao.immodule.utils.FileHelper;
+import com.xinzhu.xuezhibao.immodule.utils.FileUtils;
+import com.xinzhu.xuezhibao.immodule.view.BrowserViewPagerActivity;
+import com.xinzhu.xuezhibao.immodule.view.DownLoadActivity;
+import com.xinzhu.xuezhibao.immodule.view.GroupNotFriendActivity;
+import com.xinzhu.xuezhibao.utils.SimpleCommonUtils;
+
 
 public class ChatItemController {
 
@@ -230,7 +232,7 @@ public class ChatItemController {
             holder.resend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  //  mAdapter.showResendDialog(holder, msg);
+               //     mAdapter.showResendDialog(holder, msg);
                 }
             });
         }
@@ -254,19 +256,19 @@ public class ChatItemController {
                     @Override
                     public void gotResult(int i, String s, UserInfo userInfo) {
                         Intent intent = new Intent();
-//                        if (i == 0) {
-//                            if (userInfo.isFriend()) {
-//                                intent.setClass(mContext, FriendInfoActivity.class);
-//                            } else {
-//                                intent.setClass(mContext, GroupNotFriendActivity.class);
-//                            }
-//                            intent.putExtra(JGApplication.TARGET_APP_KEY, appKey);
-//                            intent.putExtra(JGApplication.TARGET_ID, userName);
-//                            intent.putExtra("fromSearch", true);
-//                            mContext.startActivity(intent);
-//                        }else {
-//                            ToastUtil.shortToast(mContext, "获取信息失败,稍后重试");
-//                        }
+                        if (i == 0) {
+                            if (userInfo.isFriend()) {
+                            //    intent.setClass(mContext, FriendInfoActivity.class);
+                            } else {
+                                intent.setClass(mContext, GroupNotFriendActivity.class);
+                            }
+                            intent.putExtra(JGApplication.TARGET_APP_KEY, appKey);
+                            intent.putExtra(JGApplication.TARGET_ID, userName);
+                            intent.putExtra("fromSearch", true);
+                            mContext.startActivity(intent);
+                        }else {
+                        //    ToastUtil.shortToast(mContext, "获取信息失败,稍后重试");
+                        }
                     }
                 });
             }
@@ -380,11 +382,11 @@ public class ChatItemController {
                                 @Override
                                 public void onComplete(int i, String s, File file) {
                                     if (i == 0) {
-                                        BToast.info(mContext).text("下载成功").show();
+                                   //     ToastUtil.shortToast(mContext, "下载成功");
                                         holder.sendingIv.setVisibility(View.GONE);
                                         mAdapter.notifyDataSetChanged();
                                     } else {
-                                        BToast.info(mContext).text("下载失败").show();
+                                     //   ToastUtil.shortToast(mContext, "下载失败" + s);
                                     }
                                 }
                             });
@@ -470,7 +472,7 @@ public class ChatItemController {
 
                 @Override
                 public void onClick(View v) {
-            //        mAdapter.showResendDialog(holder, msg);
+                 //   mAdapter.showResendDialog(holder, msg);
                 }
             });
         }
@@ -617,7 +619,7 @@ public class ChatItemController {
                 @Override
                 public void onClick(View arg0) {
                     if (msg.getContent() != null) {
-                   //     mAdapter.showResendDialog(holder, msg);
+                      //  mAdapter.showResendDialog(holder, msg);
                     } else {
                         Toast.makeText(mContext, R.string.jmui_sdcard_not_exist_toast, Toast.LENGTH_SHORT).show();
                     }
@@ -758,7 +760,7 @@ public class ChatItemController {
                         mAdapter.addMsgToList(customMsg);
                     } else if (status == 803005) {
                         holder.resend.setVisibility(View.VISIBLE);
-                      //  ToastUtil.shortToast(mContext, "发送失败, 你不在该群组中");
+                   //     ToastUtil.shortToast(mContext, "发送失败, 你不在该群组中");
                     } else if (status != 0) {
                         holder.resend.setVisibility(View.VISIBLE);
                         HandleResponseCode.onHandle(mContext, status, false);
@@ -770,17 +772,19 @@ public class ChatItemController {
 
     //小视频
     public void handleVideo(final Message msg, final ViewHolder holder, int position) {
-//        FileContent fileContent = (FileContent) msg.getContent();
-//        String videoPath = fileContent.getLocalPath();
-//        if (videoPath != null) {
-////            String absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + msg.getServerMessageId();
-//            String thumbPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + msg.getServerMessageId();
-//            String path = BitmapDecoder.extractThumbnail(videoPath, thumbPath);
-//            setPictureScale(null, msg, path, holder.picture);
-//            Picasso.with(mContext).load(new File(path)).into(holder.picture);
-//        } else {
-//            Picasso.with(mContext).load(R.drawable.video_not_found).into(holder.picture);
-//        }
+
+        FileContent fileContent = (FileContent) msg.getContent();
+        String videoPath = fileContent.getLocalPath();
+        Log.d("地址打印","本地地址"+fileContent.getFileName()+videoPath);
+        if (videoPath != null) {
+//            String absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + msg.getServerMessageId();
+            String thumbPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + msg.getServerMessageId();
+            String path = BitmapDecoder.extractThumbnail(videoPath, thumbPath);
+            setPictureScale(null, msg, path, holder.picture);
+            Picasso.with(mContext).load(new File(path)).into(holder.picture);
+        } else {
+            Picasso.with(mContext).load(R.drawable.video_not_found).into(holder.picture);
+        }
 
 //        if (videoPath != null && new File(videoPath).exists()) {
 //            Bitmap bitmap = BitmapDecoder.extractThumbnail(videoPath);
@@ -850,7 +854,7 @@ public class ChatItemController {
             holder.resend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                  //  mAdapter.showResendDialog(holder, msg);
+               //     mAdapter.showResendDialog(holder, msg);
                 }
             });
 
@@ -944,7 +948,7 @@ public class ChatItemController {
                         msg.setOnSendCompleteCallback(new BasicCallback() {
                             @Override
                             public void gotResult(int status, String desc) {
-                                holder.contentLl.setBackground(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.jmui_msg_send_bg, null));
+                                holder.contentLl.setBackground(ContextCompat.getDrawable(mContext,R.drawable.jmui_msg_send_bg));
                                 holder.progressTv.setVisibility(View.GONE);
                                 if (status == 803008) {
                                     CustomContent customContent = new CustomContent();
@@ -960,7 +964,7 @@ public class ChatItemController {
                     break;
                 case send_success:
                     holder.text_receipt.setVisibility(View.VISIBLE);
-                    holder.contentLl.setBackground(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.jmui_msg_send_bg, null));
+                    holder.contentLl.setBackground(ContextCompat.getDrawable(mContext,R.drawable.jmui_msg_send_bg));
                     holder.alreadySend.setVisibility(View.VISIBLE);
                     holder.progressTv.setVisibility(View.GONE);
                     holder.resend.setVisibility(View.GONE);
@@ -969,7 +973,7 @@ public class ChatItemController {
                     holder.alreadySend.setVisibility(View.VISIBLE);
                     holder.alreadySend.setText("发送失败");
                     holder.text_receipt.setVisibility(View.GONE);
-                    holder.contentLl.setBackground(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.jmui_msg_send_bg, null));
+                    holder.contentLl.setBackground(ContextCompat.getDrawable(mContext,R.drawable.jmui_msg_send_bg));
                     holder.progressTv.setVisibility(View.GONE);
                     holder.resend.setVisibility(View.VISIBLE);
                     break;
@@ -989,7 +993,7 @@ public class ChatItemController {
                                     holder.progressTv.setText(progressStr);
                                 } else {
                                     holder.progressTv.setVisibility(View.GONE);
-                                    holder.contentLl.setBackground(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.jmui_msg_receive_bg, null));
+                                    holder.contentLl.setBackground(ContextCompat.getDrawable(mContext,R.drawable.jmui_msg_receive_bg));
                                 }
 
                             }
@@ -1007,7 +1011,7 @@ public class ChatItemController {
                     break;
                 case receive_success:
                     holder.progressTv.setVisibility(View.GONE);
-                    holder.contentLl.setBackground(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.jmui_msg_receive_bg, null));
+                    holder.contentLl.setBackground(ContextCompat.getDrawable(mContext,R.drawable.jmui_msg_receive_bg));
                     holder.fileLoad.setText("已下载");
                     break;
             }
@@ -1018,7 +1022,7 @@ public class ChatItemController {
                 @Override
                 public void onClick(View v) {
                     if (msg.getDirect() == MessageDirect.send) {
-                    //    mAdapter.showResendDialog(holder, msg);
+                      //  mAdapter.showResendDialog(holder, msg);
                     } else {
                         holder.contentLl.setBackgroundColor(Color.parseColor("#86222222"));
                         holder.progressTv.setText("0%");
@@ -1036,7 +1040,7 @@ public class ChatItemController {
                             @Override
                             public void onComplete(int status, String desc, File file) {
                                 holder.progressTv.setVisibility(View.GONE);
-                                holder.contentLl.setBackground(ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.jmui_msg_receive_bg, null));
+                                holder.contentLl.setBackground(ContextCompat.getDrawable(mContext,R.drawable.jmui_msg_receive_bg));
                                 if (status != 0) {
                                     holder.fileLoad.setText("未下载");
                                     Toast.makeText(mContext, R.string.download_file_failed,
@@ -1179,7 +1183,6 @@ public class ChatItemController {
                     }
                     break;
                 case image:
-                    //点击图片聊天消息
                     if (holder.picture != null && v.getId() == holder.picture.getId()) {
                         Intent intent = new Intent();
                         intent.putExtra(JGApplication.TARGET_ID, mConv.getTargetId());
@@ -1213,8 +1216,10 @@ public class ChatItemController {
                     String extra = content.getStringExtra("video");
                     if (extra != null) {
                         fileName = msg.getServerMessageId() + "." + extra;
+                        com.zou.fastlibrary.utils.Log.d("fileName"+fileName);
                     }
                     final String path = content.getLocalPath();
+                    com.zou.fastlibrary.utils.Log.d("fileName"+fileName+path);
                     if (path != null && new File(path).exists()) {
                         final String newPath = JGApplication.FILE_DIR + fileName;
                         File file = new File(newPath);
@@ -1231,9 +1236,9 @@ public class ChatItemController {
                                     });
                         }
                     } else {
-//                        org.greenrobot.eventbus.EventBus.getDefault().postSticky(msg);
-//                        Intent intent = new Intent(mContext, DownLoadActivity.class);
-//                        mContext.startActivity(intent);
+                        org.greenrobot.eventbus.EventBus.getDefault().postSticky(msg);
+                        Intent intent = new Intent(mContext, DownLoadActivity.class);
+                        mContext.startActivity(intent);
                     }
                     break;
             }
@@ -1454,16 +1459,10 @@ public class ChatItemController {
             String ext = fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
             MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
             String mime = mimeTypeMap.getMimeTypeFromExtension(ext);
+            File file = new File(path);
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            Uri uri;
-            if (Build.VERSION.SDK_INT >= 24) {
-                uri = FileProvider.getUriForFile(mContext,"com.xinzhu.xuezhibao.provider", new File(path));
-            } else {
-                uri = Uri.fromFile(new File(path));
-            }
-
-
-            intent.setDataAndType(uri, mime);
+            com.zou.fastlibrary.utils.Log.d(Uri.fromFile(file).toString());
+            intent.setDataAndType(Uri.fromFile(file), mime);
             mContext.startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();

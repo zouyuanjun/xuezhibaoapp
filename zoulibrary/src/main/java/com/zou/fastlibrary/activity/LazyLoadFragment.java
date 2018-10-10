@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bravin.btoast.BToast;
+import com.zou.fastlibrary.utils.Log;
 
 public abstract class LazyLoadFragment extends Fragment {
     /**
@@ -24,6 +25,7 @@ public abstract class LazyLoadFragment extends Fragment {
         view = inflater.inflate(setContentView(), container, false);
         isInit = true;
         /**初始化的时候去加载数据**/
+        Log.d("懒加载基类onCreateView");
         isCanLoadData();
         return view;
     }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.xinzhu.xuezhibao">
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -43,22 +44,26 @@
         <activity android:name=".view.activity.MainActivity"></activity>
         <activity android:name=".view.activity.WXSignActivity"></activity>
         <activity android:name=".immodule.view.ConversationListActivity"></activity>
-        <activity android:name=".imagepicker.ImageBaseActivity"></activity>
         <activity android:name=".immodule.view.SearchForAddFriendActivity"></activity>
         <activity android:name=".immodule.view.GroupNotFriendActivity"></activity>
         <activity android:name=".immodule.view.ChatActivity"></activity>
         <activity android:name=".immodule.takevideo.CameraActivity"></activity>
-        <activity android:name=".immodule.pickerimage.PickerAlbumPreviewActivity"></activity>
-        <activity android:name=".immodule.pickerimage.PickImageActivity"></activity>
-        <activity android:name=".immodule.pickerimage.PickerAlbumActivity"></activity>
         <activity android:name=".immodule.view.BrowserViewPagerActivity" />
+        <activity android:name=".view.activity.ForgetPasswordActivity" />
+        <activity android:name=".view.activity.VideoActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.activity.UserBaseActivity" />
+        <activity android:name=".immodule.view.DownLoadActivity" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="com.xinzhu.xuezhibao.utils.MyFileProvider"
             android:authorities="com.xinzhu.xuezhibao.provider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
             <meta-data
+                tools:replace="android:resource"
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_path" />
         </provider>

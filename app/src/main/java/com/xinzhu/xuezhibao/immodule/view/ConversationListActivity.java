@@ -21,6 +21,7 @@ import android.widget.PopupWindow;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.ConversationListController;
 import com.xinzhu.xuezhibao.immodule.ConversationListView;
+import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.MenuItemController;
 import com.xinzhu.xuezhibao.immodule.bean.Event;
 import com.xinzhu.xuezhibao.immodule.IMBaseActivity;
@@ -33,6 +34,7 @@ import cn.jpush.im.android.api.event.ConversationRefreshEvent;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.event.MessageReceiptStatusChangeEvent;
 import cn.jpush.im.android.api.event.MessageRetractEvent;
+import cn.jpush.im.android.api.event.NotificationClickEvent;
 import cn.jpush.im.android.api.event.OfflineMessageEvent;
 import cn.jpush.im.android.api.model.Conversation;
 import cn.jpush.im.android.api.model.GroupInfo;
@@ -230,6 +232,15 @@ public class ConversationListActivity extends IMBaseActivity {
                 mBackgroundHandler.sendMessage(mBackgroundHandler.obtainMessage(REFRESH_CONVERSATION_LIST, conv));
             }
         }
+    }
+    //通知栏点击事件
+    public void onEvent(NotificationClickEvent event){
+        Intent notificationIntent = new Intent(mContext, ChatActivity.class);
+        Log.d( event.getMessage().toString());
+        notificationIntent.putExtra(JGApplication.TARGET_ID, event.getMessage().getTargetID());
+        notificationIntent.putExtra(JGApplication.CONV_TITLE, event.getMessage().getTargetName());
+        notificationIntent.putExtra(JGApplication.TARGET_APP_KEY, event.getMessage().getTargetAppKey());
+        mContext.startActivity(notificationIntent);//自定义跳转到指定页面
     }
 
     private class BackgroundHandler extends Handler {
