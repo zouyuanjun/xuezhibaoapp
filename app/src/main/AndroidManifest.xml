@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <application
         android:allowBackup="true"
         android:name="com.xinzhu.xuezhibao.MyApplication"
@@ -55,7 +56,10 @@
             android:screenOrientation="portrait" />
         <activity android:name=".view.activity.UserBaseActivity" />
         <activity android:name=".immodule.view.DownLoadActivity" />
-
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
         <provider
             android:name="com.xinzhu.xuezhibao.utils.MyFileProvider"
             android:authorities="com.xinzhu.xuezhibao.provider"

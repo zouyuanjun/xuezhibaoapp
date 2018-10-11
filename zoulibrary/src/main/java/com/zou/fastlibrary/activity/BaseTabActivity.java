@@ -110,6 +110,7 @@ public class BaseTabActivity extends AppCompatActivity {
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragmentList));
         mNavigationController.setupWithViewPager(viewPager);
     }
+    //创建有图标的标签
     private BaseTabItem newItem(int drawable, int checkedDrawable){
         OnlyIconItemView onlyIconItemView = new OnlyIconItemView(this);
         onlyIconItemView.initialize(drawable,checkedDrawable);

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.bravin.btoast.BToast;
+import com.tencent.bugly.beta.Beta;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
 import com.xinzhu.xuezhibao.presenter.LoginPresenter;
@@ -45,6 +46,9 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
         context=this;
+        String a="sdfs";
+       // a.substring(5);
+        Beta.checkUpgrade(false,false);
         login=new LoginPresenter(this);
     }
 

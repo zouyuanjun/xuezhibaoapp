@@ -36,7 +36,7 @@ public class HomeFragemt extends LazyLoadFragment {
     FrameLayout fragment;
     @BindView(R.id.tv_message)
     TextView tvmessage;
-int messagecount=0;
+    int messagecount=0;
     Unbinder unbinder;
     Fragment_1 f1;
     Fragment_2 f2;
@@ -51,7 +51,6 @@ int messagecount=0;
 
     @Override
     protected void lazyLoad() {
-        initFragment1();
         fragmentManager=getChildFragmentManager();
         transaction = fragmentManager.beginTransaction();
         Log.d("懒加载方法可见");
@@ -66,6 +65,7 @@ int messagecount=0;
         qBadgeView.bindTarget(tvmessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
         Log.d("创建完毕");
         JMessageClient.registerEventReceiver(this);
+        initFragment1();
         return rootView;
     }
 
