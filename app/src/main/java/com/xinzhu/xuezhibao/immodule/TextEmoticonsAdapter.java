@@ -27,8 +27,8 @@ public class TextEmoticonsAdapter extends EmoticonsAdapter<EmoticonEntity> {
             viewHolder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item_emoticon_text, null);
             viewHolder.rootView = convertView;
-            viewHolder.ly_root = (LinearLayout) convertView.findViewById(R.id.ly_root);
-            viewHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
+            viewHolder.ly_root = convertView.findViewById(R.id.ly_root);
+            viewHolder.tv_content = convertView.findViewById(R.id.tv_content);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

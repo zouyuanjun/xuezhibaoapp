@@ -59,13 +59,13 @@ public class SearchForAddFriendActivity extends IMBaseActivity implements View.O
     }
 
     private void initView() {
-        mEt_searchUser = (EditText) findViewById(R.id.et_searchUser);
-        mBtn_search = (Button) findViewById(R.id.btn_search);
-        mSearch_result = (LinearLayout) findViewById(R.id.search_result);
-        mSearch_header = (SelectableRoundedImageView) findViewById(R.id.search_header);
-        mSearch_name = (TextView) findViewById(R.id.search_name);
-        mSearch_addBtn = (Button) findViewById(R.id.search_addBtn);
-        mIv_clear = (ImageView) findViewById(R.id.iv_clear);
+        mEt_searchUser = findViewById(R.id.et_searchUser);
+        mBtn_search = findViewById(R.id.btn_search);
+        mSearch_result = findViewById(R.id.search_result);
+        mSearch_header = findViewById(R.id.search_header);
+        mSearch_name = findViewById(R.id.search_name);
+        mSearch_addBtn = findViewById(R.id.search_addBtn);
+        mIv_clear = findViewById(R.id.iv_clear);
         mBtn_search.setEnabled(false);
         Intent intent = getIntent();
         if (intent.getFlags() == 2) {

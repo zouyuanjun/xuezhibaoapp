@@ -56,9 +56,7 @@ public class BitmapLoader {
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(path, opts);
-        if (opts.outHeight <= 1280 && opts.outWidth <= 720)
-            return true;
-        else return false;
+        return opts.outHeight <= 1280 && opts.outWidth <= 720;
     }
 
     /**

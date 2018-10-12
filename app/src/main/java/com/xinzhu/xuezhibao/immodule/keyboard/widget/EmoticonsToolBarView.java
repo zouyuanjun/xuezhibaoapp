@@ -39,8 +39,8 @@ public class EmoticonsToolBarView extends RelativeLayout {
         mInflater.inflate(R.layout.view_emoticonstoolbar, this);
         this.mContext = context;
         mBtnWidth = (int) context.getResources().getDimension(R.dimen.bar_tool_btn_width);
-        hsv_toolbar = (HorizontalScrollView) findViewById(R.id.hsv_toolbar);
-        ly_tool = (LinearLayout) findViewById(R.id.ly_tool);
+        hsv_toolbar = findViewById(R.id.hsv_toolbar);
+        ly_tool = findViewById(R.id.ly_tool);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class EmoticonsToolBarView extends RelativeLayout {
     }
 
     protected void initItemToolBtn(View toolBtnView, int rec, final PageSetEntity pageSetEntity, OnClickListener onClickListener){
-        ImageView iv_icon = (ImageView) toolBtnView.findViewById(R.id.iv_icon);
+        ImageView iv_icon = toolBtnView.findViewById(R.id.iv_icon);
         if (rec > 0) {
             iv_icon.setImageResource(rec);
         }

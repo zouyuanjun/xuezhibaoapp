@@ -71,14 +71,14 @@ public class XhsEmoticonsKeyBoard extends AutoHeightLayout implements View.OnCli
     }
 
     protected void initView() {
-        mBtnVoiceOrText = ((ImageView) findViewById(R.id.btn_voice_or_text));
-        mBtnVoice = ((RecordVoiceButton) findViewById(R.id.btn_voice));
-        mEtChat = ((EmoticonsEditText) findViewById(R.id.et_chat));
-        mBtnFace = ((ImageView) findViewById(R.id.btn_face));
-        mRlInput = ((RelativeLayout) findViewById(R.id.rl_input));
-        mBtnMultimedia = ((ImageView) findViewById(R.id.btn_multimedia));
-        mBtnSend = ((Button) findViewById(R.id.btn_send));
-        mLyKvml = ((FuncLayout) findViewById(R.id.ly_kvml));
+        mBtnVoiceOrText = findViewById(R.id.btn_voice_or_text);
+        mBtnVoice = findViewById(R.id.btn_voice);
+        mEtChat = findViewById(R.id.et_chat);
+        mBtnFace = findViewById(R.id.btn_face);
+        mRlInput = findViewById(R.id.rl_input);
+        mBtnMultimedia = findViewById(R.id.btn_multimedia);
+        mBtnSend = findViewById(R.id.btn_send);
+        mLyKvml = findViewById(R.id.ly_kvml);
 
 //        mBtnVoiceOrText.setOnClickListener(this);
         mBtnFace.setOnClickListener(this);
@@ -94,9 +94,9 @@ public class XhsEmoticonsKeyBoard extends AutoHeightLayout implements View.OnCli
     protected void initEmoticonFuncView() {
         View keyboardView = inflateFunc();
         mLyKvml.addFuncView(FUNC_TYPE_EMOTION, keyboardView);
-        mEmoticonsFuncView = ((EmoticonsFuncView) findViewById(R.id.view_epv));
-        mEmoticonsIndicatorView = ((EmoticonsIndicatorView) findViewById(R.id.view_eiv));
-        mEmoticonsToolBarView = ((EmoticonsToolBarView) findViewById(R.id.view_etv));
+        mEmoticonsFuncView = findViewById(R.id.view_epv);
+        mEmoticonsIndicatorView = findViewById(R.id.view_eiv);
+        mEmoticonsToolBarView = findViewById(R.id.view_etv);
         mEmoticonsFuncView.setOnIndicatorListener(this);
         mEmoticonsToolBarView.setOnToolBarItemClickListener(this);
         mLyKvml.setOnFuncChangeListener(this);

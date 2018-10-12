@@ -456,55 +456,55 @@ public class ChattingListAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new ViewHolder();
             convertView = createViewByType(msg, position);
-            holder.msgTime = (TextView) convertView.findViewById(R.id.jmui_send_time_txt);
-            holder.headIcon = (ImageView) convertView.findViewById(R.id.jmui_avatar_iv);
-            holder.displayName = (TextView) convertView.findViewById(R.id.jmui_display_name_tv);
-            holder.txtContent = (TextView) convertView.findViewById(R.id.jmui_msg_content);
-            holder.sendingIv = (ImageView) convertView.findViewById(R.id.jmui_sending_iv);
-            holder.resend = (ImageButton) convertView.findViewById(R.id.jmui_fail_resend_ib);
-            holder.ivDocument = (ImageView) convertView.findViewById(R.id.iv_document);
-            holder.text_receipt = (TextView) convertView.findViewById(R.id.text_receipt);
+            holder.msgTime = convertView.findViewById(R.id.jmui_send_time_txt);
+            holder.headIcon = convertView.findViewById(R.id.jmui_avatar_iv);
+            holder.displayName = convertView.findViewById(R.id.jmui_display_name_tv);
+            holder.txtContent = convertView.findViewById(R.id.jmui_msg_content);
+            holder.sendingIv = convertView.findViewById(R.id.jmui_sending_iv);
+            holder.resend = convertView.findViewById(R.id.jmui_fail_resend_ib);
+            holder.ivDocument = convertView.findViewById(R.id.iv_document);
+            holder.text_receipt = convertView.findViewById(R.id.text_receipt);
             switch (msg.getContentType()) {
                 case text:
-                    holder.ll_businessCard = (LinearLayout) convertView.findViewById(R.id.ll_businessCard);
-                    holder.business_head = (ImageView) convertView.findViewById(R.id.business_head);
-                    holder.tv_nickUser = (TextView) convertView.findViewById(R.id.tv_nickUser);
-                    holder.tv_userName = (TextView) convertView.findViewById(R.id.tv_userName);
+                    holder.ll_businessCard = convertView.findViewById(R.id.ll_businessCard);
+                    holder.business_head = convertView.findViewById(R.id.business_head);
+                    holder.tv_nickUser = convertView.findViewById(R.id.tv_nickUser);
+                    holder.tv_userName = convertView.findViewById(R.id.tv_userName);
                     break;
                 case image:
-                    holder.picture = (ImageView) convertView.findViewById(R.id.jmui_picture_iv);
-                    holder.progressTv = (TextView) convertView.findViewById(R.id.jmui_progress_tv);
+                    holder.picture = convertView.findViewById(R.id.jmui_picture_iv);
+                    holder.progressTv = convertView.findViewById(R.id.jmui_progress_tv);
                     break;
                 case file:
                     String extra = msg.getContent().getStringExtra("video");
                     if (!TextUtils.isEmpty(extra)) {
-                        holder.picture = (ImageView) convertView.findViewById(R.id.jmui_picture_iv);
-                        holder.progressTv = (TextView) convertView.findViewById(R.id.jmui_progress_tv);
-                        holder.videoPlay = (LinearLayout) convertView.findViewById(R.id.message_item_video_play);
+                        holder.picture = convertView.findViewById(R.id.jmui_picture_iv);
+                        holder.progressTv = convertView.findViewById(R.id.jmui_progress_tv);
+                        holder.videoPlay = convertView.findViewById(R.id.message_item_video_play);
                     } else {
-                        holder.progressTv = (TextView) convertView.findViewById(R.id.jmui_progress_tv);
-                        holder.contentLl = (LinearLayout) convertView.findViewById(R.id.jmui_send_file_ll);
-                        holder.sizeTv = (TextView) convertView.findViewById(R.id.jmui_send_file_size);
-                        holder.alreadySend = (TextView) convertView.findViewById(R.id.file_already_send);
+                        holder.progressTv = convertView.findViewById(R.id.jmui_progress_tv);
+                        holder.contentLl = convertView.findViewById(R.id.jmui_send_file_ll);
+                        holder.sizeTv = convertView.findViewById(R.id.jmui_send_file_size);
+                        holder.alreadySend = convertView.findViewById(R.id.file_already_send);
                     }
                     if (msg.getDirect().equals(MessageDirect.receive)) {
-                        holder.fileLoad = (TextView) convertView.findViewById(R.id.jmui_send_file_load);
+                        holder.fileLoad = convertView.findViewById(R.id.jmui_send_file_load);
                     }
                     break;
                 case voice:
-                    holder.voice = (ImageView) convertView.findViewById(R.id.jmui_voice_iv);
-                    holder.voiceLength = (TextView) convertView.findViewById(R.id.jmui_voice_length_tv);
-                    holder.readStatus = (ImageView) convertView.findViewById(R.id.jmui_read_status_iv);
+                    holder.voice = convertView.findViewById(R.id.jmui_voice_iv);
+                    holder.voiceLength = convertView.findViewById(R.id.jmui_voice_length_tv);
+                    holder.readStatus = convertView.findViewById(R.id.jmui_read_status_iv);
                     break;
                 case location:
-                    holder.location = (TextView) convertView.findViewById(R.id.jmui_loc_desc);
-                    holder.picture = (ImageView) convertView.findViewById(R.id.jmui_picture_iv);
+                    holder.location = convertView.findViewById(R.id.jmui_loc_desc);
+                    holder.picture = convertView.findViewById(R.id.jmui_picture_iv);
                     holder.locationView = convertView.findViewById(R.id.location_view);
                     break;
                 case custom:
                 case prompt:
                 case eventNotification:
-                    holder.groupChange = (TextView) convertView.findViewById(R.id.jmui_group_content);
+                    holder.groupChange = convertView.findViewById(R.id.jmui_group_content);
                     break;
             }
             convertView.setTag(holder);

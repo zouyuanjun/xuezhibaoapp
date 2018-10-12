@@ -34,13 +34,16 @@ public class BaseActivity extends AppCompatActivity {
     }
     public void networktimeout(){
         BToast.error(context).text("网络连接超时···").show();
-    };
+    }
+
     public void networkerr(){
         BToast.error(context).text("网络连接失败···").show();
-    };
+    }
+
     public void servererr(){
         BToast.error(context).text("服务器内部错误，正在紧急修复中···").show();
-    };
+    }
+
     public  void finishAllActivity(){
         AtyContainer.getInstance().finishAllActivity();
     }

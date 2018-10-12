@@ -409,10 +409,7 @@ public class TipView extends View {
         if (pointF.y < targetRect.top) {
             return false;
         }
-        if (pointF.y > targetRect.bottom) {
-            return false;
-        }
-        return true;
+        return !(pointF.y > targetRect.bottom);
     }
 
     private void setOnItemClickListener(OnItemClickListener onItemClickListener) {

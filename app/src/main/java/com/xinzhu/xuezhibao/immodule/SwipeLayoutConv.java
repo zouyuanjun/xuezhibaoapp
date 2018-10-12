@@ -44,13 +44,11 @@ public class SwipeLayoutConv extends FrameLayout {
 
     private boolean mSwipeEnabled = true;
 
-    public static enum DragEdge {
-        Left, Right, Top, Bottom;
+    public enum DragEdge {
+        Left, Right, Top, Bottom
     }
 
-    ;
-
-    public static enum ShowMode {
+    public enum ShowMode {
         LayDown, PullOut
     }
 
@@ -77,17 +75,17 @@ public class SwipeLayoutConv extends FrameLayout {
     }
 
     public interface SwipeListener {
-        public void onStartOpen(SwipeLayoutConv layout);
+        void onStartOpen(SwipeLayoutConv layout);
 
-        public void onOpen(SwipeLayoutConv layout);
+        void onOpen(SwipeLayoutConv layout);
 
-        public void onStartClose(SwipeLayoutConv layout);
+        void onStartClose(SwipeLayoutConv layout);
 
-        public void onClose(SwipeLayoutConv layout);
+        void onClose(SwipeLayoutConv layout);
 
-        public void onUpdate(SwipeLayoutConv layout, int leftOffset, int topOffset);
+        void onUpdate(SwipeLayoutConv layout, int leftOffset, int topOffset);
 
-        public void onHandRelease(SwipeLayoutConv layout, float xvel, float yvel);
+        void onHandRelease(SwipeLayoutConv layout, float xvel, float yvel);
     }
 
     public void addSwipeListener(SwipeListener l) {
@@ -98,7 +96,7 @@ public class SwipeLayoutConv extends FrameLayout {
         mSwipeListeners.remove(l);
     }
 
-    public static interface SwipeDenier {
+    public interface SwipeDenier {
         /*
          * Called in onInterceptTouchEvent Determines if this swipe event should
          * be denied Implement this interface if you are using views with swipe
@@ -106,7 +104,7 @@ public class SwipeLayoutConv extends FrameLayout {
          *
          * @return true deny false allow
          */
-        public boolean shouldDenySwipe(MotionEvent ev);
+        boolean shouldDenySwipe(MotionEvent ev);
     }
 
     public void addSwipeDenier(SwipeDenier denier) {
@@ -122,8 +120,8 @@ public class SwipeLayoutConv extends FrameLayout {
     }
 
     public interface OnRevealListener {
-        public void onReveal(View child, DragEdge edge, float fraction,
-                             int distance);
+        void onReveal(View child, DragEdge edge, float fraction,
+                      int distance);
     }
 
 
@@ -624,7 +622,7 @@ public class SwipeLayoutConv extends FrameLayout {
      * to support it from API 8.
      */
     public interface OnLayout {
-        public void onLayout(SwipeLayoutConv v);
+        void onLayout(SwipeLayoutConv v);
     }
 
     private List<OnLayout> mOnLayoutListeners;
@@ -1372,7 +1370,7 @@ public class SwipeLayoutConv extends FrameLayout {
     }
 
     public interface DoubleClickListener {
-        public void onDoubleClick(SwipeLayoutConv layout, boolean surface);
+        void onDoubleClick(SwipeLayoutConv layout, boolean surface);
     }
 
     private int dp2px(float dp) {

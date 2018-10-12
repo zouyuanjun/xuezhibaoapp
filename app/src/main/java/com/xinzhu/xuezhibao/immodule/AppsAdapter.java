@@ -50,8 +50,8 @@ public class AppsAdapter extends BaseAdapter {
         if (convertView == null) {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.item_app, null);
-            viewHolder.iv_icon = (ImageView) convertView.findViewById(R.id.iv_icon);
-            viewHolder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+            viewHolder.iv_icon = convertView.findViewById(R.id.iv_icon);
+            viewHolder.tv_name = convertView.findViewById(R.id.tv_name);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

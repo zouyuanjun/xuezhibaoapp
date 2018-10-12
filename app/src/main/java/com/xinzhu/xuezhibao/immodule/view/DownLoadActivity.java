@@ -45,12 +45,12 @@ public class DownLoadActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_down_load);
-        mFileName = (TextView) findViewById(R.id.file_name);
-        mProcess = (TextView) findViewById(R.id.process_num);
-        mProcessBar = (ProgressBar) findViewById(R.id.processbar);
-        mBtnDown = (Button) findViewById(R.id.btn_down);
-        mTv_titleName = (TextView) findViewById(R.id.tv_titleName);
-        mIv_back = (ImageView) findViewById(R.id.iv_back);
+        mFileName = findViewById(R.id.file_name);
+        mProcess = findViewById(R.id.process_num);
+        mProcessBar = findViewById(R.id.processbar);
+        mBtnDown = findViewById(R.id.btn_down);
+        mTv_titleName = findViewById(R.id.tv_titleName);
+        mIv_back = findViewById(R.id.iv_back);
         EventBus.getDefault().register(this);
 
         mFileName.setText(mFileContent.getFileName());

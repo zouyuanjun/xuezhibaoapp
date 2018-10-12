@@ -198,11 +198,11 @@ public class ConversationListController implements View.OnClickListener,
         View v = LayoutInflater.from(context).inflate(
                 IdHelper.getLayout(context, "jmui_dialog_delete_conv"), null);
         dialog.setContentView(v);
-        final LinearLayout deleteLl = (LinearLayout) v.findViewById(IdHelper
+        final LinearLayout deleteLl = v.findViewById(IdHelper
                 .getViewID(context, "jmui_delete_conv_ll"));
-        final LinearLayout top = (LinearLayout) v.findViewById(IdHelper
+        final LinearLayout top = v.findViewById(IdHelper
                 .getViewID(context, "jmui_top_conv_ll"));
-        TextView tv_top = (TextView) v.findViewById(IdHelper.getViewID(context, "tv_conv_top"));
+        TextView tv_top = v.findViewById(IdHelper.getViewID(context, "tv_conv_top"));
         if (isTop) {
             tv_top.setText("会话置顶");
         } else {

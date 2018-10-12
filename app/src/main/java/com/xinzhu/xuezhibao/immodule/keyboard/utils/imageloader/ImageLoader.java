@@ -74,9 +74,8 @@ public class ImageLoader implements ImageBase {
      *
      * @param imageUri
      * @param imageView
-     * @throws IOException
      */
-    protected void displayImageFromFile(String imageUri, ImageView imageView) throws IOException {
+    protected void displayImageFromFile(String imageUri, ImageView imageView) {
         String filePath = Scheme.FILE.crop(imageUri);
         File file = new File(filePath);
         if (!file.exists()) {
@@ -99,9 +98,8 @@ public class ImageLoader implements ImageBase {
      *
      * @param imageUri
      * @param imageView
-     * @throws IOException
      */
-    protected void displayImageFromAssets(String imageUri, ImageView imageView) throws IOException {
+    protected void displayImageFromAssets(String imageUri, ImageView imageView) {
         String filePath = Scheme.ASSETS.crop(imageUri);
         Bitmap bitmap;
         try {
@@ -150,9 +148,8 @@ public class ImageLoader implements ImageBase {
      *
      * @param imageUri
      * @param extra
-     * @throws IOException
      */
-    protected void displayImageFromNetwork(String imageUri, Object extra) throws IOException {
+    protected void displayImageFromNetwork(String imageUri, Object extra) {
     }
 
 
@@ -163,7 +160,7 @@ public class ImageLoader implements ImageBase {
      * @param imageView
      * @throws IOException
      */
-    protected void displayImageFromContent(String imageUri, ImageView imageView) throws FileNotFoundException {
+    protected void displayImageFromContent(String imageUri, ImageView imageView) {
     }
 
     /**
@@ -171,9 +168,8 @@ public class ImageLoader implements ImageBase {
      *
      * @param imageUri
      * @param imageView
-     * @throws IOException
      */
-    protected void displayImageFromOtherSource(String imageUri, ImageView imageView) throws IOException {
+    protected void displayImageFromOtherSource(String imageUri, ImageView imageView) {
     }
 
 }

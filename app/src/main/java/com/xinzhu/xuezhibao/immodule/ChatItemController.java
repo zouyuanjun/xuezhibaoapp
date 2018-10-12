@@ -1227,7 +1227,7 @@ public class ChatItemController {
                             browseDocument(fileName, newPath);
                         } else {
                             final String finalFileName = fileName;
-                            FileHelper.getInstance().copyFile(fileName, path, (Activity) mContext,
+                            FileHelper.getInstance().copyFile(fileName, path, mContext,
                                     new FileHelper.CopyFileCallback() {
                                         @Override
                                         public void copyCallback(Uri uri) {

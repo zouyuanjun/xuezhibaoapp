@@ -64,9 +64,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 
 				if (code.equals("0")){
 					//查询微信号是否注册，如果返回是0则说明已注册，直接跳到主页
-					String data = JSON.parseObject(result).getString("data");;
+					String data = JSON.parseObject(result).getString("data");
 
-					Intent intent=new Intent(activity, MainActivity.class);
+                    Intent intent=new Intent(activity, MainActivity.class);
 					startActivity(intent);
 					activity.finish();
 				}else if(code.equals("-100")){
@@ -104,9 +104,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 			}else {
 				Toast.makeText(activity,"微信功能异常，无法使用", Toast.LENGTH_SHORT).show();
 				finish();
-			};
+			}
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

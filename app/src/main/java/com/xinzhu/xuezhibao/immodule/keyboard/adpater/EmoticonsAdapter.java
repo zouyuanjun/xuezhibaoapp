@@ -84,8 +84,8 @@ public class EmoticonsAdapter<T> extends BaseAdapter {
             viewHolder = new ViewHolder();
             convertView = mInflater.inflate(R.layout.item_emoticon, null);
             viewHolder.rootView = convertView;
-            viewHolder.ly_root = (LinearLayout) convertView.findViewById(R.id.ly_root);
-            viewHolder.iv_emoticon = (ImageView) convertView.findViewById(R.id.iv_emoticon);
+            viewHolder.ly_root = convertView.findViewById(R.id.ly_root);
+            viewHolder.iv_emoticon = convertView.findViewById(R.id.iv_emoticon);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

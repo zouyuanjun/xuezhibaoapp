@@ -245,8 +245,6 @@ public class CommonUtil {
 		showProgressDialog(context, null, dialogMessage);
 	}
 	/**展示加载进度条
-	 * @param dialog Title 标题
-	 * @param dialog Message 信息
 	 */
 	public static void showProgressDialog(final Activity context, final String dialogTitle, final String dialogMessage){
 		if (context == null) {

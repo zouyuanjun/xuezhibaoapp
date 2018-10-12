@@ -46,11 +46,11 @@ public class ChatView extends RelativeLayout {
 
 
     public void initModule(float density, int densityDpi) {
-        mReturnButton = (ImageButton) findViewById(R.id.jmui_return_btn);
-        mGroupNumTv = (TextView) findViewById(R.id.jmui_group_num_tv);
-        mRightBtn = (ImageButton) findViewById(R.id.jmui_right_btn);
-        mChatTitle = (TextView) findViewById(R.id.jmui_title);
-        mAtMeBtn = (Button) findViewById(R.id.jmui_at_me_btn);
+        mReturnButton = findViewById(R.id.jmui_return_btn);
+        mGroupNumTv = findViewById(R.id.jmui_group_num_tv);
+        mRightBtn = findViewById(R.id.jmui_right_btn);
+        mChatTitle = findViewById(R.id.jmui_title);
+        mAtMeBtn = findViewById(R.id.jmui_at_me_btn);
         if (densityDpi <= 160) {
             mChatTitle.setMaxWidth((int)(180 * density + 0.5f));
         }else if (densityDpi <= 240) {
@@ -58,7 +58,7 @@ public class ChatView extends RelativeLayout {
         }else {
             mChatTitle.setMaxWidth((int)(200 * density + 0.5f));
         }
-        mChatListView = (DropDownListView) findViewById(R.id.lv_chat);
+        mChatListView = findViewById(R.id.lv_chat);
 
     }
 

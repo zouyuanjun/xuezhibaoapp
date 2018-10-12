@@ -17,7 +17,7 @@ public class HandleResponseCode {
         Toast toast = new Toast(context);
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(IdHelper.getLayout(context, "jmui_default_toast"), null);
-        TextView content = (TextView) view.findViewById(IdHelper.getViewID(context, "jmui_toast_content_tv"));
+        TextView content = view.findViewById(IdHelper.getViewID(context, "jmui_toast_content_tv"));
         switch (status){
             case 0:
                 break;

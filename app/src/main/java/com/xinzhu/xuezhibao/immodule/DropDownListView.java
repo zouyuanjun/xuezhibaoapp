@@ -112,8 +112,8 @@ public class DropDownListView extends ListView implements OnScrollListener {
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         headerLayout = (RelativeLayout) inflater.inflate(R.layout.jmui_drop_down_list_header, this, false);
-        loading = (ImageView) headerLayout.findViewById(R.id.jmui_loading_img);
-        loadingView = (LinearLayout)headerLayout.findViewById(R.id.loading_view);
+        loading = headerLayout.findViewById(R.id.jmui_loading_img);
+        loadingView = headerLayout.findViewById(R.id.loading_view);
         addHeaderView(headerLayout);
 
         measureHeaderLayout(headerLayout);
@@ -282,7 +282,7 @@ public class DropDownListView extends ListView implements OnScrollListener {
         /**
          * called when header released
          */
-        public void onDropDown();
+        void onDropDown();
     }
 
     /**

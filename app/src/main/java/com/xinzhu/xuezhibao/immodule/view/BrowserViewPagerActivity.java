@@ -110,16 +110,16 @@ public class BrowserViewPagerActivity extends IMBaseActivity {
 
         mContext = this;
         setContentView(R.layout.activity_image_browser);
-        mViewPager = (ImgBrowserViewPager) findViewById(R.id.img_browser_viewpager);
-        returnBtn = (ImageButton) findViewById(R.id.return_btn);
-        mNumberTv = (TextView) findViewById(R.id.number_tv);
-        mSendBtn = (Button) findViewById(R.id.pick_picture_send_btn);
-        titleBarRl = (RelativeLayout) findViewById(R.id.title_bar_rl);
-        checkBoxRl = (RelativeLayout) findViewById(R.id.check_box_rl);
-        mOriginPictureCb = (CheckBox) findViewById(R.id.origin_picture_cb);
-        mTotalSizeTv = (TextView) findViewById(R.id.total_size_tv);
-        mPictureSelectedCb = (CheckBox) findViewById(R.id.picture_selected_cb);
-        mLoadBtn = (Button) findViewById(R.id.load_image_btn);
+        mViewPager = findViewById(R.id.img_browser_viewpager);
+        returnBtn = findViewById(R.id.return_btn);
+        mNumberTv = findViewById(R.id.number_tv);
+        mSendBtn = findViewById(R.id.pick_picture_send_btn);
+        titleBarRl = findViewById(R.id.title_bar_rl);
+        checkBoxRl = findViewById(R.id.check_box_rl);
+        mOriginPictureCb = findViewById(R.id.origin_picture_cb);
+        mTotalSizeTv = findViewById(R.id.total_size_tv);
+        mPictureSelectedCb = findViewById(R.id.picture_selected_cb);
+        mLoadBtn = findViewById(R.id.load_image_btn);
 
         HandlerThread backgroundThread = new HandlerThread("Work on BrowserActivity");
         backgroundThread.start();

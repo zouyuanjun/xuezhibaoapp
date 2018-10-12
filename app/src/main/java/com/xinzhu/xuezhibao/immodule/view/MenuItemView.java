@@ -19,10 +19,10 @@ public class MenuItemView {
     }
 
     public void initModule() {
-        mCreateGroupLl = (LinearLayout) mView.findViewById(R.id.create_group_ll);
-        mAddFriendLl = (LinearLayout) mView.findViewById(R.id.add_friend_with_confirm_ll);
-        mSendMsgLl = (LinearLayout) mView.findViewById(R.id.send_message_ll);
-        mLl_saoYiSao = (LinearLayout) mView.findViewById(R.id.ll_saoYiSao);
+        mCreateGroupLl = mView.findViewById(R.id.create_group_ll);
+        mAddFriendLl = mView.findViewById(R.id.add_friend_with_confirm_ll);
+        mSendMsgLl = mView.findViewById(R.id.send_message_ll);
+        mLl_saoYiSao = mView.findViewById(R.id.ll_saoYiSao);
     }
 
     public void setListeners(View.OnClickListener listener) {

@@ -365,7 +365,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
         if(mFromChatActivity){
             activity.finish();
         }else {
-            RelativeLayout titleRl = (RelativeLayout) activity.findViewById(R.id.title_bar_rl);
+            RelativeLayout titleRl = activity.findViewById(R.id.title_bar_rl);
             WindowManager.LayoutParams attrs = activity.getWindow().getAttributes();
             //如果标题栏，菜单栏可见，单击后隐藏并设置全屏模式
             if(mTitleBarVisible){
@@ -767,7 +767,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 	 * 
 	 * @author Chris Banes
 	 */
-	public static interface OnMatrixChangedListener {
+	public interface OnMatrixChangedListener {
 		/**
 		 * Callback for when the Matrix displaying the Drawable has changed.
 		 * This could be because the View's bounds have changed, or the user has
@@ -784,7 +784,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 	 * 
 	 * @author Chris Banes
 	 */
-	public static interface OnPhotoTapListener {
+	public interface OnPhotoTapListener {
 
 		/**
 		 * A callback to receive where the user taps on a image. You will only
@@ -806,7 +806,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 	 * 
 	 * @author Chris Banes
 	 */
-	public static interface OnViewTapListener {
+	public interface OnViewTapListener {
 
 		/**
 		 * A callback to receive where the user taps on a ImageView. You will

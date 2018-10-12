@@ -118,13 +118,15 @@ public abstract class LazyLoadFragment extends Fragment {
     }
     public void networktimeout(){
         BToast.error(getContext()).text("网络连接超时···").show();
-    };
+    }
+
     public void networkerr(){
         BToast.error(getContext()).text("网络连接失败···").show();
-    };
+    }
+
     public void servererr(){
         BToast.error(getContext()).text("服务器内部错误，正在紧急修复中···").show();
-    };
+    }
 
 
 }

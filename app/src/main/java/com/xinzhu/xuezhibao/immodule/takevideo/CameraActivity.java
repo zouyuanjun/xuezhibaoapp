@@ -132,15 +132,15 @@ public class CameraActivity extends AppCompatActivity implements View.OnClickLis
 
 
     private void initView() {
-        mTextureView = (TextureView) findViewById(R.id.mTextureView);
-        mCameraView = (CameraView) findViewById(R.id.mCameraView);
-        mProgressbar = (CameraProgressBar) findViewById(R.id.mProgressbar);
-        rl_camera = (RelativeLayout) findViewById(R.id.rl_camera);
-        iv_close = (ImageView) findViewById(R.id.iv_close);
-        iv_choice = (ImageView) findViewById(R.id.iv_choice);
-        iv_facing = (ImageView) findViewById(R.id.iv_facing);
-        tv_flash = (TextView) findViewById(R.id.tv_flash);
-        mTv_tack = (TextView) findViewById(R.id.tv_tack);
+        mTextureView = findViewById(R.id.mTextureView);
+        mCameraView = findViewById(R.id.mCameraView);
+        mProgressbar = findViewById(R.id.mProgressbar);
+        rl_camera = findViewById(R.id.rl_camera);
+        iv_close = findViewById(R.id.iv_close);
+        iv_choice = findViewById(R.id.iv_choice);
+        iv_facing = findViewById(R.id.iv_facing);
+        tv_flash = findViewById(R.id.tv_flash);
+        mTv_tack = findViewById(R.id.tv_tack);
         iv_close.setOnClickListener(this);
         iv_choice.setOnClickListener(this);
         iv_facing.setOnClickListener(this);

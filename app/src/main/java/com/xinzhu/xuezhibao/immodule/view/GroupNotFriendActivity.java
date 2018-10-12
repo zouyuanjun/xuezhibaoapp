@@ -136,22 +136,22 @@ public class GroupNotFriendActivity extends IMBaseActivity implements View.OnCli
     }
 
     private void initView() {
-        mReturnBtn = (ImageButton) findViewById(R.id.return_btn);
-        mIvMore = (ImageView) findViewById(R.id.iv_more);
-        mIv_friendPhoto = (ImageView) findViewById(R.id.iv_friendPhoto);
-        mTv_noteName = (TextView) findViewById(R.id.tv_nickName);
-        mTv_sign = (TextView) findViewById(R.id.tv_sign);
-        mTv_userName = (TextView) findViewById(R.id.tv_userName);
-        mTv_gender = (TextView) findViewById(R.id.tv_gender);
-        mTv_birthday = (TextView) findViewById(R.id.tv_birthday);
-        mTv_address = (TextView) findViewById(R.id.tv_address);
-        mBtn_add_friend = (Button) findViewById(R.id.btn_add_friend);
-        mBtn_send_message = (Button) findViewById(R.id.btn_send_message);
-        mRl_NickName = (RelativeLayout) findViewById(R.id.rl_nickName);
-        mTv_NickName = (TextView) findViewById(R.id.tv_nick);
+        mReturnBtn = findViewById(R.id.return_btn);
+        mIvMore = findViewById(R.id.iv_more);
+        mIv_friendPhoto = findViewById(R.id.iv_friendPhoto);
+        mTv_noteName = findViewById(R.id.tv_nickName);
+        mTv_sign = findViewById(R.id.tv_sign);
+        mTv_userName = findViewById(R.id.tv_userName);
+        mTv_gender = findViewById(R.id.tv_gender);
+        mTv_birthday = findViewById(R.id.tv_birthday);
+        mTv_address = findViewById(R.id.tv_address);
+        mBtn_add_friend = findViewById(R.id.btn_add_friend);
+        mBtn_send_message = findViewById(R.id.btn_send_message);
+        mRl_NickName = findViewById(R.id.rl_nickName);
+        mTv_NickName = findViewById(R.id.tv_nick);
 
-        mTv_additionalMsg = (TextView) findViewById(R.id.tv_additionalMsg);
-        mLl_additional = (LinearLayout) findViewById(R.id.ll_additional);
+        mTv_additionalMsg = findViewById(R.id.tv_additionalMsg);
+        mLl_additional = findViewById(R.id.ll_additional);
 
         mBtn_add_friend.setOnClickListener(this);
         mBtn_send_message.setOnClickListener(this);

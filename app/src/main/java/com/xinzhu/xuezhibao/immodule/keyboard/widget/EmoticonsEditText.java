@@ -84,7 +84,7 @@ public class EmoticonsEditText extends RichEditText {
     }
 
     public void removedEmoticonFilter(EmoticonFilter emoticonFilter){
-        if(mFilterList != null && mFilterList.contains(emoticonFilter)){
+        if(mFilterList != null){
             mFilterList.remove(emoticonFilter);
         }
     }

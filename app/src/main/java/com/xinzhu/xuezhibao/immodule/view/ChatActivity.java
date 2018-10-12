@@ -171,7 +171,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
         mHeight = dm.heightPixels;
         mRatio = Math.min((float) mWidth / 720, (float) mHeight / 1280);
         mAvatarSize = (int) (50 * mDensity);
-        mChatView = (ChatView) findViewById(R.id.chat_view);
+        mChatView = findViewById(R.id.chat_view);
         mChatView.initModule(mDensity, mDensityDpi);
 
         this.mWindow = getWindow();

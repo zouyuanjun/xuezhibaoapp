@@ -15,6 +15,7 @@ import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
 import com.xinzhu.xuezhibao.presenter.LoginPresenter;
 import com.xinzhu.xuezhibao.view.interfaces.LoginInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.utils.CommonUtil;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StringUtil;
 
@@ -77,6 +78,7 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
                 startActivity(new Intent(context,SignActivity.class));
                 break;
             case R.id.imb_wxsign:
+                CommonUtil.call(this,"18702508050");
                 break;
             case R.id.bt_forgetpassword:
                 startActivity(new Intent(context,ForgetPasswordActivity.class));

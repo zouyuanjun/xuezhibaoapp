@@ -244,12 +244,12 @@ public class RecordVoiceButton extends Button {
         }
         recordIndicator = new Dialog(getContext(), IdHelper.getStyle(mContext, "jmui_record_voice_dialog"));
         recordIndicator.setContentView(R.layout.jmui_dialog_record_voice);
-        mVolumeIv = (ImageView) recordIndicator.findViewById(R.id.jmui_volume_hint_iv);
-        mRecordHintTv = (TextView) recordIndicator.findViewById(R.id.jmui_record_voice_tv);
-        mVoiceTime = (Chronometer) recordIndicator.findViewById(R.id.voice_time);
+        mVolumeIv = recordIndicator.findViewById(R.id.jmui_volume_hint_iv);
+        mRecordHintTv = recordIndicator.findViewById(R.id.jmui_record_voice_tv);
+        mVoiceTime = recordIndicator.findViewById(R.id.voice_time);
 
-        mTimeDown = (TextView) recordIndicator.findViewById(R.id.time_down);
-        mMicShow = (LinearLayout) recordIndicator.findViewById(R.id.mic_show);
+        mTimeDown = recordIndicator.findViewById(R.id.time_down);
+        mMicShow = recordIndicator.findViewById(R.id.mic_show);
 
         mRecordHintTv.setText(mContext.getString(R.string.jmui_move_to_cancel_hint));
         startRecording();

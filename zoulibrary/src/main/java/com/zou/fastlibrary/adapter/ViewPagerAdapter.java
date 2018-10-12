@@ -26,7 +26,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
       return fragmentList.get(position);
   }
   public interface Viewpageposition{
-      public void sendposition(int position);
+      void sendposition(int position);
   }
   private Viewpageposition pagelistener;
   public void setpagelistener( Viewpageposition pagelistener){

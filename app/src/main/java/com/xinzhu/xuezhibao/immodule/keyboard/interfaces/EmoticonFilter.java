@@ -42,7 +42,7 @@ public abstract class EmoticonFilter {
         }
 
         try {
-            return Build.VERSION.SDK_INT >= 21 ? context.getResources().getDrawable(resID, (Resources.Theme) null) : context.getResources().getDrawable(resID);
+            return Build.VERSION.SDK_INT >= 21 ? context.getResources().getDrawable(resID, null) : context.getResources().getDrawable(resID);
         } catch (Exception var4) {
             var4.printStackTrace();
             return null;
@@ -54,7 +54,7 @@ public abstract class EmoticonFilter {
             return null;
         }
         try {
-            return Build.VERSION.SDK_INT >= 21 ? context.getResources().getDrawable(emoticon, (Resources.Theme) null) : context.getResources().getDrawable(emoticon);
+            return Build.VERSION.SDK_INT >= 21 ? context.getResources().getDrawable(emoticon, null) : context.getResources().getDrawable(emoticon);
         } catch (Exception var4) {
             var4.printStackTrace();
             return null;

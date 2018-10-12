@@ -120,7 +120,7 @@ public class NativeImageLoader {
                 @Override
                 public void run() {
                     //先获取图片的缩略图
-                    Bitmap mBitmap = decodeThumbBitmapForFile(path, point.x == 0 ? 0 : point.x, point.y == 0 ? 0 : point.y);
+                    Bitmap mBitmap = decodeThumbBitmapForFile(path, point.x, point.y);
                     Message msg = mHander.obtainMessage();
                     msg.obj = mBitmap;
                     mHander.sendMessage(msg);

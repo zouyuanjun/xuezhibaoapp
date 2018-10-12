@@ -459,11 +459,8 @@ public class StringUtil {
 	public boolean isContainChinese(String str) {
 		Pattern pattern = Pattern.compile("[\u4e00-\u9fa5]");
 		Matcher matcher = pattern.matcher(str);
-		if (matcher.find()) {
-			return true;
-		}
-		return false;
-	}
+        return matcher.find();
+    }
 
 
 

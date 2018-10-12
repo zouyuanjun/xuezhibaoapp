@@ -53,7 +53,7 @@ public class FileHelper {
 
 
     public interface CopyFileCallback {
-        public void copyCallback(Uri uri);
+        void copyCallback(Uri uri);
     }
 
     public void copyFile(final String fileName, final String filePath, final Activity context,
