@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             style="@style/activity_page" >
+
+    <LinearLayout
+        style="@style/ll_vertical_match_match"
+        android:baselineAligned="false" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white_alpha_6" >
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="          " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="扫一扫"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <SurfaceView
+                android:id="@+id/svCameraScan"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center" />
+
+
+            <LinearLayout
+                style="@style/ll_vertical_match_match"
+                android:layout_gravity="center_horizontal"
+                >
+
+                <TextView
+                    android:textSize="15sp"
+                    android:layout_margin="30dp"
+                    android:text="将取景框对准二维码\n即可自动扫描"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            style="@style/ll_horizontal_match_wrap"
+            android:layout_gravity="bottom"
+            android:background="@color/white_alpha_6"
+            android:gravity="center" >
+
+            <LinearLayout
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="12dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="4dp" >
+
+                <ImageButton
+                    android:onClick="onReturnClick"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/camera_choice"
+                    android:padding="12dp"
+                    android:src="@drawable/camera_facing" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="返回" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="12dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="4dp" >
+
+                <ImageButton
+                    android:id="@+id/ivCameraScanLight"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/ic_done_white"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_check_white_18dp" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="开灯/关灯" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_margin="12dp"
+                android:paddingBottom="4dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="4dp" >
+
+                <ImageButton
+                  android:id="@+id/imb_back"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/white_btn_selector"
+                    android:padding="12dp"
+                    android:src="@drawable/add_friend" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="我的名片" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <!-- 必须在最外层，且不能指定宽高，否则扫描解析成功率很低 -->
+    <com.zxing.view.ViewfinderView
+        android:id="@+id/vfvCameraScan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</FrameLayout>

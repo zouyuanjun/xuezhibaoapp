@@ -20,9 +20,9 @@
     <me.majiajie.pagerbottomtabstrip.PageNavigationView
         android:id="@+id/basebottomtab"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/blue_sky"
+        android:background="@color/white"
         />
 
 </LinearLayout>

@@ -6,51 +6,73 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/ed_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="120dp"
-        android:ems="10"
-        android:inputType="phone"
-        android:text="1234567"
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        android:background="@drawable/shape_yuan_44_f2f2f2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="22dp"
+            android:background="@color/appcolor"/>
+        <EditText
+            android:id="@+id/ed_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="textPassword"
+            android:background="@color/transparent"
+            android:paddingLeft="16dp"
+            android:textColor="#999999"
+            android:textSize="15sp"
+            android:hint="请输入密码"
+             />
+    </LinearLayout>
 
-    <EditText
-        android:text="123456"
-        android:id="@+id/ed_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_phone" />
-
-    <Button
+    <com.zou.fastlibrary.ui.ShapeCornerBgView
         android:id="@+id/bt_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="30dp"
         android:text="登陆"
+        android:textColor='#ffffff'
+        android:textSize="15sp"
+        app:appBgColor='@color/appcolor'
+        app:appRadius='90dp'
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_password" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"></com.zou.fastlibrary.ui.ShapeCornerBgView>
 
     <Button
         android:id="@+id/bt_sign"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="注册"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:text="快速注册"
+        android:background="@color/transparent"
+        android:textSize="15sp"
+        android:textColor="@color/appcolor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/bt_login"
-        app:layout_constraintTop_toTopOf="@+id/bt_login" />
+        app:layout_constraintTop_toBottomOf="@+id/bt_login" />
 
     <ImageButton
+        android:visibility="gone"
         android:id="@+id/imb_wxsign"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -64,11 +86,63 @@
         android:id="@+id/bt_forgetpassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:text="忘记密码"
+        android:textSize="15sp"
+        android:background="@color/transparent"
         app:layout_constraintEnd_toStartOf="@+id/bt_login"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/bt_login" />
+        app:layout_constraintTop_toBottomOf="@+id/bt_login" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/appcolor" />
+
+    <LinearLayout
+        android:background="@drawable/shape_yuan_44_f2f2f2"
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="22dp"
+            android:background="@color/appcolor"/>
+
+        <com.zou.fastlibrary.ui.ClearWriteEditText
+            android:id="@+id/ed_phone"
+            android:layout_height="44dp"
+            android:layout_width="match_parent"
+            android:inputType="phone"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textSize="15sp"
+            android:hint="请输入手机号"
+            android:textColor="#999999"
+            android:background="@color/transparent"
+            app:edBgColor="#00000000"
+            app:edRadius='50dp'
+           />
+    </LinearLayout>
+
+
 </android.support.constraint.ConstraintLayout>

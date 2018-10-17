@@ -169,5 +169,32 @@
         <item name="android:src">@drawable/jmui_head_icon</item>
         <item name="android:scaleType">fitXY</item>
     </style>
+    <style name="activity_page">
+        <item name="android:splitMotionEvents">false</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:background">#f7f8f8</item>
+        <item name="android:orientation">vertical</item>
+        <!-- 状态栏沉浸 <<<<<<<<<<<<<<<<< -->
+        <item name="android:clipToPadding">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <!-- 状态栏沉浸 >>>>>>>>>>>>>>>>> -->
+    </style>
+    <style name="match_wrap">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="ll_horizontal_match_wrap" parent="match_wrap">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <style name="ll_vertical_match_match" parent="match_match">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="match_match">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
 
 </resources>

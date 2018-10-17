@@ -9,11 +9,10 @@ public class SignBean {
     public SignBean() {
     }
 
-    public SignBean(String phone, String password, String code, String name) {
+    public SignBean(String phone, String password, String code) {
         this.phone = phone;
         this.password = password;
         this.code = code;
-        this.name = name;
     }
 
     public String getPhone() {

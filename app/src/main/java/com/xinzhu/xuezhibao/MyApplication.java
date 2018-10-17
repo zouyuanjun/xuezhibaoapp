@@ -3,6 +3,7 @@ package com.xinzhu.xuezhibao;
 import android.app.Application;
 
 import com.bravin.btoast.BToast;
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -14,6 +15,10 @@ public class MyApplication  extends Application{
     public void onCreate() {
         super.onCreate();
         Bugly.init(getApplicationContext(), "15d797d434", false);
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
         JPushInterface.setDebugMode(true);
         JMessageClient.init(this,true);
         JPushInterface.init(this);
