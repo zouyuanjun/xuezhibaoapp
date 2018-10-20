@@ -89,12 +89,7 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
                 startActivity(new Intent(context,SignActivity.class));
                 break;
             case R.id.imb_wxsign:
-                if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
-                        != PackageManager.PERMISSION_GRANTED) ) {
-                    EasyPermissions.requestPermissions(this, "需要获取打电话权限才能打电话哦", 1, Manifest.permission.CALL_PHONE);
-                } else {
-                    CommonUtil.call(this,"18702508050");
-                }
+
 
                 break;
             case R.id.bt_forgetpassword:

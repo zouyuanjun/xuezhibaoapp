@@ -14,14 +14,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:leftTextVisible='false'
         app:midText='注册'
         app:midTextFontColor="#ffffff"
         app:midTextSizeSp="18"
         app:rightImageVisible='false'
         app:rightTextVisible='false'
-        app:titleBarBackground='@color/appcolor'
-        tools:layout_editor_absoluteY="0dp"></com.zou.fastlibrary.ui.CustomNavigatorBar>
+        app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
 
     <EditText
         android:id="@+id/et_phone"

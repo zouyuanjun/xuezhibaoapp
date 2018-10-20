@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
-import com.xinzhu.xuezhibao.bean.VideoBean;
 
 import java.util.List;
 

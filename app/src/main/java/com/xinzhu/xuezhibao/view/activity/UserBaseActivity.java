@@ -33,7 +33,7 @@ public class UserBaseActivity extends TakePhotoActivity {
     @BindView(R.id.sd_myphoto)
     SimpleDraweeView sdMyphoto;
     Activity activity;
-Handler handler=new Handler(){
+    Handler handler=new Handler(){
     @Override
     public void handleMessage(Message msg) {
         super.handleMessage(msg);

@@ -12,16 +12,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.adapter.ArticleListAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeArticleAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeVideoAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.bean.VideoBean;
 import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
 import com.xinzhu.xuezhibao.presenter.HomepagePresenter;
+import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
+import com.xinzhu.xuezhibao.view.activity.ArticleListActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
+import com.xinzhu.xuezhibao.view.activity.SettingActivity;
+import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
 import com.xinzhu.xuezhibao.view.interfaces.HomepageInterface;
 import com.youth.banner.Banner;
@@ -148,6 +152,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             case R.id.ed_search:
                 break;
             case R.id.im_setting:
+                startActivity(new Intent(getContext(),SettingActivity.class));
                 break;
             case R.id.im_message:
                 qBadgeView.setBadgeNumber(0);
@@ -159,15 +164,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 break;
             case R.id.im_more_video:
                 break;
-            case R.id.rv_video:
-                break;
             case R.id.im_more_voice:
                 break;
-            case R.id.rv_voice:
-                break;
             case R.id.im_more_article:
-                break;
-            case R.id.rv_article:
+                startActivity(new Intent(getContext(),ArticleListActivity.class));
                 break;
         }
     }
@@ -194,6 +194,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         rvVideo.setNestedScrollingEnabled(false);
         homeVideoAdapter=new HomeVideoAdapter(getContext(),mDatas);
         rvVideo.setAdapter(homeVideoAdapter);
+
     }
 
     @Override
@@ -205,6 +206,17 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         rvVoice.setNestedScrollingEnabled(false);
         rvVoice.setLayoutManager(linearLayoutManager2);
         rvVoice.setAdapter(homeVideoAdapter);
+        homeVideoAdapter.setOnItemClickListener(new HomeVideoAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startActivity(new Intent(getContext(),VideoDetilsActivity.class));
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
 
     @Override
@@ -216,6 +228,17 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         rvArticle.setNestedScrollingEnabled(false);
         homeArticleAdapter=new HomeArticleAdapter(getActivity(),mDatas);
         rvArticle.setAdapter(homeArticleAdapter);
+        homeArticleAdapter.setOnItemClickListener(new HomeArticleAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startActivity(new Intent(getContext(),ArticleDetilsActivity.class));
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
 
     @Override

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.zou.fastlibrary.ui.CustomNavigatorBar
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftTextVisible='false'
+        app:midText='关于我们'
+        app:midTextFontColor="#ffffff"
+        app:midTextSizeSp="18"
+        app:rightImageVisible='false'
+        app:rightTextVisible='false'
+        app:titleBarBackground='@color/appcolor'>
+
+    </com.zou.fastlibrary.ui.CustomNavigatorBar>
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        app:srcCompat="@mipmap/emoji_0x1f381" />
+
+    <TextView
+        android:id="@+id/tv_appversion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="V1.1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:text="学之本教育是国内领先的线上家庭教育科技公司，其产品研发中心和教育研究中心设立于北京，产品运营中心，教练指导中心，客户服务中心，营销中心与售后服务由江西学树文化传播有限责任公司运营"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_appversion" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:srcCompat="@drawable/address_logo" />
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView9"
+        app:srcCompat="@drawable/address_logo" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout64"
+        android:layout_width="5dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="20dp"
+        android:background="@color/itemfenge"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@+id/imageView9"
+        app:layout_constraintTop_toTopOf="@+id/imageView9">
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:text="42656155656"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout64"
+        app:layout_constraintTop_toTopOf="@+id/imageView9" />
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="江西省南昌市高新区紫阳大道3399号"
+        app:layout_constraintStart_toEndOf="@+id/linearLayout65"
+        app:layout_constraintTop_toTopOf="@+id/imageView11" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout65"
+        android:layout_width="5dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="24dp"
+        android:background="@color/itemfenge"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="@+id/imageView11"
+        app:layout_constraintTop_toTopOf="@+id/imageView11">
+
+    </LinearLayout>
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/mapview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_address">
+
+    </com.baidu.mapapi.map.MapView>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:text="2018经营许可：京ICP备18045999号-1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>
