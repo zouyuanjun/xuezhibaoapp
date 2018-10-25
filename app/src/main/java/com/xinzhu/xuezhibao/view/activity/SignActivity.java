@@ -79,7 +79,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
                 if (StringUtil.isEmpty(phone)) {
                     BToast.error(view.getContext()).text("请填写手机号").show();
                 } else {
-
+                    signPresenter.sendcode(phone);
                 }
                 break;
             case R.id.tv_signup:

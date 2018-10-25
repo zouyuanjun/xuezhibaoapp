@@ -1,7 +1,7 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class SignBean {
-    String phone ;
+    String account;
     String password;
     String code;
     String name;
@@ -10,17 +10,17 @@ public class SignBean {
     }
 
     public SignBean(String phone, String password, String code) {
-        this.phone = phone;
+        this.account = phone;
         this.password = password;
         this.code = code;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getAccount() {
+        return account;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
     public String getPassword() {

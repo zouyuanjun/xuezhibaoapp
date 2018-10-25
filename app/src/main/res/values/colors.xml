@@ -3,9 +3,9 @@
     <color name="appcolor">#f87d28</color>
     <color name="hittextcolor">#999999</color>
     <color name="itemfenge">#e5e5e6</color>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#f87d28</color>
+    <color name="colorPrimaryDark">#f87d28</color>
+    <color name="colorAccent">#f87d28</color>
     <color name="jmui_jpush_blue">#2DD0CF</color>
     <color name="item_click_bg_color">#E9EDED</color>
     <color name="white">#FFFFFF</color>
@@ -26,6 +26,7 @@
 
     <color name="black">#000000</color>
     <color name="color_black_333333">#333333</color>
+    <color name="color_black_666666">#666666</color>
     <color name="color_split_line_d9d9d9">#d9d9d9</color>
     <color name="spilt_line">#CFCFCF</color>
 

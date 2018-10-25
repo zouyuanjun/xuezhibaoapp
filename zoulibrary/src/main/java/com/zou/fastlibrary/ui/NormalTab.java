@@ -38,9 +38,9 @@ public class NormalTab extends BaseTabItem {
 
         LayoutInflater.from(context).inflate(R.layout.item_noamal_tab, this, true);
 
-        mIcon = (ImageView) findViewById(me.majiajie.pagerbottomtabstrip.R.id.icon);
-        mTitle = (TextView) findViewById(me.majiajie.pagerbottomtabstrip.R.id.title);
-        mMessages = (RoundMessageView) findViewById(me.majiajie.pagerbottomtabstrip.R.id.messages);
+        mIcon = (ImageView) findViewById(R.id.icon);
+        mTitle = (TextView) findViewById(R.id.title);
+        mMessages = (RoundMessageView) findViewById(R.id.messages);
     }
 
     /**

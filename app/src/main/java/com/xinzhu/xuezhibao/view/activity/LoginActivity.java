@@ -23,6 +23,7 @@ import com.xinzhu.xuezhibao.view.interfaces.LoginInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
 import com.zou.fastlibrary.utils.CommonUtil;
+import com.zou.fastlibrary.utils.EditTextUtil;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StatusBar;
 import com.zou.fastlibrary.utils.StringUtil;
@@ -68,7 +69,6 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.bt_login:
-                Log.d("登陆");
                 String phone=edPhone.getText().toString();
                 String password=edPassword.getText().toString();
                 if (StringUtil.isEmpty(phone)){
@@ -83,6 +83,7 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
                     BToast.error(context).animate(true).text("密码长度必须大于6位").show();
                     break;
                 }
+                EditTextUtil.hideKeyboard(context,edPassword);
                 login.phonelogin(phone,password);
                 break;
             case R.id.bt_sign:
@@ -117,8 +118,8 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
     }
 
     @Override
-    public void loginfail() {
-
+    public void loginfail(int code) {
+        BToast.error(context).text("错误码："+code+",账号或密码错误").show();
     }
 
     @Override

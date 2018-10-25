@@ -11,6 +11,7 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.view.fragment.HomeFragemt;
 import com.xinzhu.xuezhibao.view.fragment.UserCentreFragment;
+import com.xinzhu.xuezhibao.view.fragment.XuebaoFragment;
 import com.zou.fastlibrary.activity.BaseTabActivity;
 import com.zou.fastlibrary.utils.EditTextUtil;
 import com.zou.fastlibrary.utils.StatusBar;
@@ -37,21 +38,21 @@ public class MainActivity extends BaseTabActivity {
         tabTextlist.add("学宝");
         tabTextlist.add("测评");
         tabTextlist.add("我的");
-        iocdef.add(R.drawable.bg_btn_nor);
-        iocdef.add(R.drawable.bg_btn_nor);
-        iocdef.add(R.drawable.bg_btn_nor);
-        iocdef.add(R.drawable.bg_btn_nor);
-        iocdef.add(R.drawable.bg_btn_nor);
-        iocsel.add(R.drawable.add_friend);
-        iocsel.add(R.drawable.add_friend);
-        iocsel.add(R.drawable.add_friend);
-        iocsel.add(R.drawable.add_friend);
-        iocsel.add(R.drawable.add_friend);
+        iocdef.add(R.drawable.tab_btn_home_nor);
+        iocdef.add(R.drawable.tab_btn_study_nor);
+        iocdef.add(R.drawable.tab_btn_video_nor);
+        iocdef.add(R.drawable.tab_btn_evaluation_nor);
+        iocdef.add(R.drawable.tab_btn_my_nor);
+        iocsel.add(R.drawable.tab_btn_home_sel);
+        iocsel.add(R.drawable.tab_btn_study_sel);
+        iocsel.add(R.drawable.tab_btn_video_sel);
+        iocsel.add(R.drawable.tab_btn_evaluation_sel);
+        iocsel.add(R.drawable.tab_btn_my_sel);
 
         creatNormalTab(iocdef,iocsel,tabTextlist);
         fragmentList.add(new HomeFragemt());
         fragmentList.add(new HomeFragemt());
-        fragmentList.add(new HomeFragemt());
+        fragmentList.add(new XuebaoFragment());
         fragmentList.add(new HomeFragemt());
         fragmentList.add(new UserCentreFragment());
         setViewPagerAdaptr(fragmentList);
@@ -60,8 +61,6 @@ public class MainActivity extends BaseTabActivity {
                 != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
                 != PackageManager.PERMISSION_GRANTED)) {
             EasyPermissions.requestPermissions(this, "允许必要权限才可以正常使用哦", 1, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-
         }
     }
 }

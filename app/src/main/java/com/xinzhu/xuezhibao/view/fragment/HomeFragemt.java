@@ -17,15 +17,18 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ArticleListAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeArticleAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeVideoAdapter;
+import com.xinzhu.xuezhibao.adapter.HomeVoiceAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.bean.VideoBean;
 import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
 import com.xinzhu.xuezhibao.presenter.HomepagePresenter;
+import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.ArticleListActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SettingActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
+import com.xinzhu.xuezhibao.view.activity.VoiceDetilsActivity;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
 import com.xinzhu.xuezhibao.view.interfaces.HomepageInterface;
 import com.youth.banner.Banner;
@@ -81,6 +84,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     RecyclerView rvArticle;
     HomeVideoAdapter homeVideoAdapter;
     HomeArticleAdapter homeArticleAdapter;
+    HomeVoiceAdapter homeVoiceAdapter;
 
 
     @Override
@@ -143,8 +147,9 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         Log.d("收到l一条消息" + messagecount);
     }
 
-    @OnClick({R.id.im_scan, R.id.ed_search, R.id.im_setting, R.id.im_message, R.id.banner, R.id.im_test, R.id.im_more_video, R.id.rv_video, R.id.im_more_voice, R.id.rv_voice, R.id.im_more_article, R.id.rv_article})
+    @OnClick({R.id.im_scan, R.id.ed_search, R.id.im_setting, R.id.im_message, R.id.banner, R.id.im_test, R.id.ll_more_video, R.id.rv_video, R.id.ll_more_voice, R.id.rv_voice, R.id.ll_more_article, R.id.rv_article})
     public void onViewClicked(View view) {
+
         switch (view.getId()) {
             case R.id.im_scan:
                 startScanQR();
@@ -162,12 +167,20 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 break;
             case R.id.im_test:
                 break;
-            case R.id.im_more_video:
+            case R.id.ll_more_video:
+                Intent intent=new Intent(getContext(),ArticleListActivity.class);
+                intent.putExtra("TYPE",1);
+                startActivity(intent);
                 break;
-            case R.id.im_more_voice:
+            case R.id.ll_more_voice:
+                Intent intent2=new Intent(getContext(),ArticleListActivity.class);
+                intent2.putExtra("TYPE",2);
+                startActivity(intent2);
                 break;
-            case R.id.im_more_article:
-                startActivity(new Intent(getContext(),ArticleListActivity.class));
+            case R.id.ll_more_article:
+                Intent intent3=new Intent(getContext(),ArticleListActivity.class);
+                intent3.putExtra("TYPE",3);
+                startActivity(intent3);
                 break;
         }
     }
@@ -194,18 +207,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         rvVideo.setNestedScrollingEnabled(false);
         homeVideoAdapter=new HomeVideoAdapter(getContext(),mDatas);
         rvVideo.setAdapter(homeVideoAdapter);
-
-    }
-
-    @Override
-    public void getVoicedata(List<VideoBean> mDatas) {
-
-        //初始化音频列表
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
-        linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rvVoice.setNestedScrollingEnabled(false);
-        rvVoice.setLayoutManager(linearLayoutManager2);
-        rvVoice.setAdapter(homeVideoAdapter);
         homeVideoAdapter.setOnItemClickListener(new HomeVideoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -220,7 +221,30 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     }
 
     @Override
-    public void getArticle(List<ArticleBean> mDatas) {
+    public void getVoicedata(List<VideoBean> mDatas) {
+
+        //初始化音频列表
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
+        linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvVoice.setNestedScrollingEnabled(false);
+        rvVoice.setLayoutManager(linearLayoutManager2);
+        homeVoiceAdapter=new HomeVoiceAdapter(getContext(),mDatas);
+        rvVoice.setAdapter(homeVoiceAdapter);
+        homeVoiceAdapter.setOnItemClickListener(new HomeVoiceAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startActivity(new Intent(getContext(),VoiceDetilsActivity.class));
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+    }
+
+    @Override
+    public void getArticle(final List<ArticleBean> mDatas) {
         //初始化文章列表
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
@@ -231,7 +255,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         homeArticleAdapter.setOnItemClickListener(new HomeArticleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(),ArticleDetilsActivity.class));
+                String id=mDatas.get(position).getArticleId();
+                Intent intent=new Intent(getActivity(),ArticleDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ARTICLE_ID,id);
+                getActivity().startActivity(intent);
             }
 
             @Override

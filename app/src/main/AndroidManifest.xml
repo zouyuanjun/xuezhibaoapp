@@ -38,7 +38,7 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="YxWBs3f5mKeBcVnpWoiEd9lWOxUN4uqS"></meta-data>
         <activity
-            android:name=".view.activity.LoginActivity"
+            android:name=".view.activity.MainActivity"
             android:label="@string/app_name"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait">
@@ -50,8 +50,8 @@
 
         </activity>
         <activity android:name=".view.activity.SignActivity"></activity>
-        <activity android:name=".view.activity.MainActivity"
-            android:windowSoftInputMode="stateHidden"></activity>
+        <!--<activity android:name=".view.activity.MainActivity"-->
+            <!--android:windowSoftInputMode="stateHidden"></activity>-->
         <activity android:name=".view.activity.WXSignActivity"></activity>
         <activity android:name=".immodule.view.ConversationListActivity"></activity>
         <activity android:name=".immodule.view.SearchForAddFriendActivity"></activity>
@@ -78,6 +78,10 @@
         <activity android:name=".view.activity.FeedbackActivity" />
         <activity android:name=".view.activity.VideoDetilsActivity" />
         <activity android:name=".view.activity.VoiceDetilsActivity" />
+        <activity android:name=".view.activity.JiajiaoActivity" />
+        <activity android:name=".view.activity.XuekeActivity" />
+        <activity android:name=".view.activity.AllCourseActivity" />
+        <activity android:name=".view.activity.SendCommentActivity" />
 
         <provider
             android:name="com.xinzhu.xuezhibao.utils.MyFileProvider"

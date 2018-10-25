@@ -1,57 +1,61 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class CommentBean {
-    String imurl;
-    String username;
-    String dianzan;
-    String creattime;
-    String commentdetils;
+    String abcimurl;
+    String creater;
+    String createTime;
+    String commentContent;
+    String commentId;
+    String productId;
 
-    public CommentBean(String imurl, String username, String dianzan, String creattime, String commentdetils) {
-        this.imurl = imurl;
-        this.username = username;
-        this.dianzan = dianzan;
-        this.creattime = creattime;
-        this.commentdetils = commentdetils;
+    public CommentBean() {
     }
 
-    public String getImurl() {
-        return imurl;
+    public String getAbcimurl() {
+        return abcimurl;
     }
 
-    public void setImurl(String imurl) {
-        this.imurl = imurl;
+    public void setAbcimurl(String abcimurl) {
+        this.abcimurl = abcimurl;
     }
 
-    public String getUsername() {
-        return username;
+    public String getCreater() {
+        return creater;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setCreater(String creater) {
+        this.creater = creater;
     }
 
-    public String getDianzan() {
-        return dianzan;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setDianzan(String dianzan) {
-        this.dianzan = dianzan;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public String getCreattime() {
-        return creattime;
+    public String getCommentContent() {
+        return commentContent;
     }
 
-    public void setCreattime(String creattime) {
-        this.creattime = creattime;
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
     }
 
-    public String getCommentdetils() {
-        return commentdetils;
+    public String getCommentId() {
+        return commentId;
     }
 
-    public void setCommentdetils(String commentdetils) {
-        this.commentdetils = commentdetils;
+    public void setCommentId(String commentId) {
+        this.commentId = commentId;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 }

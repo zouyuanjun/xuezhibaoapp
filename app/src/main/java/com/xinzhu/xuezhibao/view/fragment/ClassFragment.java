@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,8 +14,11 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ArticleListAdapter;
+import com.xinzhu.xuezhibao.adapter.VideoVoiceListAdapter;
 import com.xinzhu.xuezhibao.bean.ItemBean;
+import com.zou.fastlibrary.utils.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +29,11 @@ import butterknife.Unbinder;
 public class ClassFragment extends LazyLoadFragment {
     @BindView(R.id.rv_item)
     RecyclerView rvItem;
-    ArticleListAdapter articleListAdapter;
+    VideoVoiceListAdapter adapter;
     Unbinder unbinder;
+    static String TITLE="type";
+    int TYPE=-2;
+    int POSITION=-1;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
 
@@ -34,14 +41,20 @@ public class ClassFragment extends LazyLoadFragment {
     protected int setContentView() {
         return R.layout.fragment_class;
     }
-
+    public static ClassFragment newInstance(int type) {
+        ClassFragment tabFragment = new ClassFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(TITLE, type);
+        tabFragment.setArguments(bundle);
+        return tabFragment;
+    }
     @Override
     protected void lazyLoad() {
-        articleListAdapter = new ArticleListAdapter(getContext(), initdata());
+        adapter = new VideoVoiceListAdapter(new WeakReference(getContext()), initdata());
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvItem.setLayoutManager(linearLayoutManager3);
-        rvItem.setAdapter(articleListAdapter);
+        rvItem.setAdapter(adapter);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -63,7 +76,15 @@ public class ClassFragment extends LazyLoadFragment {
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
-
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            TYPE = getArguments().getInt("TYPE");
+            POSITION=getArguments().getInt("POSITION");
+        }
+        Log.d("类型"+TYPE+POSITION);
+    }
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -73,7 +94,7 @@ public class ClassFragment extends LazyLoadFragment {
 
     public List<ItemBean> initdata() {
         List<ItemBean> list = new ArrayList<>();
-        String url = "http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg";
+        String url = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
         String title = "哈哈哈这是什么和水水水水";
         ItemBean itemBean = new ItemBean(url, title, "225", "2553", "2018.254", 1);
         list.add(itemBean);

@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,6 +14,7 @@ public class ListViewPageAdapter extends FragmentPagerAdapter {
      * The m fragment list.
      */
     private List<Fragment> mFragmentList = null;
+    int TYPE=-1;
 
     private String[] titles;
 
@@ -34,10 +36,11 @@ public class ListViewPageAdapter extends FragmentPagerAdapter {
      * @param fragmentList
      * @param titles
      */
-    public ListViewPageAdapter(FragmentManager mFragmentManager,List<Fragment> fragmentList, String[] titles) {
+    public ListViewPageAdapter(FragmentManager mFragmentManager,List<Fragment> fragmentList, String[] titles,int type) {
         super(mFragmentManager);
         mFragmentList = fragmentList;
         this.titles = titles;
+        this.TYPE=type;
     }
 
     /**
@@ -67,6 +70,10 @@ public class ListViewPageAdapter extends FragmentPagerAdapter {
         } else {
             fragment = mFragmentList.get(0);
         }
+        Bundle bundle = new Bundle();
+        bundle.putInt("POSITION",position);
+        bundle.putInt("TYPE",TYPE);
+        fragment.setArguments(bundle);
         return fragment;
     }
 

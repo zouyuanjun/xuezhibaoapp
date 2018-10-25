@@ -1,6 +1,6 @@
 package com.xinzhu.xuezhibao.view.interfaces;
 
-public interface LoginInterface {
+public interface LoginInterface extends publiceviewinterface{
     void loginsuccessful();
-    void loginfail();
+    void loginfail(int code);
 }

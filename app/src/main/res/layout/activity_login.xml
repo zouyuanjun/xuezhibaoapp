@@ -26,7 +26,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="22dp"
-            android:background="@color/appcolor"/>
+            android:background="@drawable/login_icon_code"/>
         <EditText
             android:id="@+id/ed_password"
             android:layout_width="match_parent"
@@ -107,7 +107,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@color/appcolor" />
+        android:background="@drawable/login_bg" />
 
     <LinearLayout
         android:background="@drawable/shape_yuan_44_f2f2f2"
@@ -128,7 +128,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginLeft="22dp"
-            android:background="@color/appcolor"/>
+            android:background="@drawable/login_icon_user"/>
 
         <com.zou.fastlibrary.ui.ClearWriteEditText
             android:id="@+id/ed_phone"
@@ -145,6 +145,16 @@
             app:edRadius='50dp'
            />
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="116dp"
+        android:layout_height="116dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/login_icon_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </android.support.constraint.ConstraintLayout>

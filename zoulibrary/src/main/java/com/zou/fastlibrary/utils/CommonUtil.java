@@ -40,10 +40,13 @@ import android.graphics.PorterDuff.Mode;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.zou.fastlibrary.R;
+
+import static android.content.Context.TELEPHONY_SERVICE;
 
 /**通用操作类
  * @author Lemon
@@ -458,6 +461,15 @@ public class CommonUtil {
 			return PackageManager.PERMISSION_GRANTED == context.getPackageManager().checkPermission(name, context.getPackageName());
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+		return false;
+	}
+
+	public static boolean isWifi(Context mContext) {
+		ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+		if (activeNetInfo != null && activeNetInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+			return true;
 		}
 		return false;
 	}

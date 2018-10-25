@@ -13,6 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.util.List;
 
@@ -42,12 +43,11 @@ public class CommentAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvCreattime.setText(mDatas.get(position).getCreattime());
-        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getDianzan());
-        ((MyViewHolder) holder).tvCommentDetils.setText(mDatas.get(position).getCommentdetils());
-        ((MyViewHolder) holder).tv_userName.setText(mDatas.get(position).getUsername());
-        ((MyViewHolder) holder).sdvPhoto.setImageURI(mDatas.get(position).getImurl());
-
+        ((MyViewHolder) holder).tvCreattime.setText(TimeUtil.getWholeTime2(Long.parseLong(mDatas.get(position).getCreateTime())));
+        ((MyViewHolder) holder).tvCommentDetils.setText(mDatas.get(position).getCommentContent());
+        ((MyViewHolder) holder).tv_userName.setText(mDatas.get(position).getCreater());
+        ((MyViewHolder) holder).sdvPhoto.setImageURI(mDatas.get(position).getAbcimurl());
+        Log.d("加载一条数据");
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

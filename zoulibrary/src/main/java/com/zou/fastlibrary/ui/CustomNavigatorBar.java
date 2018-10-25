@@ -42,7 +42,7 @@ public class CustomNavigatorBar extends RelativeLayout implements View.OnClickLi
 //        initTwoType(context, attrs);//第二种初始化
     }
 
-    private void iniView(Context context) {
+    private void iniView(final Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_customtoolbar, this, true);
         leftImage = (ImageView) view.findViewById(R.id.left_image);
         leftText = (TextView) view.findViewById(R.id.left_text);

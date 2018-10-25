@@ -1,37 +1,96 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class ArticleBean {
-    String imurl;
-    String title;
-    String readnum;
+    String articlePicture;
+    String articleTitle;
+    String articleRead;
+    String articleContent;
+    String articleLike;
+    String articleId;
+    String createTime;
+    String creater;
+
+    public ArticleBean() {
+    }
 
     public ArticleBean(String imurl, String title, String readnum) {
-        this.imurl = imurl;
-        this.title = title;
-        this.readnum = readnum;
+        this.articlePicture = imurl;
+        this.articleTitle = title;
+        this.articleRead = readnum;
     }
 
-    public String getImurl() {
-        return imurl;
+    public ArticleBean(String articlePicture, String articleTitle, String articleRead, String articleContent, String articleLike, String articleId, String createTime, String creater) {
+        this.articlePicture = articlePicture;
+        this.articleTitle = articleTitle;
+        this.articleRead = articleRead;
+        this.articleContent = articleContent;
+        this.articleLike = articleLike;
+        this.articleId = articleId;
+        this.createTime = createTime;
+        this.creater = creater;
     }
 
-    public void setImurl(String imurl) {
-        this.imurl = imurl;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public String getTitle() {
-        return title;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getCreater() {
+        return creater;
     }
 
-    public String getReadnum() {
-        return readnum;
+    public void setCreater(String creater) {
+        this.creater = creater;
     }
 
-    public void setReadnum(String readnum) {
-        this.readnum = readnum;
+    public String getArticlePicture() {
+        return articlePicture;
+    }
+
+    public void setArticlePicture(String articlePicture) {
+        this.articlePicture = articlePicture;
+    }
+
+    public String getArticleTitle() {
+        return articleTitle;
+    }
+
+    public void setArticleTitle(String articleTitle) {
+        this.articleTitle = articleTitle;
+    }
+
+    public String getArticleRead() {
+        return articleRead;
+    }
+
+    public void setArticleRead(String articleRead) {
+        this.articleRead = articleRead;
+    }
+
+    public String getArticleContent() {
+        return articleContent;
+    }
+
+    public void setArticleContent(String articleContent) {
+        this.articleContent = articleContent;
+    }
+
+    public String getArticleLike() {
+        return articleLike;
+    }
+
+    public void setArticleLike(String articleLike) {
+        this.articleLike = articleLike;
+    }
+
+    public String getArticleId() {
+        return articleId;
+    }
+
+    public void setArticleId(String articleId) {
+        this.articleId = articleId;
     }
 }

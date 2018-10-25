@@ -86,4 +86,5 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
     // implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/BaiduLBS_Android.jar')
+    implementation files('libs/alipaySdk-20180601.jar')
 }

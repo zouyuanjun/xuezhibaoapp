@@ -50,7 +50,7 @@ public class Network {
                 if (e instanceof SocketTimeoutException) {
                     //判断超时异常
                     Message message=new Message();
-                    String s="{\"message\":\"请求超时\",\"code\":\"-200\",\"data\":[{}]}";
+                    String s="{\"message\":\"请求超时\",\"_code\":\"-200\",\"data\":[{}]}";
                     message.what=i;
                     message.obj=s;
                     handler.sendMessage(message);
@@ -59,7 +59,7 @@ public class Network {
                 if (e instanceof ConnectException) {
                     ////判断连接异常，
                     Message message=new Message();
-                    String s="{\"message\":\"连接异常\",\"code\":\"-100\",\"data\":[{}]}";
+                    String s="{\"message\":\"连接异常\",\"_code\":\"-100\",\"data\":[{}]}";
                     message.what=i;
                     message.obj=s;
                     handler.sendMessage(message);
@@ -104,7 +104,7 @@ public class Network {
                 if (e instanceof SocketTimeoutException) {
                     //判断超时异常
                     Message message=new Message();
-                    String s="{\"message\":\"请求超时\",\"code\":-200,\"data\":[{}]}";
+                    String s="{\"message\":\"请求超时\",\"_code\":-200,\"data\":[{}]}";
                     message.what=i;
                     message.obj=s;
                     handler.sendMessage(message);
@@ -113,7 +113,7 @@ public class Network {
                 if (e instanceof ConnectException) {
                     ////判断连接异常，
                     Message message=new Message();
-                    String s="{\"message\":\"连接异常\",\"code\":-100,\"data\":[{}]}";
+                    String s="{\"message\":\"连接异常\",\"_code\":-100,\"data\":[{}]}";
                     message.what=i;
                     message.obj=s;
                     handler.sendMessage(message);
@@ -153,7 +153,7 @@ public class Network {
                 if (e instanceof SocketTimeoutException) {
                     //判断超时异常
                     Message message=new Message();
-                    String s="{\"message\":\"请求超时\",\"code\":-200,\"data\":[{}]}";
+                    String s="{\"message\":\"请求超时\",\"_code\":-200,\"data\":[{}]}";
                     message.obj=s;
                     handler.sendMessage(message);
                     Log.d("555","请求超时");
@@ -161,7 +161,7 @@ public class Network {
                 if (e instanceof ConnectException) {
                     ////判断连接异常，
                     Message message=new Message();
-                    String s="{\"message\":\"连接异常\",\"code\":-100,\"data\":[{}]}";
+                    String s="{\"message\":\"连接异常\",\"_code\":-100,\"data\":[{}]}";
                     message.obj=s;
                     handler.sendMessage(message);
                     Log.d("555","连接异常");

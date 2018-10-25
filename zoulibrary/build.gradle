@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 26
@@ -42,12 +42,12 @@ dependencies {
      api 'com.android.support.constraint:constraint-layout:1.1.2'
     api 'com.alibaba:fastjson:1.2.9'
     //JSON解析
-    api 'com.android.support:recyclerview-v7:26.1.0'
+    api 'com.android.support:recyclerview-v7:27.1.1'
     api 'com.squareup.okhttp3:okhttp:3.10.0'
-    api 'com.android.support:appcompat-v7:26.1.0'
-    api 'com.android.support:support-v4:26.1.0'
-    api 'com.android.support:design:26.1.0'
-    api 'com.android.support:support-annotations:26.1.0'
+    api 'com.android.support:appcompat-v7:27.1.1'
+    api 'com.android.support:design:27.1.1'
+    api 'com.android.support:support-annotations:27.1.1'
+    //Tosat工具
     api 'com.bravin.btoast:BToast:1.0.2'
     api 'com.facebook.fresco:fresco:1.7.1'
     //动态请求授权

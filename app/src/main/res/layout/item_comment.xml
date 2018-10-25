@@ -8,10 +8,11 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/sdv_photo"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
+        app:roundAsCircle="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,16 +21,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
+        android:textSize="13sp"
+        android:textColor="@color/appcolor"
         android:text="家长WA"
         app:layout_constraintStart_toEndOf="@+id/sdv_photo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/im_dianzan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginEnd="6dp"
         app:layout_constraintEnd_toStartOf="@+id/tv_dianzan"
         app:layout_constraintTop_toTopOf="@+id/tv_dianzan"
         app:srcCompat="@drawable/address_logo" />
@@ -39,6 +42,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:textColor="@color/color_grey_999999"
+android:textSize="13sp"
         android:text="42"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_userName" />
@@ -48,8 +53,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:text="18.06.25 12:52"
+        android:textColor="@color/color_grey_999999"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@+id/sdv_photo"
         app:layout_constraintTop_toBottomOf="@+id/tv_userName" />
 
@@ -58,9 +65,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         android:text="哈哈哈哈哈战壕里看"
+        android:textColor="@color/color_black_333333"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/sdv_photo"
         app:layout_constraintTop_toBottomOf="@+id/tv_creattime" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/itemfenge"
+        android:layout_marginStart="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

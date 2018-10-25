@@ -208,6 +208,16 @@ public class TimeUtil {
 		return details[0] + "年" + details[1] + "月" 
 		+ details[2] + "日  " + details[3] + "时" + details[4] + "分";
 	}
+	/**获取完整时间 yy-mm-dd-hh时mm分
+	 * @param date
+	 * @return
+	 */
+	public static String getWholeTime2(long date) {
+		int[] details = TimeUtil.getWholeDetail(date);
+
+		return String.valueOf(details[0]).substring(2) + "-" + details[1] + "-"
+				+ details[2] + " " + details[3] + ":" + details[4];
+	}
 
 
 	/**将long型时间长度数据转化为文字形式时间长度
@@ -399,7 +409,7 @@ public class TimeUtil {
 		return getAge(getDateDetail(birthday));
 	}
 	/**根据生日获取年龄
-	 * @param birthday
+	 * @param
 	 * @return
 	 */
 	public static int getAge(int[] birthdayDetail) {
@@ -480,7 +490,7 @@ public class TimeUtil {
 		return details[1] + "月" + details[2] + "日";
 	}
 	/**获取智能生日
-	 * @param birthday
+	 * @param
 	 * @return
 	 */
 	public static String getSmartBirthday(int[] birthdayDetails) {
