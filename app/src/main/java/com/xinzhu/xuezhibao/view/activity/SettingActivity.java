@@ -8,6 +8,7 @@ import android.widget.Switch;
 
 import com.xinzhu.xuezhibao.R;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.ui.CustomNavigatorBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,28 +25,36 @@ public class SettingActivity extends BaseActivity {
     ImageView imAboutUs;
     @BindView(R.id.im_clean_cache)
     ImageView imCleanCache;
+    @BindView(R.id.appbar)
+    CustomNavigatorBar appbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
-    @OnClick({R.id.st_notifition, R.id.st_netdownload, R.id.im_couple_back, R.id.im_about_us, R.id.im_clean_cache})
+    @OnClick({R.id.st_notifition, R.id.st_netdownload, R.id.textView4, R.id.textView7, R.id.textView8})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.st_notifition:
                 break;
             case R.id.st_netdownload:
                 break;
-            case R.id.im_couple_back:
-                startActivity(new Intent(this,FeedbackActivity.class));
+            case R.id.textView4:
+                startActivity(new Intent(this, FeedbackActivity.class));
                 break;
-            case R.id.im_about_us:
-                startActivity(new Intent(this,AboutUsActivity.class));
+            case R.id.textView7:
+                startActivity(new Intent(this, AboutUsActivity.class));
                 break;
-            case R.id.im_clean_cache:
+            case R.id.textView8:
                 break;
         }
     }

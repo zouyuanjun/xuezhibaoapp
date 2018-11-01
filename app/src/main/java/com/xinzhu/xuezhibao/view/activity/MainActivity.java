@@ -11,6 +11,7 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.view.fragment.HomeFragemt;
 import com.xinzhu.xuezhibao.view.fragment.UserCentreFragment;
+import com.xinzhu.xuezhibao.view.fragment.VideoFragment;
 import com.xinzhu.xuezhibao.view.fragment.XuebaoFragment;
 import com.zou.fastlibrary.activity.BaseTabActivity;
 import com.zou.fastlibrary.utils.EditTextUtil;
@@ -51,7 +52,7 @@ public class MainActivity extends BaseTabActivity {
 
         creatNormalTab(iocdef,iocsel,tabTextlist);
         fragmentList.add(new HomeFragemt());
-        fragmentList.add(new HomeFragemt());
+        fragmentList.add(new VideoFragment());
         fragmentList.add(new XuebaoFragment());
         fragmentList.add(new HomeFragemt());
         fragmentList.add(new UserCentreFragment());

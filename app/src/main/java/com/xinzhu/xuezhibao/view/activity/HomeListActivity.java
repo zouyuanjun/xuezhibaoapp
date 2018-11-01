@@ -4,22 +4,25 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.widget.TableLayout;
+import android.view.View;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
 import com.xinzhu.xuezhibao.view.fragment.ArticleListFragment;
-import com.xinzhu.xuezhibao.view.fragment.ClassFragment;
+import com.xinzhu.xuezhibao.view.fragment.HomeVideoVoiceListFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ArticleListActivity extends BaseActivity {
+/**
+ * 首页视频列表，音频列表，文章列表公用activity
+ * 通过向fragment传递参数type区分资源类型，position参数区分tab标签位置
+ */
+public class HomeListActivity extends BaseActivity {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
     @BindView(R.id.tb_class)
@@ -42,16 +45,16 @@ public class ArticleListActivity extends BaseActivity {
         if (TYPE==1){
             appbar.setMidText("视频");
             fragmentList.clear();
-            fragmentList.add(ClassFragment.newInstance(1));
-            fragmentList.add(ClassFragment.newInstance(1));
-            fragmentList.add(ClassFragment.newInstance(1));
+            fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
+            fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
+            fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
             listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,1);
         }else if (TYPE==2){
             appbar.setMidText("音频");
             fragmentList.clear();
-            fragmentList.add(ClassFragment.newInstance(2));
-            fragmentList.add(ClassFragment.newInstance(2));
-            fragmentList.add(ClassFragment.newInstance(2));
+            fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
+            fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
+            fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
             listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,2);
         }else if (TYPE==3){
             appbar.setMidText("文章");
@@ -63,6 +66,12 @@ public class ArticleListActivity extends BaseActivity {
         }
        vpItemlist.setAdapter(listViewPageAdapter);
         tbClass.setupWithViewPager(vpItemlist);
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
 }

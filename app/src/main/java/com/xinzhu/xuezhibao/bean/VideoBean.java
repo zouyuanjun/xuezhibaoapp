@@ -1,27 +1,39 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class VideoBean {
-    String imurl;
-    String title;
+    String videoPicture;
+    String videoTitle;
+    String videoId;
 
-    public VideoBean(String imurl, String title) {
-        this.imurl = imurl;
-        this.title = title;
+    public VideoBean() {
     }
 
-    public String getImurl() {
-        return imurl;
+    public VideoBean(String videoPicture, String videoTitle) {
+        this.videoPicture = videoPicture;
+        this.videoTitle = videoTitle;
     }
 
-    public void setImurl(String imurl) {
-        this.imurl = imurl;
+    public String getVideoPicture() {
+        return videoPicture;
     }
 
-    public String getTitle() {
-        return title;
+    public void setVideoPicture(String videoPicture) {
+        this.videoPicture = videoPicture;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getVideoTitle() {
+        return videoTitle;
+    }
+
+    public void setVideoTitle(String videoTitle) {
+        this.videoTitle = videoTitle;
+    }
+
+    public String getVideoId() {
+        return videoId;
+    }
+
+    public void setVideoId(String videoId) {
+        this.videoId = videoId;
     }
 }

@@ -178,11 +178,13 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/im_like"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@color/white" />
+                android:background="@drawable/videodetails_btn_like_nor" />
 
             <TextView
+                android:id="@+id/tv_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -190,7 +192,36 @@
                 android:text="56"
                 android:textSize="13sp" />
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="1dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:background="#e2e2e2">
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/im_collection"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/videodetails_btn_collection_nor" />
+
+            <TextView
+                android:id="@+id/tv_collection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:text="56"
+                android:textSize="13sp" />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="1dp"
             android:layout_height="20dp"
@@ -209,11 +240,13 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/im_comment"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:background="@color/white" />
+                android:background="@drawable/videodetails_btn_comment" />
 
             <TextView
+                android:id="@+id/tv_comment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -222,34 +255,8 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="1dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:background="#e2e2e2">
 
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:background="@color/white" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:text="56"
-                android:textSize="13sp" />
-        </LinearLayout>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

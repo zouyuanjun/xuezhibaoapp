@@ -3,8 +3,11 @@ package com.xinzhu.xuezhibao.view.activity;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.TextView;
 
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
@@ -16,9 +19,13 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.utils.Constants;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.CommonUtil;
+import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.Network;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,22 +37,64 @@ public class AboutUsActivity extends BaseActivity {
 
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
+    @BindView(R.id.tv_appversion)
+    TextView tvAppversion;
+    @BindView(R.id.tv_about)
+    TextView tvAbout;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+    @BindView(R.id.tv_ipc)
+    TextView tvIpc;
     private MapView mMapView;
     private BaiduMap mBaiduMap;
+    String address;
+    String phone;
+    String ipc;
+    String about;
+    String logourl;
+    String l1;   //纬度
+    String l2;  //经度
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String result = (String) msg.obj;
+            Log.d(result);
+            int code=0;
+            code=JsonUtils.getIntValue(result,"_code");
+            if (code==100){
+                String data=JsonUtils.getStringValue(result,"Data");
+                logourl=JsonUtils.getStringValue(data,"logo");
+                about=JsonUtils.getStringValue(data,"companyInfo");
+                phone=JsonUtils.getStringValue(data,"contact");
+                address=JsonUtils.getStringValue(data,"address");
+                ipc=JsonUtils.getStringValue(data,"copyright");
+                l1=JsonUtils.getStringValue(data,"longitude");
+                l2=JsonUtils.getStringValue(data,"latitude");
+                tvAbout.setText(about);
+                tvPhone.setText(phone);
+                tvIpc.setText(ipc);
+                tvAddress.setText(address);
+
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aboutus);
         ButterKnife.bind(this);
-        mMapView = (MapView) findViewById(R.id.mapview);
-appbar.setLeftImageOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View view) {
-        finish();
-    }
-});
-
+        mMapView = findViewById(R.id.mapview);
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        Network.getnetwork().postJson("", Constants.URL + "/guest/find-by-time", handler, 1);
     }
 
     @OnClick({R.id.tv_appversion, R.id.tv_phone, R.id.tv_address})
@@ -55,14 +104,15 @@ appbar.setLeftImageOnClickListener(new View.OnClickListener() {
                 break;
             case R.id.tv_phone:
                 if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED)||(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED)) {
-                    EasyPermissions.requestPermissions(this, "需要获取打电话权限才能打电话哦", 1, Manifest.permission.CALL_PHONE);
+                    EasyPermissions.requestPermissions(this, "需要获取打电话权限才能打电话哦", 1, Manifest.permission.CALL_PHONE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 } else {
                     CommonUtil.call(this, "18702508050");
                 }
                 break;
             case R.id.tv_address:
-                initmap();
+                initmap(l1,l2);
                 break;
         }
     }
@@ -94,18 +144,18 @@ appbar.setLeftImageOnClickListener(new View.OnClickListener() {
         mMapView.onPause();
     }
 
-    private void initmap() {
+    private void initmap(String l2,String l1) {
 
         mMapView.setVisibility(View.VISIBLE);
         mBaiduMap = mMapView.getMap();
         mBaiduMap.setMyLocationEnabled(true);
-        LatLng cenpt = new LatLng(28.682552, 115.997666);//设定中心点坐标
+        LatLng cenpt = new LatLng(Double.parseDouble(l1), Double.parseDouble(l2));//设定中心点坐标
         MapStatus.Builder builder = new MapStatus.Builder();
         builder.target(cenpt).zoom(18.0f);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
         //定义Maker坐标点
 
-        LatLng point = new LatLng(28.682552, 115.997666);
+        LatLng point = new LatLng(Double.parseDouble(l1), Double.parseDouble(l2));
         BitmapDescriptor bitmap = BitmapDescriptorFactory
                 .fromResource(R.drawable.address_logo);
         OverlayOptions option = new MarkerOptions()

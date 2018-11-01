@@ -125,7 +125,7 @@ public abstract class LazyLoadFragment extends Fragment {
     }
 
     public void servererr(){
-        BToast.error(getContext()).text("服务器内部错误，正在紧急修复中···").show();
+        BToast.error(getContext()).text("请求数据失败，正在紧急修复中···").show();
     }
 
 

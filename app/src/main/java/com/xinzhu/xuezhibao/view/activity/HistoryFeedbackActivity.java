@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.view.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -35,20 +36,20 @@ public class HistoryFeedbackActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historyfeedback);
         ButterKnife.bind(this);
-        Glide.with(this).load("https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1539945159&di=09e92627d4a71dc000deea4ec7154209&src=http://img4q.duitang.com/uploads/blog/201404/17/20140417225143_aWWfi.jpeg").
+        im1.setVisibility(View.VISIBLE);
+        im2.setVisibility(View.VISIBLE);
+        im3.setVisibility(View.VISIBLE);
+        Glide.with(this).load("http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg").
                 into(im1);
-        Glide.with(this).load("http://img3.imgtn.bdimg.com/it/u=2200166214,500725521&fm=26&gp=0.jpg").
+        Glide.with(this).load("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg").
                 into(im2);
-        Glide.with(this).load("http://a3.topitme.com/5/db/ff/11527264392c7ffdb5o.jpg").
+        Glide.with(this).load("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg").
                 into(im3);
-        Glide.with(this).load("http://img3.imgtn.bdimg.com/it/u=2200166214,500725521&fm=26&gp=0.jpg").
+        Glide.with(this).load("http://t2.hddhhn.com/uploads/tu/201610/198/gkowtcsq5sg.jpg").
                 into(imBack1);
-        Glide.with(this).load("http://pic2.ooopic.com/10/50/25/52b1OOOPICa3.jpg").
+        Glide.with(this).load("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg").
                 into(imBack2);
-        Glide.with(this).load("http://img3.imgtn.bdimg.com/it/u=2200166214,500725521&fm=26&gp=0.jpg").
+        Glide.with(this).load("http://t2.hddhhn.com/uploads/tu/201610/198/amcmsp2nuwp.jpg").
                 into(imBack3);
-
-
-
     }
 }

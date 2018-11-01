@@ -50,13 +50,13 @@
 
     <ImageView
         android:id="@+id/im_watch_ioc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_readnum"
         app:layout_constraintEnd_toStartOf="@+id/tv_readnum"
-        app:layout_constraintTop_toTopOf="@+id/simpleDraweeView"
-        app:srcCompat="@drawable/birthday_logo" />
+        app:layout_constraintTop_toTopOf="@+id/tv_readnum"
+        app:srcCompat="@drawable/login_icon_user" />
 
     <TextView
         android:id="@+id/tv_readnum"
@@ -77,6 +77,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="一年级"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:background="@drawable/textbg"
         app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
         app:layout_constraintTop_toBottomOf="@+id/tv_teacher" />
 
@@ -87,6 +92,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="语文"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="1dp"
+        android:paddingBottom="1dp"
+        android:background="@drawable/textbg"
         app:layout_constraintStart_toEndOf="@+id/tv_class"
         app:layout_constraintTop_toBottomOf="@+id/tv_teacher" />
 

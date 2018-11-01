@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.bravin.btoast.BToast;
@@ -13,6 +14,7 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.im.android.api.JMessageClient;
 
 public class MyApplication  extends Application{
+    static Context context;
     @Override
     public void onCreate() {
         super.onCreate();
@@ -27,5 +29,9 @@ public class MyApplication  extends Application{
         JMessageClient.init(this,true);
         JPushInterface.init(this);
         BToast.Config.getInstance().apply(this);
+        context=this.getApplicationContext();
+    }
+    public static Context getContext(){
+       return context;
     }
 }

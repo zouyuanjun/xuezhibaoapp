@@ -32,6 +32,15 @@ public class CreatPopwindows {
         });
         return mPopWindow;
     }
+
+    /**
+     * 创建限制宽高的popwindow
+     * @param activity
+     * @param ViewID
+     * @param with
+     * @param height
+     * @return
+     */
     public static PopupWindow creatpopwindows(final Activity activity, int ViewID, int with, int height){
         WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         lp.alpha = 0.4f;

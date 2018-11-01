@@ -1,9 +1,6 @@
 package com.xinzhu.xuezhibao.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,25 +9,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
-import com.xinzhu.xuezhibao.bean.ItemBean;
-import com.zou.fastlibrary.utils.ImageUtils;
 import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
-import java.security.MessageDigest;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class ArticleListAdapter extends RecyclerView.Adapter {
     protected Context mContext;

@@ -16,7 +16,9 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.JiatingCourseBean;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.security.MessageDigest;
@@ -29,14 +31,14 @@ import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
     protected WeakReference<Context> mContext;
-    protected List<JiatingCourseBean> mDatas;
+    protected List<CourseBean> mDatas;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public RvJiatingCourseAdapter(WeakReference<Context> mContext, List<JiatingCourseBean> mDatas) {
+    public RvJiatingCourseAdapter(WeakReference<Context> mContext, List<CourseBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
@@ -50,31 +52,33 @@ public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getTitle());
-        ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getTeacher());
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getReadnum());
-        ((ViewHolder) holder).tvClass.setText(mDatas.get(position).getCourseclass());
-        RequestOptions requestOptions = RequestOptions.frameOf(0);
-        requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
-        requestOptions.transform(new BitmapTransformation() {
-            @Override
-            protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-                return toTransform;
-            }
+        ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
+        ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getVideoTeacher());
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply());
+        ((ViewHolder) holder).tvClass.setText(mDatas.get(position).getCurriculumExplain());
+        if (StringUtil.isEmpty(mDatas.get(position).getCurriculumPicture())) {
 
-            @Override
-            public void updateDiskCacheKey(MessageDigest messageDigest) {
-                try {
-                    messageDigest.update((mContext.get().getPackageName() + "RotateTransform").getBytes("utf-8"));
-                } catch (Exception e) {
-                    e.printStackTrace();
+            RequestOptions requestOptions = RequestOptions.frameOf(0);
+            requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
+            requestOptions.transform(new BitmapTransformation() {
+                @Override
+                protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+                    return toTransform;
                 }
-            }
-        });
-        Glide.with(mContext.get()).load(mDatas.get(position).getImurl()).apply(requestOptions).into(((ViewHolder) holder).simpleDraweeView);
 
-        // ((MyViewHolder) holder).simpleDraweeView.setImageBitmap(ImageUtils.createVideoThumbnail(mDatas.get(position).getArticlePicture(),MediaStore.Images.Thumbnails.MINI_KIND));
-
+                @Override
+                public void updateDiskCacheKey(MessageDigest messageDigest) {
+                    try {
+                        messageDigest.update((mContext.get().getPackageName() + "RotateTransform").getBytes("utf-8"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumUrl()).apply(requestOptions).into(((ViewHolder) holder).simpleDraweeView);
+        }else {
+            Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
+        }
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

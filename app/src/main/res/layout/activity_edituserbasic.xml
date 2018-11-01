@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/itemfenge">
+
+    <com.zou.fastlibrary.ui.CustomNavigatorBar
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftTextVisible='false'
+        app:midText='修改'
+        app:midTextFontColor="#ffffff"
+        app:midTextSizeSp="18"
+        app:rightImageVisible='false'
+        app:rightTextColor='#ffffff'
+        app:rightTextSizeSp="15"
+        app:rightTextVisible='true'
+        app:rightText="提交"
+        app:titleBarBackground='@color/appcolor' />
+
+    <LinearLayout
+        android:background="@color/white"
+        android:layout_width="395dp"
+        android:layout_height="76dp"
+        android:gravity="center_vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
+        <TextView
+            android:id="@+id/tv_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="学生姓名"
+            android:textColor="@color/color_black_333333"
+            android:layout_marginLeft="20dp"
+            android:textSize="15sp"/>
+        <EditText
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:background="@color/white"
+            android:id="@+id/ed_basic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            />
+
+
+    </LinearLayout>
+
+
+</android.support.constraint.ConstraintLayout>

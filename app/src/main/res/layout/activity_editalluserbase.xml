@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/itemfenge"
+    android:divider="@drawable/lldiv"
+    android:orientation="vertical"
+    android:dividerPadding="20dp"
+    android:showDividers="end|middle"
+    >
+
+    <com.zou.fastlibrary.ui.CustomNavigatorBar
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:leftTextVisible='false'
+        app:midText='完善资料'
+        app:midTextFontColor="#ffffff"
+        app:midTextSizeSp="18"
+        app:rightImageVisible='false'
+        app:rightTextColor='#ffffff'
+        app:rightTextSizeSp="15"
+        app:rightTextVisible='true'
+        app:rightText="提交"
+        app:titleBarBackground='@color/appcolor' />
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_jifenshop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp"
+            android:text="学宝头像" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sd_myphoto"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:roundAsCircle="true" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            app:srcCompat="@drawable/home_btn_more" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_vipname"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="昵称"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/ed_vipname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:hint="请输入会员名"
+            android:textColor="@color/color_black_666666"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_studenname"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="学生姓名"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/ed_studenname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:hint="请输入学生姓名"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:textColor="@color/color_black_666666"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_studenage"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="学生年龄"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/ed_studennage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:hint="请输入年龄"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:textColor="@color/color_black_666666"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:id="@+id/ll_fathername"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="父亲姓名"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/ed_fathername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:hint="请输入父亲姓名"
+            android:layout_weight="1"
+            android:background="@color/white"
+            android:textColor="@color/color_black_666666"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_mothername"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="母亲姓名"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+
+        <EditText
+            android:background="@color/white"
+            android:id="@+id/ed_mothername"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="16dp"
+            android:hint="请输入母亲姓名"
+            android:layout_weight="1"
+            android:textColor="@color/color_black_666666"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_address"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="所属地区"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_marginRight="16dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="所属地区"
+            android:layout_weight="1"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp"
+            android:drawableRight="@drawable/home_btn_more"/>
+
+    </LinearLayout>
+</LinearLayout>
+
+

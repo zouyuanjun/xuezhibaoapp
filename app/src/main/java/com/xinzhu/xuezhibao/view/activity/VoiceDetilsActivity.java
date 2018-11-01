@@ -35,8 +35,14 @@ public class VoiceDetilsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice_details);
         ButterKnife.bind(this);
-        mMusicView.setmContext(new WeakReference<Context>(this));
         mMusicView.setTitleText("孩子回家不吃饭");
+        mMusicView.setmContext(new WeakReference<Context>(this));
         mMusicView.startPlayMusic("http://other.web.nf01.sycdn.kuwo.cn/resource/n2/87/0/3398589179.mp3");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMusicView.stopPlayMusic();
     }
 }

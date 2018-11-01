@@ -1,13 +1,23 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.app.Service;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -21,18 +31,21 @@ import com.xinzhu.xuezhibao.presenter.ArticlePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.ArticleInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.TimeUtil;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 文章详情页
+ */
 public class ArticleDetilsActivity extends BaseActivity implements ArticleInterface {
-
     CommentAdapter commentAdapter;
     @BindView(R.id.tv_title)
     TextView tvTitle;
@@ -42,8 +55,6 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     TextView tvReadnum;
     @BindView(R.id.tv_details)
     TextView tvDetails;
-    @BindView(R.id.tv_comment_num)
-    TextView tvCommentNum;
     @BindView(R.id.rv_comment)
     RecyclerView rvComment;
     @BindView(R.id.ll_comment)
@@ -52,27 +63,39 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     ArticlePresenter articlePresenter;
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
-    List<CommentBean> list = new ArrayList<>();
+    LinkedList<CommentBean> commentBeanArrayList = new LinkedList<>();
     @BindView(R.id.smartrv)
     SmartRefreshLayout smartrv;
     int page = 1;
     @BindView(R.id.nestedScrollView)
     NestedScrollView nestedScrollView;
+    @BindView(R.id.tv_detail_comment)
+    TextView tvComment;
+    @BindView(R.id.ll_dianzan)
+    LinearLayout llDianzan;
+    @BindView(R.id.ll_shoucan)
+    LinearLayout llShoucan;
+    Context context;
+    @BindView(R.id.im_like)
+    ImageView imLike;
+    @BindView(R.id.im_collection)
+    ImageView imCollection;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article_details);
-        articleid = getIntent().getStringExtra(Constants.INTENT_ARTICLE_ID);
+        context = this;
+        articleid = getIntent().getStringExtra(Constants.INTENT_ID);
         articlePresenter = new ArticlePresenter(this);
         ButterKnife.bind(this);
         init();
-        articlePresenter.getComment(articleid, 1);
     }
 
     private void init() {
         articlePresenter.getArticleDetils(articleid);
-        commentAdapter = new CommentAdapter(this, list);
+        articlePresenter.getComment(articleid, 1);
+        commentAdapter = new CommentAdapter(this, commentBeanArrayList);
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this);
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvComment.setLayoutManager(linearLayoutManager3);
@@ -82,17 +105,6 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
             @Override
             public void onClick(View view) {
                 finish();
-            }
-        });
-        llComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Constants.TOKEN.isEmpty()) {
-
-                } else {
-                    startActivityForResult(new Intent(ArticleDetilsActivity.this, SendCommentActivity.class), 1);
-                }
-
             }
         });
         smartrv.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -113,11 +125,17 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
 
     }
 
-
-    @OnClick(R.id.ll_comment)
-    public void onViewClicked() {
-
-
+    @OnClick({R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_detail_comment})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_dianzan:
+                break;
+            case R.id.ll_shoucan:
+                break;
+            case R.id.tv_detail_comment:
+                showpop(view);
+                break;
+        }
     }
 
     @Override
@@ -129,13 +147,12 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     }
 
     @Override
-    public void getcomment(List<CommentBean> mDatas,String total) {
-        list.addAll(mDatas);
+    public void getcomment(List<CommentBean> mDatas, String total) {
+        commentBeanArrayList.addAll(mDatas);
         page++;
         if (commentAdapter != null) {
             commentAdapter.notifyDataSetChanged();
         }
-        tvCommentNum.setText("全部评论("+total+")");
         smartrv.finishLoadMore();
     }
 
@@ -144,14 +161,54 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         smartrv.finishLoadMoreWithNoMoreData();
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data != null) {
-            String result = data.getExtras().getString("result");
-            articlePresenter.sendComment(articleid, result);
-        }
+    //弹出发送评论对话框
+    private void showpop(View view) {
+        if (Constants.TOKEN.isEmpty()) {
+            CustomDialog.Builder builder = new CustomDialog.Builder(this);
+            builder.setTitle("提示");
+            builder.setMessage("您尚未登陆，现在就去登陆");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(ArticleDetilsActivity.this, LoginActivity.class);
+                    intent.putExtra(Constants.FROMAPP, "fss");
+                    startActivity(intent);
 
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+        } else {
+            View view1 = LayoutInflater.from(context).inflate(R.layout.pop_commend, null);
+            final EditText editText = view1.findViewById(R.id.ed_comment);
+            TextView textView = view1.findViewById(R.id.tv_send);
+            final PopupWindow window = new PopupWindow(view1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            window.setOutsideTouchable(true);
+            window.setTouchable(true);
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Service.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            window.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String commend = editText.getText().toString();
+                    CommentBean commentBean=new CommentBean("","sdfsd","1540785350000",commend,"","111");
+                    commentBeanArrayList.addFirst(commentBean);
+                    commentAdapter.notifyItemInserted(0);
+                    articlePresenter.sendComment(articleid, commend);
+                    window.dismiss();
+                }
+            });
+        }
     }
+
+
 }
 

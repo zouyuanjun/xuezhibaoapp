@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.zou.fastlibrary.R;
 
 public class CustomDialog extends Dialog {
+
 public CustomDialog(Context context) {
         super(context);
         }
@@ -129,7 +130,7 @@ public static class Builder {
             ((Button) layout.findViewById(R.id.btn_dialog_ok))
                     .setText(positiveButtonText);
             if (positiveButtonClickListener != null) {
-                ((Button) layout.findViewById(R.id.btn_dialog_ok))
+                layout.findViewById(R.id.btn_dialog_ok)
                         .setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 positiveButtonClickListener.onClick(dialog,
@@ -147,7 +148,7 @@ public static class Builder {
             ((Button) layout.findViewById(R.id.btn_dialog_cancel))
                     .setText(negativeButtonText);
             if (negativeButtonClickListener != null) {
-                ((Button) layout.findViewById(R.id.btn_dialog_cancel))
+                layout.findViewById(R.id.btn_dialog_cancel)
                         .setOnClickListener(new View.OnClickListener() {
                             public void onClick(View v) {
                                 negativeButtonClickListener.onClick(dialog,

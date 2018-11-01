@@ -51,7 +51,7 @@
         android:layout_marginEnd="6dp"
         app:layout_constraintEnd_toStartOf="@+id/tv_dianzan"
         app:layout_constraintTop_toTopOf="@+id/tv_item_time"
-        app:srcCompat="@mipmap/emoji_0x1f339" />
+        android:background="@drawable/videolist_icon_like" />
 
     <TextView
         android:id="@+id/tv_dianzan"
@@ -64,24 +64,23 @@
 
     <ImageView
         android:id="@+id/im_watch_ioc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_readnum"
-        app:layout_constraintTop_toTopOf="@+id/simpleDraweeView"
-        app:srcCompat="@drawable/birthday_logo" />
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="72dp"
+        android:background="@drawable/articlelist_icon_read"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_readnum"
+        app:layout_constraintStart_toStartOf="@+id/simpleDraweeView"
+        app:layout_constraintTop_toTopOf="@+id/tv_readnum" />
 
     <TextView
         android:id="@+id/tv_readnum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:text="2232"
-        android:textSize="12sp"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/simpleDraweeView"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/im_watch_ioc"
         app:layout_constraintTop_toTopOf="@+id/simpleDraweeView" />
 
     <ImageView
@@ -91,6 +90,6 @@
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
         app:layout_constraintTop_toTopOf="@+id/tv_item_time"
-        app:srcCompat="@drawable/btn_blue_bg" />
+        android:background="@drawable/videolist_icon_time" />
 
 </android.support.constraint.ConstraintLayout>

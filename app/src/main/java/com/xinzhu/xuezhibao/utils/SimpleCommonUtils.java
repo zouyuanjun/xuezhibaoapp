@@ -245,11 +245,9 @@ public class SimpleCommonUtils {
                 if (isDelBtn) {
                     viewHolder.iv_emoticon.setImageResource(R.mipmap.icon_del);
                 } else {
-                    try {
+
                         ImageLoader.getInstance(viewHolder.iv_emoticon.getContext()).displayImage(emoticonEntity.getIconUri(), viewHolder.iv_emoticon);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+
                 }
 
                 viewHolder.rootView.setOnClickListener(new View.OnClickListener() {

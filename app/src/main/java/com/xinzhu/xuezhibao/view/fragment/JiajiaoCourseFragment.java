@@ -1,8 +1,8 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,17 +14,19 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.adapter.ArticleListAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoCourseAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoFeedbackAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoTaskAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoTeacherAdapter;
-import com.xinzhu.xuezhibao.bean.ItemBean;
 import com.xinzhu.xuezhibao.bean.JiajiaoFeedbackBean;
 import com.xinzhu.xuezhibao.bean.JiaojiaoCourseBean;
 import com.xinzhu.xuezhibao.bean.TaskBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
+import com.xinzhu.xuezhibao.view.activity.CourseFeedbackActivity;
+import com.xinzhu.xuezhibao.view.activity.CourseTaskActivity;
+import com.xinzhu.xuezhibao.view.activity.TeacherDetailActivity;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ public class JiajiaoCourseFragment extends LazyLoadFragment {
     @BindView(R.id.rv_item)
     RecyclerView rvItem;
     RvJiaojiaoCourseAdapter rvJiaojiaoCourseAdapter;
-    RvJiaojiaoTeacherAdapter articleListAdapter;
+    RvJiaojiaoTeacherAdapter rvJiaojiaoTeacherAdapter;
     RvJiaojiaoTaskAdapter rvJiaojiaoTaskAdapter;
     RvJiaojiaoFeedbackAdapter rvJiaojiaoFeedbackAdapter;
     Unbinder unbinder;
@@ -50,7 +52,7 @@ public class JiajiaoCourseFragment extends LazyLoadFragment {
 
     @Override
     protected int setContentView() {
-        return R.layout.fragment_class;
+        return R.layout.fragment_onlylist;
     }
 
     public static JiajiaoCourseFragment newInstance(int type) {
@@ -63,7 +65,7 @@ public class JiajiaoCourseFragment extends LazyLoadFragment {
 
     @Override
     protected void lazyLoad() {
-        mContext=new WeakReference(getActivity());
+        mContext=new WeakReference(MyApplication.getContext());
       if (MYCLASS==1){
           initdata();
       }else if (MYCLASS==2){
@@ -73,7 +75,7 @@ public class JiajiaoCourseFragment extends LazyLoadFragment {
       }else if (MYCLASS==4){
           initdata4();
       }
-        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(mContext.get());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvItem.setLayoutManager(linearLayoutManager3);
 
@@ -89,6 +91,8 @@ public class JiajiaoCourseFragment extends LazyLoadFragment {
                 refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
             }
         });
+
+
     }
 
     @Override
@@ -111,6 +115,7 @@ public class JiajiaoCourseFragment extends LazyLoadFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+       rvItem.setAdapter(null);
         unbinder.unbind();
     }
 
@@ -149,8 +154,20 @@ public class JiajiaoCourseFragment extends LazyLoadFragment {
         list.add(itemBean);
         list.add(itemBean);
         list.add(itemBean);
-        articleListAdapter = new RvJiaojiaoTeacherAdapter(getContext(),list);
-        rvItem.setAdapter(articleListAdapter);
+        rvJiaojiaoTeacherAdapter = new RvJiaojiaoTeacherAdapter(getContext(),list);
+        rvItem.setAdapter(rvJiaojiaoTeacherAdapter);
+        rvJiaojiaoTeacherAdapter.setOnItemClickListener(new RvJiaojiaoTeacherAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startActivity(new Intent(getContext(),TeacherDetailActivity.class));
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+
     }
     public void initdata3() {
         List<TaskBean> list = new ArrayList<>();
@@ -169,6 +186,17 @@ public class JiajiaoCourseFragment extends LazyLoadFragment {
         list.add(itemBean);
         rvJiaojiaoTaskAdapter = new RvJiaojiaoTaskAdapter(getContext(),list);
         rvItem.setAdapter(rvJiaojiaoTaskAdapter);
+        rvJiaojiaoTaskAdapter.setOnItemClickListener(new RvJiaojiaoTaskAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startActivity(new Intent(getContext(),CourseTaskActivity.class));
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
     public void initdata4() {
         List<JiajiaoFeedbackBean> list = new ArrayList<>();
@@ -187,5 +215,16 @@ public class JiajiaoCourseFragment extends LazyLoadFragment {
         list.add(itemBean);
         rvJiaojiaoFeedbackAdapter = new RvJiaojiaoFeedbackAdapter(getContext(),list);
         rvItem.setAdapter(rvJiaojiaoFeedbackAdapter);
+        rvJiaojiaoFeedbackAdapter.setOnItemClickListener(new RvJiaojiaoFeedbackAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                startActivity(new Intent(getContext(),CourseFeedbackActivity.class));
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
 }

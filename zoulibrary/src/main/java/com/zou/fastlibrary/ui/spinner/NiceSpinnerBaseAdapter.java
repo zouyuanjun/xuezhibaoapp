@@ -1,12 +1,14 @@
 package com.zou.fastlibrary.ui.spinner;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zou.fastlibrary.R;
@@ -34,7 +36,7 @@ public abstract class NiceSpinnerBaseAdapter<T> extends BaseAdapter {
     private int textColor;
     private int backgroundSelector;
 
-    int selectedIndex;
+    int selectedIndex = 0;
 
     NiceSpinnerBaseAdapter(Context context, int textColor, int backgroundSelector,
                            SpinnerTextFormatter spinnerTextFormatter) {
@@ -43,24 +45,45 @@ public abstract class NiceSpinnerBaseAdapter<T> extends BaseAdapter {
         this.textColor = textColor;
     }
 
-    @Override public View getView(int position, @Nullable View convertView, ViewGroup parent) {
+    @Override
+    public View getView(int position, @Nullable View convertView, ViewGroup parent) {
         Context context = parent.getContext();
         TextView textView;
+        ImageView imageView;
+        if (selectedIndex == position) {
+            if (convertView == null) {
+                convertView = View.inflate(context, R.layout.spinner_list_item, null);
+                textView = convertView.findViewById(R.id.text_view_spinner);
+                imageView=convertView.findViewById(R.id.image);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    textView.setBackground(ContextCompat.getDrawable(context, backgroundSelector));
+                }
+                convertView.setTag(new ViewHolder(textView,imageView));
+            } else {
+                textView = ((ViewHolder) convertView.getTag()).textView;
+                imageView = ((ViewHolder) convertView.getTag()).imageView;
 
-        if (convertView == null) {
-            convertView = View.inflate(context, R.layout.spinner_list_item, null);
-            textView = (TextView) convertView.findViewById(R.id.text_view_spinner);
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                textView.setBackground(ContextCompat.getDrawable(context, backgroundSelector));
             }
-            convertView.setTag(new ViewHolder(textView));
+            imageView.setVisibility(View.VISIBLE);
+            textView.setTextColor(Color.parseColor("#f87d28"));
         } else {
-            textView = ((ViewHolder) convertView.getTag()).textView;
+            if (convertView == null) {
+                convertView = View.inflate(context, R.layout.spinner_list_item, null);
+                textView = convertView.findViewById(R.id.text_view_spinner);
+                imageView=convertView.findViewById(R.id.image);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    textView.setBackground(ContextCompat.getDrawable(context, backgroundSelector));
+                }
+                convertView.setTag(new ViewHolder(textView,imageView));
+            } else {
+                textView = ((ViewHolder) convertView.getTag()).textView;
+                imageView = ((ViewHolder) convertView.getTag()).imageView;
+            }
+            textView.setTextColor(textColor);
+            imageView.setVisibility(View.GONE);
         }
-
         textView.setText(spinnerTextFormatter.format(getItem(position).toString()));
-        textView.setTextColor(textColor);
+
         return convertView;
     }
 
@@ -74,19 +97,27 @@ public abstract class NiceSpinnerBaseAdapter<T> extends BaseAdapter {
 
     public abstract T getItemInDataset(int position);
 
-    @Override public long getItemId(int position) {
+    @Override
+    public long getItemId(int position) {
         return position;
     }
 
-    @Override public abstract T getItem(int position);
+    @Override
+    public abstract T getItem(int position);
 
-    @Override public abstract int getCount();
+    @Override
+    public abstract int getCount();
 
     static class ViewHolder {
         TextView textView;
-
+        ImageView imageView;
         ViewHolder(TextView textView) {
             this.textView = textView;
+        }
+
+        public ViewHolder(TextView textView, ImageView imageView) {
+            this.textView = textView;
+            this.imageView = imageView;
         }
     }
 }

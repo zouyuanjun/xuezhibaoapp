@@ -44,11 +44,11 @@ public class CustomNavigatorBar extends RelativeLayout implements View.OnClickLi
 
     private void iniView(final Context context) {
         View view = LayoutInflater.from(context).inflate(R.layout.view_customtoolbar, this, true);
-        leftImage = (ImageView) view.findViewById(R.id.left_image);
-        leftText = (TextView) view.findViewById(R.id.left_text);
-        midText = (TextView) view.findViewById(R.id.mid_text);
-        rightText = (TextView) view.findViewById(R.id.right_text);
-        rightImage = (ImageView) view.findViewById(R.id.right_image);
+        leftImage = view.findViewById(R.id.left_image);
+        leftText = view.findViewById(R.id.left_text);
+        midText = view.findViewById(R.id.mid_text);
+        rightText = view.findViewById(R.id.right_text);
+        rightImage = view.findViewById(R.id.right_image);
 
     }
 
@@ -130,7 +130,10 @@ public class CustomNavigatorBar extends RelativeLayout implements View.OnClickLi
             } else if (index == R.styleable.CustomNavigatorBar_midTextSizeSp) {
                 midText.setTextSize(TypedValue.COMPLEX_UNIT_SP,typedArray.getInteger(index, 15));
 
-            } else if (index == R.styleable.CustomNavigatorBar_midTextFontColor) {
+            } else if (index == R.styleable.CustomNavigatorBar_rightTextSizeSp) {
+                rightText.setTextSize(TypedValue.COMPLEX_UNIT_SP,typedArray.getInteger(index, 15));
+
+            }else if (index == R.styleable.CustomNavigatorBar_midTextFontColor) {
                 midText.setTextColor(typedArray.getColor(index, Color.WHITE));
 
                 rightImage.setImageDrawable(typedArray.getDrawable(index));

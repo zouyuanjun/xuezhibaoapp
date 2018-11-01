@@ -61,7 +61,7 @@
             android:id="@+id/right_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="60dp"
+            android:layout_marginEnd="20dp"
             android:layout_toLeftOf="@+id/right_image"
             android:gravity="center"
             android:minHeight="45dp"
@@ -69,7 +69,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/mid_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+           />
 
         <ImageView
             android:id="@+id/right_image"

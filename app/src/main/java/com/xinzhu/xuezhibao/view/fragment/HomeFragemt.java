@@ -3,8 +3,6 @@ package com.xinzhu.xuezhibao.view.fragment;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -13,8 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.adapter.ArticleListAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeArticleAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeVideoAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeVoiceAdapter;
@@ -24,7 +22,7 @@ import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
 import com.xinzhu.xuezhibao.presenter.HomepagePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
-import com.xinzhu.xuezhibao.view.activity.ArticleListActivity;
+import com.xinzhu.xuezhibao.view.activity.HomeListActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SettingActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
@@ -55,8 +53,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     int messagecount = 0;
     Unbinder unbinder;
     HomepagePresenter homepagePresenter;
-    FragmentManager fragmentManager;
-    FragmentTransaction transaction;
     QBadgeView qBadgeView;
     @BindView(R.id.im_scan)
     ImageView tvMessage;
@@ -95,13 +91,9 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     @Override
     protected void lazyLoad() {
         Log.d("懒加载开始");
-        EditTextUtil.hideKeyboard(getContext(),edSearch);
-        homepagePresenter=new HomepagePresenter(this,getActivity());
-        homepagePresenter.requestArticledata();
-        homepagePresenter.requestVideodata();
-        homepagePresenter.requestVoicedata();
-        fragmentManager = getChildFragmentManager();
-        transaction = fragmentManager.beginTransaction();
+        EditTextUtil.hideKeyboard(MyApplication.getContext(),edSearch);
+        homepagePresenter=new HomepagePresenter(this,MyApplication.getContext());
+        homepagePresenter.initdata();
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
@@ -126,7 +118,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
-        qBadgeView = new QBadgeView(getActivity());
+        qBadgeView = new QBadgeView(MyApplication.getContext());
         qBadgeView.bindTarget(imMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
         JMessageClient.registerEventReceiver(this);
         Log.d("创建完毕");
@@ -168,17 +160,17 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             case R.id.im_test:
                 break;
             case R.id.ll_more_video:
-                Intent intent=new Intent(getContext(),ArticleListActivity.class);
+                Intent intent=new Intent(getContext(),HomeListActivity.class);
                 intent.putExtra("TYPE",1);
                 startActivity(intent);
                 break;
             case R.id.ll_more_voice:
-                Intent intent2=new Intent(getContext(),ArticleListActivity.class);
+                Intent intent2=new Intent(getContext(),HomeListActivity.class);
                 intent2.putExtra("TYPE",2);
                 startActivity(intent2);
                 break;
             case R.id.ll_more_article:
-                Intent intent3=new Intent(getContext(),ArticleListActivity.class);
+                Intent intent3=new Intent(getContext(),HomeListActivity.class);
                 intent3.putExtra("TYPE",3);
                 startActivity(intent3);
                 break;
@@ -199,18 +191,22 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     }
 
     @Override
-    public void getVideodata(List<VideoBean> mDatas) {
+    public void getVideodata(final List<VideoBean> mDatas) {
         //初始化视频列表
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvVideo.setLayoutManager(linearLayoutManager);
         rvVideo.setNestedScrollingEnabled(false);
-        homeVideoAdapter=new HomeVideoAdapter(getContext(),mDatas);
+        homeVideoAdapter=new HomeVideoAdapter(MyApplication.getContext(),mDatas);
         rvVideo.setAdapter(homeVideoAdapter);
         homeVideoAdapter.setOnItemClickListener(new HomeVideoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(),VideoDetilsActivity.class));
+                String id=mDatas.get(position).getVideoId();
+                Intent intent=new Intent(getContext(),VideoDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID,id);
+                getActivity().startActivity(intent);
+                startActivity(intent);
             }
 
             @Override
@@ -221,19 +217,23 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     }
 
     @Override
-    public void getVoicedata(List<VideoBean> mDatas) {
+    public void getVoicedata(final List<VideoBean> mDatas) {
 
         //初始化音频列表
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvVoice.setNestedScrollingEnabled(false);
         rvVoice.setLayoutManager(linearLayoutManager2);
-        homeVoiceAdapter=new HomeVoiceAdapter(getContext(),mDatas);
+        homeVoiceAdapter=new HomeVoiceAdapter(MyApplication.getContext(),mDatas);
         rvVoice.setAdapter(homeVoiceAdapter);
         homeVoiceAdapter.setOnItemClickListener(new HomeVoiceAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(),VoiceDetilsActivity.class));
+                String id=mDatas.get(position).getVideoId();
+                Intent intent=new Intent(getContext(),VoiceDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID,id);
+                getActivity().startActivity(intent);
+                startActivity(intent);
             }
 
             @Override
@@ -246,18 +246,18 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     @Override
     public void getArticle(final List<ArticleBean> mDatas) {
         //初始化文章列表
-        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvArticle.setLayoutManager(linearLayoutManager3);
         rvArticle.setNestedScrollingEnabled(false);
-        homeArticleAdapter=new HomeArticleAdapter(getActivity(),mDatas);
+        homeArticleAdapter=new HomeArticleAdapter(MyApplication.getContext(),mDatas);
         rvArticle.setAdapter(homeArticleAdapter);
         homeArticleAdapter.setOnItemClickListener(new HomeArticleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 String id=mDatas.get(position).getArticleId();
                 Intent intent=new Intent(getActivity(),ArticleDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ARTICLE_ID,id);
+                intent.putExtra(Constants.INTENT_ID,id);
                 getActivity().startActivity(intent);
             }
 

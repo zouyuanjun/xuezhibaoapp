@@ -3,6 +3,7 @@ package com.xinzhu.xuezhibao.view.activity;
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -12,6 +13,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -20,22 +23,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.bean.FeedBackDictionaryBean;
 import com.xinzhu.xuezhibao.immodule.utils.RequestCode;
-import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
+import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.Glide4Engine;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
-import com.zou.fastlibrary.utils.FileUtils;
-import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.JSON;
+import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Network;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -71,12 +79,52 @@ public class FeedbackActivity extends BaseActivity {
     @BindView(R.id.bt_login)
     ShapeCornerBgView btLogin;
     Context mContext;
+    List<String> mSelected = new ArrayList<>();   //已选择的照片
+    HashMap<String, String> map = new HashMap<>();
+    @BindView(R.id.im_clean1)
+    ImageView imClean1;
+    @BindView(R.id.im_clean2)
+    ImageView imClean2;
+    @BindView(R.id.im_clean3)
+    ImageView imClean3;
+    int canSelectCount = 3;
+    boolean im1canuse = true;
+    boolean im2canuse = true;
+    boolean im3canuse = true;
+    String selectDictionaryid ="";  //选中的反馈类型字典ID
+    List<FeedBackDictionaryBean> feedBackDictionaryBeanList;
+    @BindView(R.id.tv_canselectcount)
+    TextView tvCanselectcount;
+    Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String result= (String) msg.obj;
+            int what=msg.what;
+            if (what==2){
+                String data=JsonUtils.getStringValue(result,"Data");
+                feedBackDictionaryBeanList=JSON.parseArray(data,FeedBackDictionaryBean.class);
+                for (int i=0;i<feedBackDictionaryBeanList.size();i++){
+                    if (i==0){
+                        tvGongneng.setText(feedBackDictionaryBeanList.get(0).getDictionaryName());
+                        selectDictionaryid=feedBackDictionaryBeanList.get(0).getDictionaryId();
+                    }else if (i==1){
+                        tvGuzhang.setText(feedBackDictionaryBeanList.get(1).getDictionaryName());
+                    }else if (i==2){
+                        tvXingneng.setText(feedBackDictionaryBeanList.get(2).getDictionaryName());
+                    }
+                }
+            }
+        }
+    };
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        map.clear();
+        mSelected.clear();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
-        mContext=this;
+        mContext = this;
         ButterKnife.bind(this);
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,22 +135,25 @@ public class FeedbackActivity extends BaseActivity {
         appbar.setRightTextOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(mContext,HistoryFeedbackActivity.class));
+                startActivity(new Intent(mContext, HistoryFeedbackActivity.class));
             }
         });
+        String data="{\"dictionaryType\":\"opinion_type\"}";
+        Network.getnetwork().postJson(data,Constants.URL+"/guest/page-by-dictionary",handler,2);
     }
-
-    @OnClick({R.id.tv_gongneng, R.id.tv_xingneng, R.id.tv_guzhang, R.id.ed_feedback, R.id.im_addim, R.id.im_1, R.id.im_2, R.id.im_3, R.id.bt_login})
+    @OnClick({R.id.im_clean1, R.id.im_clean2, R.id.im_clean3, R.id.tv_gongneng, R.id.tv_xingneng, R.id.tv_guzhang, R.id.ed_feedback, R.id.im_addim, R.id.im_1, R.id.im_2, R.id.im_3, R.id.bt_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_gongneng:
+                selectDictionaryid=feedBackDictionaryBeanList.get(0).getDictionaryId();
                 changeselect(tvGongneng);
                 break;
             case R.id.tv_xingneng:
                 changeselect(tvXingneng);
-
+                selectDictionaryid=feedBackDictionaryBeanList.get(2).getDictionaryId();
                 break;
             case R.id.tv_guzhang:
+                selectDictionaryid=feedBackDictionaryBeanList.get(1).getDictionaryId();
                 changeselect(tvGuzhang);
 
                 break;
@@ -114,11 +165,11 @@ public class FeedbackActivity extends BaseActivity {
                         != PackageManager.PERMISSION_GRANTED) {
                     EasyPermissions.requestPermissions(this, "需要获取相册读写权限", 0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                     //    Toast.makeText(this, "请在应用管理中打开“读写存储”访问权限！", Toast.LENGTH_LONG).show();
-                } else {
+                } else if (canSelectCount > 0) {
                     Matisse.from(FeedbackActivity.this)
                             .choose(MimeType.ofAll(), false) // 选择 mime 的类型
                             .countable(true)
-                            .maxSelectable(3) // 图片选择的最多数量
+                            .maxSelectable(canSelectCount) // 图片选择的最多数量
                             .theme(R.style.Matisse_Custom)
                             .gridExpectedSize(400)
                             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
@@ -126,6 +177,8 @@ public class FeedbackActivity extends BaseActivity {
                             .imageEngine(new Glide4Engine()) // 使用的图片加载引擎
                             .forResult(requestCode); // 设置作为标记的请求码
 
+                } else {
+                    BToast.custom(mContext).text("最多只能选3张哦").show();
                 }
                 break;
             case R.id.im_1:
@@ -135,22 +188,84 @@ public class FeedbackActivity extends BaseActivity {
             case R.id.im_3:
                 break;
             case R.id.bt_login:
+                HashMap<String, String> data = new HashMap<>();
+                for (String key:map.keySet()){
+                    mSelected.add(map.get(key));
+                }
+                String feedback=edFeedback.getText().toString();
+                if (feedback.isEmpty()){
+                    return;
+                }
+                if (Constants.TOKEN.isEmpty()){
+                    CustomDialog.Builder builder = new CustomDialog.Builder(this);
+                    builder.setTitle("提示");
+                    builder.setMessage("您尚未登陆，现在就去登陆");
+                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            Intent intent=new Intent(FeedbackActivity.this,LoginActivity.class);
+                            intent.putExtra(Constants.FROMAPP,"fss");
+                            startActivity(intent);
+
+                        }
+                    });
+                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    builder.create().show();
+                }else {
+                    data.put("opinionContent",feedback);
+                    data.put("token",Constants.TOKEN);
+                    data.put("dictionaryId", selectDictionaryid);
+                    Network.getnetwork().uploadimg(data,Constants.URL+"/guest/opinion-insert",mSelected,handler);
+                   // Network.getnetwork().uploadimg(data,"http://192.168.1.200:8080/upload",mSelected,handler);
+                }
+                 break;
+            case R.id.im_clean1:
+                im1.setVisibility(View.INVISIBLE);
+                imClean1.setVisibility(View.INVISIBLE);
+                im1canuse = true;
+                canSelectCount++;
+                map.remove("1");
+                break;
+            case R.id.im_clean2:
+                im2.setVisibility(View.INVISIBLE);
+                imClean2.setVisibility(View.INVISIBLE);
+                im2canuse = true;
+                canSelectCount++;
+                map.remove("2");
+                break;
+            case R.id.im_clean3:
+                im3.setVisibility(View.INVISIBLE);
+                imClean3.setVisibility(View.INVISIBLE);
+                im3canuse = true;
+                canSelectCount++;
+                map.remove("3");
                 break;
         }
     }
 
-    public void changeselect(TextView textView){
-        List<String> selectlist=new ArrayList<>();
-        selectlist.clear();
-        selectlist.add(textView.getText().toString());
+    public void changeselect(TextView textView) {
+//        List<String> selectlist = new ArrayList<>();
+//        selectlist.clear();
+//        selectlist.add(textView.getText().toString());
+      //  selecttext =textView.getText().toString();
         clearcolor();
         textView.setTextColor(Color.parseColor("#f87d28"));
+        textView.setBackground(ContextCompat.getDrawable(mContext, R.drawable.dialogbg));
     }
 
-    public void clearcolor(){
+    public void clearcolor() {
         tvGongneng.setTextColor(Color.parseColor("#666666"));
+        tvGongneng.setBackground(ContextCompat.getDrawable(mContext, R.drawable.dialogbg_nor));
         tvGuzhang.setTextColor(Color.parseColor("#666666"));
+        tvGuzhang.setBackground(ContextCompat.getDrawable(mContext, R.drawable.dialogbg_nor));
         tvXingneng.setTextColor(Color.parseColor("#666666"));
+        tvXingneng.setBackground(ContextCompat.getDrawable(mContext, R.drawable.dialogbg_nor));
     }
 
     @Override
@@ -158,61 +273,62 @@ public class FeedbackActivity extends BaseActivity {
         if (data == null) {
             return;
         }
+        List<Uri> Selected = Matisse.obtainResult(data);
+        if (Selected.size() == 0) {
+            return;
+        }
+        int selectcount = Selected.size();
+        canSelectCount = canSelectCount - selectcount;
+        tvCanselectcount.setText(3-canSelectCount+"/3");
+        for (int i = 0; i < Selected.size(); i++) {
+            Uri uri = Selected.get(i);
+            File file = new File(getRealFilePath(mContext, uri));
 
-        List<Uri> mSelected;
-        mSelected = Matisse.obtainResult(data);
-        Log.d("拿到了返回结果"+mSelected.size());
-        for (int i=0;i<mSelected.size();i++){
-            if (i==0) {
-                Uri uri = mSelected.get(i);
-                File file = new File(getRealFilePath(mContext, uri));
-                try {
-                    FileInputStream fis = new FileInputStream(file.getPath());
-                    Bitmap bitmap = BitmapFactory.decodeStream(fis);
-                    im1.setImageBitmap(bitmap);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }else if (i==1) {
-                Uri uri = mSelected.get(i);
-                File file = new File(getRealFilePath(mContext, uri));
-                try {
-                    FileInputStream fis = new FileInputStream(file.getPath());
-                    Bitmap bitmap = BitmapFactory.decodeStream(fis);
-                    im2.setImageBitmap(bitmap);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }else if (i==2) {
-                Uri uri = mSelected.get(i);
-                File file = new File(getRealFilePath(mContext, uri));
-                try {
-                    FileInputStream fis = new FileInputStream(file.getPath());
-                    Bitmap bitmap = BitmapFactory.decodeStream(fis);
-                    im3.setImageBitmap(bitmap);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(file.getPath());
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
-
+            Bitmap bitmap = BitmapFactory.decodeStream(fis);
+            if (im1canuse) {
+                im1.setImageBitmap(bitmap);
+                im1.setVisibility(View.VISIBLE);
+                imClean1.setVisibility(View.VISIBLE);
+                im1canuse = false;
+                map.put("1", getRealFilePath(mContext, uri));
+            } else if (im2canuse) {
+                im2.setImageBitmap(bitmap);
+                im2.setVisibility(View.VISIBLE);
+                imClean2.setVisibility(View.VISIBLE);
+                map.put("2", getRealFilePath(mContext, uri));
+                im2canuse = false;
+            } else if (im3canuse) {
+                im3.setImageBitmap(bitmap);
+                im3.setVisibility(View.VISIBLE);
+                imClean3.setVisibility(View.VISIBLE);
+                map.put("3", getRealFilePath(mContext, uri));
+                im3canuse = false;
+            }
         }
 
     }
-    public static String getRealFilePath( final Context context, final Uri uri ) {
-        if ( null == uri ) return null;
+
+    public static String getRealFilePath(final Context context, final Uri uri) {
+        if (null == uri) return null;
         final String scheme = uri.getScheme();
         String data = null;
-        if ( scheme == null )
+        if (scheme == null)
             data = uri.getPath();
-        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
             data = uri.getPath();
-        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
-            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
-            if ( null != cursor ) {
-                if ( cursor.moveToFirst() ) {
-                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
-                    if ( index > -1 ) {
-                        data = cursor.getString( index );
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
                     }
                 }
                 cursor.close();
@@ -220,5 +336,6 @@ public class FeedbackActivity extends BaseActivity {
         }
         return data;
     }
+
 
 }

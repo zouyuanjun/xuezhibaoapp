@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,29 +10,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
 
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.RvXuekeCourseAdapter;
 import com.xinzhu.xuezhibao.bean.XuekeCourseBean;
+import com.zou.fastlibrary.ui.spinner.NiceSpinner;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * 学宝页面全部课程里的学科页面
+ */
 public class FragmentXuekeCourse extends LazyLoadFragment {
 
     Unbinder unbinder;
     RvXuekeCourseAdapter adapter;
     WeakReference<Context> mContext;
     @BindView(R.id.sp_zonghe)
-    Spinner spZonghe;
+    NiceSpinner spZonghe;
     @BindView(R.id.sp_nianji)
-    Spinner spNianji;
+    NiceSpinner spNianji;
     @BindView(R.id.sp_kemu)
-    Spinner spKemu;
+    NiceSpinner spKemu;
     @BindView(R.id.rv_xueke)
     RecyclerView rvXueke;
 
@@ -42,12 +50,17 @@ public class FragmentXuekeCourse extends LazyLoadFragment {
 
     @Override
     protected void lazyLoad() {
-        mContext = new WeakReference(getActivity());
+        mContext = new WeakReference(MyApplication.getContext());
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvXueke.setLayoutManager(linearLayoutManager3);
         initdata();
-
+        LinkedList<String> data=new LinkedList<>(Arrays.asList("综合排序", "人气优先"));
+        spZonghe.attachDataSource(data);
+        LinkedList<String> data2=new LinkedList<>(Arrays.asList("一年级", "二年级","三年级","四年级","五年级","6年纪"));
+        spNianji.attachDataSource(data2);
+        LinkedList<String> data3=new LinkedList<>(Arrays.asList("数学", "语文"));
+        spKemu.attachDataSource(data3);
     }
 
     @Override
@@ -60,6 +73,7 @@ public class FragmentXuekeCourse extends LazyLoadFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        rvXueke.setAdapter(null);
         unbinder.unbind();
     }
 

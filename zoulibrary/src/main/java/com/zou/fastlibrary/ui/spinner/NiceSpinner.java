@@ -26,6 +26,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.zou.fastlibrary.R;
+import com.zou.fastlibrary.utils.ScreenUtil;
 
 import java.util.List;
 
@@ -67,24 +68,28 @@ public class NiceSpinner extends AppCompatTextView {
     private int backgroundSelector;
     private int arrowDrawableTint;
     private int displayHeight;
+    private int displayWeigth;
     private int parentVerticalOffset;
     private int dropDownListPaddingBottom;
     private @DrawableRes int arrowDrawableResId;
     private SpinnerTextFormatter spinnerTextFormatter = new SimpleSpinnerTextFormatter();
     private SpinnerTextFormatter selectedTextFormatter = new SimpleSpinnerTextFormatter();
-
+    Context context;
     public NiceSpinner(Context context) {
         super(context);
+        this.context=context;
         init(context, null);
     }
 
     public NiceSpinner(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context=context;
         init(context, attrs);
     }
 
     public NiceSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context=context;
         init(context, attrs);
     }
 
@@ -139,7 +144,7 @@ public class NiceSpinner extends AppCompatTextView {
                 defaultPadding);
         setClickable(true);
 
-        backgroundSelector = typedArray.getResourceId(R.styleable.NiceSpinner_backgroundSelector, R.drawable.selector);
+        backgroundSelector = typedArray.getResourceId(R.styleable.NiceSpinner_backgroundSelector, R.color.transparent);
         setBackgroundResource(backgroundSelector);
         textColor = typedArray.getColor(R.styleable.NiceSpinner_textTint, getDefaultTextColor(context));
         setTextColor(textColor);
@@ -157,9 +162,9 @@ public class NiceSpinner extends AppCompatTextView {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position >= selectedIndex && position < adapter.getCount()) {
-                    position++;
-                }
+//                if (position >= selectedIndex && position < adapter.getCount()) {
+//                    position++;
+//                }
 
                 // Need to set selected index before calling listeners or getSelectedIndex() can be
                 // reported incorrectly due to race conditions.
@@ -174,6 +179,7 @@ public class NiceSpinner extends AppCompatTextView {
                 }
 
                 adapter.setSelectedIndex(position);
+                adapter.notifyDataSetChanged();
                 setTextInternal(adapter.getItemInDataset(position).toString());
                 dismissDropDown();
             }
@@ -212,6 +218,8 @@ public class NiceSpinner extends AppCompatTextView {
 
     private void measureDisplayHeight() {
         displayHeight = getContext().getResources().getDisplayMetrics().heightPixels;
+        displayWeigth=getContext().getResources().getDisplayMetrics().widthPixels;
+
     }
 
     private int getParentVerticalOffset() {
@@ -254,7 +262,7 @@ public class NiceSpinner extends AppCompatTextView {
                 .resolveAttribute(android.R.attr.textColorPrimary, typedValue, true);
         TypedArray typedArray = context.obtainStyledAttributes(typedValue.data,
                 new int[]{android.R.attr.textColorPrimary});
-        int defaultTextColor = typedArray.getColor(0, Color.BLACK);
+        int defaultTextColor = typedArray.getColor(0, Color.parseColor("#f87d28"));
         typedArray.recycle();
         return defaultTextColor;
     }
@@ -275,11 +283,14 @@ public class NiceSpinner extends AppCompatTextView {
     }
 
     public void setTextInternal(String text) {
-        if (selectedTextFormatter != null) {
-            setText(selectedTextFormatter.format(text));
-        } else {
-            setText(text);
-        }
+//        if (selectedTextFormatter != null) {
+//            setText(selectedTextFormatter.format(text));
+//        } else {
+//            setText(text);
+//        }
+        setText(text);
+        setTextColor(Color.parseColor("#f87d28"));
+   //     setPadding(20,0,0,0);
     }
 
     /**
@@ -361,7 +372,7 @@ public class NiceSpinner extends AppCompatTextView {
     }
 
     private void measurePopUpDimension() {
-        int widthSpec = MeasureSpec.makeMeasureSpec(getMeasuredWidth(), MeasureSpec.EXACTLY);
+        int widthSpec = MeasureSpec.makeMeasureSpec(displayWeigth, MeasureSpec.AT_MOST);
         int heightSpec = MeasureSpec.makeMeasureSpec(
                 displayHeight - getParentVerticalOffset() - getMeasuredHeight(),
                 MeasureSpec.AT_MOST);

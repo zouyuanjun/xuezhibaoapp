@@ -9,4 +9,5 @@ public interface ArticleListInterface extends publiceviewinterface{
     void getNewArticle(List<ArticleBean> mDatas);
     void getHotArticle(List<ArticleBean> mDatas);
     void getCollect(List<ArticleBean> mDatas);
+    void getDataFail();
 }

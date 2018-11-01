@@ -81,11 +81,9 @@ public class EmoticonsToolBarView extends RelativeLayout {
         iv_icon.setLayoutParams(imgParams);
         if (pageSetEntity != null) {
             iv_icon.setTag(R.id.id_tag_pageset, pageSetEntity);
-            try {
+
                 ImageLoader.getInstance(mContext).displayImage(pageSetEntity.getIconUri(), iv_icon);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
         }
         toolBtnView.setOnClickListener(onClickListener != null ? onClickListener : new OnClickListener() {
             @Override

@@ -37,9 +37,9 @@ public class HomeVoiceAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((RecyclerHolder) holder).title.setText(mDatas.get(position).getTitle());
+        ((RecyclerHolder) holder).title.setText(mDatas.get(position).getVideoTitle());
 
-        ((RecyclerHolder) holder).im_video.setImageURI(mDatas.get(position).getImurl());
+        ((RecyclerHolder) holder).im_video.setImageURI(mDatas.get(position).getVideoPicture());
 
 
         if (onItemClickListener != null) {

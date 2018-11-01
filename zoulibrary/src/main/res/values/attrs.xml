@@ -19,6 +19,7 @@
         <attr name="rightImage" format="reference" />
         <attr name="rightImageVisible" format="boolean" />
         <attr name="midTextSizeSp" format="integer" />
+        <attr name="rightTextSizeSp" format="integer" />
     </declare-styleable>
 
     <!-- 背景颜色 -->

@@ -16,8 +16,9 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.ItemBean;
+import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.lang.ref.WeakReference;
 import java.security.MessageDigest;
@@ -30,14 +31,14 @@ import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class VoiceListAdapter extends RecyclerView.Adapter {
     protected Context mContext;
-    protected List<ItemBean> mDatas;
+    protected List<VideoVoiceBean> mDatas;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public VoiceListAdapter(WeakReference<Context> mContext, List<ItemBean> mDatas) {
+    public VoiceListAdapter(WeakReference<Context> mContext, List<VideoVoiceBean> mDatas) {
         this.mContext = mContext.get();
         this.mDatas = mDatas;
     }
@@ -51,9 +52,9 @@ public class VoiceListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getTitle());
-        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getDianzan());
-        ((MyViewHolder) holder).tvItemTime.setText(mDatas.get(position).getCreattime());
+        ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getVideoTitle());
+        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getVidelLike());
+        ((MyViewHolder) holder).tvItemTime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
         ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getReadnum());
         RequestOptions requestOptions = RequestOptions.frameOf(0);
         requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
@@ -71,7 +72,7 @@ public class VoiceListAdapter extends RecyclerView.Adapter {
                 }
             }
         });
-        Glide.with(mContext).load(mDatas.get(position).getImurl()).apply(requestOptions).into(((MyViewHolder) holder).simpleDraweeView);
+        Glide.with(mContext).load(mDatas.get(position).getVideoPicture()).apply(requestOptions).into(((MyViewHolder) holder).simpleDraweeView);
 
        // ((MyViewHolder) holder).simpleDraweeView.setImageBitmap(ImageUtils.createVideoThumbnail(mDatas.get(position).getArticlePicture(),MediaStore.Images.Thumbnails.MINI_KIND));
 

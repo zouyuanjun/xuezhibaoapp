@@ -1,47 +1,88 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class CourseBean {
-    String imgurl;
-    String price;
-    String title;
-    String num;
+    String curriculumPicture;
+    String curriculumPrice;
+    String curriculumTitle;
+    String curriculumApply;
+    String curriculumId;
+    String curriculumUrl;
+    String curriculumExplain;
+    String curriculumLike;
+    String videoTeacher;
 
-    public CourseBean(String imgurl, String price, String title, String num) {
-        this.imgurl = imgurl;
-        this.price = price;
-        this.title = title;
-        this.num = num;
+    public CourseBean() {
     }
 
-    public String getImgurl() {
-        return imgurl;
+    public String getCurriculumId() {
+        return curriculumId;
     }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
+    public void setCurriculumId(String curriculumId) {
+        this.curriculumId = curriculumId;
     }
 
-    public String getPrice() {
-        return price;
+    public String getCurriculumUrl() {
+        return curriculumUrl;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setCurriculumUrl(String curriculumUrl) {
+        this.curriculumUrl = curriculumUrl;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCurriculumExplain() {
+        return curriculumExplain;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCurriculumExplain(String curriculumExplain) {
+        this.curriculumExplain = curriculumExplain;
     }
 
-    public String getNum() {
-        return num;
+    public String getCurriculumLike() {
+        return curriculumLike;
     }
 
-    public void setNum(String num) {
-        this.num = num;
+    public void setCurriculumLike(String curriculumLike) {
+        this.curriculumLike = curriculumLike;
+    }
+
+    public String getVideoTeacher() {
+        return videoTeacher;
+    }
+
+    public void setVideoTeacher(String videoTeacher) {
+        this.videoTeacher = videoTeacher;
+    }
+
+    public String getCurriculumPicture() {
+        return curriculumPicture;
+    }
+
+    public void setCurriculumPicture(String curriculumPicture) {
+        this.curriculumPicture = curriculumPicture;
+    }
+
+    public String getCurriculumPrice() {
+        return curriculumPrice;
+    }
+
+    public void setCurriculumPrice(String curriculumPrice) {
+        this.curriculumPrice = curriculumPrice;
+    }
+
+    public String getCurriculumTitle() {
+        return curriculumTitle;
+    }
+
+    public void setCurriculumTitle(String curriculumTitle) {
+        this.curriculumTitle = curriculumTitle;
+    }
+
+    public String getCurriculumApply() {
+        return curriculumApply;
+    }
+
+    public void setCurriculumApply(String curriculumApply) {
+        this.curriculumApply = curriculumApply;
     }
 }

@@ -11,6 +11,15 @@ public class CommentBean {
     public CommentBean() {
     }
 
+    public CommentBean(String abcimurl, String creater, String createTime, String commentContent, String commentId, String productId) {
+        this.abcimurl = abcimurl;
+        this.creater = creater;
+        this.createTime = createTime;
+        this.commentContent = commentContent;
+        this.commentId = commentId;
+        this.productId = productId;
+    }
+
     public String getAbcimurl() {
         return abcimurl;
     }

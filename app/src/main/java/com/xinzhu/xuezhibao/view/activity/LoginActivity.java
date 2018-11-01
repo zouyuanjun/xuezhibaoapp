@@ -19,6 +19,7 @@ import com.xinzhu.xuezhibao.immodule.utils.RequestCode;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
 import com.xinzhu.xuezhibao.presenter.LoginPresenter;
+import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.LoginInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
@@ -50,13 +51,14 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
     Button btForgetpassword;
     Context context;
     LoginPresenter login;
-
+    String FROMAPP="";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         StatusBar.setColor(this,0xFFf87d28);
         ButterKnife.bind(this);
+        FROMAPP=getIntent().getStringExtra(Constants.FROMAPP);
         context=this;
         String a="sdfs";
        // a.substring(5);
@@ -114,7 +116,10 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
     @Override
     public void loginsuccessful() {
         finish();
-        startActivity(new Intent(this,MainActivity.class));
+        if (null==FROMAPP||FROMAPP.isEmpty()){
+            startActivity(new Intent(this,MainActivity.class));
+        }
+
     }
 
     @Override

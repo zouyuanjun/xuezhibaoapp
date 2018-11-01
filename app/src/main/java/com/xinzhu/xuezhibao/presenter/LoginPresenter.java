@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.xinzhu.xuezhibao.bean.UserBasicInfo;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.LoginInterface;
 import com.zou.fastlibrary.utils.JsonUtils;
@@ -45,7 +46,9 @@ public class LoginPresenter {
             }
             if (what == 1) {
                 if (code==100){
-                    Constants.TOKEN=JsonUtils.getStringValue(result,"Data");
+                    String data=JsonUtils.getStringValue(result,"Data");
+                    Constants.TOKEN=JsonUtils.getStringValue(data,"token");
+                    Constants.userBasicInfo= (UserBasicInfo) JsonUtils.stringToObject(data,UserBasicInfo.class);
                     loginInterface.loginsuccessful();
                 }
                 if (code==0){

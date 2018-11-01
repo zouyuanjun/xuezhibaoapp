@@ -11,13 +11,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
-    <TextView
+    <com.zou.fastlibrary.ui.ShapeCornerBgView
         android:id="@+id/textView12"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="反馈"
+        android:textColor="@color/white"
+        app:appRadius="40dp"
+        app:appBgColor="@color/green"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,12 +45,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
-    <TextView
+    <com.zou.fastlibrary.ui.ShapeCornerBgView
         android:id="@+id/tv_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_marginEnd="32dp"
         android:text="2"
+        android:textSize="10sp"
+        app:appBgColor="@color/red"
+        app:appRadius="90dp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_conent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_conent"
         app:srcCompat="@drawable/address_logo" />

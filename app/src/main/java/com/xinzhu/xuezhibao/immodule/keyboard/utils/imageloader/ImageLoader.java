@@ -36,10 +36,9 @@ public class ImageLoader implements ImageBase {
     /**
      * @param uriStr
      * @param imageView
-     * @throws IOException
      */
     @Override
-    public void displayImage(String uriStr, ImageView imageView) throws IOException {
+    public void displayImage(String uriStr, ImageView imageView) {
         switch (Scheme.ofUri(uriStr)) {
             case FILE:
                 displayImageFromFile(uriStr, imageView);

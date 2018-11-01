@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
+import com.xinzhu.xuezhibao.adapter.ViewPagnorAdapter;
 import com.xinzhu.xuezhibao.view.fragment.JiajiaoCourseFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
@@ -16,6 +17,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 主页学宝标签的学科页面
+ */
 public class XuekeActivity extends BaseActivity {
 
     ArrayList<Fragment> fragmentList = new ArrayList<>();
@@ -41,7 +45,7 @@ public class XuekeActivity extends BaseActivity {
         fragmentList.add(JiajiaoCourseFragment.newInstance(2));
         fragmentList.add(JiajiaoCourseFragment.newInstance(3));
         fragmentList.add(JiajiaoCourseFragment.newInstance(4));
-        ListViewPageAdapter listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, title,1);
+        ViewPagnorAdapter listViewPageAdapter = new ViewPagnorAdapter(getSupportFragmentManager(), fragmentList, title);
         vpJiajiao.setAdapter(listViewPageAdapter);
         tbJiajiao.setupWithViewPager(vpJiajiao);
     }

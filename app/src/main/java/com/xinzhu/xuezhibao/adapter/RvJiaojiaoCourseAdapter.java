@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -118,8 +119,8 @@ public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
         TextView tvAll;
         @BindView(R.id.tv_already)
         TextView tvAlready;
-        @BindView(R.id.tv_feedback)
-        TextView tvFeedback;
+        @BindView(R.id.ll_feedback)
+        LinearLayout tvFeedback;
 
         ViewHolder(View view) {
             super(view);

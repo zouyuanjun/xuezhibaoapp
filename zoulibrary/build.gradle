@@ -56,6 +56,7 @@ dependencies {
     api 'com.zhihu.android:matisse:0.5.2-beta2'
     //圆点消息提示
     api 'q.rorbin:badgeview:1.1.3'
-    //下拉刷新Recyclerview
+    //省市区三级联动地区选择器
+    api 'liji.library.dev:citypickerview:3.1.13'
 
 }

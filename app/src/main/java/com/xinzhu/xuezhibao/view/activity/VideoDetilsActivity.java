@@ -21,8 +21,13 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
+import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
+import com.xinzhu.xuezhibao.presenter.VideoVoiceDetailPresenter;
+import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.view.interfaces.VideoVoiceDetailInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.utils.ImageUtils;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class VideoDetilsActivity extends BaseActivity {
+public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetailInterface {
 
 
     @BindView(R.id.standardGSYVideoPlayer)
@@ -51,25 +56,30 @@ public class VideoDetilsActivity extends BaseActivity {
     CommentAdapter commentAdapter;
     boolean isPlay = false;
     Context context;
-
+    String videoid="";
+    List<CommentBean> commentBeanList=new ArrayList<>();
+    VideoVoiceDetailPresenter videoVoiceDetailPresenter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_details2);
         ButterKnife.bind(this);
         context = this;
+        videoid=getIntent().getStringExtra(Constants.INTENT_ID);
         init();
     }
 
     private void init() {
-        commentAdapter = new CommentAdapter(this, initdata());
+        videoVoiceDetailPresenter=new VideoVoiceDetailPresenter(this);
+        videoVoiceDetailPresenter.getVideoDetail(videoid);
+        commentAdapter = new CommentAdapter(this, commentBeanList);
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this);
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvComment.setLayoutManager(linearLayoutManager3);
         rvComment.setNestedScrollingEnabled(false);
         rvComment.setAdapter(commentAdapter);
 
-        detailPlayer = (StandardGSYVideoPlayer) findViewById(R.id.standardGSYVideoPlayer);
+        detailPlayer = findViewById(R.id.standardGSYVideoPlayer);
 
         String source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
         //外部辅助的旋转，帮助全屏
@@ -178,6 +188,42 @@ public class VideoDetilsActivity extends BaseActivity {
         return list;
 
 
+    }
+
+    @Override
+    public void getVideodetail(VideoVoiceBean videoVoiceBean) {
+        tvCreattime.setText(TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
+        tvDetails.setText(videoVoiceBean.getVideoDetails());
+    }
+
+    @Override
+    public void getVoicedetail(VideoVoiceBean videoVoiceBean) {
+
+    }
+
+    @Override
+    public void getcomment(List<CommentBean> mDatas, String total) {
+
+    }
+
+    @Override
+    public void getcommentfail() {
+
+    }
+
+    @Override
+    public void networktimeout() {
+        super.networktimeout();
+    }
+
+    @Override
+    public void networkerr() {
+        super.networkerr();
+    }
+
+    @Override
+    public void servererr() {
+        super.servererr();
     }
 }
 

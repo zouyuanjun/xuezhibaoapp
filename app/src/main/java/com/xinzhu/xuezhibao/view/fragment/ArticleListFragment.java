@@ -1,6 +1,5 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -17,7 +16,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ArticleListAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
-import com.xinzhu.xuezhibao.bean.ItemBean;
 import com.xinzhu.xuezhibao.presenter.ArticlePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
@@ -46,7 +44,7 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
     boolean isvisible=false;
     @Override
     protected int setContentView() {
-        return R.layout.fragment_class;
+        return R.layout.fragment_onlylist;
     }
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,7 +79,11 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                if (POSITION==0){
+                    articlePresenter.getHotArticle(pageindex);
+                }else if (  POSITION==1){
+                    articlePresenter.getNewArticle(pageindex);
+                }
             }
         });
         articleListAdapter.setOnItemClickListener(new ArticleListAdapter.OnItemClickListener() {
@@ -89,7 +91,7 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
             public void onItemClick(View view, int position) {
                 String id=list.get(position).getArticleId();
                 Intent intent=new Intent(getActivity(),ArticleDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ARTICLE_ID,id);
+                intent.putExtra(Constants.INTENT_ID,id);
                 getActivity().startActivity(intent);
             }
 
@@ -121,6 +123,8 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
         if (isvisible){
             articleListAdapter.notifyDataSetChanged();
         }
+        refreshLayout.finishLoadMore();
+        pageindex++;
     }
 
     @Override
@@ -129,12 +133,18 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
         if (isvisible){
             articleListAdapter.notifyDataSetChanged();
         }
-
+        refreshLayout.finishLoadMore();
+        pageindex++;
     }
 
     @Override
     public void getCollect(List<ArticleBean> mDatas) {
 
+    }
+
+    @Override
+    public void getDataFail() {
+        refreshLayout.finishLoadMoreWithNoMoreData();
     }
 
     @Override

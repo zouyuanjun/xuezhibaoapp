@@ -36,6 +36,7 @@
             android:paddingLeft="16dp"
             android:textColor="#999999"
             android:textSize="15sp"
+            android:text="123456"
             android:hint="请输入密码"
              />
     </LinearLayout>
@@ -139,6 +140,7 @@
             android:paddingRight="16dp"
             android:textSize="15sp"
             android:hint="请输入手机号"
+            android:text="18702508050"
             android:textColor="#999999"
             android:background="@color/transparent"
             app:edBgColor="#00000000"

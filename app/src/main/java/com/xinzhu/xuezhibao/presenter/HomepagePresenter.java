@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.presenter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
@@ -10,18 +11,16 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.HomepageInterface;
 import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomepagePresenter {
     HomepageInterface homepageInterface;
-    Activity context;
+    Context context;
     Network network;
 
-    public HomepagePresenter(HomepageInterface homepageInterface, Activity context) {
+    public HomepagePresenter(HomepageInterface homepageInterface, Context context) {
         this.homepageInterface = homepageInterface;
         this.context = context;
     }
@@ -48,58 +47,30 @@ public class HomepagePresenter {
                 homepageInterface.networktimeout();
                 return;
             }
+            if (code==100){
+
             if (what==1){
                 String data=JsonUtils.getStringValue(result,"Data");
                 List<ArticleBean> mDatas=JSON.parseArray(data,ArticleBean.class);
-                Log.d(mDatas.toString()+mDatas.size());
                 homepageInterface.getArticle(mDatas);
+            }else if (what==2){
+                String data=JsonUtils.getStringValue(result,"Data");
+                List<VideoBean> mDatas=JSON.parseArray(data,VideoBean.class);
+                homepageInterface.getVideodata(mDatas);
+            }else if (what==3){
+                String data=JsonUtils.getStringValue(result,"Data");
+                List<VideoBean> mDatas=JSON.parseArray(data,VideoBean.class);
+                homepageInterface.getVoicedata(mDatas);
+            }
             }
         }
     };
-    public void requestVideodata(){
-        homepageInterface.getVideodata(initdata());
-    }
-    public void requestVoicedata(){
-        homepageInterface.getVoicedata(initdata());
-    }
-    public void requestArticledata(){
+    public void initdata(){
         String data=JsonUtils.keyValueToString("pageNo",1);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/article-newest",handler,1);
+        Network.getnetwork().postJson(data,Constants.URL+"/guest/video-newest-gratis",handler,2);
+        Network.getnetwork().postJson(data,Constants.URL+"/guest/video-newest",handler,3);
+
     }
-    private List<VideoBean> initdata(){
-        List<VideoBean> mDatas=new ArrayList<>();
-        String url="http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg";
-        String title="哈哈哈这是什么和水水水水";
-        VideoBean videoBean=new VideoBean(url,title);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        return  mDatas;
-    }
-
-    private List<ArticleBean> initArticle(){
-
-
-
-        List<ArticleBean> mDatas=new ArrayList<>();
-        String url="http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg";
-        String title="哈哈哈这是什么和水水水水";
-        ArticleBean videoBean=new ArticleBean(url,title,"555");
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        mDatas.add(videoBean);
-        return  mDatas;
-    }
-
 
 }

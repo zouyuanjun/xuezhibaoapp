@@ -16,8 +16,8 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.ItemBean;
-import com.zou.fastlibrary.utils.Log;
+import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.lang.ref.WeakReference;
 import java.security.MessageDigest;
@@ -30,14 +30,14 @@ import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class VideoVoiceListAdapter extends RecyclerView.Adapter {
     protected Context mContext;
-    protected List<ItemBean> mDatas;
+    protected List<VideoVoiceBean> mDatas;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public VideoVoiceListAdapter(WeakReference<Context> mContext, List<ItemBean> mDatas) {
+    public VideoVoiceListAdapter(WeakReference<Context> mContext, List<VideoVoiceBean> mDatas) {
         this.mContext = mContext.get();
         this.mDatas = mDatas;
     }
@@ -51,29 +51,33 @@ public class VideoVoiceListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getTitle());
-        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getDianzan());
-        ((MyViewHolder) holder).tvItemTime.setText(mDatas.get(position).getCreattime());
+        ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getVideoTitle());
+        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getVidelLike());
+        ((MyViewHolder) holder).tvItemTime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
         ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getReadnum());
-        RequestOptions requestOptions = RequestOptions.frameOf(0);
-        requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
-        requestOptions.transform(new BitmapTransformation() {
-            @Override
-            protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-                return toTransform;
-            }
-            @Override
-            public void updateDiskCacheKey(MessageDigest messageDigest) {
-                try {
-                    messageDigest.update((mContext.getPackageName() + "RotateTransform").getBytes("utf-8"));
-                } catch (Exception e) {
-                    e.printStackTrace();
+        if (null==mDatas.get(position).getVideoPicture()) {
+            RequestOptions requestOptions = RequestOptions.frameOf(0);
+            requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
+            requestOptions.transform(new BitmapTransformation() {
+                @Override
+                protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
+                    return toTransform;
                 }
-            }
-        });
-        Glide.with(mContext).load(mDatas.get(position).getImurl()).apply(requestOptions).into(((MyViewHolder) holder).simpleDraweeView);
 
-       // ((MyViewHolder) holder).simpleDraweeView.setImageBitmap(ImageUtils.createVideoThumbnail(mDatas.get(position).getArticlePicture(),MediaStore.Images.Thumbnails.MINI_KIND));
+                @Override
+                public void updateDiskCacheKey(MessageDigest messageDigest) {
+                    try {
+                        messageDigest.update((mContext.getPackageName() + "RotateTransform").getBytes("utf-8"));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            Glide.with(mContext).load(mDatas.get(position).getVideoUrl()).apply(requestOptions).into(((MyViewHolder) holder).simpleDraweeView);
+        }else {
+            Glide.with(mContext).load(mDatas.get(position).getVideoPicture()).into(((MyViewHolder) holder).simpleDraweeView);
+        }
+
 
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -96,20 +100,6 @@ public class VideoVoiceListAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return mDatas.size();
     }
-
-//    class RecyclerHolder extends RecyclerView.ViewHolder {
-//        TextView title;
-//        SimpleDraweeView im_article;
-//        TextView tv_readnum;
-//
-//        private RecyclerHolder(View itemView) {
-//            super(itemView);
-//            title = itemView.findViewById(R.id.tv_article_title);
-//            im_article = itemView.findViewById(R.id.im_article);
-//            tv_readnum = itemView.findViewById(R.id.tv_readnum);
-//
-//        }
-//    }
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);

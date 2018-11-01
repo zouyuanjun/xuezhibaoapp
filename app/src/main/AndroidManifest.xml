@@ -27,13 +27,14 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
     <application
+        tools:replace="android:theme"
         android:allowBackup="true"
         android:name="com.xinzhu.xuezhibao.MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        android:theme="@style/MyAppTheme">
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="YxWBs3f5mKeBcVnpWoiEd9lWOxUN4uqS"></meta-data>
@@ -44,10 +45,8 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity android:name=".view.activity.SignActivity"></activity>
         <!--<activity android:name=".view.activity.MainActivity"-->
@@ -60,9 +59,6 @@
         <activity android:name=".immodule.takevideo.CameraActivity"></activity>
         <activity android:name=".immodule.view.BrowserViewPagerActivity" />
         <activity android:name=".view.activity.ForgetPasswordActivity" />
-        <activity android:name=".view.activity.VideoActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait" />
         <activity android:name=".view.activity.UserBaseActivity" />
         <activity android:name=".immodule.view.DownLoadActivity" />
         <activity
@@ -73,7 +69,7 @@
         <activity android:name=".view.activity.ArticleDetilsActivity" />
         <activity android:name=".view.activity.AboutUsActivity" />
         <activity android:name=".view.activity.SettingActivity" />
-        <activity android:name=".view.activity.ArticleListActivity" />
+        <activity android:name=".view.activity.HomeListActivity" />
         <activity android:name=".view.activity.HistoryFeedbackActivity" />
         <activity android:name=".view.activity.FeedbackActivity" />
         <activity android:name=".view.activity.VideoDetilsActivity" />
@@ -82,6 +78,18 @@
         <activity android:name=".view.activity.XuekeActivity" />
         <activity android:name=".view.activity.AllCourseActivity" />
         <activity android:name=".view.activity.SendCommentActivity" />
+        <activity android:name=".view.activity.LoginActivity" />
+        <activity android:name=".view.activity.TeacherDetailActivity" />
+        <activity android:name=".view.activity.EditTaskActivity" />
+        <activity android:name=".view.activity.CourseFeedbackActivity" />
+        <activity android:name=".view.activity.CourseTaskActivity" />
+        <activity android:name=".view.activity.EditUserBasicActivity"
+            android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".view.activity.TrickActivity" />
+        <activity android:name=".view.activity.EditAllActivity" />
+        <activity android:name=".view.activity.MyTaskActivity" />
+        <activity android:name=".view.activity.MyTaskDetailActivity" />
+        <activity android:name=".view.activity.MyCollectActivity" />
 
         <provider
             android:name="com.xinzhu.xuezhibao.utils.MyFileProvider"

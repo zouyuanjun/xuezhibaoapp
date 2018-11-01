@@ -6,9 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
 import com.xinzhu.xuezhibao.adapter.ViewPagnorAdapter;
-import com.xinzhu.xuezhibao.view.fragment.ClassFragment;
 import com.xinzhu.xuezhibao.view.fragment.JiajiaoCourseFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;

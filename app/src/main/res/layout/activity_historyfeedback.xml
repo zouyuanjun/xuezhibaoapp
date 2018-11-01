@@ -1,117 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/itemfenge">
-    <android.support.constraint.ConstraintLayout
+    android:background="#f2f2f2">
+
+
+    <com.zou.fastlibrary.ui.CustomNavigatorBar
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:background="@color/itemfenge">
-        <com.zou.fastlibrary.ui.CustomNavigatorBar
-            android:id="@+id/appbar"
+        android:layout_height="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftTextVisible='false'
+        app:midText='历史反馈'
+        app:midTextFontColor="#ffffff"
+        app:midTextSizeSp="18"
+        app:rightImageVisible='false'
+        app:rightTextVisible='false'
+        app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
+
+    <android.support.v4.widget.NestedScrollView
+
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="44dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:leftTextVisible='false'
-            app:midText='历史反馈'
-            app:midTextFontColor="#ffffff"
-            app:midTextSizeSp="18"
-            app:rightImageVisible='false'
-            app:rightTextVisible='false'
-            app:titleBarBackground='@color/appcolor'>
-        </com.zou.fastlibrary.ui.CustomNavigatorBar>
-
-        <LinearLayout
-            android:id="@+id/linearLayout10"
-            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:paddingRight="10dp"
-            android:orientation="vertical"
-            android:background="@color/white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appbar">
+            android:orientation="vertical">
 
-            <TextView
+
+            <LinearLayout
+                android:id="@+id/linearLayout10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="9dp"
-                android:text="我提了一个问题啊啊啊啊啊啊啊啊 啊啊啊啊啊啊啊啊
+                android:layout_marginStart="64dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+
+                android:orientation="vertical"
+                android:paddingRight="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/chat_bg_dialogbox_right"
+                    android:lineSpacingExtra="5dp"
+                    android:padding="15dp"
+                    android:text="我提了一个问题啊啊啊啊啊啊啊啊 啊啊啊啊啊啊啊啊
              啊啊四季度覅哦啊圣诞节佛啊撒打发死哦的军事基地佛啊是大家佛爱上"
-                />
-            <ImageView
-                android:layout_gravity="right"
-                android:id="@+id/im_1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                />
-            <ImageView
-                android:id="@+id/im_2"
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                />
-            <ImageView
-                android:id="@+id/im_3"
-                android:layout_gravity="right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                />
-        </LinearLayout>
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="15sp" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
-            android:layout_marginEnd="64dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
+                <ImageView
+                    android:id="@+id/im_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="15dp"
+                    android:padding="5dp"
+                    android:scaleType="fitXY" />
 
-            <TextView
+                <ImageView
+                    android:id="@+id/im_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="15dp"
+                    android:padding="5dp"
+                    android:scaleType="fitXY" />
+
+                <ImageView
+                    android:id="@+id/im_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="15dp"
+                    android:padding="5dp"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="9dp"
-                android:text="我提了一个问题啊啊啊啊啊啊啊啊 啊啊啊啊啊啊啊啊
-             啊啊四季度覅哦啊圣诞节佛啊撒打发死哦的军事基地佛啊是大家佛爱上" />
-            <ImageView
-                android:id="@+id/im_back1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                />
-            <ImageView
-                android:id="@+id/im_back2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                />
-            <ImageView
-                android:scaleType="fitXY"
-                android:id="@+id/im_back3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="64dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
 
-            </ImageView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/chat_bg_dialogbox_left"
+                    android:lineSpacingExtra="5dp"
+                    android:padding="15dp"
+                    android:text="我提了一个问题啊啊啊啊啊啊啊啊 啊啊啊啊啊啊啊啊
+             啊啊四季度覅哦啊圣诞节佛啊撒打发死哦的军事基地佛啊是大家佛爱上"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="15sp" />
 
+                <ImageView
+                    android:id="@+id/im_back1"
+                    android:layout_marginTop="15dp"
+                    android:padding="5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY" />
+
+                <ImageView
+                    android:layout_marginTop="15dp"
+                    android:padding="5dp"
+                    android:id="@+id/im_back2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY" />
+
+                <ImageView
+                    android:layout_marginTop="15dp"
+                    android:padding="5dp"
+                    android:id="@+id/im_back3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY">
+
+                </ImageView>
+
+            </LinearLayout>
         </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.constraint.ConstraintLayout>
 
-
-    </android.support.constraint.ConstraintLayout>
-</android.support.v4.widget.NestedScrollView>

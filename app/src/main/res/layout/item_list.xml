@@ -22,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="18dp"
         android:layout_marginEnd="16dp"
         android:textSize="15sp"
         android:lineSpacingExtra="3dp"
@@ -51,7 +51,7 @@
         android:layout_marginEnd="6dp"
         app:layout_constraintEnd_toStartOf="@+id/tv_dianzan"
         app:layout_constraintTop_toTopOf="@+id/tv_item_time"
-        app:srcCompat="@mipmap/emoji_0x1f339" />
+        android:background="@drawable/videolist_icon_like" />
 
     <TextView
         android:id="@+id/tv_dianzan"
@@ -91,6 +91,6 @@
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
         app:layout_constraintTop_toTopOf="@+id/tv_item_time"
-        app:srcCompat="@drawable/btn_blue_bg" />
+        android:background="@drawable/videolist_icon_time" />
 
 </android.support.constraint.ConstraintLayout>
