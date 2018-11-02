@@ -9,5 +9,7 @@ public interface ArticleInterface extends publiceviewinterface{
     void getarticledetils(ArticleBean articleBean);
     void getcomment(List<CommentBean> mDatas,String total);
     void getcommentfail();
+    void islike(boolean islike);
+    void iscollect(boolean iscollect);
 
 }

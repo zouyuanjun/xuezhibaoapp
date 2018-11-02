@@ -1,4 +1,4 @@
-package com.xinzhu.xuezhibao.immodule;
+package com.xinzhu.xuezhibao.immodule.view;
 
 import android.app.Activity;
 import android.app.Dialog;

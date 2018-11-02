@@ -33,6 +33,7 @@ import com.xinzhu.xuezhibao.view.interfaces.ArticleInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.util.LinkedList;
@@ -80,7 +81,8 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     ImageView imLike;
     @BindView(R.id.im_collection)
     ImageView imCollection;
-
+    boolean islike=true;
+    boolean iscollect=true;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +92,13 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         articlePresenter = new ArticlePresenter(this);
         ButterKnife.bind(this);
         init();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        articlePresenter.islike(articleid);
+        articlePresenter.iscollect(articleid);
     }
 
     private void init() {
@@ -129,15 +138,41 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_dianzan:
+                if (Constants.TOKEN.isEmpty()) {
+                    showdia();
+                }else {
+                    if (islike){
+                        islike=false;
+                        articlePresenter.cancellike(articleid);
+                        imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
+                    }else {
+                        islike=true;
+                        articlePresenter.like(articleid);
+                        imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+                    }
+
+                }
                 break;
             case R.id.ll_shoucan:
+                if (Constants.TOKEN.isEmpty()) {
+                    showdia();
+                }else {
+                    if (iscollect){
+                        iscollect=false;
+                        articlePresenter.cancelcollect(articleid);
+                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_nor);
+                    }else {
+                        iscollect=true;
+                        articlePresenter.collect(articleid);
+                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
+                    }
+                }
                 break;
             case R.id.tv_detail_comment:
                 showpop(view);
                 break;
         }
     }
-
     @Override
     public void getarticledetils(ArticleBean articleBean) {
         tvTitle.setText(articleBean.getArticleTitle());
@@ -161,29 +196,27 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         smartrv.finishLoadMoreWithNoMoreData();
     }
 
+    @Override
+    public void islike(boolean like) {
+        islike=like;
+        if (like){
+            imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+        }
+    }
+
+    @Override
+    public void iscollect(boolean collect) {
+        iscollect=collect;
+        if (collect){
+            imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
+        }
+
+    }
+
     //弹出发送评论对话框
     private void showpop(View view) {
         if (Constants.TOKEN.isEmpty()) {
-            CustomDialog.Builder builder = new CustomDialog.Builder(this);
-            builder.setTitle("提示");
-            builder.setMessage("您尚未登陆，现在就去登陆");
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(ArticleDetilsActivity.this, LoginActivity.class);
-                    intent.putExtra(Constants.FROMAPP, "fss");
-                    startActivity(intent);
-
-                }
-            });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.create().show();
+            showdia();
         } else {
             View view1 = LayoutInflater.from(context).inflate(R.layout.pop_commend, null);
             final EditText editText = view1.findViewById(R.id.ed_comment);
@@ -207,6 +240,30 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                 }
             });
         }
+
+
+    }
+    public void showdia(){
+        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("您尚未登陆，现在就去登陆");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(ArticleDetilsActivity.this, LoginActivity.class);
+                intent.putExtra(Constants.FROMAPP, "fss");
+                startActivity(intent);
+
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 
 

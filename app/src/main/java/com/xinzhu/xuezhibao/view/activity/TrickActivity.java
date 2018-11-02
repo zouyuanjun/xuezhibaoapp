@@ -22,12 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TrickActivity extends BaseActivity {
-    @BindView(R.id.tv_username)
-    TextView tvUsername;
-    @BindView(R.id.tv_viplv)
-    ShapeCornerBgView tvViplv;
-    @BindView(R.id.sd_myphoto)
-    SimpleDraweeView sdMyphoto;
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
     @BindView(R.id.rv_mystrick)

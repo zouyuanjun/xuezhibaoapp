@@ -31,7 +31,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.immodule.IMBaseActivity;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 
 import com.xinzhu.xuezhibao.immodule.utils.AttachmentStore;

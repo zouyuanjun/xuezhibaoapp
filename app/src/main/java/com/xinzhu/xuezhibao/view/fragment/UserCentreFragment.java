@@ -14,15 +14,17 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.utils.Constants;
-import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.EditAllActivity;
 import com.xinzhu.xuezhibao.view.activity.LoginActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCollectActivity;
+import com.xinzhu.xuezhibao.view.activity.MyCourseActivity;
+import com.xinzhu.xuezhibao.view.activity.MyOrderActivity;
+import com.xinzhu.xuezhibao.view.activity.MyPointsActivity;
 import com.xinzhu.xuezhibao.view.activity.MyTaskActivity;
+import com.xinzhu.xuezhibao.view.activity.MyVipCentreActivity;
 import com.xinzhu.xuezhibao.view.activity.TrickActivity;
 import com.xinzhu.xuezhibao.view.activity.UserBaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
-import com.zou.fastlibrary.utils.StringUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +32,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class UserCentreFragment extends LazyLoadFragment {
+
     @BindView(R.id.sd_myphoto)
     SimpleDraweeView sdMyphoto;
     Unbinder unbinder;
@@ -81,11 +84,11 @@ public class UserCentreFragment extends LazyLoadFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (Constants.TOKEN.isEmpty()){
+        if (Constants.TOKEN.isEmpty()) {
             llUser.setVisibility(View.GONE);
             clJifen.setVisibility(View.GONE);
             tvLoginbutton.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvLoginbutton.setVisibility(View.GONE);
             llUser.setVisibility(View.VISIBLE);
             clJifen.setVisibility(View.VISIBLE);
@@ -109,8 +112,32 @@ public class UserCentreFragment extends LazyLoadFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_loginbutton, R.id.cl_jifen, R.id.im_mytask, R.id.im_mycourse, R.id.im_mylike,R.id.tv_userbasic, R.id.tv_vipcentre,R.id.tv_mytrack, R.id.tv_myorder, R.id.tv_jifenshop, R.id.tv_myaddress, R.id.tv_lognout})
+    @OnClick({R.id.tv_loginbutton, R.id.cl_jifen, R.id.im_mytask, R.id.im_mycourse, R.id.im_mylike, R.id.tv_userbasic, R.id.tv_vipcentre, R.id.tv_mytrack, R.id.tv_myorder, R.id.tv_jifenshop, R.id.tv_myaddress, R.id.tv_lognout})
     public void onViewClicked(View view) {
+        if (Constants.TOKEN.isEmpty() && view.getId() != R.id.tv_loginbutton) {
+            CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
+            builder.setTitle("提示");
+            builder.setMessage("您尚未登陆，现在就去登陆");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    intent.putExtra(Constants.FROMAPP, "fss");
+                    startActivity(intent);
+
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+            return;
+        }
+        Intent intent;
         switch (view.getId()) {
             case R.id.tv_loginbutton:
                 Intent intent2 = new Intent(getContext(), LoginActivity.class);
@@ -118,64 +145,48 @@ public class UserCentreFragment extends LazyLoadFragment {
                 startActivity(intent2);
                 break;
             case R.id.cl_jifen:
+                intent = new Intent(getActivity(), MyPointsActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.im_mytask:
                 Intent intent4 = new Intent(getContext(), MyTaskActivity.class);
                 startActivity(intent4);
                 break;
             case R.id.im_mycourse:
+                intent = new Intent(getActivity(), MyCourseActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.im_mylike:
                 Intent intent6 = new Intent(getContext(), MyCollectActivity.class);
                 startActivity(intent6);
                 break;
             case R.id.tv_userbasic:
-                Intent intent;
-                if (Constants.TOKEN.isEmpty()) {
-                    CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
-                    builder.setTitle("提示");
-                    builder.setMessage("您尚未登陆，现在就去登陆");
-                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            Intent intent = new Intent(getContext(), LoginActivity.class);
-                            intent.putExtra(Constants.FROMAPP, "fss");
-                            startActivity(intent);
-
-                        }
-                    });
-                    builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    builder.create().show();
-                }else {
-                    if (null==Constants.userBasicInfo){
-                        intent=new Intent(getActivity(),EditAllActivity.class);
-                    }else {
-                        intent=new Intent(getActivity(),UserBaseActivity.class);
-                    }
-                    getActivity().startActivity(intent);
+                if (null == Constants.userBasicInfo) {
+                    intent = new Intent(getActivity(), EditAllActivity.class);
+                } else {
+                    intent = new Intent(getActivity(), UserBaseActivity.class);
                 }
-
+                getActivity().startActivity(intent);
                 break;
             case R.id.tv_vipcentre:
+                intent = new Intent(getActivity(), MyVipCentreActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.tv_mytrack:
-                Intent intent3=new Intent(getActivity(),TrickActivity.class);
+                Intent intent3 = new Intent(getActivity(), TrickActivity.class);
                 getActivity().startActivity(intent3);
                 break;
             case R.id.tv_myorder:
+                intent = new Intent(getActivity(), MyOrderActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.tv_jifenshop:
+
                 break;
             case R.id.tv_myaddress:
                 break;
             case R.id.tv_lognout:
-                Constants.TOKEN="";
+                Constants.TOKEN = "";
                 Intent intent5 = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent5);
                 getActivity().finish();

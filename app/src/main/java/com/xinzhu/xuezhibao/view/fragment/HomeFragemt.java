@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import com.xinzhu.xuezhibao.presenter.HomepagePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.HomeListActivity;
+import com.xinzhu.xuezhibao.view.activity.PointsRuleActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SettingActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
@@ -36,6 +38,7 @@ import com.zou.fastlibrary.ui.ClearWriteEditText;
 import com.zou.fastlibrary.utils.EditTextUtil;
 import com.zou.fastlibrary.utils.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,7 +115,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         //banner设置方法全部调用完毕时最后调用
         banner.start();
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -120,7 +122,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         unbinder = ButterKnife.bind(this, rootView);
         qBadgeView = new QBadgeView(MyApplication.getContext());
         qBadgeView.bindTarget(imMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
-        JMessageClient.registerEventReceiver(this);
+        JMessageClient.registerEventReceiver(new WeakReference<>(this).get());
         Log.d("创建完毕");
         return rootView;
     }
@@ -128,6 +130,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        JMessageClient.unRegisterEventReceiver(new WeakReference<>(this).get());
         unbinder.unbind();
     }
 
@@ -205,7 +208,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 String id=mDatas.get(position).getVideoId();
                 Intent intent=new Intent(getContext(),VideoDetilsActivity.class);
                 intent.putExtra(Constants.INTENT_ID,id);
-                getActivity().startActivity(intent);
                 startActivity(intent);
             }
 
@@ -218,8 +220,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     @Override
     public void getVoicedata(final List<VideoBean> mDatas) {
-
-        //初始化音频列表
+//        初始化音频列表
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvVoice.setNestedScrollingEnabled(false);
@@ -232,10 +233,8 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 String id=mDatas.get(position).getVideoId();
                 Intent intent=new Intent(getContext(),VoiceDetilsActivity.class);
                 intent.putExtra(Constants.INTENT_ID,id);
-                getActivity().startActivity(intent);
                 startActivity(intent);
             }
-
             @Override
             public void onItemLongClick(View view, int position) {
 

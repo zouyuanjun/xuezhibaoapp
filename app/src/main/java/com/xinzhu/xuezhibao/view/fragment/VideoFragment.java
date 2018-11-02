@@ -1,5 +1,7 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -16,6 +18,8 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.VideoVoiceListAdapter;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.presenter.VideoVoiceListPresenter;
+import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.interfaces.VideoFragmentInterface;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 
@@ -60,6 +64,7 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
         if (isfistaddtab) {
             tabVideo.addTab(tabVideo.newTab().setText("免费视频"));
             tabVideo.addTab(tabVideo.newTab().setText("付费视频"));
+            tabVideo.setTabTextColors(Color.parseColor("#333333"),Color.parseColor("#f87d28"));
             isfistaddtab = false;
         }
     }
@@ -104,6 +109,34 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
             }
         });
         loaddata();
+        payadapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                String id=payBeanList.get(position).getVideoId();
+                Intent intent=new Intent(getContext(),VideoDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID,id);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+        freeadapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                String id=freeBeanList.get(position).getVideoId();
+                Intent intent=new Intent(getContext(),VideoDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID,id);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
     }
 private void loaddata(){
         if (type==0){

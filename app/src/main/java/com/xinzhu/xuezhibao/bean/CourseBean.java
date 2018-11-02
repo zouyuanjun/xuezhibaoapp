@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class CourseBean {
+    long creatTime;
     String curriculumPicture;
     String curriculumPrice;
     String curriculumTitle;
@@ -12,6 +13,14 @@ public class CourseBean {
     String videoTeacher;
 
     public CourseBean() {
+    }
+
+    public long getCreatTime() {
+        return creatTime;
+    }
+
+    public void setCreatTime(long creatTime) {
+        this.creatTime = creatTime;
     }
 
     public String getCurriculumId() {

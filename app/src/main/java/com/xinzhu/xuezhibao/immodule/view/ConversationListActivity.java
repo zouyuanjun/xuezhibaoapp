@@ -24,7 +24,6 @@ import com.xinzhu.xuezhibao.immodule.ConversationListView;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.MenuItemController;
 import com.xinzhu.xuezhibao.immodule.bean.Event;
-import com.xinzhu.xuezhibao.immodule.IMBaseActivity;
 import com.zou.fastlibrary.utils.Log;
 
 import cn.jpush.im.android.api.JMessageClient;
@@ -132,6 +131,7 @@ public class ConversationListActivity extends IMBaseActivity {
     }
 
 
+//添加好友菜单
     public void showPopWindow() {
         mMenuPopWindow.setTouchable(true);
         mMenuPopWindow.setOutsideTouchable(true);

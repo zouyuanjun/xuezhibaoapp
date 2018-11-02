@@ -53,12 +53,12 @@ public class SignPresenter {
     public void sendcode(String phone) {
         String data=JsonUtils.keyValueToString("account",phone);
 
-    //    Network.getnetwork().postJson(data, Constants.URL+"/member/noteCode", handler, 1);
-        Network.getnetwork().postform("account",phone, Constants.URL+"/member/noteCode", handler, 1);
+       Network.getnetwork().postJson(data, Constants.URL+"/member/noteCode", handler, 1);
+      //  Network.getnetwork().postJson("account",phone, Constants.URL+"/member/noteCode", handler, 1);
     }
 
     public void sign(final SignBean signBean) {
-        jimUtils.sign(signBean.getAccount(),signBean.getPassword(),signBean.getName());
+
 
 
         Network.getnetwork().postJson(JsonUtils.objectToString(signBean), Constants.URL+"/member/sign-in",handler,2);

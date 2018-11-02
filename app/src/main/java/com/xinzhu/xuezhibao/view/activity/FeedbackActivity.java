@@ -256,7 +256,7 @@ public class FeedbackActivity extends BaseActivity {
       //  selecttext =textView.getText().toString();
         clearcolor();
         textView.setTextColor(Color.parseColor("#f87d28"));
-        textView.setBackground(ContextCompat.getDrawable(mContext, R.drawable.dialogbg));
+        textView.setBackground(ContextCompat.getDrawable(mContext, R.drawable.customdialogbg));
     }
 
     public void clearcolor() {

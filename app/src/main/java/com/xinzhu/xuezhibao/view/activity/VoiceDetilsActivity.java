@@ -1,20 +1,52 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.hrb.library.MiniMusicView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.adapter.CommentAdapter;
+import com.xinzhu.xuezhibao.bean.CommentBean;
+import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
+import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
+import com.xinzhu.xuezhibao.presenter.VideoVoiceDetailPresenter;
+import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
+import com.xinzhu.xuezhibao.view.interfaces.VideoVoiceDetailInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.ui.CustomDialog;
+import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.lang.ref.WeakReference;
+import java.util.LinkedList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class VoiceDetilsActivity extends BaseActivity {
+public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetailInterface, LikeCollectInterface {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_creattime)
@@ -29,15 +61,78 @@ public class VoiceDetilsActivity extends BaseActivity {
     RecyclerView rvComment;
     @BindView(R.id.mmv_music)
     MiniMusicView mMusicView;
+    @BindView(R.id.appbar)
+    CustomNavigatorBar appbar;
+    @BindView(R.id.tv_detail_comment)
+    TextView tvDetailComment;
+    @BindView(R.id.im_like)
+    ImageView imLike;
+    @BindView(R.id.tv_like)
+    TextView tvLike;
+    @BindView(R.id.im_collection)
+    ImageView imCollection;
+    @BindView(R.id.tv_collection)
+    TextView tvCollection;
+
+    Context context;
+    String videoid = "";
+    LinkedList<CommentBean> commentBeanArrayList = new LinkedList<>();
+    VideoVoiceDetailPresenter videoVoiceDetailPresenter;
+    CommentAdapter commentAdapter;
+    LikeCollectPresenter likeCollectPresenter;
+    int page = 1;
+    @BindView(R.id.SmartRefreshLayout)
+    SmartRefreshLayout smartrv;
+    boolean islike = true;
+    boolean iscollect = true;
+    @BindView(R.id.mynest)
+    NestedScrollView mynest;
+    boolean isvisibale=false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice_details);
         ButterKnife.bind(this);
+        context = this;
+        videoid = getIntent().getStringExtra(Constants.INTENT_ID);
         mMusicView.setTitleText("孩子回家不吃饭");
         mMusicView.setmContext(new WeakReference<Context>(this));
         mMusicView.startPlayMusic("http://other.web.nf01.sycdn.kuwo.cn/resource/n2/87/0/3398589179.mp3");
+
+        videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
+        likeCollectPresenter = new LikeCollectPresenter(this);
+
+        commentAdapter = new CommentAdapter(this, commentBeanArrayList);
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this);
+        linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
+        rvComment.setLayoutManager(linearLayoutManager3);
+        rvComment.setNestedScrollingEnabled(false);
+        rvComment.setAdapter(commentAdapter);
+        smartrv.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                videoVoiceDetailPresenter.getVoiceComment(videoid, page);
+            }
+        });
+        mynest.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    smartrv.autoLoadMore();
+                }
+
+            }
+        });
+        videoVoiceDetailPresenter.getVoiceDetail(videoid);
+        videoVoiceDetailPresenter.getVoiceComment(videoid, 1);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        likeCollectPresenter.islike(videoid,"3");
+        likeCollectPresenter.iscollect(videoid,"3");
     }
 
     @Override
@@ -45,4 +140,158 @@ public class VoiceDetilsActivity extends BaseActivity {
         super.onDestroy();
         mMusicView.stopPlayMusic();
     }
+    @OnClick({R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_detail_comment})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_dianzan:
+                if (Constants.TOKEN.isEmpty()) {
+                    showdia();
+                }else {
+                    if (islike){
+                        islike=false;
+                        likeCollectPresenter.cancellike(videoid,"3");
+                        imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
+                    }else {
+                        islike=true;
+                        likeCollectPresenter.like(videoid,"3");
+                        imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+                    }
+
+                }
+                break;
+            case R.id.ll_shoucan:
+                if (Constants.TOKEN.isEmpty()) {
+                    showdia();
+                }else {
+                    if (iscollect){
+                        iscollect=false;
+                        likeCollectPresenter.cancelcollect(videoid,"3");
+                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_nor);
+                    }else {
+                        iscollect=true;
+                        likeCollectPresenter.collect(videoid,"3");
+                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
+                    }
+                }
+                break;
+            case R.id.tv_detail_comment:
+                showpop(view);
+                break;
+        }
+    }
+    @Override
+    public void getVideodetail(VideoVoiceBean videoVoiceBean) {
+
+    }
+
+    @Override
+    public void getVoicedetail(VideoVoiceBean videoVoiceBean) {
+        tvCreattime.setText(TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
+        tvDetails.setText(videoVoiceBean.getVideoDetails());
+        tvTitle.setText(videoVoiceBean.getVideoTitle());
+    }
+
+    @Override
+    public void getcomment(List<CommentBean> mDatas, String total) {
+        tvCommentNum.setText("全部评论(" + total + ")");
+        commentBeanArrayList.addAll(mDatas);
+        if (commentAdapter != null) {
+            commentAdapter.notifyDataSetChanged();
+        }
+        page++;
+        smartrv.finishLoadMore();
+
+    }
+
+    @Override
+    public void networktimeout() {
+        super.networktimeout();
+    }
+
+    @Override
+    public void networkerr() {
+        super.networkerr();
+    }
+
+    @Override
+    public void servererr() {
+        super.servererr();
+    }
+
+    @Override
+    public void getcommentfail() {
+        smartrv.finishLoadMoreWithNoMoreData();
+    }
+
+    @Override
+    public void islike(boolean like) {
+        islike = like;
+        if (like) {
+            imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+        }
+    }
+
+    @Override
+    public void iscollect(boolean collect) {
+        iscollect = collect;
+        if (collect) {
+            imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
+        }
+
+    }
+
+    //弹出发送评论对话框
+    private void showpop(View view) {
+        if (Constants.TOKEN.isEmpty()) {
+            showdia();
+        } else {
+            View view1 = LayoutInflater.from(context).inflate(R.layout.pop_commend, null);
+            final EditText editText = view1.findViewById(R.id.ed_comment);
+            TextView textView = view1.findViewById(R.id.tv_send);
+            final PopupWindow window = new PopupWindow(view1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            window.setOutsideTouchable(true);
+            window.setTouchable(true);
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Service.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+            window.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String commend = editText.getText().toString();
+                    CommentBean commentBean = new CommentBean("", "sdfsd", "1540785350000", commend, "", "111");
+                    commentBeanArrayList.addFirst(commentBean);
+                    commentAdapter.notifyItemInserted(0);
+                    videoVoiceDetailPresenter.sendVoiceComment(videoid, commend);
+                    window.dismiss();
+                }
+            });
+        }
+
+
+    }
+
+    public void showdia() {
+        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("您尚未登陆，现在就去登陆");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(VoiceDetilsActivity.this, LoginActivity.class);
+                intent.putExtra(Constants.FROMAPP, "fss");
+                startActivity(intent);
+
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
 }

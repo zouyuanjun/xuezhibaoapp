@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.immodule.IMBaseActivity;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.bean.Event;
 import com.xinzhu.xuezhibao.immodule.bean.EventType;

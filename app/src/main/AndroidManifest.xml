@@ -90,6 +90,28 @@
         <activity android:name=".view.activity.MyTaskActivity" />
         <activity android:name=".view.activity.MyTaskDetailActivity" />
         <activity android:name=".view.activity.MyCollectActivity" />
+        <activity android:name=".view.activity.CoursePlayActivity" />
+        <activity android:name=".view.activity.TestActivity" />
+        <activity android:name=".view.activity.MyVipCentreActivity" />
+        <activity android:name=".view.activity.MyOrderActivity" />
+        <activity android:name=".view.activity.MyPointsActivity" />
+        <activity android:name=".view.activity.PointsRuleActivity" />
+        <activity android:name=".view.activity.TestBeforeActivity" />
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.app.H5AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <activity android:name=".view.activity.MyCourseActivity" />
 
         <provider
             android:name="com.xinzhu.xuezhibao.utils.MyFileProvider"

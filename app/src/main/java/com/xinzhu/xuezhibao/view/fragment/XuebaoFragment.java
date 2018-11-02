@@ -17,6 +17,7 @@ import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.presenter.XuebaoPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.AllCourseActivity;
+import com.xinzhu.xuezhibao.view.activity.CoursePlayActivity;
 import com.xinzhu.xuezhibao.view.activity.JiajiaoActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
@@ -134,7 +135,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
     }
 
     @Override
-    public void getHotCourse(List<CourseBean> list) {
+    public void getHotCourse(final List<CourseBean> list) {
         //初始化最热课程列表
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -145,7 +146,9 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(), VideoDetilsActivity.class));
+                Intent intent=new Intent(getContext(), CoursePlayActivity.class);
+                intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                startActivity(intent);
             }
 
             @Override
@@ -157,7 +160,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
     }
 
     @Override
-    public void getNewCourse(List<CourseBean> list) {
+    public void getNewCourse(final List<CourseBean> list) {
         //初始化最热课程列表
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -168,7 +171,9 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(), VideoDetilsActivity.class));
+                Intent intent=new Intent(getContext(), CoursePlayActivity.class);
+                intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                startActivity(intent);
             }
 
             @Override
@@ -180,7 +185,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
     }
 
     @Override
-    public void getRecommentCourse(List<CourseBean> list) {
+    public void getRecommentCourse(final List<CourseBean> list) {
         //初始化推荐课程列表
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -191,7 +196,9 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(), VideoDetilsActivity.class));
+                Intent intent=new Intent(getContext(), CoursePlayActivity.class);
+                intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                startActivity(intent);
             }
 
             @Override
@@ -203,7 +210,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
     }
 
     @Override
-    public void getAllCourse(List<CourseBean> list) {
+    public void getAllCourse(final List<CourseBean> list) {
         //初始化最热课程列表
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -214,7 +221,9 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(), VideoDetilsActivity.class));
+                Intent intent=new Intent(getContext(), CoursePlayActivity.class);
+                intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                startActivity(intent);
             }
 
             @Override

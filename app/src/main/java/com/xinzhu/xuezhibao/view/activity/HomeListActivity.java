@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -42,6 +43,7 @@ public class HomeListActivity extends BaseActivity {
         tbClass.addTab(tbClass.newTab().setText("热门"));
         tbClass.addTab(tbClass.newTab().setText("最新"));
         tbClass.addTab(tbClass.newTab().setText("我的收藏"));
+        tbClass.setTabTextColors(Color.parseColor("#333333"),Color.parseColor("#f87d28"));
         if (TYPE==1){
             appbar.setMidText("视频");
             fragmentList.clear();

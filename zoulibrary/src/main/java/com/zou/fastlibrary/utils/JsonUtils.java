@@ -24,9 +24,9 @@ public class JsonUtils {
 	 * @param jsonString
 	 * @return
 	 */
-	public static Object stringToObject(String jsonString, Class cla) {
+	public static <T> T  stringToObject(String jsonString, Class<T> cla) {
 		JSONObject jsonObject = JSON.parseObject(jsonString);
-		Object obj = JSON.toJavaObject(jsonObject, cla);
+		T obj = JSON.toJavaObject(jsonObject, cla);
 		return obj;
 	}
 
@@ -69,12 +69,7 @@ public class JsonUtils {
 	 */
 	public static int getIntValue(String jsonString, String key) {
 		JSONObject jsonObject = JSON.parseObject(jsonString);
-		boolean b = jsonObject.containsKey(key);
-		if (b) {
-			return jsonObject.getIntValue(key);
-		} else {
-			return 10000;
-		}
+		return jsonObject.getIntValue(key);
 	}
 
 	/**

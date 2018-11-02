@@ -16,7 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.immodule.IMBaseActivity;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.bean.InfoModel;
 import com.xinzhu.xuezhibao.immodule.utils.SelectableRoundedImageView;

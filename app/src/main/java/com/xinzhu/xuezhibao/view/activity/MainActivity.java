@@ -10,6 +10,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.view.fragment.HomeFragemt;
+import com.xinzhu.xuezhibao.view.fragment.TestFragment;
 import com.xinzhu.xuezhibao.view.fragment.UserCentreFragment;
 import com.xinzhu.xuezhibao.view.fragment.VideoFragment;
 import com.xinzhu.xuezhibao.view.fragment.XuebaoFragment;
@@ -34,7 +35,7 @@ public class MainActivity extends BaseTabActivity {
         EditTextUtil.hideKeyboard(this,getCurrentFocus());
         Fresco.initialize(this.getApplicationContext());
         StatusBar.setColor(this,0xFFf87d28);
-        tabTextlist.add("学科");
+        tabTextlist.add("首页");
         tabTextlist.add("视频课程");
         tabTextlist.add("学宝");
         tabTextlist.add("测评");
@@ -54,7 +55,7 @@ public class MainActivity extends BaseTabActivity {
         fragmentList.add(new HomeFragemt());
         fragmentList.add(new VideoFragment());
         fragmentList.add(new XuebaoFragment());
-        fragmentList.add(new HomeFragemt());
+        fragmentList.add(new TestFragment());
         fragmentList.add(new UserCentreFragment());
         setViewPagerAdaptr(fragmentList);
         if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)

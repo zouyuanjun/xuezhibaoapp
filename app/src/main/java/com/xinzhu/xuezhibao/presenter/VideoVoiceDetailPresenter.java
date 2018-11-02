@@ -38,10 +38,6 @@ public class VideoVoiceDetailPresenter {
                 videoVoiceDetailInterface.networktimeout();
                 return;
             }
-            if (code!=100){
-                videoVoiceDetailInterface.servererr();
-                return;
-            }
             if (what==1){
                 String data = JsonUtils.getStringValue(result, "Data");
                 VideoVoiceBean videoVoiceBean = (VideoVoiceBean) JsonUtils.stringToObject(data,VideoVoiceBean.class);
@@ -57,6 +53,10 @@ public class VideoVoiceDetailPresenter {
                     videoVoiceDetailInterface.getcomment(mDatas, total);
                 }
 
+            }else if (what==2){
+                String data = JsonUtils.getStringValue(result, "Data");
+                VideoVoiceBean videoVoiceBean = (VideoVoiceBean) JsonUtils.stringToObject(data,VideoVoiceBean.class);
+                videoVoiceDetailInterface.getVoicedetail(videoVoiceBean);
             }
         }
     };
@@ -73,15 +73,22 @@ public class VideoVoiceDetailPresenter {
         String data=JsonUtils.keyValueToString("videoId",id);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/find-by-video-id",handler,2);
     }
-    public void sendComment(String id, String comment) {
+    public void sendVideoComment(String id, String comment) {
         SendCommentBean sendCommentBean = new SendCommentBean(Constants.TOKEN, comment, id, "1");
         String data = JsonUtils.objectToString(sendCommentBean);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/comment-add-article", handler, 4);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/comment-add-videos", handler, 4);
     }
-
-    public void getComment(String id, int page) {
+    public void sendVoiceComment(String id, String comment) {
+        SendCommentBean sendCommentBean = new SendCommentBean(Constants.TOKEN, comment, id, "1");
+        String data = JsonUtils.objectToString(sendCommentBean);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/comment-add-video", handler, 4);
+    }
+    public void getVideoComment(String id, int page) {
         String data = JsonUtils.keyValueToString2("pageNo", page, "productId", id);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/comment-article", handler, 5);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/comment-by-videos", handler, 5);
     }
-
+    public void getVoiceComment(String id, int page) {
+        String data = JsonUtils.keyValueToString2("pageNo", page, "productId", id);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/comment-by-video", handler, 5);
+    }
 }

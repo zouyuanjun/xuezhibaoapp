@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <com.zou.fastlibrary.ui.CustomNavigatorBar
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftTextVisible='false'
+        app:leftImageVisiable='false'
+        app:midText='测评'
+        app:midTextFontColor="#ffffff"
+        app:midTextSizeSp="18"
+        app:rightImageVisible='false'
+        app:rightTextVisible='false'
+        app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:textColor="@color/color_black_333333"
+        android:lineSpacingExtra="5dp"
+        android:text="本测评，由美国范德比尔特注意力家长测评表，香港初小学生读写能力饰查星表等核心内容组成，针对儿童阅读能力、书写能力、注意力发展、自我控制发展、感知觉发展和情绪发展6个方面的能力对进行专业评估。
+      家长根据孩子在日常学习、生活中是否存在如下的表现给予如实选择相应选项：
+【非常符合】经常出现描述中的情况或与描述情况很相似
+【有时符合】偶尔、有时出现描述中的情况或与描述情况相似
+【不符合】几乎没出现过描述中的情况或与描述情况不符
+
+【温馨提示】量表测评可做为初步了解孩童情况，对于儿童发展测评项发展水平做出大致评价，对可能出现的发展落后提出预警或建议，请家长根据实际情况自评填写即可。"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
+
+    <com.zou.fastlibrary.ui.ShapeCornerBgView
+        android:id="@+id/begintest"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="68dp"
+        android:text="现在开始"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        app:appBgColor="@color/appcolor"
+        app:appRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

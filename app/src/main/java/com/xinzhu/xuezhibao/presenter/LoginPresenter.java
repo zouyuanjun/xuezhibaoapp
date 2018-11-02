@@ -9,6 +9,7 @@ import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xinzhu.xuezhibao.bean.UserBasicInfo;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.JimUtils;
 import com.xinzhu.xuezhibao.view.interfaces.LoginInterface;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
@@ -50,8 +51,7 @@ public class LoginPresenter {
                     Constants.TOKEN=JsonUtils.getStringValue(data,"token");
                     Constants.userBasicInfo= (UserBasicInfo) JsonUtils.stringToObject(data,UserBasicInfo.class);
                     loginInterface.loginsuccessful();
-                }
-                if (code==0){
+                }else {
                     loginInterface.loginfail(code);
                 }
             }
@@ -63,18 +63,19 @@ public class LoginPresenter {
         this.loginInterface = loginInterface;
     }
     public void phonelogin(String phone,String password ){
-//
-//        JMessageClient.login(phone, password, new BasicCallback() {
-//            @Override
-//            public void gotResult(int responseCode, String responseMessage) {
-//                Log.d("JIM登陆响应",responseMessage);
-//                if (responseCode == 0) {
-//                    UserInfo myUserInfo = JMessageClient.getMyInfo();
-//                    //注册时更新头像
-//                    loginInterface.loginsuccessful();
-//                }
-//            }
-//        });
+        JimUtils jimUtils=new JimUtils();
+        jimUtils.sign(phone,password,"第一个账户");
+        JMessageClient.login(phone, password, new BasicCallback() {
+            @Override
+            public void gotResult(int responseCode, String responseMessage) {
+                Log.d("JIM登陆响应",responseMessage);
+                if (responseCode == 0) {
+                    UserInfo myUserInfo = JMessageClient.getMyInfo();
+                    //注册时更新头像
+                    loginInterface.loginsuccessful();
+                }
+            }
+        });
         String data=JsonUtils.keyValueToString("account",phone);
         data=JsonUtils.addKeyValue(data,"password",password);
         Network.getnetwork().postJson(data,Constants.URL+"/app/login",handler,1);

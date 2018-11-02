@@ -70,15 +70,15 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
                     homeVideoVoiceListPresenter.getHotVideo(page);
                 }else if (POSITION==1){
                     homeVideoVoiceListPresenter.getNewVideo(page);
-                }else if (POSITION==3){
+                }else if (POSITION==2){
                     homeVideoVoiceListPresenter.getLikeVideo(page);
                 }
-            }else if (TYPE==1){
+            }else if (TYPE==2){
                 if (POSITION==0){
                     homeVideoVoiceListPresenter.getHotVoice(page);
                 }else if (POSITION==1){
                     homeVideoVoiceListPresenter.getNewVoice(page);
-                }else if (POSITION==3){
+                }else if (POSITION==2){
                     homeVideoVoiceListPresenter.getLikeVoice(page);
                 }
             }
@@ -90,14 +90,14 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
                 Intent intent=new Intent();
                 if (TYPE==1){
                      intent=new Intent(getContext(),VideoDetilsActivity.class);
-
+                        intent.putExtra(Constants.INTENT_ID,list.get(position).getVideoId());
                 }else if (TYPE==2){
                     intent=new Intent(getContext(),VoiceDetilsActivity.class);
+                    intent.putExtra(Constants.INTENT_ID,list.get(position).getVideoId());
                 }
                 intent.putExtra(Constants.INTENT_ID,list.get(position).getVideoId());
                 getActivity().startActivity(intent);
             }
-
             @Override
             public void onItemLongClick(View view, int position) {
 
@@ -110,13 +110,29 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+              refreshlayout.finishRefresh(1000);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadMore(2000/*,false*/);//传入false表示加载失败
+                if (TYPE==1){
+                    if (POSITION==0){
+                        homeVideoVoiceListPresenter.getHotVideo(page);
+                    }else if (POSITION==1){
+                        homeVideoVoiceListPresenter.getNewVideo(page);
+                    }else if (POSITION==2){
+                        homeVideoVoiceListPresenter.getLikeVideo(page);
+                    }
+                }else if (TYPE==2){
+                    if (POSITION==0){
+                        homeVideoVoiceListPresenter.getHotVoice(page);
+                    }else if (POSITION==1){
+                        homeVideoVoiceListPresenter.getNewVoice(page);
+                    }else if (POSITION==2){
+                        homeVideoVoiceListPresenter.getLikeVoice(page);
+                    }
+                }
             }
         });
 

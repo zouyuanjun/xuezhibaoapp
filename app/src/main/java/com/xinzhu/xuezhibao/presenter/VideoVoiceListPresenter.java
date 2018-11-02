@@ -10,6 +10,7 @@ import com.xinzhu.xuezhibao.view.interfaces.VideoFragmentInterface;
 import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.List;
 
@@ -96,8 +97,10 @@ public class VideoVoiceListPresenter {
     }
 
     public void getLikeVideo(int page) {
-        String data = JsonUtils.keyValueToString("pageNo", page);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-videos", handler, 3);
+        if (!StringUtil.isEmpty(Constants.TOKEN)){
+            String data = JsonUtils.keyValueToString2("pageNo", page,"token",Constants.TOKEN);
+            Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-videos", handler, 3);
+        }
     }
 
     public void getHotVoice(int page) {
@@ -111,8 +114,10 @@ public class VideoVoiceListPresenter {
     }
 
     public void getLikeVoice(int page) {
-        String data = JsonUtils.keyValueToString("pageNo", page);
+        if (!StringUtil.isEmpty(Constants.TOKEN)){
+        String data = JsonUtils.keyValueToString2("pageNo", page,"token",Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-video", handler, 6);
+        }
     }
 
     public void getfreeVideo(int page) {

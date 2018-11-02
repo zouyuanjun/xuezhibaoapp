@@ -44,7 +44,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:background="@drawable/dialogbg"
+        android:background="@drawable/customdialogbg"
         android:gravity="center"
         android:text=""
         android:textColor="@color/appcolor"

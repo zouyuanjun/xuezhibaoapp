@@ -16,14 +16,14 @@ public class Constants {
     public static int SETTING_USENET=1;
     public static int SETTING_CANNOTIFITION=1;
     public static String TOKEN="";
-    public static String ALAPPID="2018102561835573";
+    public static String ALAPPID="2016091800540358";
     public static String INTENT_ID ="id";
     public static String FROMAPP="fromapp";
     public static String INTENT_COURSE_CLASS="COURSE";
     public static String INTENT_EDITITEM="COURSE";    //修改个人资料时传入要修改的项目
     public static UserBasicInfo userBasicInfo=null;
     //支付宝私钥
-    public static String APPKEY="\n" +
+    public static String privateKEY ="\n" +
             "MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDT4licaHutf7rm\n" +
             "lTSqRw5NEcpyzaJA1xFcCl/TI8D6aFWlejhksyJzrCixEqymYuyzJGKFZVN6KpJU\n" +
             "ewDapgUpRJevW+aVkr7PSysYyXJOqRAEBM4WQBzxM/vAg0Mf2a2Fuy/h8kMMODBv\n" +
