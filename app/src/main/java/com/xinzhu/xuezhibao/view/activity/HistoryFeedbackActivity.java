@@ -1,14 +1,33 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.bravin.btoast.BToast;
 import com.bumptech.glide.Glide;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.bean.FeedbackPictureBean;
+import com.xinzhu.xuezhibao.utils.Constants;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.JSON;
+import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.Network;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,32 +43,124 @@ public class HistoryFeedbackActivity extends BaseActivity {
     ImageView im3;
     @BindView(R.id.linearLayout10)
     LinearLayout linearLayout10;
-    @BindView(R.id.im_back1)
-    ImageView imBack1;
-    @BindView(R.id.im_back2)
-    ImageView imBack2;
-    @BindView(R.id.im_back3)
-    ImageView imBack3;
+    Activity context;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String result = (String) msg.obj;
+            Log.d(result);
+            int code = JsonUtils.getIntValue(result, "_code");
+            if (code == 100) {
+
+                String data = JsonUtils.getStringValue(result, "Data");
+                String opinionContent = JsonUtils.getStringValue(data, "opinionContent");
+                String opinionReply=JsonUtils.getStringValue(data, "opinionReply");
+                String accessoryList=JsonUtils.getStringValue(data, "accessoryList");
+                List<FeedbackPictureBean> list=JSON.parseArray(accessoryList,FeedbackPictureBean.class);
+                if (list.size()>0){
+                    for (int i=0;i<list.size();i++){
+                        if (i==0){
+                            im1.setVisibility(View.VISIBLE);
+                            Glide.with(context).load(list.get(0).getAccessoryUrl()).
+                                    into(im1);
+                        }
+                        if (i==1){
+                            im2.setVisibility(View.VISIBLE);
+                            Glide.with(context).load(list.get(1).getAccessoryUrl()).
+                                    into(im2);
+                        }
+                        if (i==2){
+                            im3.setVisibility(View.VISIBLE);
+                            Glide.with(context).load(list.get(2).getAccessoryUrl()).
+                                    into(im3);
+                        }
+                    }
+              }
+                wbFeedback.loadDataWithBaseURL( null, opinionReply , "text/html", "UTF-8", null ) ;
+                tvData.setText(opinionContent);
+            }
+        }
+    };
+    @BindView(R.id.tv_data)
+    TextView tvData;
+    @BindView(R.id.wb_feedback)
+    WebView wbFeedback;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historyfeedback);
         ButterKnife.bind(this);
-        im1.setVisibility(View.VISIBLE);
-        im2.setVisibility(View.VISIBLE);
-        im3.setVisibility(View.VISIBLE);
-        Glide.with(this).load("http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg").
-                into(im1);
-        Glide.with(this).load("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg").
-                into(im2);
-        Glide.with(this).load("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg").
-                into(im3);
-        Glide.with(this).load("http://t2.hddhhn.com/uploads/tu/201610/198/gkowtcsq5sg.jpg").
-                into(imBack1);
-        Glide.with(this).load("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg").
-                into(imBack2);
-        Glide.with(this).load("http://t2.hddhhn.com/uploads/tu/201610/198/amcmsp2nuwp.jpg").
-                into(imBack3);
+        context=this;
+        WebSettings webSettings = wbFeedback.getSettings();//获取webview设置属性
+        webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
+        webSettings.setJavaScriptEnabled(true);//支持js
+        wbFeedback.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        wbFeedback.setWebViewClient(new MyWebViewClient());
+        wbFeedback.addJavascriptInterface(this, "App");
+        if (Constants.TOKEN.isEmpty()) {
+            BToast.error(this).text("您尚未登陆，没有反馈哦").show();
+        } else {
+            String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
+            Network.getnetwork().postJson(data, Constants.URL + "/app/find-newest-opinion", handler, 1);
+        }
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null!=handler){
+            handler.removeMessages(1);
+            handler=null;
+        }
+
+    }
+    private class MyWebViewClient extends WebViewClient {
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            imgReset();
+            wbFeedback.loadUrl("javascript:App.resize(document.body.getBoundingClientRect().height)");
+            super.onPageFinished(view, url);
+
+
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
+        }
+        private void imgReset() {
+            wbFeedback.loadUrl("javascript:(function(){" +
+                    "var objs = document.getElementsByTagName('img'); " +
+                    "for(var i=0;i<objs.length;i++)  " +
+                    "{"
+                    + "var img = objs[i];   " +
+                    " img.style.maxWidth = '100%';img.style.height='auto';" +
+                    "}" +
+                    "})()");
+        }
+    }
+    @JavascriptInterface
+    public void resize(final float height) {
+        context.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) wbFeedback.getLayoutParams();
+
+
+                layoutParams.width = (int)((getResources().getDisplayMetrics().widthPixels)*0.7);
+                layoutParams.height = (int) (height * getResources().getDisplayMetrics().density)+50;
+                Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+getResources().getDisplayMetrics().density);
+                wbFeedback.setLayoutParams(layoutParams);
+                //Toast.makeText(getActivity(), height + "", Toast.LENGTH_LONG).show();
+            //    wbFeedback.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
+            }
+        });
+    }
+
+
 }

@@ -6,11 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
@@ -20,13 +17,11 @@ import com.lljjcoder.bean.CityBean;
 import com.lljjcoder.bean.DistrictBean;
 import com.lljjcoder.bean.ProvinceBean;
 import com.lljjcoder.citywheel.CityConfig;
-import com.lljjcoder.style.citylist.utils.CityListLoader;
 import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.SelectPhotoUtils;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
-import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
@@ -105,6 +100,9 @@ public class UserBaseActivity extends TakePhotoActivity {
     LinearLayout llAddress;
     String citysrt="";
     CityPickerView mPicker=new CityPickerView();
+    String sheng;
+    String  shi;
+    String qu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,9 +116,15 @@ public class UserBaseActivity extends TakePhotoActivity {
             tvStudennage.setText(Constants.userBasicInfo.getStudentAge()+"岁");
             tvFathername.setText(Constants.userBasicInfo.getFatherName());
             tvMothername.setText(Constants.userBasicInfo.getMotherName());
-            tvAddress.setText(Constants.userBasicInfo.getRegionId());
+            tvAddress.setText(Constants.userBasicInfo.getProvince());
             sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
         }
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
 
@@ -202,9 +206,9 @@ public class UserBaseActivity extends TakePhotoActivity {
                         .setCityWheelType(CityConfig.WheelType.PRO_CITY_DIS)//显示类，只显示省份一级，显示省市两级还是显示省市区三级
                         .showBackground(true)//是否显示半透明背景
                         .visibleItemsCount(5)//显示item的数量
-                        .province("浙江省")//默认显示的省份
-                        .city("杭州市")//默认显示省份下面的城市
-                        .district("滨江区")//默认显示省市下面的区县数据
+                        .province("江西省")//默认显示的省份
+                        .city("南昌市")//默认显示省份下面的城市
+                        .district("南昌县")//默认显示省市下面的区县数据
                         .provinceCyclic(false)//省份滚轮是否可以循环滚动
                         .cityCyclic(false)//城市滚轮是否可以循环滚动
                         .districtCyclic(false)//区县滚轮是否循环滚动
@@ -224,19 +228,24 @@ public class UserBaseActivity extends TakePhotoActivity {
                         super.onSelected(province, city, district);
                         //省份
                         if (province != null) {
+                            sheng=province.getName();
                             citysrt=province.getName().replace("省","");
                         }
                         //城市
                         if (city != null) {
+                            shi=city.getName();
                             citysrt=citysrt+"·"+city.getName().replace("市","");
                         }
                         //地区
                         if (district != null) {
+                            qu=district.getName();
                             citysrt=citysrt+"·"+district.getName();
 
                         }
                         tvAddress.setText(citysrt);
-                        Constants.userBasicInfo.setRegionId(citysrt);
+                        Constants.userBasicInfo.setProvince(sheng);
+                        Constants.userBasicInfo.setCity(shi);
+                        Constants.userBasicInfo.setCounty(qu);
                         String string=JsonUtils.objectToString(Constants.userBasicInfo);
                         Network.getnetwork().postJson(string,Constants.URL+"/app/update-member",handler,2);
                     }

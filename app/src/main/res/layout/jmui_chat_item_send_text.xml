@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout style="@style/jmui_chat_item_send_layout"
-              xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
 
 
     <TextView
@@ -49,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="3dp"
             android:autoLink="web"
-            android:background="@drawable/jmui_msg_send_bg"
+            android:background="@drawable/chat_bg_dialogbox_right"
             android:paddingLeft="10dp"
             android:paddingRight="18dp"
             android:textColorLink="#157BFB"
@@ -124,8 +125,10 @@
 
         </LinearLayout>
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/jmui_avatar_iv"
+            fresco:roundAsCircle="true"
+            fresco:placeholderImage="@color/appcolor"
             style="@style/jmui_chat_item_sender_avatar_style"/>
 
     </LinearLayout>

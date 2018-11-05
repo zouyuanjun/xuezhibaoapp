@@ -42,7 +42,7 @@ import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.android.eventbus.EventBus;
 
 /**
- * Created by ${chenyn} on 2017/2/20.
+ * 聊天会话列表
  */
 
 public class ConversationListActivity extends IMBaseActivity {

@@ -38,17 +38,33 @@ public class Network {
 
     private Network() {
     }
+    public void postform(String key, String valu, String url, final Handler handler, final int i) {
+        HashMap<String, String> data=new HashMap<>();
+        data.put(key,valu);
+        postform(data,url,handler,i);
+    }
+    public void postform(String key, String valu, String key2, String valu2,String url, final Handler handler, final int i) {
+        HashMap<String, String> data=new HashMap<>();
+        data.put(key,valu);
+        data.put(key2,valu2);
+        postform(data,url,handler,i);
+    }
 
-    public void postform(String key, String value, String url, final Handler handler, final int i) {
+
+    public void postform(HashMap<String, String> data, String url, final Handler handler, final int i) {
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(1000, TimeUnit.SECONDS)
+                .readTimeout(1000, TimeUnit.SECONDS)
                 .build();//创建OkHttpClient对象。
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");//数据类型为json格式，
-        RequestBody formBody = new MultipartBody.Builder().setType(MultipartBody.FORM).addFormDataPart(key, value).build();
+        MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+            for (String keyset : data.keySet()) {
+                builder.addFormDataPart(keyset, data.get(keyset));
+            }
+        RequestBody requestBody = builder.build();
         Request request = new Request.Builder()
                 .url(url)
-                .post(formBody)
+                .post(requestBody)
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -95,8 +111,8 @@ public class Network {
      */
     public void postJson(String date, String url, final Handler handler, final int i) {
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(1000, TimeUnit.SECONDS)
+                .readTimeout(1000, TimeUnit.SECONDS)
                 .build();//创建OkHttpClient对象。
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");//数据类型为json格式，
         String jsonStr = date;//json数据.

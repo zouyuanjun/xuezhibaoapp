@@ -110,7 +110,7 @@ public class ConversationListController implements View.OnClickListener,
         Intent intent = new Intent();
         if (position > 0) {
             //这里-3是减掉添加的三个headView
-            Conversation conv = mDatas.get(position - 3);
+            Conversation conv = mDatas.get(position - 2);
             intent.putExtra(JGApplication.CONV_TITLE, conv.getTitle());
             //群聊
             if (conv.getType() == ConversationType.group) {
@@ -146,7 +146,7 @@ public class ConversationListController implements View.OnClickListener,
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-        final Conversation conv = mDatas.get(position - 3);
+        final Conversation conv = mDatas.get(position - 2);
         if (conv != null) {
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override
@@ -170,7 +170,7 @@ public class ConversationListController implements View.OnClickListener,
                             } else {
                                 JMessageClient.deleteSingleConversation(((UserInfo) conv.getTargetInfo()).getUserName());
                             }
-                            mDatas.remove(position - 3);
+                            mDatas.remove(position - 2);
                             if (mDatas.size() > 0) {
                                 mConvListView.setNullConversation(true);
                             } else {

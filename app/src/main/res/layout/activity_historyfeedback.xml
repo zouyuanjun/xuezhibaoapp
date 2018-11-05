@@ -26,8 +26,7 @@
     <android.support.v4.widget.NestedScrollView
 
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar">
@@ -53,6 +52,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/appbar">
 
                 <TextView
+                    android:id="@+id/tv_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/chat_bg_dialogbox_right"
@@ -93,52 +93,23 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="64dp"
+                android:background="@drawable/chat_bg_dialogbox_left"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout10">
 
-                <TextView
+                <WebView
+                    android:id="@+id/wb_feedback"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/chat_bg_dialogbox_left"
-                    android:lineSpacingExtra="5dp"
-                    android:padding="15dp"
-                    android:text="我提了一个问题啊啊啊啊啊啊啊啊 啊啊啊啊啊啊啊啊
-             啊啊四季度覅哦啊圣诞节佛啊撒打发死哦的军事基地佛啊是大家佛爱上"
-                    android:textColor="@color/color_black_333333"
+                    android:layout_height="match_parent"
                     android:textSize="15sp" />
 
-                <ImageView
-                    android:id="@+id/im_back1"
-                    android:layout_marginTop="15dp"
-                    android:padding="5dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY" />
-
-                <ImageView
-                    android:layout_marginTop="15dp"
-                    android:padding="5dp"
-                    android:id="@+id/im_back2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY" />
-
-                <ImageView
-                    android:layout_marginTop="15dp"
-                    android:padding="5dp"
-                    android:id="@+id/im_back3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:scaleType="fitXY">
-
-                </ImageView>
 
             </LinearLayout>
         </LinearLayout>

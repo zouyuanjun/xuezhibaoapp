@@ -21,7 +21,9 @@
         app:midTextSizeSp="18"
         app:rightImageVisible='false'
         app:rightTextVisible='false'
-        app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
+        app:titleBarBackground='@color/appcolor'>
+
+    </com.zou.fastlibrary.ui.CustomNavigatorBar>
 
     <EditText
         android:id="@+id/et_phone"
@@ -141,6 +143,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView5"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/im_codeistrue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_code"
+        app:layout_constraintEnd_toStartOf="@+id/bt_getcode"
+        app:layout_constraintTop_toTopOf="@+id/et_code"
+        app:srcCompat="@drawable/order_icon_arrive" />
+    <ImageView
+        android:id="@+id/im_passwordtrue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="@+id/et_confirm_password"
+        app:layout_constraintEnd_toEndOf="@+id/et_confirm_password"
+        app:layout_constraintTop_toTopOf="@+id/et_confirm_password"
+        app:layout_constraintVertical_bias="0.404"
+        android:visibility="gone"
+        app:srcCompat="@drawable/order_icon_arrive" />
 
     <com.zou.fastlibrary.ui.ShapeCornerBgView
         android:id='@+id/tv_signup'
@@ -152,7 +175,7 @@
         android:text='立即注册'
         android:textColor='#ffffff'
         android:textSize="15sp"
-        app:appBgColor='@color/appcolor'
+        app:appBgColor='#999999'
         app:appRadius='90dp'
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -174,8 +197,9 @@
         android:background="@color/itemfenge"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="118dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_phone" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"

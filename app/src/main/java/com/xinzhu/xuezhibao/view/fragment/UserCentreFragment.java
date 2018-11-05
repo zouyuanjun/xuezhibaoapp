@@ -22,6 +22,7 @@ import com.xinzhu.xuezhibao.view.activity.MyOrderActivity;
 import com.xinzhu.xuezhibao.view.activity.MyPointsActivity;
 import com.xinzhu.xuezhibao.view.activity.MyTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.MyVipCentreActivity;
+import com.xinzhu.xuezhibao.view.activity.PointsMallTabActivity;
 import com.xinzhu.xuezhibao.view.activity.TrickActivity;
 import com.xinzhu.xuezhibao.view.activity.UserBaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
@@ -32,7 +33,6 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class UserCentreFragment extends LazyLoadFragment {
-
     @BindView(R.id.sd_myphoto)
     SimpleDraweeView sdMyphoto;
     Unbinder unbinder;
@@ -94,7 +94,7 @@ public class UserCentreFragment extends LazyLoadFragment {
             clJifen.setVisibility(View.VISIBLE);
             tvUsername.setText(Constants.userBasicInfo.getNickName());
             tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
-
+            sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
         }
     }
 
@@ -161,7 +161,7 @@ public class UserCentreFragment extends LazyLoadFragment {
                 startActivity(intent6);
                 break;
             case R.id.tv_userbasic:
-                if (null == Constants.userBasicInfo) {
+                if (null == Constants.userBasicInfo.getNickName()||Constants.userBasicInfo.getNickName().isEmpty()) {
                     intent = new Intent(getActivity(), EditAllActivity.class);
                 } else {
                     intent = new Intent(getActivity(), UserBaseActivity.class);
@@ -181,7 +181,8 @@ public class UserCentreFragment extends LazyLoadFragment {
                 getActivity().startActivity(intent);
                 break;
             case R.id.tv_jifenshop:
-
+                intent = new Intent(getActivity(), PointsMallTabActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.tv_myaddress:
                 break;

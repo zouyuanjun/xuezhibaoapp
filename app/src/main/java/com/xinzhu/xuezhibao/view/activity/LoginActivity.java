@@ -116,8 +116,12 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
     @Override
     public void loginsuccessful() {
         finish();
+        if (null==Constants.userBasicInfo.getNickName()||Constants.userBasicInfo.getNickName().isEmpty()){
+            startActivity(new Intent(this,EditAllActivity.class));
+            return;
+        }
         if (null==FROMAPP||FROMAPP.isEmpty()){
-            startActivity(new Intent(this,MainActivity.class));
+                startActivity(new Intent(this,MainActivity.class));
         }
 
     }

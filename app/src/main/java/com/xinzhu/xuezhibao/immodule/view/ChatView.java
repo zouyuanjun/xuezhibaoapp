@@ -24,7 +24,6 @@ public class ChatView extends RelativeLayout {
     Context mContext;
     private ImageButton mReturnButton;
     private TextView mGroupNumTv;
-    private ImageButton mRightBtn;
     private DropDownListView mChatListView;
     private Conversation mConv;
     private Button mAtMeBtn;
@@ -48,7 +47,6 @@ public class ChatView extends RelativeLayout {
     public void initModule(float density, int densityDpi) {
         mReturnButton = findViewById(R.id.jmui_return_btn);
         mGroupNumTv = findViewById(R.id.jmui_group_num_tv);
-        mRightBtn = findViewById(R.id.jmui_right_btn);
         mChatTitle = findViewById(R.id.jmui_title);
         mAtMeBtn = findViewById(R.id.jmui_at_me_btn);
         if (densityDpi <= 160) {
@@ -87,22 +85,10 @@ public class ChatView extends RelativeLayout {
         this.mConv = conv;
     }
 
-    public void setGroupIcon() {
-        mRightBtn.setImageResource(R.drawable.jmui_group_chat_detail);
-    }
 
     public void setListeners(ChatActivity listeners) {
         mReturnButton.setOnClickListener(listeners);
-        mRightBtn.setOnClickListener(listeners);
         mAtMeBtn.setOnClickListener(listeners);
-    }
-
-    public void dismissRightBtn() {
-        mRightBtn.setVisibility(View.GONE);
-    }
-
-    public void showRightBtn() {
-        mRightBtn.setVisibility(View.VISIBLE);
     }
 
     public void setChatTitle(int id, int count) {

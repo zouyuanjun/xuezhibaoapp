@@ -1,7 +1,6 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
@@ -24,7 +24,6 @@ import com.xinzhu.xuezhibao.presenter.HomepagePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.HomeListActivity;
-import com.xinzhu.xuezhibao.view.activity.PointsRuleActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SettingActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
@@ -84,6 +83,8 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     HomeVideoAdapter homeVideoAdapter;
     HomeArticleAdapter homeArticleAdapter;
     HomeVoiceAdapter homeVoiceAdapter;
+    @BindView(R.id.ll_message)
+    LinearLayout llMessage;
 
 
     @Override
@@ -94,8 +95,8 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     @Override
     protected void lazyLoad() {
         Log.d("懒加载开始");
-        EditTextUtil.hideKeyboard(MyApplication.getContext(),edSearch);
-        homepagePresenter=new HomepagePresenter(this,MyApplication.getContext());
+        EditTextUtil.hideKeyboard(MyApplication.getContext(), edSearch);
+        homepagePresenter = new HomepagePresenter(this, MyApplication.getContext());
         homepagePresenter.initdata();
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
@@ -115,13 +116,14 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         //banner设置方法全部调用完毕时最后调用
         banner.start();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         qBadgeView = new QBadgeView(MyApplication.getContext());
-        qBadgeView.bindTarget(imMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
+        qBadgeView.bindTarget(llMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
         JMessageClient.registerEventReceiver(new WeakReference<>(this).get());
         Log.d("创建完毕");
         return rootView;
@@ -152,36 +154,38 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             case R.id.ed_search:
                 break;
             case R.id.im_setting:
-                startActivity(new Intent(getContext(),SettingActivity.class));
+                startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             case R.id.im_message:
+                messagecount = 0;
                 qBadgeView.setBadgeNumber(0);
-                startActivity(new Intent(getContext(),ConversationListActivity.class));
+                startActivity(new Intent(getContext(), ConversationListActivity.class));
                 break;
             case R.id.banner:
                 break;
             case R.id.im_test:
                 break;
             case R.id.ll_more_video:
-                Intent intent=new Intent(getContext(),HomeListActivity.class);
-                intent.putExtra("TYPE",1);
+                Intent intent = new Intent(getContext(), HomeListActivity.class);
+                intent.putExtra("TYPE", 1);
                 startActivity(intent);
                 break;
             case R.id.ll_more_voice:
-                Intent intent2=new Intent(getContext(),HomeListActivity.class);
-                intent2.putExtra("TYPE",2);
+                Intent intent2 = new Intent(getContext(), HomeListActivity.class);
+                intent2.putExtra("TYPE", 2);
                 startActivity(intent2);
                 break;
             case R.id.ll_more_article:
-                Intent intent3=new Intent(getContext(),HomeListActivity.class);
-                intent3.putExtra("TYPE",3);
+                Intent intent3 = new Intent(getContext(), HomeListActivity.class);
+                intent3.putExtra("TYPE", 3);
                 startActivity(intent3);
                 break;
         }
     }
-    private List<String> initimg(){
-        List<String> mDatas=new ArrayList<>();
-        String url="http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg";
+
+    private List<String> initimg() {
+        List<String> mDatas = new ArrayList<>();
+        String url = "http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg";
         mDatas.add(url);
         mDatas.add("http://pic14.nipic.com/20110605/1369025_165540642000_2.jpg");
         mDatas.add("http://img.zcool.cn/community/01f39a59a7affba801211d25185cd3.jpg@1280w_1l_2o_100sh.jpg");
@@ -190,7 +194,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         mDatas.add("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg");
         mDatas.add(url);
         mDatas.add("http://pic24.nipic.com/20121010/3798632_184253198370_2.jpg");
-        return  mDatas;
+        return mDatas;
     }
 
     @Override
@@ -200,14 +204,14 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvVideo.setLayoutManager(linearLayoutManager);
         rvVideo.setNestedScrollingEnabled(false);
-        homeVideoAdapter=new HomeVideoAdapter(MyApplication.getContext(),mDatas);
+        homeVideoAdapter = new HomeVideoAdapter(MyApplication.getContext(), mDatas);
         rvVideo.setAdapter(homeVideoAdapter);
         homeVideoAdapter.setOnItemClickListener(new HomeVideoAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                String id=mDatas.get(position).getVideoId();
-                Intent intent=new Intent(getContext(),VideoDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID,id);
+                String id = mDatas.get(position).getVideoId();
+                Intent intent = new Intent(getContext(), VideoDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID, id);
                 startActivity(intent);
             }
 
@@ -225,16 +229,17 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvVoice.setNestedScrollingEnabled(false);
         rvVoice.setLayoutManager(linearLayoutManager2);
-        homeVoiceAdapter=new HomeVoiceAdapter(MyApplication.getContext(),mDatas);
+        homeVoiceAdapter = new HomeVoiceAdapter(MyApplication.getContext(), mDatas);
         rvVoice.setAdapter(homeVoiceAdapter);
         homeVoiceAdapter.setOnItemClickListener(new HomeVoiceAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                String id=mDatas.get(position).getVideoId();
-                Intent intent=new Intent(getContext(),VoiceDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID,id);
+                String id = mDatas.get(position).getVideoId();
+                Intent intent = new Intent(getContext(), VoiceDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID, id);
                 startActivity(intent);
             }
+
             @Override
             public void onItemLongClick(View view, int position) {
 
@@ -249,14 +254,14 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvArticle.setLayoutManager(linearLayoutManager3);
         rvArticle.setNestedScrollingEnabled(false);
-        homeArticleAdapter=new HomeArticleAdapter(MyApplication.getContext(),mDatas);
+        homeArticleAdapter = new HomeArticleAdapter(MyApplication.getContext(), mDatas);
         rvArticle.setAdapter(homeArticleAdapter);
         homeArticleAdapter.setOnItemClickListener(new HomeArticleAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                String id=mDatas.get(position).getArticleId();
-                Intent intent=new Intent(getActivity(),ArticleDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID,id);
+                String id = mDatas.get(position).getArticleId();
+                Intent intent = new Intent(getActivity(), ArticleDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID, id);
                 getActivity().startActivity(intent);
             }
 
@@ -284,26 +289,26 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     @AfterPermissionGranted(1)
     public void onPermissionsGranted() {
-        startActivityForResult(new Intent(getActivity(),QRActivity.class),1);
+        startActivityForResult(new Intent(getActivity(), QRActivity.class), 1);
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (null!=data){
-            String qrcode=data.getStringExtra("RESULT_QRCODE_STRING");
+        if (null != data) {
+            String qrcode = data.getStringExtra("RESULT_QRCODE_STRING");
             Log.d(qrcode);
         }
 
 
     }
 
-    public void startScanQR(){
-        if (EasyPermissions.hasPermissions(getContext(),Manifest.permission.CAMERA )){
-            startActivityForResult(new Intent(getContext(),QRActivity.class),1);
-        }else {
-            EasyPermissions.requestPermissions(getActivity(), "使用扫一扫功能需要允许相机权限哦！",1,Manifest.permission.CAMERA);
+    public void startScanQR() {
+        if (EasyPermissions.hasPermissions(getContext(), Manifest.permission.CAMERA)) {
+            startActivityForResult(new Intent(getContext(), QRActivity.class), 1);
+        } else {
+            EasyPermissions.requestPermissions(getActivity(), "使用扫一扫功能需要允许相机权限哦！", 1, Manifest.permission.CAMERA);
         }
     }
 }

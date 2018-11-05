@@ -86,12 +86,6 @@ import cn.jpush.im.android.api.options.MessageSendingOptions;
 import cn.jpush.im.android.eventbus.EventBus;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
-
-
-/**
- * Created by ${chenyn} on 2017/3/26.
- */
-
 public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFuncKeyBoardListener, View.OnClickListener, EasyPermissions.PermissionCallbacks {
     @BindView(R.id.lv_chat)
     DropDownListView lvChat;
@@ -159,7 +153,6 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-
         setContentView(R.layout.activity_chat);
         ButterKnife.bind(this);
         JMessageClient.registerEventReceiver(this);
@@ -208,65 +201,6 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                 mConv = Conversation.createSingleConversation(mTargetId, mTargetAppKey);
             }
             mChatAdapter = new ChattingListAdapter(mContext, mConv, longClickListener);
-        } else {
-            //群聊
-            mIsSingle = false;
-            mGroupId = intent.getLongExtra(GROUP_ID, 0);
-            final boolean fromGroup = intent.getBooleanExtra("fromGroup", false);
-            if (fromGroup) {
-                mChatView.setChatTitle(mTitle, intent.getIntExtra(MEMBERS_COUNT, 0));
-                mConv = JMessageClient.getGroupConversation(mGroupId);
-                mChatAdapter = new ChattingListAdapter(mContext, mConv, longClickListener);//长按聊天内容监听
-            } else {
-                mAtMsgId = intent.getIntExtra("atMsgId", -1);
-                mAtAllMsgId = intent.getIntExtra("atAllMsgId", -1);
-                mConv = JMessageClient.getGroupConversation(mGroupId);
-                if (mConv != null) {
-                    GroupInfo groupInfo = (GroupInfo) mConv.getTargetInfo();
-                    UserInfo userInfo = groupInfo.getGroupMemberInfo(mMyInfo.getUserName(), mMyInfo.getAppKey());
-                    //如果自己在群聊中，聊天标题显示群人数
-                    if (userInfo != null) {
-                        if (!TextUtils.isEmpty(groupInfo.getGroupName())) {
-                            mChatView.setChatTitle(mTitle, groupInfo.getGroupMembers().size());
-                        } else {
-                            mChatView.setChatTitle(mTitle, groupInfo.getGroupMembers().size());
-                        }
-                        mChatView.showRightBtn();
-                    } else {
-                        if (!TextUtils.isEmpty(mTitle)) {
-                            mChatView.setChatTitle(mTitle);
-                        } else {
-                            mChatView.setChatTitle(R.string.group);
-                        }
-                        mChatView.dismissRightBtn();
-                    }
-                } else {
-                    mConv = Conversation.createGroupConversation(mGroupId);
-                }
-                //更新群名
-                JMessageClient.getGroupInfo(mGroupId, new GetGroupInfoCallback(false) {
-                    @Override
-                    public void gotResult(int status, String desc, GroupInfo groupInfo) {
-                        if (status == 0) {
-                            mGroupInfo = groupInfo;
-                            mUIHandler.sendEmptyMessage(REFRESH_CHAT_TITLE);
-                        }
-                    }
-                });
-                if (mAtMsgId != -1) {
-                    mUnreadMsgCnt = mConv.getUnReadMsgCnt();
-                    // 如果 @我 的消息位于屏幕显示的消息之上，显示 有人@我 的按钮
-                    if (mAtMsgId + 8 <= mConv.getLatestMessage().getId()) {
-                        mChatView.showAtMeButton();
-                    }
-                    mChatAdapter = new ChattingListAdapter(mContext, mConv, longClickListener, mAtMsgId);
-                } else {
-                    mChatAdapter = new ChattingListAdapter(mContext, mConv, longClickListener);
-                }
-
-            }
-            //聊天信息标志改变
-            mChatView.setGroupIcon();
         }
 
         String draft = intent.getStringExtra(DRAFT);
@@ -397,9 +331,6 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
         switch (v.getId()) {
             case R.id.jmui_return_btn:
                 returnBtn();
-                break;
-            case R.id.jmui_right_btn:
-               // startChatDetailActivity(mTargetId, mTargetAppKey, mGroupId);
                 break;
             case R.id.jmui_at_me_btn:
                 if (mUnreadMsgCnt < ChattingListAdapter.PAGE_MESSAGE_COUNT) {
@@ -574,60 +505,6 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
 
         //若为群聊相关事件，如添加、删除群成员
         if (message.getContentType() == ContentType.eventNotification) {
-            GroupInfo groupInfo = (GroupInfo) message.getTargetInfo();
-            long groupId = groupInfo.getGroupID();
-            EventNotificationContent.EventNotificationType type = ((EventNotificationContent) message
-                    .getContent()).getEventNotificationType();
-            if (groupId == mGroupId) {
-                switch (type) {
-                    case group_member_added:
-                        //添加群成员事件
-                        List<String> userNames = ((EventNotificationContent) message.getContent()).getUserNames();
-                        //群主把当前用户添加到群聊，则显示聊天详情按钮
-                        refreshGroupNum();
-                        if (userNames.contains(mMyInfo.getNickname()) || userNames.contains(mMyInfo.getUserName())) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mChatView.showRightBtn();
-                                }
-                            });
-                        }
-
-                        break;
-                    case group_member_removed:
-                        //删除群成员事件
-                        userNames = ((EventNotificationContent) message.getContent()).getUserNames();
-                        //群主删除了当前用户，则隐藏聊天详情按钮
-                        if (userNames.contains(mMyInfo.getNickname()) || userNames.contains(mMyInfo.getUserName())) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    mChatView.dismissRightBtn();
-                                    GroupInfo groupInfo = (GroupInfo) mConv.getTargetInfo();
-                                    if (TextUtils.isEmpty(groupInfo.getGroupName())) {
-                                        mChatView.setChatTitle(R.string.group);
-                                    } else {
-                                        mChatView.setChatTitle(groupInfo.getGroupName());
-                                    }
-                                    mChatView.dismissGroupNum();
-                                }
-                            });
-                        } else {
-                            refreshGroupNum();
-                        }
-
-                        break;
-                    case group_member_exit:
-                        EventNotificationContent content = (EventNotificationContent) message.getContent();
-                        if (content.getUserNames().contains(JMessageClient.getMyInfo().getUserName())) {
-                            mChatAdapter.notifyDataSetChanged();
-                        } else {
-                            refreshGroupNum();
-                        }
-                        break;
-                }
-            }
         }
         runOnUiThread(new Runnable() {
             @Override
@@ -1025,10 +902,8 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                                 if (info != null) {
                                     activity.mChatView.setChatTitle(activity.mTitle,
                                             activity.mGroupInfo.getGroupMembers().size());
-                                    activity.mChatView.showRightBtn();
                                 } else {
                                     activity.mChatView.setChatTitle(activity.mTitle);
-                                    activity.mChatView.dismissRightBtn();
                                 }
                             }
                         }

@@ -59,14 +59,19 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/home_btn_setup"/>
-            <ImageView
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="16dp"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/im_message"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/home_icon_notice"/>
+            <LinearLayout
+                android:id="@+id/ll_message"
+                android:layout_width="44dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp">
+                <ImageView
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/im_message"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:background="@drawable/home_icon_notice"/>
+            </LinearLayout>
+
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
 

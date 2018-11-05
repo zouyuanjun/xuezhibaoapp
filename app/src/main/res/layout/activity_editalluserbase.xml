@@ -139,6 +139,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginRight="16dp"
             android:hint="请输入年龄"
+            android:inputType="number"
             android:layout_weight="1"
             android:background="@color/white"
             android:textColor="@color/color_black_666666"

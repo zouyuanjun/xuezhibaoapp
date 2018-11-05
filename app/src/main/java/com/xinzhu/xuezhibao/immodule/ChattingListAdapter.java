@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 
 import java.util.ArrayList;
@@ -559,12 +561,12 @@ public class ChattingListAdapter extends BaseAdapter {
                         if (status == 0) {
                             holder.headIcon.setImageBitmap(bitmap);
                         } else {
-                            holder.headIcon.setImageResource(R.drawable.jmui_head_icon);
+                  //          holder.headIcon.setImageResource(R.drawable.jmui_head_icon);
                         }
                     }
                 });
             } else {
-                holder.headIcon.setImageResource(R.drawable.jmui_head_icon);
+               holder.headIcon.setImageURI(Uri.parse("res://com.xinzhu.xuezhibao/" + R.drawable.jmui_head_icon));
             }
 
             // 点击头像跳转到个人信息界面
@@ -773,7 +775,7 @@ public class ChattingListAdapter extends BaseAdapter {
 
     public static class ViewHolder {
         public TextView msgTime;
-        public ImageView headIcon;
+        public SimpleDraweeView headIcon;
         public ImageView ivDocument;
         public TextView displayName;
         public TextView txtContent;

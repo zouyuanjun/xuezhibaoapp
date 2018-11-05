@@ -63,16 +63,13 @@ public class LoginPresenter {
         this.loginInterface = loginInterface;
     }
     public void phonelogin(String phone,String password ){
-        JimUtils jimUtils=new JimUtils();
-        jimUtils.sign(phone,password,"第一个账户");
         JMessageClient.login(phone, password, new BasicCallback() {
             @Override
             public void gotResult(int responseCode, String responseMessage) {
                 Log.d("JIM登陆响应",responseMessage);
                 if (responseCode == 0) {
-                    UserInfo myUserInfo = JMessageClient.getMyInfo();
+
                     //注册时更新头像
-                    loginInterface.loginsuccessful();
                 }
             }
         });

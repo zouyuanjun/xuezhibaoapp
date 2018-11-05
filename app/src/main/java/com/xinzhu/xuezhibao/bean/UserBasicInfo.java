@@ -7,7 +7,9 @@ public class UserBasicInfo {
     String studentName;
     String fatherName;
     String motherName;
-    String regionId;
+    String province;
+    String city;
+    String county;
     String image;
     int studentAge;
     String dictionaryName;
@@ -28,8 +30,24 @@ public class UserBasicInfo {
         this.studentName = studentName;
         this.fatherName = fatherName;
         this.motherName = motherName;
-        this.regionId = regionId;
+        this.province = regionId;
         this.studentAge = studentAge;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCounty() {
+        return county;
+    }
+
+    public void setCounty(String county) {
+        this.county = county;
     }
 
     public String getToken() {
@@ -80,12 +98,12 @@ public class UserBasicInfo {
         this.motherName = motherName;
     }
 
-    public String getRegionId() {
-        return regionId;
+    public String getProvince() {
+        return province;
     }
 
-    public void setRegionId(String regionId) {
-        this.regionId = regionId;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getImage() {

@@ -1,16 +1,23 @@
 package com.xinzhu.xuezhibao.view.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 
 import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.SignBean;
+import com.xinzhu.xuezhibao.immodule.TextWatcherAdapter;
 import com.xinzhu.xuezhibao.presenter.SignPresenter;
 import com.xinzhu.xuezhibao.view.interfaces.SignInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
@@ -49,7 +56,14 @@ public class SignActivity extends BaseActivity implements SignInterface {
     ShapeCornerBgView tvSignup;
     @BindView(R.id.radioButton)
     RadioButton radioButton;
-
+    boolean isconsent = false; //是否同意用户协议
+    boolean cansend = true;  //能否发送验证码
+    boolean passwordisture=false; //验证码是否一致
+    CountDownTimer timer;
+    @BindView(R.id.im_codeistrue)
+    ImageView imCodeistrue;
+    @BindView(R.id.im_passwordtrue)
+    ImageView imPasswordtrue;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +77,58 @@ public class SignActivity extends BaseActivity implements SignInterface {
                 finish();
             }
         });
+        radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                isconsent = b;
+            }
+        });
+        timer = new CountDownTimer(60 * 1000, 1000) {
+            /**
+             * 固定间隔被调用,就是每隔countDownInterval会回调一次方法onTick
+             * @param millisUntilFinished
+             */
+            @Override
+            public void onTick(long millisUntilFinished) {
+                btGetcode.setText("重新发送(" + millisUntilFinished / 1000 + ")");
+            }
+            /**
+             * 倒计时完成时被调用
+             */
+            @Override
+            public void onFinish() {
+                btGetcode.setText("重新发送");
+                btGetcode.setTextColor(Color.parseColor("#f87d26"));
+                cansend = true;
+            }
+        };
+
+        etConfirmPassword.addTextChangedListener(new TextWatcherAdapter() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                super.onTextChanged(s, start, before, count);
+                password = etPassword.getText().toString();
+                if (s.toString().equals(password)) {
+                    passwordisture = true;
+                    imPasswordtrue.setVisibility(View.VISIBLE);
+                    etConfirmPassword.setTextColor(Color.parseColor("#900000"));
+
+                        tvSignup.setBgColor(Color.parseColor("#f87d26"));
+                } else {
+                    passwordisture = false;
+                    etConfirmPassword.setTextColor(Color.RED);
+                    imPasswordtrue.setVisibility(View.GONE);
+                    tvSignup.setBgColor(Color.parseColor("#999999"));
+                }
+                ;
+            }
+        });
+
+
+
     }
 
-    @OnClick({ R.id.et_phone, R.id.et_password, R.id.et_code, R.id.bt_getcode, R.id.tv_signup})
+    @OnClick({R.id.et_phone, R.id.et_password, R.id.et_code, R.id.bt_getcode, R.id.tv_signup})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_phone:
@@ -79,7 +142,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
                 if (StringUtil.isEmpty(phone)) {
                     BToast.error(view.getContext()).text("请填写手机号").show();
                 } else {
-                    signPresenter.sendcode(phone);
+                    sendcode(phone);
                 }
                 break;
             case R.id.tv_signup:
@@ -88,40 +151,77 @@ public class SignActivity extends BaseActivity implements SignInterface {
                 password = etPassword.getText().toString();
                 if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(code) || StringUtil.isEmpty(password)) {
                     BToast.error(view.getContext()).text("请填写完整信息再注册").show();
+                } else if (!isconsent) {
+                    BToast.error(view.getContext()).text("必须同意学之宝用户协议才可以注册哦").show();
                 } else {
                     signPresenter.sign(new SignBean(phone, password, code));
                 }
                 break;
         }
     }
+    //请求验证码
+    public void sendcode(String phone) {
+        Log.d("5555", phone + phone.length());
+        if (phone.length() == 11) {
+            if (cansend) {
+                timer.start();
+                cansend = false;
+                btGetcode.setTextColor(Color.parseColor("#999999"));
+                signPresenter.sendcode(phone, 1);
+            }
+        } else {
+            BToast.error(SignActivity.this).text("请填写正确的11位手机号").show();
+
+        }
+    }
 
     @Override
     public void signsuccessful() {
-        BToast.info(context).text("注册成功").show();
+        goToActivity(SignActivity.this,EditAllActivity.class);
+        finish();
+        BToast.success(context).text("注册成功").show();
     }
+
     @Override
-    public void codeerr() {
-        BToast.info(context).target(etCode).text("验证码错误").show();
+    public void codeiserr() {
     }
+
     @Override
     public void isexist() {
-        BToast.info(context).target(etPhone).text("用户已存在").show();
+        BToast.error(context).text("用户已存在,请直接登陆").show();
     }
+
+    @Override
+    public void codeistrue() {
+    }
+
+    @Override
+    public void signinfail(int code) {
+        BToast.info(context).target(etCode).text("注册失败，错误码"+code).show();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
+
     @Override
     public void networktimeout() {
         super.networktimeout();
     }
+
     @Override
     public void networkerr() {
         super.networkerr();
     }
+
     @Override
     public void servererr() {
         super.servererr();
     }
 
+    @OnClick(R.id.textView6)
+    public void onViewClicked() {
+        finish();
+    }
 }

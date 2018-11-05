@@ -40,9 +40,9 @@ public class HomeListActivity extends BaseActivity {
         setContentView(R.layout.activity_itemlist);
         TYPE=getIntent().getIntExtra("TYPE",0);
         ButterKnife.bind(this);
-        tbClass.addTab(tbClass.newTab().setText("热门"));
-        tbClass.addTab(tbClass.newTab().setText("最新"));
-        tbClass.addTab(tbClass.newTab().setText("我的收藏"));
+        tbClass.addTab(tbClass.newTab());
+        tbClass.addTab(tbClass.newTab());
+        tbClass.addTab(tbClass.newTab());
         tbClass.setTabTextColors(Color.parseColor("#333333"),Color.parseColor("#f87d28"));
         if (TYPE==1){
             appbar.setMidText("视频");
