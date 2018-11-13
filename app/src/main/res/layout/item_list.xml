@@ -17,6 +17,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/sdd"
+        android:layout_width="135dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/mengban"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_item_title"
         android:layout_width="0dp"
@@ -24,10 +34,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="18dp"
         android:layout_marginEnd="16dp"
-        android:textSize="15sp"
         android:lineSpacingExtra="3dp"
+        android:text="孩子回然只是老师今天没有表扬他"
         android:textColor="@color/color_black_333333"
-        android:text="孩子回家不开心竟然只是老师今天没有表扬他"
+        android:textSize="15sp"
+        android:maxLines="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,21 +77,20 @@
         android:id="@+id/im_watch_ioc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="3dp"
+        android:background="@drawable/home_icon_playback"
         app:layout_constraintEnd_toStartOf="@+id/tv_readnum"
-        app:layout_constraintTop_toTopOf="@+id/simpleDraweeView"
-        app:srcCompat="@drawable/home_icon_playback" />
+        app:layout_constraintTop_toTopOf="@+id/simpleDraweeView" />
 
     <TextView
         android:id="@+id/tv_readnum"
-        android:layout_width="wrap_content"
+        android:layout_width="35dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="3dp"
         android:text="2232"
-        android:textSize="12sp"
         android:textColor="@color/white"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/simpleDraweeView"
         app:layout_constraintTop_toTopOf="@+id/simpleDraweeView" />
 
@@ -92,5 +102,17 @@
         app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
         app:layout_constraintTop_toTopOf="@+id/tv_item_time"
         android:background="@drawable/videolist_icon_time" />
+
+    <TextView
+        android:id="@+id/tv_teacher"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="主讲：XX老师"
+        android:visibility="gone"
+        android:textSize="13sp"
+        android:textColor="@color/color_black_666666"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_title" />
 
 </android.support.constraint.ConstraintLayout>

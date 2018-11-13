@@ -32,6 +32,7 @@ public class VideoVoiceListAdapter extends RecyclerView.Adapter {
     protected Context mContext;
     protected List<VideoVoiceBean> mDatas;
     private OnItemClickListener onItemClickListener;
+    int TYPE = 0; //标记是否视频课程列表
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
@@ -40,6 +41,12 @@ public class VideoVoiceListAdapter extends RecyclerView.Adapter {
     public VideoVoiceListAdapter(WeakReference<Context> mContext, List<VideoVoiceBean> mDatas) {
         this.mContext = mContext.get();
         this.mDatas = mDatas;
+    }
+
+    public VideoVoiceListAdapter(Context mContext, List<VideoVoiceBean> mDatas, int TYPE) {
+        this.mContext = mContext;
+        this.mDatas = mDatas;
+        this.TYPE = TYPE;
     }
 
     @NonNull
@@ -54,8 +61,8 @@ public class VideoVoiceListAdapter extends RecyclerView.Adapter {
         ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getVideoTitle());
         ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getVidelLike());
         ((MyViewHolder) holder).tvItemTime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
-        ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getReadnum());
-        if (null==mDatas.get(position).getVideoPicture()) {
+        ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getVideoLook());
+        if (null == mDatas.get(position).getVideoPicture()) {
             RequestOptions requestOptions = RequestOptions.frameOf(0);
             requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
             requestOptions.transform(new BitmapTransformation() {
@@ -74,10 +81,14 @@ public class VideoVoiceListAdapter extends RecyclerView.Adapter {
                 }
             });
             Glide.with(mContext).load(mDatas.get(position).getVideoUrl()).apply(requestOptions).into(((MyViewHolder) holder).simpleDraweeView);
-        }else {
+        } else {
             Glide.with(mContext).load(mDatas.get(position).getVideoPicture()).into(((MyViewHolder) holder).simpleDraweeView);
         }
-
+        if (TYPE == 2) {
+            ((MyViewHolder) holder).tvTeacher.setVisibility(View.VISIBLE);
+            ((MyViewHolder) holder).tvTeacher.setText("主讲："+mDatas.get(position).getVideoTeacher());
+            ((MyViewHolder) holder).tvItemTitle.setMaxLines(1);
+        }
 
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +119,7 @@ public class VideoVoiceListAdapter extends RecyclerView.Adapter {
     }
 
 
-     class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.simpleDraweeView)
         ImageView simpleDraweeView;
         @BindView(R.id.tv_item_title)
@@ -125,10 +136,13 @@ public class VideoVoiceListAdapter extends RecyclerView.Adapter {
         TextView tv_readnum;
         @BindView(R.id.imageView10)
         ImageView imageView10;
+        @BindView(R.id.tv_teacher)
+        TextView tvTeacher;
 
         MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
     }
+
 }

@@ -48,7 +48,8 @@
             android:id="@+id/sd_myphoto"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            app:roundAsCircle="true" />
+            app:roundAsCircle="true"
+            app:placeholderImage="@drawable/my_icon_original"/>
 
 
         <ImageView

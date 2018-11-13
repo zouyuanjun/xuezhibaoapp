@@ -15,6 +15,7 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.utils.IdHelper;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
+import com.zou.fastlibrary.utils.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -114,18 +115,6 @@ public class ConversationListController implements View.OnClickListener,
             intent.putExtra(JGApplication.CONV_TITLE, conv.getTitle());
             //群聊
             if (conv.getType() == ConversationType.group) {
-                if (mListAdapter.includeAtMsg(conv)) {
-                    intent.putExtra("atMsgId", mListAdapter.getAtMsgId(conv));
-                }
-
-                if (mListAdapter.includeAtAllMsg(conv)) {
-                    intent.putExtra("atAllMsgId", mListAdapter.getatAllMsgId(conv));
-                }
-                long groupId = ((GroupInfo) conv.getTargetInfo()).getGroupID();
-                intent.putExtra(JGApplication.GROUP_ID, groupId);
-                intent.putExtra(JGApplication.DRAFT, getAdapter().getDraft(conv.getId()));
-                intent.setClass(mContext, ChatActivity.class);
-                mContext.startActivity(intent);
                 return;
                 //单聊
             } else {
@@ -136,7 +125,6 @@ public class ConversationListController implements View.OnClickListener,
             }
             intent.setClass(mContext, ChatActivity.class);
             mContext.startActivity(intent);
-
         }
     }
 

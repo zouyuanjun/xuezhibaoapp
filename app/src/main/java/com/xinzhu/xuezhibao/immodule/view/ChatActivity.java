@@ -57,9 +57,11 @@ import com.xinzhu.xuezhibao.utils.SimpleCommonUtils;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zou.fastlibrary.utils.ImageUtils;
 import com.zou.fastlibrary.utils.Log;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
@@ -200,7 +202,9 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
             if (mConv == null) {
                 mConv = Conversation.createSingleConversation(mTargetId, mTargetAppKey);
             }
-            mChatAdapter = new ChattingListAdapter(mContext, mConv, longClickListener);
+            mChatAdapter = new ChattingListAdapter(new WeakReference<>(mContext).get(), mConv, longClickListener);
+        }else {
+            //群聊
         }
 
         String draft = intent.getStringExtra(DRAFT);
@@ -499,13 +503,17 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
         super.onResume();
 
     }
+    @Override
+    protected void onDestroy() {
+        //销毁
+        Log.d("聊天会话销毁了");
+        JMessageClient.unRegisterEventReceiver(this);
+        super.onDestroy();
 
+    }
     public void onEvent(MessageEvent event) {
         final Message message = event.getMessage();
-
         //若为群聊相关事件，如添加、删除群成员
-        if (message.getContentType() == ContentType.eventNotification) {
-        }
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -569,27 +577,6 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
         }
     }
 
-    private void refreshGroupNum() {
-        Conversation conv = JMessageClient.getGroupConversation(mGroupId);
-        GroupInfo groupInfo = (GroupInfo) conv.getTargetInfo();
-        if (!TextUtils.isEmpty(groupInfo.getGroupName())) {
-            android.os.Message handleMessage = mUIHandler.obtainMessage();
-            handleMessage.what = REFRESH_GROUP_NAME;
-            Bundle bundle = new Bundle();
-            bundle.putString(GROUP_NAME, groupInfo.getGroupName());
-            bundle.putInt(MEMBERS_COUNT, groupInfo.getGroupMembers().size());
-            handleMessage.setData(bundle);
-            handleMessage.sendToTarget();
-        } else {
-            android.os.Message handleMessage = mUIHandler.obtainMessage();
-            handleMessage.what = REFRESH_GROUP_NUM;
-            Bundle bundle = new Bundle();
-            bundle.putInt(MEMBERS_COUNT, groupInfo.getGroupMembers().size());
-            handleMessage.setData(bundle);
-            handleMessage.sendToTarget();
-        }
-    }
-
     private ChattingListAdapter.ContentLongClickListener longClickListener = new ChattingListAdapter.ContentLongClickListener() {
 
         @Override
@@ -609,7 +596,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
             mChatAdapter.setUpdateReceiptCount(serverMsgId, unReceiptCnt);
         }
     }
-
+    //更多功能广播监听
     public void onEventMainThread(ImageEvent event) {
         Intent intent;
         switch (event.getFlag()) {
@@ -620,6 +607,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                     EasyPermissions.requestPermissions(this, "需要获取相册读写权限", 0, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 //    Toast.makeText(this, "请在应用管理中打开“读写存储”访问权限！", Toast.LENGTH_LONG).show();
                 } else {
+
                     Matisse.from(ChatActivity.this)
                             .choose(MimeType.ofAll(), false) // 选择 mime 的类型
                             .countable(true)
@@ -630,16 +618,14 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                             .imageEngine(new Glide4Engine()) // 使用的图片加载引擎
                             .forResult(requestCode); // 设置作为标记的请求码
                 }
-
                 break;
             case JGApplication.TAKE_PHOTO_MESSAGE:
+                Log.d("开始拍照片"+ChatActivity.this.toString());
                 if ((ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.RECORD_AUDIO)
                         != PackageManager.PERMISSION_GRANTED)) {
                     EasyPermissions.requestPermissions(this, "需要获取相册读写权限", 1, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-
                 } else {
                     intent = new Intent(ChatActivity.this, CameraActivity.class);
                     startActivityForResult(intent, RequestCode.TAKE_PHOTO);
@@ -679,6 +665,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
             case RequestCode.PICK_IMAGE://4
+                Log.d("聊天图片选区结果回来了");
                 onPickImageActivityResult(requestCode, data);
                 break;
         }
@@ -708,10 +695,18 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                 }
                 break;
             case RequestCode.TAKE_PHOTO:
+                Log.d("拍照结果");
                 if (data != null) {
                     String name = data.getStringExtra("take_photo");
                     Bitmap bitmap = BitmapFactory.decodeFile(name);
-                    ImageContent.createImageContentAsync(bitmap, new ImageContent.CreateImageContentCallback() {
+                    File file=null;
+                    try {
+                       file=ImageUtils.samsungPhoneSetting(name);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    ImageContent.createImageContentAsync(file, new ImageContent.CreateImageContentCallback() {
                         @Override
                         public void gotResult(int responseCode, String responseMessage, ImageContent imageContent) {
                             if (responseCode == 0) {
@@ -723,6 +718,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                 }
                 break;
             case RequestCode.TAKE_VIDEO:
+                Log.d("小视频结果");
                 if (data != null) {
                     String path = data.getStringExtra("video");
                     try {
@@ -750,8 +746,13 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
         List<Uri> mSelected;
         mSelected = Matisse.obtainResult(data);
        for (Uri uri:mSelected){
-               File file = new File(getRealFilePath(mContext,uri));
-               ImageContent.createImageContentAsync(file, new ImageContent.CreateImageContentCallback() {
+           File file = null;
+           try {
+               file = ImageUtils.samsungPhoneSetting(getRealFilePath(mContext,uri));
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+           ImageContent.createImageContentAsync(file, new ImageContent.CreateImageContentCallback() {
                    @Override
                    public void gotResult(int responseCode, String responseMessage, ImageContent imageContent) {
                        if (responseCode == 0) {
@@ -912,5 +913,6 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
             }
         }
     }
+
 
 }

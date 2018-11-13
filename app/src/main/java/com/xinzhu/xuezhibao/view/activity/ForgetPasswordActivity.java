@@ -175,6 +175,12 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        timer.onFinish();
+
+    }
 
     @Override
     public void codeistrue() {
@@ -200,6 +206,11 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
     @Override
     public void fail(int code) {
         BToast.error(ForgetPasswordActivity.this).text("修改失败"+code).show();
+    }
+
+    @Override
+    public void usernotfind() {
+        BToast.error(ForgetPasswordActivity.this).text("该用户不存在").show();
     }
 
     @Override

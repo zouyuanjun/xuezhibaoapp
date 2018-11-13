@@ -17,6 +17,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.JiaojiaoCourseBean;
 import com.zou.fastlibrary.utils.Log;
 
@@ -31,14 +32,14 @@ import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
     protected WeakReference<Context> mContext;
-    protected List<JiaojiaoCourseBean> mDatas;
+    protected List<CourseBean> mDatas;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public RvJiaojiaoCourseAdapter(WeakReference<Context> mContext, List<JiaojiaoCourseBean> mDatas) {
+    public RvJiaojiaoCourseAdapter(WeakReference<Context> mContext, List<CourseBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
@@ -52,32 +53,12 @@ public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getTitle());
-        ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getTeacher());
-        ((ViewHolder) holder).tvAll.setText(mDatas.get(position).getAllclass() + "/");
-        Log.d(mDatas.get(position).getAllclass() + "/");
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getReadnum());
-        ((ViewHolder) holder).tvAlready.setText(mDatas.get(position).getAlreadyclass());
-        RequestOptions requestOptions = RequestOptions.frameOf(0);
-        requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
-        requestOptions.transform(new BitmapTransformation() {
-            @Override
-            protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-                return toTransform;
-            }
-            @Override
-            public void updateDiskCacheKey(MessageDigest messageDigest) {
-                try {
-                    messageDigest.update((mContext.get().getPackageName() + "RotateTransform").getBytes("utf-8"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        Glide.with(mContext.get()).load(mDatas.get(position).getImurl()).apply(requestOptions).into(((ViewHolder) holder).simpleDraweeView);
-
-        // ((MyViewHolder) holder).simpleDraweeView.setImageBitmap(ImageUtils.createVideoThumbnail(mDatas.get(position).getArticlePicture(),MediaStore.Images.Thumbnails.MINI_KIND));
-
+        ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
+        ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getVideoTeacher());
+        ((ViewHolder) holder).tvAll.setText(mDatas.get(position).getSumHour() + "节");
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply());
+        ((ViewHolder) holder).tvAlready.setText("/"+mDatas.get(position).getConsumeHour());
+        Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -92,6 +73,12 @@ public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
                     return false;
                 }
             });
+            ((ViewHolder) holder).tvFeedback.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.feedBackClick(view,position);
+                }
+            });
         }
     }
 
@@ -104,7 +91,8 @@ public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
         void onItemClick(View view, int position);
 
         void onItemLongClick(View view, int position);
-    }
+        void feedBackClick(View view, int position);
+    };
 
     static class ViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.simpleDraweeView)

@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,7 @@ import android.widget.TextView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
@@ -33,8 +36,8 @@ import com.xinzhu.xuezhibao.view.interfaces.ArticleInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
+import com.zou.fastlibrary.utils.WebViewUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,7 +58,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     @BindView(R.id.tv_readnum)
     TextView tvReadnum;
     @BindView(R.id.tv_details)
-    TextView tvDetails;
+    WebView tvDetails;
     @BindView(R.id.rv_comment)
     RecyclerView rvComment;
     @BindView(R.id.ll_comment)
@@ -81,8 +84,15 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     ImageView imLike;
     @BindView(R.id.im_collection)
     ImageView imCollection;
-    boolean islike=true;
-    boolean iscollect=true;
+    boolean islike = true;
+    boolean iscollect = true;
+    @BindView(R.id.tv_like)
+    TextView tvLike;
+    @BindView(R.id.tv_collection)
+    TextView tvCollection;
+    int likenum;  //点赞数
+    int commentnum; //评论数
+    GoodView mGoodView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +101,8 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         articleid = getIntent().getStringExtra(Constants.INTENT_ID);
         articlePresenter = new ArticlePresenter(this);
         ButterKnife.bind(this);
+        tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this,tvDetails));
+        mGoodView = new GoodView(this);
         init();
     }
 
@@ -140,13 +152,20 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
             case R.id.ll_dianzan:
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
-                }else {
-                    if (islike){
-                        islike=false;
+                } else {
+                    if (islike) {
+                        islike = false;
+                        likenum--;
+                        tvLike.setText(likenum+"");
                         articlePresenter.cancellike(articleid);
                         imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
-                    }else {
-                        islike=true;
+                    } else {
+                        mGoodView.setImage(R.drawable.videodetails_btn_like_sel);
+                        mGoodView.setTextInfo("+1",Color.parseColor("#f87d28"),25);
+                        mGoodView.show(view);
+                        likenum++;
+                        tvLike.setText(likenum+"");
+                        islike = true;
                         articlePresenter.like(articleid);
                         imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
                     }
@@ -156,13 +175,13 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
             case R.id.ll_shoucan:
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
-                }else {
-                    if (iscollect){
-                        iscollect=false;
+                } else {
+                    if (iscollect) {
+                        iscollect = false;
                         articlePresenter.cancelcollect(articleid);
                         imCollection.setImageResource(R.drawable.videodetails_btn_collection_nor);
-                    }else {
-                        iscollect=true;
+                    } else {
+                        iscollect = true;
                         articlePresenter.collect(articleid);
                         imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
                     }
@@ -173,16 +192,24 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                 break;
         }
     }
+
     @Override
     public void getarticledetils(ArticleBean articleBean) {
-        tvTitle.setText(articleBean.getArticleTitle());
-        tvReadnum.setText("阅读：" + articleBean.getArticleRead());
-        tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(Long.parseLong(articleBean.getCreateTime())));
-        tvDetails.setText(articleBean.getArticleContent());
+        if (null!=articleBean){
+            tvTitle.setText(articleBean.getArticleTitle());
+            tvReadnum.setText("阅读：" + articleBean.getArticleRead());
+            tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(Long.parseLong(articleBean.getCreateTime())));
+            tvDetails.loadDataWithBaseURL( null, articleBean.getArticleContent() , "text/html", "UTF-8", null ) ;
+            tvLike.setText(articleBean.getArticleLike()+"");
+            likenum=articleBean.getArticleLike();
+        }
+
     }
 
     @Override
-    public void getcomment(List<CommentBean> mDatas, String total) {
+    public void getcomment(List<CommentBean> mDatas, int total) {
+        commentnum=total;
+        tvComment.setText("全部评论("+commentnum+")");
         commentBeanArrayList.addAll(mDatas);
         page++;
         if (commentAdapter != null) {
@@ -198,21 +225,20 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
 
     @Override
     public void islike(boolean like) {
-        islike=like;
-        if (like){
+        islike = like;
+        if (like) {
             imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
         }
     }
 
     @Override
     public void iscollect(boolean collect) {
-        iscollect=collect;
-        if (collect){
+        iscollect = collect;
+        if (collect) {
             imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
         }
 
     }
-
     //弹出发送评论对话框
     private void showpop(View view) {
         if (Constants.TOKEN.isEmpty()) {
@@ -232,7 +258,9 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                 @Override
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
-                    CommentBean commentBean=new CommentBean("","sdfsd","1540785350000",commend,"","111");
+                    commentnum++;
+                    tvComment.setText("全部评论("+commentnum+")");
+                    CommentBean commentBean = new CommentBean(Constants.userBasicInfo.getImage(), Constants.userBasicInfo.getNickName(), System.currentTimeMillis(), commend, "", "111");
                     commentBeanArrayList.addFirst(commentBean);
                     commentAdapter.notifyItemInserted(0);
                     articlePresenter.sendComment(articleid, commend);
@@ -240,10 +268,9 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                 }
             });
         }
-
-
     }
-    public void showdia(){
+
+    public void showdia() {
         CustomDialog.Builder builder = new CustomDialog.Builder(this);
         builder.setTitle("提示");
         builder.setMessage("您尚未登陆，现在就去登陆");

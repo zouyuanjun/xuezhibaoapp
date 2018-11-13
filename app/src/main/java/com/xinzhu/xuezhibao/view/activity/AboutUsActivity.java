@@ -108,7 +108,7 @@ public class AboutUsActivity extends BaseActivity {
                         != PackageManager.PERMISSION_GRANTED)) {
                     EasyPermissions.requestPermissions(this, "需要获取打电话权限才能打电话哦", 1, Manifest.permission.CALL_PHONE,Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 } else {
-                    CommonUtil.call(this, "18702508050");
+                    CommonUtil.call(this, tvPhone.getText().toString());
                 }
                 break;
             case R.id.tv_address:
@@ -119,7 +119,8 @@ public class AboutUsActivity extends BaseActivity {
 
     @AfterPermissionGranted(1)
     public void onPermissionsGranted() {
-        CommonUtil.call(this, "18702508050");
+
+        CommonUtil.call(this, tvPhone.getText().toString());
 
     }
 
@@ -151,7 +152,7 @@ public class AboutUsActivity extends BaseActivity {
         mBaiduMap.setMyLocationEnabled(true);
         LatLng cenpt = new LatLng(Double.parseDouble(l1), Double.parseDouble(l2));//设定中心点坐标
         MapStatus.Builder builder = new MapStatus.Builder();
-        builder.target(cenpt).zoom(18.0f);
+        builder.target(cenpt).zoom(19.0f);
         mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
         //定义Maker坐标点
 

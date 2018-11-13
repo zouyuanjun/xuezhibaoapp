@@ -13,6 +13,15 @@ public class UserBasicInfo {
     String image;
     int studentAge;
     String dictionaryName;
+    int dictionaryId;
+
+    public int getDictionaryId() {
+        return dictionaryId;
+    }
+
+    public void setDictionaryId(int dictionaryId) {
+        this.dictionaryId = dictionaryId;
+    }
 
     public String getDictionaryName() {
         return dictionaryName;

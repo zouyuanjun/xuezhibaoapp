@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
     <com.zou.fastlibrary.ui.CustomNavigatorBar
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:leftTextVisible='false'
         app:leftImageVisiable='false'
         app:midText="视频课程"
@@ -25,20 +22,22 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_video"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar"></android.support.design.widget.TabLayout>
+        android:layout_height="44dp"
+        app:tabIndicatorHeight="4dp"
+        app:tabSelectedTextColor="@color/appcolor"
+        app:tabTextColor="@color/color_black_333333">
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    </android.support.design.widget.TabLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/itemfenge"></LinearLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tab_video">
+        android:layout_height="match_parent"
+      >
 
         <com.scwang.smartrefresh.header.PhoenixHeader
             android:layout_width="match_parent"
@@ -55,4 +54,4 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

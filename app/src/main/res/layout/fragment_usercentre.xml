@@ -115,81 +115,98 @@
             app:srcCompat="@drawable/home_btn_more" />
     </android.support.constraint.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/im_mytask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
+    <LinearLayout
+        android:id="@+id/linearLayout30"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView20"
-        app:srcCompat="@drawable/my_btn_mytask" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView20">
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/im_myvideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/myvideo" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/im_mytask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/my_btn_mytask" />
 
-    <ImageView
-        android:id="@+id/im_mycourse"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/im_mytask"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/im_mytask"
-        app:srcCompat="@drawable/my_btn_mycourse" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/im_mycourse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
 
-    <ImageView
-        android:id="@+id/im_mylike"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/im_mytask"
-        app:layout_constraintTop_toTopOf="@+id/im_mytask"
-        app:srcCompat="@drawable/my_btn_mycollection" />
+            app:srcCompat="@drawable/my_btn_mycourse" />
 
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="我的课程"
-        app:layout_constraintEnd_toEndOf="@+id/im_mycourse"
-        app:layout_constraintStart_toStartOf="@+id/im_mycourse"
-        app:layout_constraintTop_toBottomOf="@+id/im_mycourse" />
+        <ImageView
+            android:layout_weight="1"
+            android:id="@+id/im_mylike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/my_btn_mycollection" />
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="我的任务"
-        app:layout_constraintEnd_toEndOf="@+id/im_mytask"
-        app:layout_constraintStart_toStartOf="@+id/im_mytask"
-        app:layout_constraintTop_toBottomOf="@+id/im_mytask" />
 
-    <TextView
-        android:id="@+id/textView19"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="我的收藏"
-        app:layout_constraintEnd_toEndOf="@+id/im_mylike"
-        app:layout_constraintStart_toStartOf="@+id/im_mylike"
-        app:layout_constraintTop_toBottomOf="@+id/im_mylike" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout31"
+        android:layout_width="match_parent"
+        android:layout_height="29dp"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout30"
+     >
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:gravity="center"
+            android:text="我的视频" />
+
+
+
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/textView18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的任务" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的课程" />
+        <TextView
+            android:gravity="center"
+            android:layout_weight="1"
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我的收藏" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linearLayout18"
         android:layout_width="0dp"
         android:layout_height="10dp"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
         android:background="@color/fenge"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView18">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout31">
 
     </LinearLayout>
 

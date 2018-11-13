@@ -3,6 +3,7 @@ package com.xinzhu.xuezhibao.view.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +22,14 @@ import com.xinzhu.xuezhibao.view.activity.MyCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.MyOrderActivity;
 import com.xinzhu.xuezhibao.view.activity.MyPointsActivity;
 import com.xinzhu.xuezhibao.view.activity.MyTaskActivity;
+import com.xinzhu.xuezhibao.view.activity.MyVideoActivity;
 import com.xinzhu.xuezhibao.view.activity.MyVipCentreActivity;
 import com.xinzhu.xuezhibao.view.activity.PointsMallTabActivity;
 import com.xinzhu.xuezhibao.view.activity.TrickActivity;
 import com.xinzhu.xuezhibao.view.activity.UserBaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
+import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Network;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,7 +116,7 @@ public class UserCentreFragment extends LazyLoadFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.tv_loginbutton, R.id.cl_jifen, R.id.im_mytask, R.id.im_mycourse, R.id.im_mylike, R.id.tv_userbasic, R.id.tv_vipcentre, R.id.tv_mytrack, R.id.tv_myorder, R.id.tv_jifenshop, R.id.tv_myaddress, R.id.tv_lognout})
+    @OnClick({R.id.sd_myphoto,R.id.tv_loginbutton, R.id.cl_jifen, R.id.im_mytask, R.id.im_mycourse,R.id.im_myvideo, R.id.im_mylike, R.id.tv_userbasic, R.id.tv_vipcentre, R.id.tv_mytrack, R.id.tv_myorder, R.id.tv_jifenshop, R.id.tv_myaddress, R.id.tv_lognout})
     public void onViewClicked(View view) {
         if (Constants.TOKEN.isEmpty() && view.getId() != R.id.tv_loginbutton) {
             CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
@@ -156,6 +160,10 @@ public class UserCentreFragment extends LazyLoadFragment {
                 intent = new Intent(getActivity(), MyCourseActivity.class);
                 getActivity().startActivity(intent);
                 break;
+            case R.id.im_myvideo:
+                intent = new Intent(getActivity(), MyVideoActivity.class);
+                getActivity().startActivity(intent);
+                break;
             case R.id.im_mylike:
                 Intent intent6 = new Intent(getContext(), MyCollectActivity.class);
                 startActivity(intent6);
@@ -187,10 +195,20 @@ public class UserCentreFragment extends LazyLoadFragment {
             case R.id.tv_myaddress:
                 break;
             case R.id.tv_lognout:
+                String data=JsonUtils.keyValueToString("token",Constants.TOKEN);
+                Network.getnetwork().postJson(data,Constants.URL+"/app/login-out",new Handler(),1);
                 Constants.TOKEN = "";
                 Intent intent5 = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent5);
                 getActivity().finish();
+                break;
+            case R.id.sd_myphoto:
+                if (null == Constants.userBasicInfo.getNickName()||Constants.userBasicInfo.getNickName().isEmpty()) {
+                    intent = new Intent(getActivity(), EditAllActivity.class);
+                } else {
+                    intent = new Intent(getActivity(), UserBaseActivity.class);
+                }
+                getActivity().startActivity(intent);
                 break;
         }
     }

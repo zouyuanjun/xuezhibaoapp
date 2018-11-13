@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -43,10 +42,10 @@ public class CommentAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvCreattime.setText(TimeUtil.getWholeTime2(Long.parseLong(mDatas.get(position).getCreateTime())));
+        ((MyViewHolder) holder).tvCreattime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
         ((MyViewHolder) holder).tvCommentDetils.setText(mDatas.get(position).getCommentContent());
         ((MyViewHolder) holder).tv_userName.setText(mDatas.get(position).getCreater());
-        ((MyViewHolder) holder).sdvPhoto.setImageURI(mDatas.get(position).getAbcimurl());
+        ((MyViewHolder) holder).sdvPhoto.setImageURI(mDatas.get(position).getImage());
         Log.d("加载一条数据");
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -83,10 +82,6 @@ public class CommentAdapter extends RecyclerView.Adapter {
         SimpleDraweeView sdvPhoto;
         @BindView(R.id.tv_userName)
         TextView tv_userName;
-        @BindView(R.id.im_dianzan)
-        ImageView imDianzan;
-        @BindView(R.id.tv_dianzan)
-        TextView tvDianzan;
         @BindView(R.id.tv_creattime)
         TextView tvCreattime;
         @BindView(R.id.tv_comment_detils)

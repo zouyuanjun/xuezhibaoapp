@@ -302,6 +302,7 @@ public class NiceSpinner extends AppCompatTextView {
         if (adapter != null) {
             if (position >= 0 && position <= adapter.getCount()) {
                 adapter.setSelectedIndex(position);
+                adapter.notifyDataSetChanged();
                 selectedIndex = position;
                 setTextInternal(adapter.getItemInDataset(position).toString());
             } else {

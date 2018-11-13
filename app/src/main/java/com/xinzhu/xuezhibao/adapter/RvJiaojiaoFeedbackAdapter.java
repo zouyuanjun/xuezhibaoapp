@@ -9,8 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.JiajiaoFeedbackBean;
-import com.xinzhu.xuezhibao.bean.TaskBean;
+import com.xinzhu.xuezhibao.bean.CourseFeedbackBean;
 
 import java.util.List;
 
@@ -19,14 +18,14 @@ import butterknife.ButterKnife;
 
 public class RvJiaojiaoFeedbackAdapter extends RecyclerView.Adapter {
     protected Context mContext;
-    protected List<JiajiaoFeedbackBean> mDatas;
+    protected List<CourseFeedbackBean> mDatas;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public RvJiaojiaoFeedbackAdapter(Context mContext, List<JiajiaoFeedbackBean> mDatas) {
+    public RvJiaojiaoFeedbackAdapter(Context mContext, List<CourseFeedbackBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
@@ -40,10 +39,10 @@ public class RvJiaojiaoFeedbackAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((ViewHolder) holder).tvFeedbacktitle.setText(mDatas.get(position).getTitle());
-        ((ViewHolder) holder).tvConent.setText(mDatas.get(position).getConcent());
-        ((ViewHolder) holder).tvNum.setText(mDatas.get(position).getNum());
-        ((ViewHolder) holder).tvFeedbacktheme.setText(mDatas.get(position).getFeedbacktheme());
+        ((ViewHolder) holder).tvFeedbacktitle.setText(mDatas.get(position).getContent());
+        ((ViewHolder) holder).tvConent.setText(mDatas.get(position).getReplyContent());
+        ((ViewHolder) holder).tvNum.setText(mDatas.get(position).getReplyCount());
+        ((ViewHolder) holder).tvFeedbacktheme.setText("关于课程“"+mDatas.get(position).getCurriculumTitle()+"”的反馈");
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

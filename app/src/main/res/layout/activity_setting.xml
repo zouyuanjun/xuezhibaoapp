@@ -150,7 +150,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView7"></LinearLayout>
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/tv_cleancacle"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_marginStart="16dp"

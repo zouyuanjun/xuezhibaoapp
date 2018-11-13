@@ -40,34 +40,35 @@ public class MyVipCentreActivity extends BaseActivity {
     TextView tvMomeny;
     @BindView(R.id.tv_introduce)
     TextView tvIntroduce;
-Handler handler=new Handler(){
-    @Override
-    public void handleMessage(Message msg) {
-        super.handleMessage(msg);
-        switch (msg.what) {
-            case 1: {
-                @SuppressWarnings("unchecked")
-                PayResult payResult = new PayResult((Map<String, String>) msg.obj);
-                /**
-                 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
-                 */
-                String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-                String resultStatus = payResult.getResultStatus();
-                // 判断resultStatus 为9000则代表支付成功
-                if (TextUtils.equals(resultStatus, "9000")) {
-                    // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                    Toast.makeText(MyVipCentreActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                    Toast.makeText(MyVipCentreActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        Toast.makeText(MyVipCentreActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        Toast.makeText(MyVipCentreActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
                 }
-                break;
+                default:
+                    break;
             }
-            default:
-                break;
         }
-    }
-};
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);

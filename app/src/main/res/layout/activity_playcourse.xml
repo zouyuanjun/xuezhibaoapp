@@ -6,12 +6,12 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/standardGSYVideoPlayer"
         android:layout_width="match_parent"
         android:layout_height="180dp">
 
-    </com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer>
+    </com.facebook.drawee.view.SimpleDraweeView>
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/NestedScrollView"
@@ -22,7 +22,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
          >
-
             <LinearLayout
                 android:id="@+id/linearLayout22"
                 android:layout_width="0dp"
@@ -34,34 +33,38 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
+                    android:id="@+id/tv_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:text="2245"
+                    android:text=""
                     android:textColor="@color/appcolor"
                     android:textSize="23sp" />
 
                 <TextView
+                    android:id="@+id/tv_allclass"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="3dp"
                     android:layout_weight="1"
-                    android:text="共16节"
+                    android:text="共0节"
                     android:textColor="@color/color_black_666666"
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/tv_alreadybuynum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="3dp"
                     android:layout_marginRight="6dp"
-                    android:text="3265人已购买"
+                    android:text="0人已购买"
                     android:textColor="@color/color_grey_999999"
                     android:textSize="13sp" />
 
                 <com.zou.fastlibrary.ui.ShapeCornerBgView
+                    android:id="@+id/tv_buycourse"
                     android:layout_width="80dp"
                     android:layout_height="32dp"
                     android:layout_marginRight="16dp"
@@ -79,7 +82,7 @@
                 android:layout_marginTop="16dp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:text="孩子回家不开心竟然只是老师没有表扬他"
+                android:text=""
                 android:textColor="@color/color_black_333333"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -91,21 +94,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="发布时间：18-02-19：15.25"
+                android:text="发布时间"
                 android:textColor="@color/color_grey_999999"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-            <TextView
+            <WebView
                 android:id="@+id/tv_details"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:lineSpacingExtra="4dp"
-                android:text="很多家有宣布那可是当你发觉上来看飞洒六十打架俯瞰代理费吉拉斯的附件两款手机都付款界面洒家扩大封建礼教阿斯利康地方加萨卢克点击发送i地方"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_creattime" />
@@ -177,7 +178,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="TextView"
+                android:text=""
                 android:textColor="@color/appcolor"
                 app:layout_constraintStart_toEndOf="@+id/textView3"
                 app:layout_constraintTop_toTopOf="@+id/textView3" />
@@ -269,7 +270,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingLeft="2dp"
-                android:text="56"
+                android:text=""
                 android:textSize="13sp" />
         </LinearLayout>
 

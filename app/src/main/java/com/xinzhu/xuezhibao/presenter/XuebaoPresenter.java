@@ -3,6 +3,7 @@ package com.xinzhu.xuezhibao.presenter;
 import android.os.Handler;
 import android.os.Message;
 
+import com.xinzhu.xuezhibao.bean.BannerImgBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.XuebaoInterface;
@@ -56,6 +57,9 @@ public class XuebaoPresenter {
                 }else if (what==4){
                     List<CourseBean> list=JSON.parseArray(data,CourseBean.class);
                     xuebaoInterface.getHotCourse(list);
+                }else if (what == 5) {
+                    List<BannerImgBean> mDatas = JSON.parseArray(data, BannerImgBean.class);
+                    xuebaoInterface.getBanner(mDatas);
                 }
             }
 
@@ -65,11 +69,13 @@ public class XuebaoPresenter {
     public void initdata(){
 
         String data2=JsonUtils.keyValueToString2("pageNo",1,"isRecommend",1);
-        Network.getnetwork().postJson(data2,Constants.URL+"/guest/synthesize-curriculum",handler,2);
+        Network.getnetwork().postJson(data2,Constants.URL+"/guest/newest-curriculum",handler,2);
         String data3=JsonUtils.keyValueToString("pageNo",1);
-        Network.getnetwork().postJson(data3,Constants.URL+"/guest/curriculum",handler,3);
+        Network.getnetwork().postJson(data3,Constants.URL+"/guest/newest-curriculum",handler,3);
         Network.getnetwork().postJson(data3,Constants.URL+"/guest/hottest-curriculum",handler,4);
-        Network.getnetwork().postJson(data3,Constants.URL+"/guest/synthesize-curriculum",handler,1);
+        Network.getnetwork().postJson(data3,Constants.URL+"/guest/all-curriculum",handler,1);
+
+        Network.getnetwork().postJson(data3,Constants.URL+"/guest/select-study-index-round",handler,5);
     }
 
 }

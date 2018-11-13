@@ -44,7 +44,11 @@ public class XuebaoCourseAdapter extends RecyclerView.Adapter {
         ((RecyclerHolder) holder).tvNum.setText(mDatas.get(position).getCurriculumApply());
         ((RecyclerHolder) holder).tvPrice.setText(mDatas.get(position).getCurriculumPrice());
         ((RecyclerHolder) holder).simpleDraweeView.setImageURI(mDatas.get(position).getCurriculumPicture());
-
+        if (mDatas.get(position).getCurriculumKind() == 1) {
+            ((RecyclerHolder) holder).tvtype.setText("家教");
+        } else {
+            ((RecyclerHolder) holder).tvtype.setText("学科");
+        }
 
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +80,7 @@ public class XuebaoCourseAdapter extends RecyclerView.Adapter {
     }
 
 
-    static class RecyclerHolder extends RecyclerView.ViewHolder{
+    static class RecyclerHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.simpleDraweeView)
         SimpleDraweeView simpleDraweeView;
         @BindView(R.id.tv_num)
@@ -85,6 +89,8 @@ public class XuebaoCourseAdapter extends RecyclerView.Adapter {
         TextView tvTitle;
         @BindView(R.id.tv_price)
         TextView tvPrice;
+        @BindView(R.id.tv_coursetype)
+        TextView tvtype;
 
         RecyclerHolder(View view) {
             super(view);

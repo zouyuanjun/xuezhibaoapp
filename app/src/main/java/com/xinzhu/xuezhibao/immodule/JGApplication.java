@@ -79,10 +79,10 @@ public class JGApplication  {
 
     public static final String MEMBERS_COUNT = "membersCount";
 
-    public static String PICTURE_DIR = "sdcard/JChatDemo/pictures/";
+    public static String PICTURE_DIR = "sdcard/xzb/pictures/";
     private static final String JCHAT_CONFIGS = "JChat_configs";
-    public static String FILE_DIR = "sdcard/JChatDemo/recvFiles/";
-    public static String VIDEO_DIR = "sdcarVIDEOd/JChatDemo/sendFiles/";
+    public static String FILE_DIR = "sdcard/xzb/recvFiles/";
+    public static String VIDEO_DIR = "sdcarVIDEOd/xzb/sendFiles/";
     public static final String TARGET_ID = "targetId";
     public static final String ATUSER = "atuser";
     public static final String TARGET_APP_KEY = "targetAppKey";
@@ -103,7 +103,7 @@ public class JGApplication  {
     public static void setPicturePath(String appKey) {
         if (!SharePreferenceManager.getCachedAppKey().equals(appKey)) {
             SharePreferenceManager.setCachedAppKey(appKey);
-            PICTURE_DIR = "sdcard/JChatDemo/pictures/" + appKey + "/";
+            PICTURE_DIR = "sdcard/xzb/pictures/" + appKey + "/";
         }
     }
 

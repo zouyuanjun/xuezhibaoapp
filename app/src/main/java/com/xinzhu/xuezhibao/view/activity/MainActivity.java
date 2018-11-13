@@ -8,13 +8,12 @@ import android.support.v4.content.ContextCompat;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.view.fragment.HomeFragemt;
 import com.xinzhu.xuezhibao.view.fragment.TestFragment;
 import com.xinzhu.xuezhibao.view.fragment.UserCentreFragment;
 import com.xinzhu.xuezhibao.view.fragment.VideoFragment;
 import com.xinzhu.xuezhibao.view.fragment.XuebaoFragment;
-import com.zou.fastlibrary.activity.BaseTabActivity;
+import com.zou.fastlibrary.activity.BaseBottomTabActivity;
 import com.zou.fastlibrary.utils.EditTextUtil;
 import com.zou.fastlibrary.utils.StatusBar;
 
@@ -23,7 +22,7 @@ import java.util.List;
 
 import pub.devrel.easypermissions.EasyPermissions;
 
-public class MainActivity extends BaseTabActivity {
+public class MainActivity extends BaseBottomTabActivity {
     List<String> tabTextlist=new ArrayList<>();
     private List<Fragment> fragmentList=new ArrayList<>();
     List<Integer> iocdef=new ArrayList<>();

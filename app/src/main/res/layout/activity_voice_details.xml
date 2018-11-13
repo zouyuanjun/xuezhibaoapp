@@ -99,19 +99,14 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <TextView
+            <WebView
                 android:id="@+id/tv_details"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:focusable="true"
-
                 android:focusableInTouchMode="true"
-                android:lineSpacingExtra="3dp"
-                android:text="很多家有宣布那可是当你发觉上来看飞洒六十打架俯瞰代理费吉拉斯的附件两款手机都付款界面洒家扩大封建礼教阿斯利康地方加萨卢克点击发送i地方"
-                android:textColor="@color/color_black_333333"
-                android:textSize="15sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent" />
@@ -219,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingLeft="2dp"
-                android:text="56"
+                android:text="0"
                 android:textSize="13sp" />
         </LinearLayout>
 

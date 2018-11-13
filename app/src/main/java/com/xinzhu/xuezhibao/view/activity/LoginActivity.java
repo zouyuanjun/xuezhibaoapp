@@ -29,6 +29,8 @@ import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StatusBar;
 import com.zou.fastlibrary.utils.StringUtil;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -63,7 +65,7 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
         String a="sdfs";
        // a.substring(5);
         Beta.checkUpgrade(false,false);
-        login=new LoginPresenter(this);
+        login=new LoginPresenter(new WeakReference<>(this).get());
 
     }
 

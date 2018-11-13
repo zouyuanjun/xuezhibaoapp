@@ -16,6 +16,7 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.XuekeCourseBean;
 
 import java.lang.ref.WeakReference;
@@ -29,14 +30,14 @@ import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class RvXuekeCourseAdapter extends RecyclerView.Adapter {
     protected WeakReference<Context> mContext;
-    protected List<XuekeCourseBean> mDatas;
+    protected List<CourseBean> mDatas;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public RvXuekeCourseAdapter(WeakReference<Context> mContext, List<XuekeCourseBean> mDatas) {
+    public RvXuekeCourseAdapter(WeakReference<Context> mContext, List<CourseBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
@@ -50,29 +51,12 @@ public class RvXuekeCourseAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getTitle());
-        ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getTeacher());
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getReadnum());
-        ((ViewHolder) holder).tvClass.setText(mDatas.get(position).getCourseclass());
-        ((ViewHolder) holder).tvClass2.setText(mDatas.get(position).getCourseclass2());
-        RequestOptions requestOptions = RequestOptions.frameOf(0);
-        requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
-        requestOptions.transform(new BitmapTransformation() {
-            @Override
-            protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-                return toTransform;
-            }
-
-            @Override
-            public void updateDiskCacheKey(MessageDigest messageDigest) {
-                try {
-                    messageDigest.update((mContext.get().getPackageName() + "RotateTransform").getBytes("utf-8"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        Glide.with(mContext.get()).load(mDatas.get(position).getImurl()).apply(requestOptions).into(((ViewHolder) holder).simpleDraweeView);
+        ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
+        ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getVideoTeacher());
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply());
+        ((ViewHolder) holder).tvClass.setText(mDatas.get(position).getClassDictionaryName());
+        ((ViewHolder) holder).tvClass2.setText(mDatas.get(position).getSubjectDictionaryName());
+        Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
 
         // ((MyViewHolder) holder).simpleDraweeView.setImageBitmap(ImageUtils.createVideoThumbnail(mDatas.get(position).getArticlePicture(),MediaStore.Images.Thumbnails.MINI_KIND));
 

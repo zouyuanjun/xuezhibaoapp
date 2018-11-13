@@ -13,7 +13,9 @@ import com.xinzhu.xuezhibao.view.interfaces.SignInterface;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
 
-
+/**
+ * 负责注册和找回密码
+ */
 public class SignPresenter {
     SignInterface signInterface;
     ForgetPasswordInterface forgetPasswordInterface;
@@ -65,7 +67,12 @@ public class SignPresenter {
                     if (null!=signInterface){
                         signInterface.isexist();
                     }
+                }else if (code==203){
+                    if (null!=forgetPasswordInterface){
+                        forgetPasswordInterface.usernotfind();
+                    }
                 }
+
                 com.zou.fastlibrary.utils.Log.d(result);
             }
             if (what == 2) {
@@ -106,6 +113,8 @@ public class SignPresenter {
     public void sendcode(String phone,int type) {
         String data=JsonUtils.keyValueToString2("phone",phone,"templateTypeId",type);
         Network.getnetwork().postJson(data, Constants.URL+"/send/onSendCode", handler, 1);
+      //  Network.getnetwork().postform("phone",phone,"templateTypeId",type+"", Constants.URL+"/send/onSendCode",handler,3);
+
     }
 
     public void sign(final SignBean signBean) {
@@ -120,9 +129,7 @@ public class SignPresenter {
 
     public void iscodeture(String phone,String code){
         String data=JsonUtils.keyValueToString2("phone",phone,"code",code);
-
         Network.getnetwork().postform("phone",phone,"code",code, Constants.URL+"/login/judge-note-code",handler,3);
-
     }
 
 }

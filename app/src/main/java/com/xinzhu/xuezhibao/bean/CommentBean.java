@@ -1,9 +1,9 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class CommentBean {
-    String abcimurl;
+    String image;
     String creater;
-    String createTime;
+    long createTime;
     String commentContent;
     String commentId;
     String productId;
@@ -11,8 +11,8 @@ public class CommentBean {
     public CommentBean() {
     }
 
-    public CommentBean(String abcimurl, String creater, String createTime, String commentContent, String commentId, String productId) {
-        this.abcimurl = abcimurl;
+    public CommentBean(String abcimurl, String creater, long createTime, String commentContent, String commentId, String productId) {
+        this.image = abcimurl;
         this.creater = creater;
         this.createTime = createTime;
         this.commentContent = commentContent;
@@ -20,12 +20,12 @@ public class CommentBean {
         this.productId = productId;
     }
 
-    public String getAbcimurl() {
-        return abcimurl;
+    public String getImage() {
+        return image;
     }
 
-    public void setAbcimurl(String abcimurl) {
-        this.abcimurl = abcimurl;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getCreater() {
@@ -36,11 +36,11 @@ public class CommentBean {
         this.creater = creater;
     }
 
-    public String getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 

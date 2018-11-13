@@ -28,9 +28,9 @@ public class SelectPhotoUtils {
             case 1:
                 takePhoto.onPickFromGalleryWithCrop(imageUri, getCropOptions());
                 break;
-//            case R.id.btnPickByTake:
-//                takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
-//                break;
+            case 2:
+                takePhoto.onPickFromCaptureWithCrop(imageUri, getCropOptions());
+                break;
             default:
                 break;
         }

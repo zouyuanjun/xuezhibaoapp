@@ -36,7 +36,7 @@
             android:paddingLeft="16dp"
             android:textColor="#999999"
             android:textSize="15sp"
-            android:text="123456"
+            android:text="111111"
             android:hint="请输入密码"
              />
     </LinearLayout>

@@ -2,7 +2,6 @@ package com.zou.fastlibrary.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,13 +15,12 @@ import java.util.List;
 import me.majiajie.pagerbottomtabstrip.NavigationController;
 import me.majiajie.pagerbottomtabstrip.PageNavigationView;
 import me.majiajie.pagerbottomtabstrip.item.BaseTabItem;
-import me.majiajie.pagerbottomtabstrip.item.NormalItemView;
 import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 
 /**
  * 带Tab标签的导航主页，必须实现initview方法
  */
-public class BaseTabActivity extends AppCompatActivity {
+public class BaseBottomTabActivity extends AppCompatActivity {
     ViewPager viewPager;
     Context context;
     Activity activity;
@@ -33,7 +31,7 @@ public class BaseTabActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_basetab);
+        setContentView(R.layout.activity_basebottomtab);
         activity=this;
         context=this;
         pageBottomTabLayout= findViewById(R.id.basebottomtab);

@@ -15,7 +15,7 @@
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/jmui_avatar_iv"
             app:roundAsCircle="true"
-            style="@style/jmui_chat_item_receiver_avatar_style"/>
+            style="@style/jmui_chat_item_sender_avatar_style"/>
 
         <FrameLayout
             android:id="@+id/jmui_layout_location"

@@ -28,26 +28,6 @@
         app:layout_constraintStart_toEndOf="@+id/sdv_photo"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/im_dianzan"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:layout_marginEnd="6dp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_dianzan"
-        app:layout_constraintTop_toTopOf="@+id/tv_dianzan"
-        app:srcCompat="@drawable/address_logo" />
-
-    <TextView
-        android:id="@+id/tv_dianzan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:textColor="@color/color_grey_999999"
-android:textSize="13sp"
-        android:text="42"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tv_userName" />
-
     <TextView
         android:id="@+id/tv_creattime"
         android:layout_width="wrap_content"

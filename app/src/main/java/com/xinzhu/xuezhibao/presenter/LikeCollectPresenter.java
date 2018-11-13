@@ -51,18 +51,7 @@ public class LikeCollectPresenter {
                 }
                 return;
             }
-            else if (what == 5) {
-                if (code == 203) {
-                    likeCollectInterface.getcommentfail();
-                } else if (code == 100) {
-                    String data = JsonUtils.getStringValue(result, "Data");
-                    String total = JsonUtils.getStringValue(data, "total");
-                    data = JsonUtils.getStringValue(data, "rows");
-                    List<CommentBean> mDatas = JSON.parseArray(data, CommentBean.class);
-                    likeCollectInterface.getcomment(mDatas, total);
-                }
-
-            } else if (what == 7) {
+            else if (what == 7) {
                 if (code == 6) {
                     likeCollectInterface.islike(false);
                 }else if (code==100){

@@ -3,7 +3,7 @@ package com.xinzhu.xuezhibao.bean;
 public class VideoVoiceBean {
     String videoPicture;
     String videoTitle;
-    String readnum;
+    String videoLook;
     String videlLike;
     long createTime;
     String videoDetails;
@@ -11,8 +11,26 @@ public class VideoVoiceBean {
     String videoPrice;
     String videoUrl;
     String videoId;
+    boolean isBuy;
+    int videoType;  //0免费，1收费
 
     public VideoVoiceBean() {
+    }
+
+    public int getVideoType() {
+        return videoType;
+    }
+
+    public void setVideoType(int videoType) {
+        this.videoType = videoType;
+    }
+
+    public boolean isBuy() {
+        return isBuy;
+    }
+
+    public void setBuy(boolean buy) {
+        isBuy = buy;
     }
 
     public String getVideoPicture() {
@@ -31,12 +49,12 @@ public class VideoVoiceBean {
         this.videoTitle = videoTitle;
     }
 
-    public String getReadnum() {
-        return readnum;
+    public String getVideoLook() {
+        return videoLook;
     }
 
-    public void setReadnum(String readnum) {
-        this.readnum = readnum;
+    public void setVideoLook(String videoLook) {
+        this.videoLook = videoLook;
     }
 
     public String getVidelLike() {

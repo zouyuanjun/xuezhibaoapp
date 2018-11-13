@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bravin.btoast.BToast;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -21,6 +24,7 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
 import com.xinzhu.xuezhibao.view.interfaces.ArticleListInterface;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -37,34 +41,36 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
     Unbinder unbinder;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    int POSITION=-1;
+    int POSITION = -1;
     ArticlePresenter articlePresenter;
     List<ArticleBean> list = new ArrayList<>();
-    int pageindex=1;
-    boolean isvisible=false;
+    int pageindex = 1;
+    boolean isvisible = false;
+    @BindView(R.id.im_dataisnull)
+    ImageView imDataisnull;
+    @BindView(R.id.im_loading)
+    ImageView imLoading;
+    boolean isfirstload=false;
     @Override
     protected int setContentView() {
         return R.layout.fragment_onlylist;
     }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            POSITION=getArguments().getInt("POSITION");
+            POSITION = getArguments().getInt("POSITION");
         }
-        Log.d("类型"+POSITION);
-        articlePresenter=new ArticlePresenter(this);
-        if (POSITION==0){
-            articlePresenter.getHotArticle(pageindex);
-        }else if (  POSITION==1){
-            articlePresenter.getNewArticle(pageindex);
-        }
+        Log.d("类型" + POSITION);
+        articlePresenter = new ArticlePresenter(this);
+        isfirstload=true;
     }
 
 
     @Override
     protected void lazyLoad() {
-        isvisible=true;
+        isvisible = true;
         articleListAdapter = new ArticleListAdapter(new WeakReference(getContext()), list);
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
@@ -73,33 +79,48 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                pageindex = 1;
+                list.clear();
+                if (POSITION == 0) {
+                    articlePresenter.getHotArticle(pageindex);
+                } else if (POSITION == 1) {
+                    articlePresenter.getNewArticle(pageindex);
+                } else if (POSITION == 2) {
+                    articlePresenter.getCollectArticle(pageindex);
+                }
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
-                if (POSITION==0){
+                if (POSITION == 0) {
                     articlePresenter.getHotArticle(pageindex);
-                }else if (  POSITION==1){
+                } else if (POSITION == 1) {
                     articlePresenter.getNewArticle(pageindex);
+                } else if (POSITION == 2) {
+                    articlePresenter.getCollectArticle(pageindex);
                 }
             }
         });
         articleListAdapter.setOnItemClickListener(new ArticleListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                String id=list.get(position).getArticleId();
-                Intent intent=new Intent(getActivity(),ArticleDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID,id);
+                String id = list.get(position).getArticleId();
+                Intent intent = new Intent(getActivity(), ArticleDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID, id);
                 getActivity().startActivity(intent);
             }
-
             @Override
             public void onItemLongClick(View view, int position) {
-
             }
         });
+        if (POSITION == 2) {
+            if (!StringUtil.isEmpty(Constants.TOKEN)){
+            }else {
+                BToast.error(getContext()).text("请登陆后再查看").show();
+                imDataisnull.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -107,6 +128,22 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
+        if (isfirstload){
+            isfirstload=false;
+            if (POSITION == 0) {
+                articlePresenter.getHotArticle(pageindex);
+            } else if (POSITION == 1) {
+                articlePresenter.getNewArticle(pageindex);
+            } else if (POSITION == 2) {
+                if (!StringUtil.isEmpty(Constants.TOKEN)){
+                    articlePresenter.getCollectArticle(pageindex);
+                }
+            }
+            imLoading.setVisibility(View.VISIBLE);
+            AnimationDrawable drawable = (AnimationDrawable) imLoading.getDrawable();
+            drawable.start();
+        }
+
         return rootView;
     }
 
@@ -117,34 +154,28 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
     }
 
 
+
     @Override
-    public void getNewArticle(List<ArticleBean> mDatas) {
+    public void getDataSuccessful(List<ArticleBean> mDatas) {
         list.addAll(mDatas);
-        if (isvisible){
+        if (isvisible) {
             articleListAdapter.notifyDataSetChanged();
         }
         refreshLayout.finishLoadMore();
+        refreshLayout.finishRefresh(true);
         pageindex++;
-    }
-
-    @Override
-    public void getHotArticle(List<ArticleBean> mDatas) {
-        list.addAll(mDatas);
-        if (isvisible){
-            articleListAdapter.notifyDataSetChanged();
-        }
-        refreshLayout.finishLoadMore();
-        pageindex++;
-    }
-
-    @Override
-    public void getCollect(List<ArticleBean> mDatas) {
-
+        imDataisnull.setVisibility(View.GONE);
+        imLoading.setVisibility(View.GONE);
     }
 
     @Override
     public void getDataFail() {
         refreshLayout.finishLoadMoreWithNoMoreData();
+        refreshLayout.finishRefresh(false);
+        if (list.size()==0){
+            imDataisnull.setVisibility(View.VISIBLE);
+        }
+        imLoading.setVisibility(View.GONE);
     }
 
     @Override

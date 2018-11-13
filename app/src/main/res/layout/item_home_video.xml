@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="159dp"
-    android:layout_height="wrap_content">
+    android:layout_height="160dp">
 
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -19,15 +19,53 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <ImageView
+        android:id="@+id/aaa"
+        android:layout_width="145dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/mengban"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_video_titletv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:maxLines="2"
+        android:padding="10dp"
         android:text="孩子回家不开心尽然只是老师今天没有表扬他"
+        android:textColor="@color/color_black_333333"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/im_video" />
+
+    <ImageView
+        android:id="@+id/imageView27"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_playnum"
+        app:layout_constraintEnd_toStartOf="@+id/tv_playnum"
+        app:layout_constraintTop_toTopOf="@+id/tv_playnum"
+        android:background="@drawable/home_icon_playback" />
+
+    <TextView
+        android:id="@+id/tv_playnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="10dp"
+        android:text="2322"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/im_video"
+        app:layout_constraintTop_toTopOf="@+id/im_video" />
 </android.support.constraint.ConstraintLayout>

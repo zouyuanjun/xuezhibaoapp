@@ -8,7 +8,7 @@ import java.util.List;
 
 public  interface CoursePlayInterface extends publiceviewinterface {
     void getCoursedetail(CourseBean courseBean);
-    void getcomment(List<CommentBean> mDatas, String total);
+    void getcomment(List<CommentBean> mDatas, int total);
     void getcommentfail();
 
 }

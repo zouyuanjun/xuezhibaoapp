@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import android.view.ViewGroup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.VideoVoiceListAdapter;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
@@ -50,8 +53,9 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     VideoVoiceListPresenter videoVoiceListPresenter;
-    boolean isfirstloadfree=true;
-    boolean isfirstloadpay=true;
+    boolean isfirstloadfree = true;
+    boolean isfirstloadpay = true;
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_homevideocourse;
@@ -64,19 +68,19 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
         if (isfistaddtab) {
             tabVideo.addTab(tabVideo.newTab().setText("免费视频"));
             tabVideo.addTab(tabVideo.newTab().setText("付费视频"));
-            tabVideo.setTabTextColors(Color.parseColor("#333333"),Color.parseColor("#f87d28"));
+            tabVideo.setTabTextColors(Color.parseColor("#333333"), Color.parseColor("#f87d28"));
             isfistaddtab = false;
         }
     }
 
     @Override
     protected void lazyLoad() {
-        videoVoiceListPresenter=new VideoVoiceListPresenter(this);
+        videoVoiceListPresenter = new VideoVoiceListPresenter(this);
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvVideocourselist.setLayoutManager(linearLayoutManager3);
-        freeadapter = new VideoVoiceListAdapter(new WeakReference(getContext()), freeBeanList);
-        payadapter = new VideoVoiceListAdapter(new WeakReference(getContext()), payBeanList);
+        freeadapter = new VideoVoiceListAdapter(new WeakReference<Context>(getContext()).get(), freeBeanList, 2);
+        payadapter = new VideoVoiceListAdapter(new WeakReference<>(getContext()).get(), payBeanList, 2);
         rvVideocourselist.setAdapter(freeadapter);
         tabVideo.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -102,6 +106,19 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
 
             }
         });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                if (type==0){
+                    freeBeanList.clear();
+                    freepage=1;
+                }else {
+                    payBeanList.clear();
+                    paypage=1;
+                }
+                loaddata();
+            }
+        });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -112,9 +129,9 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
         payadapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                String id=payBeanList.get(position).getVideoId();
-                Intent intent=new Intent(getContext(),VideoDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID,id);
+                String id = payBeanList.get(position).getVideoId();
+                Intent intent = new Intent(getContext(), VideoDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID, id);
                 startActivity(intent);
             }
 
@@ -126,9 +143,9 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
         freeadapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                String id=freeBeanList.get(position).getVideoId();
-                Intent intent=new Intent(getContext(),VideoDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID,id);
+                String id = freeBeanList.get(position).getVideoId();
+                Intent intent = new Intent(getContext(), VideoDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID, id);
                 startActivity(intent);
             }
 
@@ -138,23 +155,25 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
             }
         });
     }
-private void loaddata(){
-        if (type==0){
-            if (isfirstloadfree){
+
+    private void loaddata() {
+        if (type == 0) {
+            if (isfirstloadfree) {
                 videoVoiceListPresenter.getfreeVideo(1);
-                isfirstloadfree=false;
-            }else {
+                isfirstloadfree = false;
+            } else {
                 videoVoiceListPresenter.getfreeVideo(freepage);
             }
-        }else {
-            if (isfirstloadpay){
+        } else {
+            if (isfirstloadpay) {
                 videoVoiceListPresenter.getpayVideo(1);
-                isfirstloadpay=false;
-            }else {
+                isfirstloadpay = false;
+            } else {
                 videoVoiceListPresenter.getpayVideo(paypage);
             }
         }
-}
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
@@ -170,16 +189,17 @@ private void loaddata(){
         isfistaddtab = true;
         type = 0;
         freepage = 1;
-        isfirstloadpay=true;
-        isfirstloadfree=true;
+        isfirstloadpay = true;
+        isfirstloadfree = true;
     }
 
     @Override
     public void getFreeVideo(List<VideoVoiceBean> List) {
         freeBeanList.addAll(List);
         freeadapter.notifyDataSetChanged();
-     freepage++;
+        freepage++;
         refreshLayout.finishLoadMore();
+        refreshLayout.finishRefresh(true);
     }
 
     @Override
@@ -188,6 +208,7 @@ private void loaddata(){
         payadapter.notifyDataSetChanged();
         paypage++;
         refreshLayout.finishLoadMore();
+        refreshLayout.finishRefresh(true);
     }
 
     @Override

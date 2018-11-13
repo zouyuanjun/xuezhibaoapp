@@ -227,4 +227,8 @@
     <style name="TabLayoutTextStyle">
         <item name="android:textSize">15sp</item>
     </style>
+
+    <style name="toolbarTitle" >
+        <item name="android:textSize">19sp</item>
+    </style>
 </resources>

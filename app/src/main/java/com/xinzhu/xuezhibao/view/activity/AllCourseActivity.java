@@ -4,11 +4,12 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
 import com.xinzhu.xuezhibao.utils.Constants;
-import com.xinzhu.xuezhibao.view.fragment.FragmentXuekeCourse;
+import com.xinzhu.xuezhibao.view.fragment.SubjectCourseFragment;
 import com.xinzhu.xuezhibao.view.fragment.FamilyCourseFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
@@ -41,7 +42,13 @@ public class AllCourseActivity extends BaseActivity {
         tbClass.addTab(tbClass.newTab().setText("热门"));
         tbClass.addTab(tbClass.newTab().setText("最新"));
         fragmentList.add(new FamilyCourseFragment());
-        fragmentList.add(new FragmentXuekeCourse());
+        fragmentList.add(new SubjectCourseFragment());
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         initview();
     }

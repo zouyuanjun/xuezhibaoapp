@@ -110,24 +110,24 @@ public class EditAllActivity extends TakePhotoActivity {
             @Override
             public void onClick(View view) {
                 if (EditTextUtil.getString(edVipname).isEmpty()) {
-                    BToast.custom(context).text("昵称还没有填写哦").show();
+                    BToast.info(context).text("昵称还没有填写哦").show();
                     return;
                 }
                 if (EditTextUtil.getString(edStudenname).isEmpty()) {
-                    BToast.custom(context).text("学生姓名还没有填写哦").show();
+                    BToast.info(context).text("学生姓名还没有填写哦").show();
                     return;
                 }
                 if (EditTextUtil.getString(edStudennage).isEmpty()) {
-                    BToast.custom(context).text("学生年龄还没有填写哦").show();
+                    BToast.info(context).text("学生年龄还没有填写哦").show();
                     return;
                 }
                 if (EditTextUtil.getString(edFathername).isEmpty() && EditTextUtil.getString(edMothername).isEmpty()) {
-                    BToast.custom(context).text("父亲或母亲姓名必须填写一个").show();
+                    BToast.info(context).text("父亲或母亲姓名必须填写一个").show();
                     return;
                 }
                 String address = tvAddress.getText().toString();
                 if (null == address || address.isEmpty()) {
-                    BToast.custom(context).text("地区还没选择哦").show();
+                    BToast.info(context).text("地区还没选择哦").show();
                     return;
                 }
                 String vipname = EditTextUtil.getString(edVipname);
@@ -182,10 +182,6 @@ public class EditAllActivity extends TakePhotoActivity {
         super.takeCancel();
     }
 
-    @OnClick(R.id.ll_header)
-    public void onViewClicked() {
-        SelectPhotoUtils.selectphoto(1, getTakePhoto());
-    }
 
     @OnClick({R.id.ll_header, R.id.ll_address})
     public void onViewClicked(View view) {

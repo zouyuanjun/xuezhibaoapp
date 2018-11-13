@@ -41,7 +41,6 @@ public class MyPointsActivity extends BaseActivity {
         tabOrder.addTab(tabOrder.newTab().setText("热门"));
         tabOrder.addTab(tabOrder.newTab().setText("最新"));
         tabOrder.addTab(tabOrder.newTab().setText("我的收藏"));
-        tabOrder.setTabTextColors(0x333333,0xf87d28);
         fragmentList.add(new MyPointsFragment());
         fragmentList.add(new MyPointsFragment());
         fragmentList.add(new MyPointsFragment());

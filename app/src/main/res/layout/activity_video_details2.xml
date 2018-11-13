@@ -6,12 +6,56 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
-        android:id="@+id/standardGSYVideoPlayer"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="180dp">
 
-    </com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer>
+        <com.xinzhu.xuezhibao.view.custom.VideoPlayer
+            android:id="@+id/standardGSYVideoPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="180dp">
+
+        </com.xinzhu.xuezhibao.view.custom.VideoPlayer>
+
+        <android.support.constraint.ConstraintLayout
+            android:visibility="gone"
+            android:id="@+id/csl_buy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/color_black_333333">
+
+            <TextView
+                android:id="@+id/textView32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="8dp"
+                android:text="您需要先购买视频，才能观看"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:gravity="center"
+                android:id="@+id/tv_buyvideo"
+                android:layout_width="82dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="16dp"
+                android:text="￥6 购买"
+                android:textSize="15sp"
+                android:background="@drawable/buytextbg"
+                android:textColor="@color/appcolor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView32" />
+        </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
+
+
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/NestedScrollView"
@@ -28,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="孩子回家不开心竟然只是老师没有表扬他"
+                android:text=""
                 android:textColor="@color/color_black_333333"
                 android:textSize="15sp"
                 android:focusable="true"
@@ -43,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="发布时间：18-02-19：15.25"
+                android:text="发布时间："
                 android:textColor="@color/color_grey_999999"
                 android:textSize="13sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,21 +98,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="播放：2345"
+                android:text="播放：0"
                 android:textColor="@color/color_grey_999999"
                 android:textSize="13sp"
                 app:layout_constraintStart_toEndOf="@+id/tv_creattime"
                 app:layout_constraintTop_toTopOf="@+id/tv_creattime" />
 
-            <TextView
+            <WebView
                 android:id="@+id/tv_details"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="16dp"
-                android:lineSpacingExtra="4dp"
-                android:text="很多家有宣布那可是当你发觉上来看飞洒六十打架俯瞰代理费吉拉斯的附件两款手机都付款界面洒家扩大封建礼教阿斯利康地方加萨卢克点击发送i地方"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_creattime" />
@@ -92,7 +134,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingLeft="16dp"
-                    android:text="全部评论（23）" />
+                    android:text="全部评论（0）" />
             </LinearLayout>
 
             <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -180,7 +222,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
                 android:paddingLeft="2dp"
-                android:text="56"
+                android:text="0"
                 android:textSize="13sp" />
         </LinearLayout>
 

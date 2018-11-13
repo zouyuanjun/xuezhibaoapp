@@ -15,6 +15,7 @@
         android:layout_marginTop="5dp">
 
         <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_marginTop="7dp"
             android:id="@+id/jmui_avatar_iv"
             app:roundAsCircle="true"
             style="@style/jmui_chat_item_receiver_avatar_style"/>
@@ -33,6 +34,7 @@
                 android:layout_toRightOf="@id/jmui_avatar_iv"/>
 
             <TextView
+                android:paddingBottom="3dp"
                 android:id="@+id/jmui_msg_content"
                 style="@style/jmui_msg_text_style"
                 android:layout_width="wrap_content"

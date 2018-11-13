@@ -14,6 +14,8 @@ import com.xinzhu.xuezhibao.view.interfaces.LoginInterface;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
 
+import org.json.JSONException;
+
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
@@ -33,7 +35,7 @@ public class LoginPresenter {
             int code=-999;
             try {
                 code = JsonUtils.getIntValue(result, "_code");
-            }catch (Exception e){
+            }catch (com.alibaba.fastjson.JSONException e){
                 com.zou.fastlibrary.utils.Log.d("异常了");
                 loginInterface.servererr();
             }
@@ -66,7 +68,7 @@ public class LoginPresenter {
         JMessageClient.login(phone, password, new BasicCallback() {
             @Override
             public void gotResult(int responseCode, String responseMessage) {
-                Log.d("JIM登陆响应",responseMessage);
+                Log.d("JIM登陆响应",responseCode+responseMessage);
                 if (responseCode == 0) {
 
                     //注册时更新头像

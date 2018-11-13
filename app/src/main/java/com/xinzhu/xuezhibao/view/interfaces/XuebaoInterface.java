@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.view.interfaces;
 
+import com.xinzhu.xuezhibao.bean.BannerImgBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 
 import java.util.List;
@@ -9,4 +10,5 @@ public interface XuebaoInterface extends publiceviewinterface{
    void getNewCourse(List<CourseBean> list);
    void  getRecommentCourse(List<CourseBean> list);
    void getAllCourse(List<CourseBean> list);
+   void getBanner(List<BannerImgBean> list);
 }

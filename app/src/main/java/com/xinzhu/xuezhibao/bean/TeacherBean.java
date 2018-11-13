@@ -1,37 +1,76 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class TeacherBean  {
-    String imurl;
-    String name;
-    String course;
+    String headPortraitUrl;
+    String realName;
+    String curriculumTitle;
+    String account;
+    String memberId;
+    String userId;
+    String describeInfo;
+
+    public TeacherBean() {
+    }
 
     public TeacherBean(String imurl, String name, String course) {
-        this.imurl = imurl;
-        this.name = name;
-        this.course = course;
+        this.headPortraitUrl = imurl;
+        this.realName = name;
+        this.curriculumTitle = course;
     }
 
-    public String getImurl() {
-        return imurl;
+    public String getDescribeInfo() {
+        return describeInfo;
     }
 
-    public void setImurl(String imurl) {
-        this.imurl = imurl;
+    public void setDescribeInfo(String describeInfo) {
+        this.describeInfo = describeInfo;
     }
 
-    public String getName() {
-        return name;
+    public String getAccount() {
+        return account;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAccount(String account) {
+        this.account = account;
     }
 
-    public String getCourse() {
-        return course;
+    public String getMemberId() {
+        return memberId;
     }
 
-    public void setCourse(String course) {
-        this.course = course;
+    public void setMemberId(String memberId) {
+        this.memberId = memberId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getHeadPortraitUrl() {
+        return headPortraitUrl;
+    }
+
+    public void setHeadPortraitUrl(String headPortraitUrl) {
+        this.headPortraitUrl = headPortraitUrl;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getCurriculumTitle() {
+        return curriculumTitle;
+    }
+
+    public void setCurriculumTitle(String curriculumTitle) {
+        this.curriculumTitle = curriculumTitle;
     }
 }

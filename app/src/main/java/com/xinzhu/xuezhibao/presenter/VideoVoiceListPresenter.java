@@ -87,48 +87,50 @@ public class VideoVoiceListPresenter {
     };
 
     public void getHotVideo(int page) {
-        String data = JsonUtils.keyValueToString("pageNo", page);
+        String data = JsonUtils.keyValueToString2("pageNo", page,"type",2);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/videos-hottest", handler, 1);
     }
 
     public void getNewVideo(int page) {
-        String data = JsonUtils.keyValueToString("pageNo", page);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/video-newest-gratis", handler, 2);
+        String data = JsonUtils.keyValueToString2("pageNo", page,"type",2);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/video-newest", handler, 2);
     }
 
     public void getLikeVideo(int page) {
         if (!StringUtil.isEmpty(Constants.TOKEN)){
             String data = JsonUtils.keyValueToString2("pageNo", page,"token",Constants.TOKEN);
+            data=JsonUtils.addKeyValue(data,"type",1);
             Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-videos", handler, 3);
         }
     }
 
     public void getHotVoice(int page) {
-        String data = JsonUtils.keyValueToString("pageNo", page);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/video-hottest", handler, 4);
+        String data = JsonUtils.keyValueToString2("pageNo", page,"type",1);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/videos-hottest", handler, 4);
     }
 
     public void getNewVoice(int page) {
-        String data = JsonUtils.keyValueToString("pageNo", page);
+        String data = JsonUtils.keyValueToString2("pageNo", page,"type",1);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/video-newest", handler, 5);
     }
 
     public void getLikeVoice(int page) {
         if (!StringUtil.isEmpty(Constants.TOKEN)){
         String data = JsonUtils.keyValueToString2("pageNo", page,"token",Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-video", handler, 6);
+        data=JsonUtils.addKeyValue(data,"type",1);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-videos", handler, 6);
         }
     }
 
     public void getfreeVideo(int page) {
-        String data = JsonUtils.keyValueToString("pageNo", page);
+        String data = JsonUtils.keyValueToString2("pageNo", page,"videoType",0);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/video-newest-gratis", handler, 7);
 
     }
 
     public void getpayVideo(int page) {
-        String data = JsonUtils.keyValueToString("pageNo", page);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/video-newest-pay", handler, 8);
+        String data = JsonUtils.keyValueToString2("pageNo", page,"videoType",1);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/video-newest-gratis", handler, 8);
 
     }
 

@@ -30,7 +30,7 @@ public class Log {
 	}
 	public static void d( String msg) {
 		if (! SettingUtil.isReleased) {
-			android.util.Log.d("打日志了", msg);
+			android.util.Log.d("da打日志了", msg);
 		}
 	}
 	/**

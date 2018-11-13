@@ -9,8 +9,71 @@ public class CourseBean {
     String curriculumId;
     String curriculumUrl;
     String curriculumExplain;
-    String curriculumLike;
+    int curriculumLike;
     String videoTeacher;
+    int curriculumKind;
+    String dictionaryName;
+    String subjectDictionaryName;
+    String classDictionaryName;
+    int sumHour;
+    int consumeHour;
+    boolean isApply;
+
+    public boolean isApply() {
+        return isApply;
+    }
+
+    public void setApply(boolean apply) {
+        isApply = apply;
+    }
+
+    public int getSumHour() {
+        return sumHour;
+    }
+
+    public void setSumHour(int sumHour) {
+        this.sumHour = sumHour;
+    }
+
+    public int getConsumeHour() {
+        return consumeHour;
+    }
+
+    public void setConsumeHour(int consumeHour) {
+        this.consumeHour = consumeHour;
+    }
+
+    public String getSubjectDictionaryName() {
+        return subjectDictionaryName;
+    }
+
+    public void setSubjectDictionaryName(String subjectDictionaryName) {
+        this.subjectDictionaryName = subjectDictionaryName;
+    }
+
+    public String getClassDictionaryName() {
+        return classDictionaryName;
+    }
+
+    public void setClassDictionaryName(String classDictionaryName) {
+        this.classDictionaryName = classDictionaryName;
+    }
+
+    public String getDictionaryName() {
+        return dictionaryName;
+    }
+
+    public void setDictionaryName(String dictionaryName) {
+        this.dictionaryName = dictionaryName;
+    }
+
+    public int getCurriculumKind() {
+        return curriculumKind;
+    }
+
+    public void setCurriculumKind(int curriculumKind) {
+        this.curriculumKind = curriculumKind;
+    }
 
     public CourseBean() {
     }
@@ -47,11 +110,11 @@ public class CourseBean {
         this.curriculumExplain = curriculumExplain;
     }
 
-    public String getCurriculumLike() {
+    public int getCurriculumLike() {
         return curriculumLike;
     }
 
-    public void setCurriculumLike(String curriculumLike) {
+    public void setCurriculumLike(int curriculumLike) {
         this.curriculumLike = curriculumLike;
     }
 

@@ -6,6 +6,5 @@ import java.util.List;
 
 public interface FamilyCourseInterface extends publiceviewinterface{
     void getFamilyCourse(List<CourseBean> list);
-    void getFamilyHotCourse(List<CourseBean> list);
-    void searchFamilyCourse(List<CourseBean> list);
+    void  noMoreData();
 }

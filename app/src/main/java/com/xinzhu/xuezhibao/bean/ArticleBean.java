@@ -5,7 +5,7 @@ public class ArticleBean {
     String articleTitle;
     String articleRead;
     String articleContent;
-    String articleLike;
+    int articleLike;
     String articleId;
     String createTime;
     String creater;
@@ -19,7 +19,7 @@ public class ArticleBean {
         this.articleRead = readnum;
     }
 
-    public ArticleBean(String articlePicture, String articleTitle, String articleRead, String articleContent, String articleLike, String articleId, String createTime, String creater) {
+    public ArticleBean(String articlePicture, String articleTitle, String articleRead, String articleContent, int articleLike, String articleId, String createTime, String creater) {
         this.articlePicture = articlePicture;
         this.articleTitle = articleTitle;
         this.articleRead = articleRead;
@@ -78,11 +78,11 @@ public class ArticleBean {
         this.articleContent = articleContent;
     }
 
-    public String getArticleLike() {
+    public int getArticleLike() {
         return articleLike;
     }
 
-    public void setArticleLike(String articleLike) {
+    public void setArticleLike(int articleLike) {
         this.articleLike = articleLike;
     }
 

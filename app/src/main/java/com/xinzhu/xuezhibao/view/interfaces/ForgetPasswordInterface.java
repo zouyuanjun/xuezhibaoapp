@@ -5,4 +5,5 @@ public interface ForgetPasswordInterface extends publiceviewinterface{
     void codeiserr(int code);
     void successful();
     void fail(int code);
+    void usernotfind();
 }

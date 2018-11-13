@@ -19,9 +19,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
+import com.zou.fastlibrary.utils.Log;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -102,7 +107,7 @@ public class ChattingListAdapter extends BaseAdapter {
         this.mMsgList = mConv.getMessagesFromNewest(0, mOffset);
         reverse(mMsgList);
         mLongClickListener = longClickListener;
-        this.mController = new ChatItemController(this, mActivity, conv, mMsgList, dm.density,
+        this.mController = new ChatItemController(this, new WeakReference<>(mActivity).get(), conv, mMsgList, dm.density,
                 longClickListener);
         mStart = mOffset;
         if (mConv.getType() == ConversationType.single) {
@@ -144,7 +149,7 @@ public class ChattingListAdapter extends BaseAdapter {
         }
         reverse(mMsgList);
         mLongClickListener = longClickListener;
-        this.mController = new ChatItemController(this, mActivity, conv, mMsgList, dm.density,
+        this.mController = new ChatItemController(this, new WeakReference<>(mActivity).get(), conv, mMsgList, dm.density,
                 longClickListener);
         GroupInfo groupInfo = (GroupInfo) mConv.getTargetInfo();
         mGroupId = groupInfo.getGroupID();
@@ -559,9 +564,12 @@ public class ChattingListAdapter extends BaseAdapter {
                     @Override
                     public void gotResult(int status, String desc, Bitmap bitmap) {
                         if (status == 0) {
-                            holder.headIcon.setImageBitmap(bitmap);
+                            RequestOptions mRequestOptions = RequestOptions.circleCropTransform()
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不做磁盘缓存
+                                    .skipMemoryCache(true);//不做内存缓存
+                            Glide.with(mContext).load(bitmap).apply(mRequestOptions).into(holder.headIcon);
                         } else {
-                  //          holder.headIcon.setImageResource(R.drawable.jmui_head_icon);
+                            holder.headIcon.setImageURI(Uri.parse("res://com.xinzhu.xuezhibao/" + R.drawable.jmui_head_icon));
                         }
                     }
                 });
@@ -586,11 +594,9 @@ public class ChattingListAdapter extends BaseAdapter {
                 }
             });
 
-            holder.headIcon.setTag(position);
+           // holder.headIcon.setTag(position);
             holder.headIcon.setOnLongClickListener(mLongClickListener);
         }
-
-
         switch (msg.getContentType()) {
             case text:
                 //final String content = ((TextContent) msg.getContent()).getText();
@@ -654,9 +660,6 @@ public class ChattingListAdapter extends BaseAdapter {
         }
         return convertView;
     }
-
-
-
     private void resendTextOrVoice(final ViewHolder holder, Message msg) {
         holder.resend.setVisibility(View.GONE);
         holder.sendingIv.setVisibility(View.VISIBLE);

@@ -86,6 +86,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -95,18 +96,19 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="154dp" />
+                android:layout_height="164dp" />
             <ImageView
                 android:id="@+id/im_test"
                 android:layout_width="match_parent"
-                android:layout_height="87dp"
-                android:background="@drawable/home_pic_evaluation"
+                android:layout_height="90dp"
+                android:src="@drawable/home_pic_evaluation"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
             <LinearLayout
                 android:id="@+id/ll_more_video"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:orientation="horizontal"
+                android:background="@color/white"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
                 <ImageView
                     android:layout_gravity="center_vertical"
@@ -135,19 +137,23 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_video"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="160dp">
 
             </android.support.v7.widget.RecyclerView >
             <LinearLayout
+               android:background="@color/fenge"
+               android:layout_width="match_parent"
+                android:layout_height="1dp"></LinearLayout>
+            <LinearLayout
                 android:id="@+id/ll_more_voice"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:orientation="horizontal"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
                 <ImageView
                     android:layout_gravity="center_vertical"
                     android:layout_width="5dp"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:background="@color/appcolor"/>
                 <TextView
                     android:textSize="15sp"
@@ -171,19 +177,23 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_voice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="160dp">
 
             </android.support.v7.widget.RecyclerView >
             <LinearLayout
+                android:background="@color/fenge"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"></LinearLayout>
+            <LinearLayout
                 android:id="@+id/ll_more_article"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:orientation="horizontal"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
                 <ImageView
                     android:layout_gravity="center_vertical"
                     android:layout_width="5dp"
-                    android:layout_height="30dp"
+                    android:layout_height="25dp"
                     android:background="@color/appcolor"/>
                 <TextView
                     android:textSize="15sp"

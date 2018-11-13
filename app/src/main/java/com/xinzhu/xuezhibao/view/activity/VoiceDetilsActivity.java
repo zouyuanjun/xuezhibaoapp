@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
@@ -14,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +26,7 @@ import com.hrb.library.MiniMusicView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
@@ -37,6 +40,7 @@ import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.TimeUtil;
+import com.zou.fastlibrary.utils.WebViewUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
@@ -54,7 +58,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
     @BindView(R.id.tv_readnum)
     TextView tvReadnum;
     @BindView(R.id.tv_details)
-    TextView tvDetails;
+    WebView tvDetails;
     @BindView(R.id.tv_comment_num)
     TextView tvCommentNum;
     @BindView(R.id.rv_comment)
@@ -87,8 +91,10 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
     boolean iscollect = true;
     @BindView(R.id.mynest)
     NestedScrollView mynest;
-    boolean isvisibale=false;
-
+    boolean isvisibale = false;
+    int likenum;  //点赞数
+    int commentnum; //评论数
+    GoodView mGoodView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,10 +105,10 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         mMusicView.setTitleText("孩子回家不吃饭");
         mMusicView.setmContext(new WeakReference<Context>(this));
         mMusicView.startPlayMusic("http://other.web.nf01.sycdn.kuwo.cn/resource/n2/87/0/3398589179.mp3");
-
+        tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this, tvDetails));
         videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
         likeCollectPresenter = new LikeCollectPresenter(this);
-
+        mGoodView = new GoodView(this);
         commentAdapter = new CommentAdapter(this, commentBeanArrayList);
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this);
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
@@ -126,13 +132,20 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         });
         videoVoiceDetailPresenter.getVoiceDetail(videoid);
         videoVoiceDetailPresenter.getVoiceComment(videoid, 1);
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        likeCollectPresenter.islike(videoid,"3");
-        likeCollectPresenter.iscollect(videoid,"3");
+        likeCollectPresenter.islike(videoid, "3");
+        likeCollectPresenter.iscollect(videoid, "3");
     }
 
     @Override
@@ -140,20 +153,27 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         super.onDestroy();
         mMusicView.stopPlayMusic();
     }
+
     @OnClick({R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_detail_comment})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_dianzan:
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
-                }else {
-                    if (islike){
-                        islike=false;
-                        likeCollectPresenter.cancellike(videoid,"3");
+                } else {
+                    if (islike) {
+                        likenum--;
+                        tvLike.setText(likenum+"");
+                        islike = false;
+                        likeCollectPresenter.cancellike(videoid, "3");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
-                    }else {
-                        islike=true;
-                        likeCollectPresenter.like(videoid,"3");
+                    } else {
+                        likenum++;
+                        tvLike.setText(likenum+"");
+                        mGoodView.setTextInfo("+1",Color.parseColor("#f87d28"),25);
+                        mGoodView.show(view);
+                        islike = true;
+                        likeCollectPresenter.like(videoid, "3");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
                     }
 
@@ -162,14 +182,15 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
             case R.id.ll_shoucan:
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
-                }else {
-                    if (iscollect){
-                        iscollect=false;
-                        likeCollectPresenter.cancelcollect(videoid,"3");
+                } else {
+                    if (iscollect) {
+                        iscollect = false;
+                        likeCollectPresenter.cancelcollect(videoid, "3");
                         imCollection.setImageResource(R.drawable.videodetails_btn_collection_nor);
-                    }else {
-                        iscollect=true;
-                        likeCollectPresenter.collect(videoid,"3");
+                    } else {
+
+                        iscollect = true;
+                        likeCollectPresenter.collect(videoid, "3");
                         imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
                     }
                 }
@@ -179,6 +200,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 break;
         }
     }
+
     @Override
     public void getVideodetail(VideoVoiceBean videoVoiceBean) {
 
@@ -186,13 +208,17 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     @Override
     public void getVoicedetail(VideoVoiceBean videoVoiceBean) {
-        tvCreattime.setText(TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
-        tvDetails.setText(videoVoiceBean.getVideoDetails());
+        tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
+        tvDetails.loadDataWithBaseURL(null, videoVoiceBean.getVideoDetails(), "text/html", "UTF-8", null);
+        tvReadnum.setText("播放：" + videoVoiceBean.getVideoLook());
         tvTitle.setText(videoVoiceBean.getVideoTitle());
+        mMusicView.setTitleText(videoVoiceBean.getVideoTitle());
+        tvLike.setText(videoVoiceBean.getVidelLike());
+        likenum=Integer.parseInt(videoVoiceBean.getVidelLike());
     }
-
     @Override
-    public void getcomment(List<CommentBean> mDatas, String total) {
+    public void getcomment(List<CommentBean> mDatas, int total) {
+        commentnum=total;
         tvCommentNum.setText("全部评论(" + total + ")");
         commentBeanArrayList.addAll(mDatas);
         if (commentAdapter != null) {
@@ -200,6 +226,11 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         }
         page++;
         smartrv.finishLoadMore();
+
+    }
+
+    @Override
+    public void nologin() {
 
     }
 
@@ -221,6 +252,16 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
     @Override
     public void getcommentfail() {
         smartrv.finishLoadMoreWithNoMoreData();
+    }
+
+    @Override
+    public void successbuy() {
+
+    }
+
+    @Override
+    public void alreadlybuy() {
+
     }
 
     @Override
@@ -259,7 +300,9 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 @Override
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
-                    CommentBean commentBean = new CommentBean("", "sdfsd", "1540785350000", commend, "", "111");
+                    CommentBean commentBean = new CommentBean(Constants.userBasicInfo.getImage(), Constants.userBasicInfo.getNickName(), System.currentTimeMillis(), commend, "", "111");
+                   commentnum++;
+                    tvCommentNum.setText("全部评论(" + commentnum + ")");
                     commentBeanArrayList.addFirst(commentBean);
                     commentAdapter.notifyItemInserted(0);
                     videoVoiceDetailPresenter.sendVoiceComment(videoid, commend);

@@ -1,14 +1,17 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Switch;
 
+import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.R;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.DataKeeper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,7 +30,7 @@ public class SettingActivity extends BaseActivity {
     ImageView imCleanCache;
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
-
+    Context context;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +42,10 @@ public class SettingActivity extends BaseActivity {
                 finish();
             }
         });
+        context=this;
     }
 
-    @OnClick({R.id.st_notifition, R.id.st_netdownload, R.id.textView4, R.id.textView7, R.id.textView8})
+    @OnClick({R.id.st_notifition, R.id.st_netdownload, R.id.textView4, R.id.textView7, R.id.tv_cleancacle})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.st_notifition:
@@ -54,7 +58,13 @@ public class SettingActivity extends BaseActivity {
             case R.id.textView7:
                 startActivity(new Intent(this, AboutUsActivity.class));
                 break;
-            case R.id.textView8:
+            case R.id.tv_cleancacle:
+                try {
+                    BToast.info(context).text("已清除缓存："+DataKeeper.getTotalCacheSize(context)).show();
+                    DataKeeper.clearAllCache(context);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
         }
     }

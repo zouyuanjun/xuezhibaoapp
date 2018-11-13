@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
@@ -22,6 +23,7 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.SelectPhotoUtils;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
@@ -35,6 +37,8 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.api.BasicCallback;
 
 public class UserBaseActivity extends TakePhotoActivity {
     Activity activity;
@@ -150,6 +154,13 @@ public class UserBaseActivity extends TakePhotoActivity {
         String s=result.getImage().getCompressPath();
         Log.d(imgurl+s);
         sdMyphoto.setImageURI(Uri.fromFile(new File(imgurl)));
+        JMessageClient.updateUserAvatar(new File(imgurl), new BasicCallback() {
+            @Override
+            public void gotResult(int i, String s) {
+                Log.d("极光用户头像更新成功");
+            }
+        });
+
         Network.getnetwork().uploadimg(Constants.TOKEN,Constants.URL+"/guest/image-upload",result.getImage().getCompressPath(),handler);
 
     }
@@ -169,7 +180,7 @@ public class UserBaseActivity extends TakePhotoActivity {
         Intent intent=new Intent(UserBaseActivity.this,EditUserBasicActivity.class);
         switch (view.getId()) {
             case R.id.sd_myphoto:
-                SelectPhotoUtils.selectphoto(1, getTakePhoto());
+                SelectPhotoUtils.selectphoto(2, getTakePhoto());
                 break;
             case R.id.ll_vipname:
               intent.putExtra(Constants.INTENT_EDITITEM,"昵称");
@@ -256,11 +267,23 @@ public class UserBaseActivity extends TakePhotoActivity {
         }
     }
 
+    public void showpopwindow(){
+        PopupWindow popupWindow=CreatPopwindows.creatpopwindows(this,R.layout.pop_selectphoto);
+        View view=popupWindow.getContentView();
+        TextView takephoto=view.findViewById(R.id.tv_take_photo);
+        TextView selectphoto=view.findViewById(R.id.tv_select_photo);
+        TextView cancle=view.findViewById(R.id.tv_cancel);
+
+
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String result="";
-        if (null==data){
+        Log.d("返回码"+requestCode);
+        if (null==data||requestCode!=1||requestCode!=2||requestCode!=3||requestCode!=4||requestCode!=5){
             return;
         }
         if (null!=data){

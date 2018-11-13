@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 
 public class JsonUtils {
@@ -69,7 +70,12 @@ public class JsonUtils {
 	 */
 	public static int getIntValue(String jsonString, String key) {
 		JSONObject jsonObject = JSON.parseObject(jsonString);
-		return jsonObject.getIntValue(key);
+		if (jsonObject.containsKey(key)){
+			return jsonObject.getIntValue(key);
+		}else {
+			throw new JSONException();
+		}
+
 	}
 
 	/**
@@ -108,7 +114,7 @@ public class JsonUtils {
 	 * @param value
 	 * @return
 	 */
-	public static String addKeyValue(String jsonstring,String key,String value){
+	public static String addKeyValue(String jsonstring,String key,Object value){
         JSONObject jsonObject;
 	    if (StringUtil.isEmpty(jsonstring)){
 	        jsonObject=new JSONObject();

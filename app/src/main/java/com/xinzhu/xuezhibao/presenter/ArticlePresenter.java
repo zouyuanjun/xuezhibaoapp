@@ -49,7 +49,6 @@ public class ArticlePresenter {
                 if (null != articleListInterface) {
                     articleListInterface.servererr();
                 }
-
             }
             if (code == -100) {
                 if (null != articleInterface) {
@@ -76,16 +75,7 @@ public class ArticlePresenter {
                     String data = JsonUtils.getStringValue(result, "Data");
                     List<ArticleBean> mDatas = JSON.parseArray(data, ArticleBean.class);
                     Log.d(mDatas.toString() + mDatas.size());
-                    articleListInterface.getHotArticle(mDatas);
-                }
-            } else if (what == 2) {
-                if (code == 203) {
-                    articleListInterface.getDataFail();
-                } else if (code == 100) {
-                    String data = JsonUtils.getStringValue(result, "Data");
-                    List<ArticleBean> mDatas = JSON.parseArray(data, ArticleBean.class);
-                    Log.d(mDatas.toString() + mDatas.size());
-                    articleListInterface.getNewArticle(mDatas);
+                    articleListInterface.getDataSuccessful(mDatas);
                 }
             } else if (what == 3) {
                 String data = JsonUtils.getStringValue(result, "Data");
@@ -96,7 +86,7 @@ public class ArticlePresenter {
                     articleInterface.getcommentfail();
                 } else if (code == 100) {
                     String data = JsonUtils.getStringValue(result, "Data");
-                    String total = JsonUtils.getStringValue(data, "total");
+                    int total = JsonUtils.getIntValue(data, "total");
                     data = JsonUtils.getStringValue(data, "rows");
                     List<CommentBean> mDatas = JSON.parseArray(data, CommentBean.class);
                     articleInterface.getcomment(mDatas, total);
@@ -127,23 +117,27 @@ public class ArticlePresenter {
 
     public void getHotArticle(int page) {
         String data = JsonUtils.keyValueToString("pageNo", page);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/article-hottest", handler, 2);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/article-hottest", handler, 1);
     }
-
+    public void getCollectArticle(int page) {
+        String data = JsonUtils.keyValueToString2("pageNo", page,"token",Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-article", handler, 1);
+    }
     public void getArticleDetils(String id) {
         String data = JsonUtils.keyValueToString("articleId", id);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/find-by-article-id", handler, 3);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/select-article-by-id", handler, 3);
     }
 
     public void sendComment(String id, String comment) {
         SendCommentBean sendCommentBean = new SendCommentBean(Constants.TOKEN, comment, id, "1");
         String data = JsonUtils.objectToString(sendCommentBean);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/comment-add-article", handler, 4);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/insert-comment", handler, 4);
     }
 
     public void getComment(String id, int page) {
         String data = JsonUtils.keyValueToString2("pageNo", page, "productId", id);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/comment-article", handler, 5);
+        data=JsonUtils.addKeyValue(data,"productType",1);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/comment-find-by-productid", handler, 5);
     }
 
     public void like(String objectId) {

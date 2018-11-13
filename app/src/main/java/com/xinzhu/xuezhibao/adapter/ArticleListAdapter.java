@@ -68,23 +68,8 @@ public class ArticleListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        Log.d("一共有"+mDatas.size());
         return mDatas.size();
     }
-
-//    class RecyclerHolder extends RecyclerView.ViewHolder {
-//        TextView title;
-//        SimpleDraweeView im_article;
-//        TextView tv_readnum;
-//
-//        private RecyclerHolder(View itemView) {
-//            super(itemView);
-//            title = itemView.findViewById(R.id.tv_article_title);
-//            im_article = itemView.findViewById(R.id.im_article);
-//            tv_readnum = itemView.findViewById(R.id.tv_readnum);
-//
-//        }
-//    }
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position);

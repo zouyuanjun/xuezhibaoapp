@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,20 +13,28 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.HomeArticleAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeVideoAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeVoiceAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
+import com.xinzhu.xuezhibao.bean.BannerImgBean;
 import com.xinzhu.xuezhibao.bean.VideoBean;
+import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
+import com.xinzhu.xuezhibao.immodule.JGApplication;
+import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
 import com.xinzhu.xuezhibao.presenter.HomepagePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
+import com.xinzhu.xuezhibao.view.activity.FeedbackActivity;
 import com.xinzhu.xuezhibao.view.activity.HomeListActivity;
+import com.xinzhu.xuezhibao.view.activity.LoginActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SettingActivity;
+import com.xinzhu.xuezhibao.view.activity.TestBeforeActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.VoiceDetilsActivity;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
@@ -33,7 +42,10 @@ import com.xinzhu.xuezhibao.view.interfaces.HomepageInterface;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 import com.zou.fastlibrary.ui.ClearWriteEditText;
+import com.zou.fastlibrary.ui.CustomDialog;
+import com.zou.fastlibrary.ui.WebActivity;
 import com.zou.fastlibrary.utils.EditTextUtil;
 import com.zou.fastlibrary.utils.Log;
 
@@ -47,6 +59,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.event.MessageEvent;
+import cn.jpush.im.android.api.event.NotificationClickEvent;
+import cn.jpush.im.api.BasicCallback;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 import q.rorbin.badgeview.QBadgeView;
@@ -85,7 +99,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     HomeVoiceAdapter homeVoiceAdapter;
     @BindView(R.id.ll_message)
     LinearLayout llMessage;
-
+    List<BannerImgBean> mybannerImgBean=new ArrayList<>();
 
     @Override
     protected int setContentView() {
@@ -102,7 +116,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
-        banner.setImages(initimg());
         //设置banner动画效果
         banner.setBannerAnimation(Transformer.DepthPage);
         //设置标题集合（当banner样式有显示title时）
@@ -114,7 +127,14 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //banner设置方法全部调用完毕时最后调用
-        banner.start();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent=new Intent(getContext(),WebActivity.class);
+                intent.putExtra("URL","https://www.baidu.com/");
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -143,7 +163,14 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         qBadgeView.setBadgeNumber(messagecount);
         Log.d("收到l一条消息" + messagecount);
     }
-
+    //通知栏点击事件
+    public void onEvent(NotificationClickEvent event){
+        Intent notificationIntent = new Intent(getContext(), ChatActivity.class);
+        notificationIntent.putExtra(JGApplication.TARGET_ID, event.getMessage().getTargetID());
+        notificationIntent.putExtra(JGApplication.CONV_TITLE, event.getMessage().getTargetName());
+        notificationIntent.putExtra(JGApplication.TARGET_APP_KEY, event.getMessage().getTargetAppKey());
+        startActivity(notificationIntent);//自定义跳转到指定页面
+    }
     @OnClick({R.id.im_scan, R.id.ed_search, R.id.im_setting, R.id.im_message, R.id.banner, R.id.im_test, R.id.ll_more_video, R.id.rv_video, R.id.ll_more_voice, R.id.rv_voice, R.id.ll_more_article, R.id.rv_article})
     public void onViewClicked(View view) {
 
@@ -157,13 +184,32 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             case R.id.im_message:
-                messagecount = 0;
-                qBadgeView.setBadgeNumber(0);
-                startActivity(new Intent(getContext(), ConversationListActivity.class));
+                if (Constants.TOKEN.isEmpty()){
+                    shoudia();
+                }else if (null==JMessageClient.getMyInfo()){
+                    JMessageClient.login(Constants.userBasicInfo.getMemberId(), "123456", new BasicCallback() {
+                        @Override
+                        public void gotResult(int responseCode, String responseMessage) {
+                            android.util.Log.d("JIM登陆响应",responseCode+responseMessage);
+                            if (responseCode == 0) {
+                               BToast.success(getContext()).text("聊天服务器登陆成功了");
+                                //注册时更新头像
+                            }
+                        }
+                    });
+                }
+
+                else {
+                    messagecount = 0;
+                    qBadgeView.setBadgeNumber(0);
+                    startActivity(new Intent(getContext(), ConversationListActivity.class));
+                }
                 break;
             case R.id.banner:
                 break;
             case R.id.im_test:
+                Intent intent11 = new Intent(getContext(), TestBeforeActivity.class);
+                startActivity(intent11);
                 break;
             case R.id.ll_more_video:
                 Intent intent = new Intent(getContext(), HomeListActivity.class);
@@ -183,23 +229,36 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         }
     }
 
-    private List<String> initimg() {
-        List<String> mDatas = new ArrayList<>();
-        String url = "http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg";
-        mDatas.add(url);
-        mDatas.add("http://pic14.nipic.com/20110605/1369025_165540642000_2.jpg");
-        mDatas.add("http://img.zcool.cn/community/01f39a59a7affba801211d25185cd3.jpg@1280w_1l_2o_100sh.jpg");
-        mDatas.add("http://pic33.photophoto.cn/20141022/0019032438899352_b.jpg");
-        mDatas.add(url);
-        mDatas.add("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg");
-        mDatas.add(url);
-        mDatas.add("http://pic24.nipic.com/20121010/3798632_184253198370_2.jpg");
-        return mDatas;
+    public void shoudia(){
+
+            CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
+            builder.setTitle("提示");
+            builder.setMessage("登陆后才可以继续操作，现在就去登陆");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    Intent intent=new Intent(getContext(),LoginActivity.class);
+                    intent.putExtra(Constants.FROMAPP,"fss");
+                    startActivity(intent);
+
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
+
     }
 
+
+    //初始化视频列表
     @Override
-    public void getVideodata(final List<VideoBean> mDatas) {
-        //初始化视频列表
+    public void getVideodata(final List<VideoVoiceBean> mDatas) {
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvVideo.setLayoutManager(linearLayoutManager);
@@ -223,7 +282,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     }
 
     @Override
-    public void getVoicedata(final List<VideoBean> mDatas) {
+    public void getVoicedata(final List<VideoVoiceBean> mDatas) {
 //        初始化音频列表
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -246,10 +305,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             }
         });
     }
-
+    //初始化文章列表
     @Override
     public void getArticle(final List<ArticleBean> mDatas) {
-        //初始化文章列表
+
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvArticle.setLayoutManager(linearLayoutManager3);
@@ -270,6 +329,19 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
             }
         });
+    }
+
+    @Override
+    public void getbanner(List<BannerImgBean> bannerImgBeans) {
+        List<String> mDatas = new ArrayList<>();
+        for (BannerImgBean bannerImgBean:bannerImgBeans){
+            mDatas.add(bannerImgBean.getAdUrl());
+            mybannerImgBean.add(bannerImgBean);
+        }
+        if (null!=banner){
+            banner.setImages(mDatas);
+            banner.start();
+        }
     }
 
     @Override
@@ -298,7 +370,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         super.onActivityResult(requestCode, resultCode, data);
         if (null != data) {
             String qrcode = data.getStringExtra("RESULT_QRCODE_STRING");
-            Log.d(qrcode);
+            BToast.info(getContext()).text("扫描结果："+qrcode).show();
         }
 
 

@@ -13,15 +13,16 @@ import android.widget.ProgressBar;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.XuebaoCourseAdapter;
+import com.xinzhu.xuezhibao.bean.BannerImgBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.presenter.XuebaoPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.AllCourseActivity;
-import com.xinzhu.xuezhibao.view.activity.CoursePlayActivity;
-import com.xinzhu.xuezhibao.view.activity.JiajiaoActivity;
+import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
+import com.xinzhu.xuezhibao.view.activity.FamilyActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
-import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
-import com.xinzhu.xuezhibao.view.activity.XuekeActivity;
+import com.xinzhu.xuezhibao.view.activity.SubjectActivity;
+import com.xinzhu.xuezhibao.view.helputils.CreatDiag;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
 import com.xinzhu.xuezhibao.view.interfaces.XuebaoInterface;
 import com.youth.banner.Banner;
@@ -29,6 +30,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +77,8 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
     ProgressBar progressBar3;
     @BindView(R.id.progressBar4)
     ProgressBar progressBar4;
-
+    List<BannerImgBean> bannerImgBeans=new ArrayList<>();
+    List<String> bannerlist=new ArrayList<>();
     @Override
     protected int setContentView() {
         return R.layout.fragment_xuebao;
@@ -102,7 +105,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //banner设置方法全部调用完毕时最后调用
-        banner.start();
+
     }
 
     @Override
@@ -146,7 +149,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), CoursePlayActivity.class);
+                Intent intent=new Intent(getContext(), CourseDetailActivity.class);
                 intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
                 startActivity(intent);
             }
@@ -171,7 +174,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), CoursePlayActivity.class);
+                Intent intent=new Intent(getContext(), CourseDetailActivity.class);
                 intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
                 startActivity(intent);
             }
@@ -196,7 +199,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), CoursePlayActivity.class);
+                Intent intent=new Intent(getContext(), CourseDetailActivity.class);
                 intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
                 startActivity(intent);
             }
@@ -221,7 +224,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), CoursePlayActivity.class);
+                Intent intent=new Intent(getContext(), CourseDetailActivity.class);
                 intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
                 startActivity(intent);
             }
@@ -232,6 +235,16 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
             }
         });
         progressBar4.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void getBanner(List<BannerImgBean> list) {
+        for (BannerImgBean bannerImgBean:list){
+            bannerlist.add(bannerImgBean.getAdUrl());
+            bannerImgBeans.add(bannerImgBean);
+        }
+        banner.setImages(bannerlist);
+        banner.start();
     }
 
 
@@ -291,10 +304,21 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 getActivity().startActivity(intent4);
                 break;
             case R.id.im_jiajiao:
-                getActivity().startActivity(new Intent(getActivity(), JiajiaoActivity.class));
+                if (StringUtil.isEmpty(Constants.TOKEN)){
+                    CreatDiag.shoudia(getActivity());
+
+                }else {
+                    getActivity().startActivity(new Intent(getActivity(), FamilyActivity.class));
+                }
+
                 break;
             case R.id.im_xueke:
-                getActivity().startActivity(new Intent(getActivity(), XuekeActivity.class));
+                if (StringUtil.isEmpty(Constants.TOKEN)){
+                    CreatDiag.shoudia(getActivity());
+                }else {
+                    getActivity().startActivity(new Intent(getActivity(), SubjectActivity.class));
+                }
+
                 break;
         }
     }

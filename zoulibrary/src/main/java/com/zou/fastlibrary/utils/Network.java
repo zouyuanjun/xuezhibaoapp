@@ -2,7 +2,6 @@ package com.zou.fastlibrary.utils;
 
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,7 +55,6 @@ public class Network {
                 .connectTimeout(1000, TimeUnit.SECONDS)
                 .readTimeout(1000, TimeUnit.SECONDS)
                 .build();//创建OkHttpClient对象。
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");//数据类型为json格式，
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
             for (String keyset : data.keySet()) {
                 builder.addFormDataPart(keyset, data.get(keyset));
@@ -116,7 +114,7 @@ public class Network {
                 .build();//创建OkHttpClient对象。
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");//数据类型为json格式，
         String jsonStr = date;//json数据.
-        Log.d("5555", "发送请求URL" + url + "请求体" + jsonStr);
+        Log.d("发送请求URL" + url + "请求体" + jsonStr);
         RequestBody body = RequestBody.create(JSON, jsonStr);
         Request request = new Request.Builder()
                 .url(url)
@@ -132,7 +130,7 @@ public class Network {
                     message.what = i;
                     message.obj = s;
                     handler.sendMessage(message);
-                    Log.d("555", "请求超时");
+                    Log.d("请求超时");
                 }
                 if (e instanceof ConnectException) {
                     ////判断连接异常，
@@ -141,7 +139,7 @@ public class Network {
                     message.what = i;
                     message.obj = s;
                     handler.sendMessage(message);
-                    Log.d("555", "连接异常");
+                    Log.d( "连接异常");
                 }
             }
 

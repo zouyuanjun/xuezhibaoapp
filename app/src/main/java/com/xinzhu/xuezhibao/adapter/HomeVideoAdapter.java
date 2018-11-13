@@ -10,20 +10,23 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.VideoBean;
+import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 
 import java.util.List;
 
+/**
+ * 主页中视频列表adapter
+ */
 public class HomeVideoAdapter extends RecyclerView.Adapter {
     protected Context mContext;
-    protected List<VideoBean> mDatas;
+    protected List<VideoVoiceBean> mDatas;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public HomeVideoAdapter(Context mContext, List<VideoBean> mDatas) {
+    public HomeVideoAdapter(Context mContext, List<VideoVoiceBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
@@ -38,7 +41,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((RecyclerHolder) holder).title.setText(mDatas.get(position).getVideoTitle());
-
+        ((RecyclerHolder) holder).readnum.setText(mDatas.get(position).getVideoLook());
         ((RecyclerHolder) holder).im_video.setImageURI(mDatas.get(position).getVideoPicture());
 
 
@@ -67,9 +70,11 @@ public class HomeVideoAdapter extends RecyclerView.Adapter {
     class RecyclerHolder extends RecyclerView.ViewHolder {
         TextView title;
         SimpleDraweeView im_video;
+        TextView readnum;
         private RecyclerHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tv_video_titletv);
+            readnum=itemView.findViewById(R.id.tv_playnum);
             im_video = itemView.findViewById(R.id.im_video);
         }
     }

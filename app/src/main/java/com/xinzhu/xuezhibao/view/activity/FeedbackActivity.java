@@ -91,7 +91,7 @@ public class FeedbackActivity extends BaseActivity {
     boolean im1canuse = true;
     boolean im2canuse = true;
     boolean im3canuse = true;
-    String selectDictionaryid ="";  //选中的反馈类型字典ID
+    String selectDictionaryid ="";  //选中的反馈类型字典ID,初始化设置为第一个类型
     List<FeedBackDictionaryBean> feedBackDictionaryBeanList;
     @BindView(R.id.tv_canselectcount)
     TextView tvCanselectcount;
@@ -138,6 +138,7 @@ public class FeedbackActivity extends BaseActivity {
                 startActivity(new Intent(mContext, HistoryFeedbackActivity.class));
             }
         });
+        //获取反馈类型
         String data="{\"dictionaryType\":\"opinion_type\"}";
         Network.getnetwork().postJson(data,Constants.URL+"/guest/page-by-dictionary",handler,2);
     }
@@ -178,7 +179,7 @@ public class FeedbackActivity extends BaseActivity {
                             .forResult(requestCode); // 设置作为标记的请求码
 
                 } else {
-                    BToast.custom(mContext).text("最多只能选3张哦").show();
+                    BToast.info(mContext).text("最多只能选3张哦").show();
                 }
                 break;
             case R.id.im_1:
@@ -199,7 +200,7 @@ public class FeedbackActivity extends BaseActivity {
                 if (Constants.TOKEN.isEmpty()){
                     CustomDialog.Builder builder = new CustomDialog.Builder(this);
                     builder.setTitle("提示");
-                    builder.setMessage("您尚未登陆，现在就去登陆");
+                    builder.setMessage("登陆后才可以继续操作，现在就去登陆");
                     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -231,6 +232,7 @@ public class FeedbackActivity extends BaseActivity {
                 im1canuse = true;
                 canSelectCount++;
                 map.remove("1");
+                tvCanselectcount.setText(3-canSelectCount+"/3");
                 break;
             case R.id.im_clean2:
                 im2.setVisibility(View.INVISIBLE);
@@ -238,25 +240,23 @@ public class FeedbackActivity extends BaseActivity {
                 im2canuse = true;
                 canSelectCount++;
                 map.remove("2");
+                tvCanselectcount.setText(3-canSelectCount+"/3");
                 break;
             case R.id.im_clean3:
                 im3.setVisibility(View.INVISIBLE);
                 imClean3.setVisibility(View.INVISIBLE);
                 im3canuse = true;
                 canSelectCount++;
+                tvCanselectcount.setText(3-canSelectCount+"/3");
                 map.remove("3");
                 break;
         }
     }
 
     public void changeselect(TextView textView) {
-//        List<String> selectlist = new ArrayList<>();
-//        selectlist.clear();
-//        selectlist.add(textView.getText().toString());
-      //  selecttext =textView.getText().toString();
         clearcolor();
         textView.setTextColor(Color.parseColor("#f87d28"));
-        textView.setBackground(ContextCompat.getDrawable(mContext, R.drawable.customdialogbg));
+        textView.setBackground(ContextCompat.getDrawable(mContext, R.drawable.feedbacktextbg));
     }
 
     public void clearcolor() {

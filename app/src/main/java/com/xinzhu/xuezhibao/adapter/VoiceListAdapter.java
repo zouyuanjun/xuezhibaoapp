@@ -55,7 +55,7 @@ public class VoiceListAdapter extends RecyclerView.Adapter {
         ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getVideoTitle());
         ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getVidelLike());
         ((MyViewHolder) holder).tvItemTime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
-        ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getReadnum());
+        ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getVideoLook());
         RequestOptions requestOptions = RequestOptions.frameOf(0);
         requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
         requestOptions.transform(new BitmapTransformation() {

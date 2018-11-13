@@ -16,6 +16,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.xinzhu.xuezhibao.R;
 
 import java.lang.ref.WeakReference;
@@ -405,14 +408,17 @@ public class ConversationListAdapter extends BaseAdapter {
                     @Override
                     public void gotResult(int status, String desc, Bitmap bitmap) {
                         if (status == 0) {
-                            headIcon.setImageBitmap(bitmap);
+                            RequestOptions mRequestOptions = RequestOptions.circleCropTransform()
+                                    .diskCacheStrategy(DiskCacheStrategy.NONE)//不做磁盘缓存
+                                    .skipMemoryCache(true);//不做内存缓存
+                            Glide.with(mContext).load(bitmap).apply(mRequestOptions).into(headIcon);
                         } else {
-                            headIcon.setImageResource(R.drawable.jmui_head_icon);
+                            headIcon.setImageResource(R.drawable.my_icon_original);
                         }
                     }
                 });
             } else {
-                headIcon.setImageResource(R.drawable.jmui_head_icon);
+                headIcon.setImageResource(R.drawable.my_icon_original);
             }
         } else {
             mGroupInfo = (GroupInfo) convItem.getTargetInfo();

@@ -603,5 +603,8 @@ public class TimeUtil {
         return fomerIsEqualOrBigger(time, MIN_TIME_DETAILS) && fomerIsEqualOrBigger(end, time);
 
     }
+    public static long getCrrentTime(){
+		return System.currentTimeMillis();
+	}
 
 }

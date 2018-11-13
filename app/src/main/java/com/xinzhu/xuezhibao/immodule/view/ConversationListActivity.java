@@ -26,6 +26,8 @@ import com.xinzhu.xuezhibao.immodule.MenuItemController;
 import com.xinzhu.xuezhibao.immodule.bean.Event;
 import com.zou.fastlibrary.utils.Log;
 
+import java.lang.ref.WeakReference;
+
 import cn.jpush.im.android.api.JMessageClient;
 import cn.jpush.im.android.api.callback.GetAvatarBitmapCallback;
 import cn.jpush.im.android.api.enums.ConversationType;
@@ -61,6 +63,7 @@ public class ConversationListActivity extends IMBaseActivity {
     private PopupWindow mMenuPopWindow;
     MenuItemController mMenuController;
     private NetworkReceiver mReceiver;
+
     protected boolean isCreate = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,7 +72,7 @@ public class ConversationListActivity extends IMBaseActivity {
         isCreate = true;
         mContext = this;
         mRootView = mContext.findViewById(R.id.conv_fragment_view).getRootView();
-        mConvListView = new ConversationListView(mRootView,mContext, this);
+        mConvListView = new ConversationListView(mRootView,new WeakReference<>(mContext).get(), this);
         mConvListView.initModule();
         mThread = new HandlerThread("MainActivity");
         mThread.start();
@@ -83,7 +86,6 @@ public class ConversationListActivity extends IMBaseActivity {
                 WindowManager.LayoutParams.WRAP_CONTENT, true);
         mMenuItemView = new MenuItemView(mMenuView);
         mMenuItemView.initModule();
-
         mMenuController = new MenuItemController(this);
         mMenuItemView.setListeners(mMenuController);
 
