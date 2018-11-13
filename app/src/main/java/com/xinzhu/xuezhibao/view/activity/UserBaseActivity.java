@@ -274,7 +274,6 @@ public class UserBaseActivity extends TakePhotoActivity {
         TextView selectphoto=view.findViewById(R.id.tv_select_photo);
         TextView cancle=view.findViewById(R.id.tv_cancel);
 
-
     }
 
 
