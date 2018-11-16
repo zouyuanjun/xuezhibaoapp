@@ -66,7 +66,6 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
        // a.substring(5);
         Beta.checkUpgrade(false,false);
         login=new LoginPresenter(new WeakReference<>(this).get());
-
     }
 
     @OnClick({ R.id.bt_login,R.id.bt_sign, R.id.imb_wxsign, R.id.bt_forgetpassword})

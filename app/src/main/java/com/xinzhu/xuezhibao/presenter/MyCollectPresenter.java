@@ -105,5 +105,7 @@ public class MyCollectPresenter {
             Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-curriculum", handler, 4);
         }
     }
-
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }

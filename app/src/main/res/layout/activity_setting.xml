@@ -115,6 +115,8 @@
         android:layout_marginStart="16dp"
         android:gravity="center_vertical"
         android:text="意见反馈"
+        android:paddingRight="16dp"
+        android:drawableRight="@drawable/home_btn_more"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sss1" />
 
@@ -136,6 +138,8 @@
         android:layout_marginStart="16dp"
         android:gravity="center_vertical"
         android:text="关于我们"
+        android:paddingRight="16dp"
+        android:drawableRight="@drawable/home_btn_more"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7" />
 
@@ -153,45 +157,17 @@
         android:id="@+id/tv_cleancacle"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginStart="16dp"
         android:gravity="center_vertical"
         android:text="清除缓存"
+        android:paddingRight="16dp"
+        android:layout_marginStart="16dp"
+        android:drawableRight="@drawable/home_btn_more"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
 
-    <ImageView
-        android:id="@+id/im_couple_back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView4"
-        app:srcCompat="@drawable/home_btn_more" />
-
-    <ImageView
-        android:id="@+id/im_about_us"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView7"
-        app:srcCompat="@drawable/home_btn_more" />
-
-    <ImageView
-        android:id="@+id/im_clean_cache"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textView8"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textView8"
-        app:srcCompat="@drawable/home_btn_more" />
 
     <LinearLayout
+        android:id="@+id/linearLayout32"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -200,5 +176,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/tv_cleancacle"></LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_cachesize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:text="0M"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout32"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout8" />
 </android.support.constraint.ConstraintLayout>

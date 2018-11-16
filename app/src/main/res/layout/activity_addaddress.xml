@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fenge"
+    android:orientation="vertical">
+
+    <com.zou.fastlibrary.ui.CustomNavigatorBar
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:leftTextVisible='false'
+        app:midText="编辑收货地址"
+        app:midTextFontColor="#ffffff"
+        app:midTextSizeSp="18"
+        app:rightImageVisible='false'
+        app:rightText="新增"
+        app:rightTextColor="@color/white"
+        app:rightTextVisible='false'
+        app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:text="收货人"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:hint="请输入收货人姓名"
+            android:maxLines="1"
+            android:textColor="@color/color_grey_999999"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:text="联系电话"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+
+        <EditText
+            android:inputType="phone"
+            android:id="@+id/ed_phone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:hint="请输入联系人电话"
+            android:maxLines="1"
+            android:textColor="@color/color_grey_999999"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:text="所在地区"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tv_selectaddress"
+            android:layout_width="match_parent"
+            android:layout_marginRight="16dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:hint="请选择所在地区"
+            android:maxLines="1"
+            android:drawableRight="@drawable/home_btn_more"
+            android:textColor="@color/color_grey_999999"
+            android:textSize="15sp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:text="详细地址"
+            android:textColor="@color/color_black_333333"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/ed_addressdetail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:hint="请输入详细地址"
+            android:textColor="@color/color_grey_999999"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <com.zou.fastlibrary.ui.ShapeCornerBgView
+        android:id="@+id/tv_commint"
+        android:layout_marginTop="30dp"
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        app:appBgColor="@color/appcolor"
+        app:appRadius="26dp"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:text="保存"
+        android:layout_gravity="center_horizontal"/>
+
+
+</LinearLayout>

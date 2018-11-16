@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.R;
@@ -22,15 +22,12 @@ public class SettingActivity extends BaseActivity {
     Switch stNotifition;
     @BindView(R.id.st_netdownload)
     Switch stNetdownload;
-    @BindView(R.id.im_couple_back)
-    ImageView imCoupleBack;
-    @BindView(R.id.im_about_us)
-    ImageView imAboutUs;
-    @BindView(R.id.im_clean_cache)
-    ImageView imCleanCache;
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
     Context context;
+    @BindView(R.id.tv_cachesize)
+    TextView tvCachesize;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +39,13 @@ public class SettingActivity extends BaseActivity {
                 finish();
             }
         });
-        context=this;
+        context = this;
+        try {
+            tvCachesize.setText(DataKeeper.getTotalCacheSize(context));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @OnClick({R.id.st_notifition, R.id.st_netdownload, R.id.textView4, R.id.textView7, R.id.tv_cleancacle})
@@ -60,8 +63,9 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.tv_cleancacle:
                 try {
-                    BToast.info(context).text("已清除缓存："+DataKeeper.getTotalCacheSize(context)).show();
+                    BToast.info(context).text("已清除缓存：" + DataKeeper.getTotalCacheSize(context)).show();
                     DataKeeper.clearAllCache(context);
+                    tvCachesize.setText(DataKeeper.getTotalCacheSize(context));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

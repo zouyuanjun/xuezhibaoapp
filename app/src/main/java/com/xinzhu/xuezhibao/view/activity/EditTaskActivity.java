@@ -32,6 +32,7 @@ import com.zhihu.matisse.MimeType;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
 
 import java.io.File;
@@ -82,7 +83,7 @@ public class EditTaskActivity extends BaseActivity {
     ImageView im2;
     @BindView(R.id.im_3)
     ImageView im3;
-
+String jobid="";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         map.clear();
@@ -91,6 +92,7 @@ public class EditTaskActivity extends BaseActivity {
         setContentView(R.layout.activity_edittask);
         mContext = this;
         ButterKnife.bind(this);
+        jobid=getIntent().getStringExtra(Constants.INTENT_ID);
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +110,7 @@ public class EditTaskActivity extends BaseActivity {
                 if (feedback.isEmpty()) {
                     return;
                 }
-                if (!Constants.TOKEN.isEmpty()) {
+                if (Constants.TOKEN.isEmpty()) {
                     CustomDialog.Builder builder = new CustomDialog.Builder(mContext);
                     builder.setTitle("提示");
                     builder.setMessage("您尚未登陆，现在就去登陆");
@@ -130,9 +132,12 @@ public class EditTaskActivity extends BaseActivity {
                     });
                     builder.create().show();
                 } else {
-                    data.put("opinionContent", feedback);
+
+
+                    data.put("jobId", jobid);
+                    data.put("replyContent",feedback);
                     data.put("token", Constants.TOKEN);
-                    Network.getnetwork().uploadimg(data, Constants.URL + "/guest/opinion-insert", mSelected, handler);
+                    Network.getnetwork().uploadimg(data, Constants.URL + "/guest/reply-curriculumJob", mSelected, handler,1);
                     // Network.getnetwork().uploadimg(data,"http://192.168.1.200:8080/upload",mSelected,handler);
                 }
             }

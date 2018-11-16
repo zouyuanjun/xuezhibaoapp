@@ -153,15 +153,15 @@ public class Network {
             }
         });
     }
-    public void  uploadimg(String data, String url, String paths, final Handler handler){
+    public void  uploadimg(String data, String url, String paths, final Handler handler,int what){
         HashMap<String,String> map=new HashMap<>();
         map.put("token",data);
         List<String> list=new ArrayList<>();
         list.add(paths);
-        uploadimg(map,url,list,handler);
+        uploadimg(map,url,list,handler,what);
     }
 
-    public void uploadimg(HashMap<String, String> data, String url, List<String> paths, final Handler handler) {
+    public void uploadimg(HashMap<String, String> data, String url, List<String> paths, final Handler handler, final int what) {
         OkHttpClient mOkHttpClent = new OkHttpClient();
         MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         for (String keyset : data.keySet()) {
@@ -187,6 +187,7 @@ public class Network {
                     Message message = new Message();
                     String s = "{\"message\":\"请求超时\",\"_code\":-200,\"data\":[{}]}";
                     message.obj = s;
+                    message.what=what;
                     handler.sendMessage(message);
                     Log.d("555", "请求超时");
                 }
@@ -195,6 +196,7 @@ public class Network {
                     Message message = new Message();
                     String s = "{\"message\":\"连接异常\",\"_code\":-100,\"data\":[{}]}";
                     message.obj = s;
+                    message.what=what;
                     handler.sendMessage(message);
                     Log.d("555", "连接异常");
                 }
@@ -202,7 +204,11 @@ public class Network {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                com.zou.fastlibrary.utils.Log.d("上传成功" + response.body().string());
+                Message message = new Message();
+                String s = response.body().string();
+                message.obj = s;
+                message.what=what;
+                handler.sendMessage(message);
             }
         });
     }

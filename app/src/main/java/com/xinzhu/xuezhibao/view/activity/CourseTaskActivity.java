@@ -10,6 +10,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.bean.FeedbackPictureBean;
+import com.xinzhu.xuezhibao.bean.MyjobBean;
+import com.xinzhu.xuezhibao.presenter.MyCoursePresenter;
+import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.view.interfaces.MyJobDetailInterpace;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 
@@ -17,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CourseTaskActivity extends BaseActivity {
+public class CourseTaskActivity extends BaseActivity implements MyJobDetailInterpace {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
     @BindView(R.id.tv_title)
@@ -32,8 +37,6 @@ public class CourseTaskActivity extends BaseActivity {
     LinearLayout linearLayout15;
     @BindView(R.id.tv_status)
     TextView tvStatus;
-    @BindView(R.id.linearLayout16)
-    LinearLayout linearLayout16;
     @BindView(R.id.tv_tasktext)
     TextView tvTasktext;
     @BindView(R.id.im_committask)
@@ -44,7 +47,9 @@ public class CourseTaskActivity extends BaseActivity {
     ImageView im2;
     @BindView(R.id.im_3)
     ImageView im3;
-    int status=1;
+    String jobid;
+    MyCoursePresenter myCoursePresenter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,32 +61,67 @@ public class CourseTaskActivity extends BaseActivity {
                 finish();
             }
         });
-        tvTasktext.setText("奥卡拉圣诞节flask地方啊手动阀手动阀手动阀撒旦fasdfasdfsdfasdfasasdfasdfasdfasdfawerqwerfwasfaewrfwefasfwerfawerwerffwerw" +
-                "阿三发射点发阀手动阀");
-        if (status==0){
-            tvStatus.setText("已完成");
-            tvStatus.setTextColor(Color.GREEN);
-            im1.setVisibility(View.VISIBLE);
-            im2.setVisibility(View.VISIBLE);
-            im3.setVisibility(View.VISIBLE);
-            tvTasktext.setVisibility(View.VISIBLE);
-            Glide.with(this).load("http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg").
-                    into(im1);
-            Glide.with(this).load("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg").
-                    into(im2);
-            Glide.with(this).load("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg").
-                    into(im3);
-        }else {
-            imCommittask.setVisibility(View.VISIBLE);
-        }
+        jobid = getIntent().getStringExtra(Constants.INTENT_ID);
+        myCoursePresenter = new MyCoursePresenter(this);
+    }
 
-
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        myCoursePresenter.getjobbyid(jobid);
     }
 
     @OnClick(R.id.im_committask)
     public void onViewClicked() {
-        startActivity(new Intent(CourseTaskActivity.this,EditTaskActivity.class));
+        Intent intent = new Intent(CourseTaskActivity.this, EditTaskActivity.class);
+        intent.putExtra(Constants.INTENT_ID, jobid);
+        startActivity(intent);
+    }
+
+    @Override
+    public void getjobbyid(MyjobBean myjobBean) {
+        if (null == myjobBean) {
+            return;
+        }
+        tvTask.setText(myjobBean.getJobContent());
+        tvTitle.setText(myjobBean.getJobTitle());
+        tvTime.setText("发布时间：" + myjobBean.getCreateTime());
+        tvCourse.setText(myjobBean.getCurriculumTitle());
+        if (myjobBean.getReplyState() > 0) {
+            tvStatus.setText("已完成");
+            tvStatus.setTextColor(Color.parseColor("#f87d28"));
+            imCommittask.setVisibility(View.GONE);
+            tvTasktext.setText(myjobBean.getReplyContent());
+            if (myjobBean.getList().size() > 0) {
+                int i = 1;
+                for (FeedbackPictureBean feedbackPictureBean : myjobBean.getList()) {
+                    if (i == 1) {
+                        Glide.with(this).load(feedbackPictureBean.getAccessoryUrl()).
+                                into(im1);
+                        i++;
+                    }
+                    if (i == 2) {
+                        Glide.with(this).load(feedbackPictureBean.getAccessoryUrl()).
+                                into(im2);
+                        i++;
+                    }
+                    if (i == 3) {
+                        Glide.with(this).load(feedbackPictureBean.getAccessoryUrl()).
+                                into(im3);
+                    }
+                }
+                im1.setVisibility(View.VISIBLE);
+                im2.setVisibility(View.VISIBLE);
+                im3.setVisibility(View.VISIBLE);
+                tvTasktext.setVisibility(View.VISIBLE);
+            }
+        }
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myCoursePresenter.cancelmessage();
     }
 }

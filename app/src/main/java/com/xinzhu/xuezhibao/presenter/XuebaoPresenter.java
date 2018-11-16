@@ -77,5 +77,7 @@ public class XuebaoPresenter {
 
         Network.getnetwork().postJson(data3,Constants.URL+"/guest/select-study-index-round",handler,5);
     }
-
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }

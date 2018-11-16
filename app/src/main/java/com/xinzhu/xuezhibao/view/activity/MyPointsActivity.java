@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
+import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.fragment.MyPointsFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
@@ -38,15 +39,16 @@ public class MyPointsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypoints);
         ButterKnife.bind(this);
-        tabOrder.addTab(tabOrder.newTab().setText("热门"));
-        tabOrder.addTab(tabOrder.newTab().setText("最新"));
-        tabOrder.addTab(tabOrder.newTab().setText("我的收藏"));
+        tabOrder.addTab(tabOrder.newTab());
+        tabOrder.addTab(tabOrder.newTab());
+        tabOrder.addTab(tabOrder.newTab());
         fragmentList.add(new MyPointsFragment());
         fragmentList.add(new MyPointsFragment());
         fragmentList.add(new MyPointsFragment());
         listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, title, 2);
         vpMyorder.setAdapter(listViewPageAdapter);
         tabOrder.setupWithViewPager(vpMyorder);
+        tvMypoints.setText(Constants.userBasicInfo.getIntegral()+"");
     }
 
     @OnClick(R.id.tv_pointsrule)

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -161,7 +162,7 @@ public class UserBaseActivity extends TakePhotoActivity {
             }
         });
 
-        Network.getnetwork().uploadimg(Constants.TOKEN,Constants.URL+"/guest/image-upload",result.getImage().getCompressPath(),handler);
+        Network.getnetwork().uploadimg(Constants.TOKEN,Constants.URL+"/guest/image-upload",result.getImage().getCompressPath(),handler,1);
 
     }
 
@@ -180,7 +181,7 @@ public class UserBaseActivity extends TakePhotoActivity {
         Intent intent=new Intent(UserBaseActivity.this,EditUserBasicActivity.class);
         switch (view.getId()) {
             case R.id.sd_myphoto:
-                SelectPhotoUtils.selectphoto(2, getTakePhoto());
+                showpopwindow(view);
                 break;
             case R.id.ll_vipname:
               intent.putExtra(Constants.INTENT_EDITITEM,"昵称");
@@ -209,7 +210,7 @@ public class UserBaseActivity extends TakePhotoActivity {
                         .titleTextColor("#585858")//标题文字颜  色
                         .titleBackgroundColor("#E9E9E9")//标题栏背景色
                         .confirTextColor("#585858")//确认按钮文字颜色
-                        .confirmText("ok")//确认按钮文字
+                        .confirmText("确认")//确认按钮文字
                         .confirmTextSize(16)//确认按钮文字大小
                         .cancelTextColor("#585858")//取消按钮文字颜色
                         .cancelText("取消")//取消按钮文字
@@ -267,13 +268,33 @@ public class UserBaseActivity extends TakePhotoActivity {
         }
     }
 
-    public void showpopwindow(){
-        PopupWindow popupWindow=CreatPopwindows.creatpopwindows(this,R.layout.pop_selectphoto);
+    public void showpopwindow(View parentview){
+        final PopupWindow popupWindow=CreatPopwindows.creatpopwindows(this,R.layout.pop_selectphoto);
         View view=popupWindow.getContentView();
         TextView takephoto=view.findViewById(R.id.tv_take_photo);
         TextView selectphoto=view.findViewById(R.id.tv_select_photo);
         TextView cancle=view.findViewById(R.id.tv_cancel);
-
+        takephoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SelectPhotoUtils.selectphoto(2, getTakePhoto());
+                popupWindow.dismiss();
+            }
+        });
+        selectphoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SelectPhotoUtils.selectphoto(1, getTakePhoto());
+                popupWindow.dismiss();
+            }
+        });
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               popupWindow.dismiss();
+            }
+        });
+        popupWindow.showAtLocation(parentview, Gravity.BOTTOM,0,0);
     }
 
 

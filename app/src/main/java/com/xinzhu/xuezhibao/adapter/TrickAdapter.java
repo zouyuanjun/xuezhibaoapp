@@ -6,13 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.TrickBean;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.util.List;
@@ -43,8 +40,8 @@ public class TrickAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvTricktime.setText(TimeUtil.getWholeTime2(Long.parseLong(mDatas.get(position).getTime())));
-        ((MyViewHolder) holder).tvEvent.setText(mDatas.get(position).getEvent());
+        ((MyViewHolder) holder).tvTricktime.setText(TimeUtil.getWholeTime2(Long.parseLong(mDatas.get(position).getCreateTime())));
+        ((MyViewHolder) holder).tvEvent.setText(mDatas.get(position).getTrackContent());
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

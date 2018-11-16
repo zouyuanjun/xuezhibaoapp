@@ -66,7 +66,6 @@ public class AllCourseActivity extends BaseActivity {
             appbar.setMidText("全部课程");
             listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,4);
         }
-
         vpItemlist.setAdapter(listViewPageAdapter);
         tbClass.setupWithViewPager(vpItemlist);
     }

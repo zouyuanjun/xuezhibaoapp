@@ -13,6 +13,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONException;
 import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.FeedBackDictionaryBean;
@@ -31,6 +33,7 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.Glide4Engine;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
@@ -38,6 +41,8 @@ import com.zou.fastlibrary.ui.ShapeCornerBgView;
 import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.StringUtil;
+
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -93,6 +98,7 @@ public class FeedbackActivity extends BaseActivity {
     boolean im3canuse = true;
     String selectDictionaryid ="";  //选中的反馈类型字典ID,初始化设置为第一个类型
     List<FeedBackDictionaryBean> feedBackDictionaryBeanList;
+    boolean cancommint=true;
     @BindView(R.id.tv_canselectcount)
     TextView tvCanselectcount;
     Handler handler=new Handler(){
@@ -101,6 +107,39 @@ public class FeedbackActivity extends BaseActivity {
             super.handleMessage(msg);
             String result= (String) msg.obj;
             int what=msg.what;
+            if (what==1){
+                int code=500;
+                try {
+                    code=JsonUtils.getIntValue(result,"_code");
+                }catch (JSONException exception){
+                    BToast.error(FeedbackActivity.this).text("提交失败，服务器内部错误，错误码："+code).show();
+                return;
+                }
+                if (code==100){
+                    BToast.success(FeedbackActivity.this).text("提交成功").show();
+                    cancommint=true;
+                    im1.setVisibility(View.INVISIBLE);
+                    imClean1.setVisibility(View.INVISIBLE);
+                    im1canuse = true;
+                    map.clear();
+                    im2.setVisibility(View.INVISIBLE);
+                    imClean2.setVisibility(View.INVISIBLE);
+                    im2canuse = true;
+                    im3.setVisibility(View.INVISIBLE);
+                    imClean3.setVisibility(View.INVISIBLE);
+                    im3canuse = true;
+                    canSelectCount=3;
+                    tvCanselectcount.setText(3-canSelectCount+"/3");
+                   edFeedback.setText("");
+                    btLogin.setBgColor(Color.parseColor("#f87d28"));
+                }
+                else {
+                    BToast.error(FeedbackActivity.this).text("提交失败，请重试，错误码："+code).show();
+                    cancommint=true;
+                    btLogin.setBgColor(Color.parseColor("#87d28"));
+                }
+
+            }
             if (what==2){
                 String data=JsonUtils.getStringValue(result,"Data");
                 feedBackDictionaryBeanList=JSON.parseArray(data,FeedBackDictionaryBean.class);
@@ -168,14 +207,16 @@ public class FeedbackActivity extends BaseActivity {
                     //    Toast.makeText(this, "请在应用管理中打开“读写存储”访问权限！", Toast.LENGTH_LONG).show();
                 } else if (canSelectCount > 0) {
                     Matisse.from(FeedbackActivity.this)
-                            .choose(MimeType.ofAll(), false) // 选择 mime 的类型
+                            .choose(MimeType.ofImage(), false) // 选择 mime 的类型
                             .countable(true)
                             .maxSelectable(canSelectCount) // 图片选择的最多数量
                             .theme(R.style.Matisse_Custom)
                             .gridExpectedSize(400)
+                            .capture(true)//选择照片时，是否显示拍照
+                            .captureStrategy(new CaptureStrategy(false, "com.xinzhu.xuezhibao.provider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
                             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                             .thumbnailScale(0.85f) // 缩略图的比例
-                            .imageEngine(new Glide4Engine()) // 使用的图片加载引擎
+                        .imageEngine(new Glide4Engine()) // 使用的图片加载引擎
                             .forResult(requestCode); // 设置作为标记的请求码
 
                 } else {
@@ -189,12 +230,17 @@ public class FeedbackActivity extends BaseActivity {
             case R.id.im_3:
                 break;
             case R.id.bt_login:
+
+                btLogin.setBgColor(Color.parseColor("#f2f2f2"));
                 HashMap<String, String> data = new HashMap<>();
                 for (String key:map.keySet()){
                     mSelected.add(map.get(key));
                 }
                 String feedback=edFeedback.getText().toString();
                 if (feedback.isEmpty()){
+                    return;
+                }
+                if (!cancommint){
                     return;
                 }
                 if (Constants.TOKEN.isEmpty()){
@@ -222,7 +268,8 @@ public class FeedbackActivity extends BaseActivity {
                     data.put("opinionContent",feedback);
                     data.put("token",Constants.TOKEN);
                     data.put("dictionaryId", selectDictionaryid);
-                    Network.getnetwork().uploadimg(data,Constants.URL+"/guest/opinion-insert",mSelected,handler);
+                    cancommint=false;
+                    Network.getnetwork().uploadimg(data,Constants.URL+"/guest/opinion-insert",mSelected,handler,1);
                    // Network.getnetwork().uploadimg(data,"http://192.168.1.200:8080/upload",mSelected,handler);
                 }
                  break;
@@ -332,6 +379,26 @@ public class FeedbackActivity extends BaseActivity {
                     }
                 }
                 cursor.close();
+            }
+        }
+
+        if (StringUtil.isEmpty(data)) {
+            if (uri != null) {
+                String uriString = uri.toString();
+                int index = uriString.lastIndexOf("/");
+                String imageName = uriString.substring(index);
+                File storageDir;
+
+                storageDir = Environment.getExternalStoragePublicDirectory(
+                        Environment.DIRECTORY_PICTURES);
+                File file = new File(storageDir, imageName);
+                if (file.exists()) {
+                    data = file.getAbsolutePath();
+                } else {
+                    storageDir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    File file1 = new File(storageDir, imageName);
+                    data = file1.getAbsolutePath();
+                }
             }
         }
         return data;

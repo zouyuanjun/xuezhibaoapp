@@ -124,12 +124,14 @@ public class SignPresenter {
     public void updatapassword(String phone,String password,String code){
         String data=JsonUtils.keyValueToString2("account",phone,"password",password);
         data=JsonUtils.addKeyValue(data,"code",code);
-        Network.getnetwork().postJson(data,Constants.URL+"/member/update-password",handler,4);
+        Network.getnetwork().postJson(data,Constants.URL+"/guest/update-password",handler,4);
     }
 
     public void iscodeture(String phone,String code){
         String data=JsonUtils.keyValueToString2("phone",phone,"code",code);
         Network.getnetwork().postform("phone",phone,"code",code, Constants.URL+"/login/judge-note-code",handler,3);
     }
-
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }

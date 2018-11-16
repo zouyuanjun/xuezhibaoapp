@@ -1,16 +1,26 @@
 package com.xinzhu.xuezhibao.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class CourseFeedbackBean implements Serializable {
     String feedbackId;
     String content;
     String replyContent;
-    String replyCount;
+    int replyCount;
     String curriculumTitle;
     int replyState; //1是已阅读，100未阅读
+    List<CourseFeedbackRpBean> listReply;
 
     public CourseFeedbackBean() {
+    }
+
+    public List<CourseFeedbackRpBean> getListReply() {
+        return listReply;
+    }
+
+    public void setListReply(List<CourseFeedbackRpBean> listReply) {
+        this.listReply = listReply;
     }
 
     public int getReplyState() {
@@ -21,13 +31,6 @@ public class CourseFeedbackBean implements Serializable {
         this.replyState = replyState;
     }
 
-    public CourseFeedbackBean(String id, String title, String concent, String num, String feedbacktheme) {
-        this.feedbackId = id;
-        this.content = title;
-        this.replyContent = concent;
-        this.replyCount = num;
-        this.curriculumTitle = feedbacktheme;
-    }
 
     public String getFeedbackId() {
         return feedbackId;
@@ -53,11 +56,11 @@ public class CourseFeedbackBean implements Serializable {
         this.replyContent = replyContent;
     }
 
-    public String getReplyCount() {
+    public int getReplyCount() {
         return replyCount;
     }
 
-    public void setReplyCount(String replyCount) {
+    public void setReplyCount(int replyCount) {
         this.replyCount = replyCount;
     }
 

@@ -11,13 +11,15 @@ import android.widget.PopupWindow;
 import com.zou.fastlibrary.R;
 
 public class CreatPopwindows {
+
+
     public static PopupWindow creatpopwindows(final Activity activity, int ViewID){
         WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         lp.alpha = 0.4f;
         activity.getWindow().setAttributes(lp);
         View contentView = LayoutInflater.from(activity).inflate(ViewID, null);
         PopupWindow mPopWindow = new PopupWindow(contentView,
-                WindowManager.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                WindowManager.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         mPopWindow.setContentView(contentView);
         mPopWindow.setFocusable(true);
         mPopWindow.setOutsideTouchable(true);

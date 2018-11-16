@@ -1,27 +1,48 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class TrickBean {
-    String time;
-    String event;
+    String createTime;
+    String trackContent;
+    String trackType;
+    String trackId;
+
+    public TrickBean() {
+    }
+
+    public String getTrackType() {
+        return trackType;
+    }
+
+    public void setTrackType(String trackType) {
+        this.trackType = trackType;
+    }
+
+    public String getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(String trackId) {
+        this.trackId = trackId;
+    }
 
     public TrickBean(String time, String event) {
-        this.time = time;
-        this.event = event;
+        this.createTime = time;
+        this.trackContent = event;
     }
 
-    public String getTime() {
-        return time;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public String getEvent() {
-        return event;
+    public String getTrackContent() {
+        return trackContent;
     }
 
-    public void setEvent(String event) {
-        this.event = event;
+    public void setTrackContent(String trackContent) {
+        this.trackContent = trackContent;
     }
 }

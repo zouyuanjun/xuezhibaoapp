@@ -42,6 +42,7 @@
             android:layout_marginRight="16dp"
             android:gravity="center_vertical"
             android:text="TextView"
+            android:maxLines="1"
             android:textColor="@color/color_black_333333"
             android:textSize="17sp" />
 
@@ -53,19 +54,15 @@
             android:background="@color/itemfenge"
             android:orientation="horizontal"></LinearLayout>
 
-        <TextView
+        <WebView
             android:id="@+id/tv_taskdetail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="20dp"
-            android:lineSpacingExtra="3dp"
-            android:text="热为奴摩卡瞬间大幅拉升粉红色就发生了肯德基佛阿三今年撒赖咖啡碱爱上了飞机啥的佛啊撒打发教案设计哦覅撒旦
-            撒旦发射点发射点手动阀佛南"
-            android:textColor="@color/color_grey_999999"
-            android:textSize="14sp" />
+            />
     </LinearLayout>
 
     <LinearLayout

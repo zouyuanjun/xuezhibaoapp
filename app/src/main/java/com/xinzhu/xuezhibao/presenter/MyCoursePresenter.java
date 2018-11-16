@@ -6,10 +6,12 @@ import android.os.Message;
 import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.CourseFeedbackBean;
+import com.xinzhu.xuezhibao.bean.MyjobBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.MyCourseInterface;
+import com.xinzhu.xuezhibao.view.interfaces.MyJobDetailInterpace;
 import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
@@ -18,6 +20,11 @@ import java.util.List;
 
 public class MyCoursePresenter {
     MyCourseInterface myCourseInterface;
+MyJobDetailInterpace myJobDetailInterpace;
+
+    public MyCoursePresenter(MyJobDetailInterpace myJobDetailInterpace) {
+        this.myJobDetailInterpace = myJobDetailInterpace;
+    }
 
     public MyCoursePresenter(MyCourseInterface myCourseInterface) {
         this.myCourseInterface = myCourseInterface;
@@ -35,14 +42,27 @@ public class MyCoursePresenter {
                 code = JsonUtils.getIntValue(result, "_code");
             } catch (Exception e) {
                 com.zou.fastlibrary.utils.Log.d("异常了");
-                myCourseInterface.servererr();
+                if (null!=myCourseInterface){
+                    myCourseInterface.servererr();
+                }else if (null!=myJobDetailInterpace){
+                    myJobDetailInterpace.servererr();
+                }
+                return;
             }
             if (code == -100) {
-                myCourseInterface.networkerr();
+                if (null!=myCourseInterface){
+                    myCourseInterface.networkerr();
+                }else if (null!=myJobDetailInterpace){
+                    myJobDetailInterpace.networkerr();
+                }
                 return;
             }
             if (code == -200) {
-                myCourseInterface.networktimeout();
+                if (null!=myCourseInterface){
+                    myCourseInterface.networktimeout();
+                }else if (null!=myJobDetailInterpace){
+                    myJobDetailInterpace.networktimeout();
+                }
                 return;
             }
             if (code == 100) {
@@ -58,10 +78,19 @@ public class MyCoursePresenter {
                 }else if (what==3){
                     List<TeacherBean> mDatas = JSON.parseArray(data, TeacherBean.class);
                     myCourseInterface.getTeacher(mDatas);
+                }else if (what==4){
+                    data = JsonUtils.getStringValue(data, "rows");
+                    List<MyjobBean> mDatas = JSON.parseArray(data, MyjobBean.class);
+                    myCourseInterface.getMyjob(mDatas);
+                }else if (what==5){
+                    MyjobBean mDatas = JsonUtils.stringToObject(data,MyjobBean.class);
+                    myJobDetailInterpace.getjobbyid(mDatas);
                 }
-
             }else {
-                myCourseInterface.nodata();
+                if (null!=myCourseInterface){
+                    myCourseInterface.nodata();
+                }else if (null!=myJobDetailInterpace){
+                }
             }
 
         }
@@ -82,5 +111,17 @@ public class MyCoursePresenter {
         String data = JsonUtils.keyValueToString2("pageNo", page, "curriculumKind", type);
         data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/page-select-teacher", handler, 3);
+    }
+    public void getjob(int page, int type){
+        String data = JsonUtils.keyValueToString2("pageNo", page, "curriculumKind", type);
+        data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/my-CurriculumJob", handler, 4);
+    }
+    public void getjobbyid(String jobId){
+        String data = JsonUtils.keyValueToString2("jobId", jobId, "token", Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/select-curriculumJob-by-id", handler, 5);
+    }
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
     }
 }

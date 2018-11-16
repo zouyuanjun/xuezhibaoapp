@@ -51,11 +51,10 @@ public class RvJiaojiaoTeacherAdapter extends RecyclerView.Adapter {
                     onItemClickListener.onItemClick(v, position);
                 }
             });
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            ((ViewHolder) holder).imTalk.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
-                    onItemClickListener.onItemLongClick(v, position);
-                    return false;
+                public void onClick(View v) {
+                    onItemClickListener.onImTalkClick(v, position);
                 }
             });
         }
@@ -69,7 +68,8 @@ public class RvJiaojiaoTeacherAdapter extends RecyclerView.Adapter {
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
 
-        void onItemLongClick(View view, int position);
+        void onImTalkClick(View view, int position);
+
     }
 
 

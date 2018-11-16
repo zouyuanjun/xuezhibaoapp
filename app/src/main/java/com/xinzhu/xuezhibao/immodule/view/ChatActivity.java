@@ -609,7 +609,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                 } else {
 
                     Matisse.from(ChatActivity.this)
-                            .choose(MimeType.ofAll(), false) // 选择 mime 的类型
+                            .choose(MimeType.ofImage(), false) // 选择 mime 的类型
                             .countable(true)
                             .maxSelectable(9) // 图片选择的最多数量
                             .gridExpectedSize(400)
@@ -627,7 +627,7 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
                         != PackageManager.PERMISSION_GRANTED)) {
                     EasyPermissions.requestPermissions(this, "需要获取相册读写权限", 1, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 } else {
-                    intent = new Intent(ChatActivity.this, CameraActivity.class);
+                    intent = new Intent(ChatActivity.this, JCameraActivity.class);
                     startActivityForResult(intent, RequestCode.TAKE_PHOTO);
                 }
                 break;

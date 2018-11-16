@@ -2,6 +2,7 @@ package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
@@ -13,10 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.EditAllActivity;
 import com.xinzhu.xuezhibao.view.activity.LoginActivity;
+import com.xinzhu.xuezhibao.view.activity.MyAddressActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCollectActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.MyOrderActivity;
@@ -28,6 +31,7 @@ import com.xinzhu.xuezhibao.view.activity.PointsMallTabActivity;
 import com.xinzhu.xuezhibao.view.activity.TrickActivity;
 import com.xinzhu.xuezhibao.view.activity.UserBaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
+import com.zou.fastlibrary.utils.DataKeeper;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
 
@@ -84,7 +88,6 @@ public class UserCentreFragment extends LazyLoadFragment {
     protected void lazyLoad() {
 
     }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -99,6 +102,7 @@ public class UserCentreFragment extends LazyLoadFragment {
             tvUsername.setText(Constants.userBasicInfo.getNickName());
             tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
             sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
+            tvMyjifen.setText(Constants.userBasicInfo.getIntegral()+"");
         }
     }
 
@@ -193,11 +197,17 @@ public class UserCentreFragment extends LazyLoadFragment {
                 getActivity().startActivity(intent);
                 break;
             case R.id.tv_myaddress:
+                intent = new Intent(getActivity(), MyAddressActivity.class);
+                getActivity().startActivity(intent);
                 break;
             case R.id.tv_lognout:
                 String data=JsonUtils.keyValueToString("token",Constants.TOKEN);
                 Network.getnetwork().postJson(data,Constants.URL+"/app/login-out",new Handler(),1);
                 Constants.TOKEN = "";
+                SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());
+                SharedPreferences.Editor editor=sharedPreferences.edit();
+                editor.remove("PHONE");
+                editor.remove("PASSWORD");
                 Intent intent5 = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent5);
                 getActivity().finish();

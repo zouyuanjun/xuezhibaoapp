@@ -123,4 +123,7 @@ public class VideoVoiceDetailPresenter {
         String data = JsonUtils.keyValueToString2("videoId", id, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/buy-video", handler, 6);
     }
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }

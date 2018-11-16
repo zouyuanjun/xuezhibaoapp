@@ -23,7 +23,7 @@ import com.xinzhu.xuezhibao.adapter.RvJiaojiaoTaskAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoTeacherAdapter;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.CourseFeedbackBean;
-import com.xinzhu.xuezhibao.bean.TaskBean;
+import com.xinzhu.xuezhibao.bean.MyjobBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
 import com.xinzhu.xuezhibao.presenter.MyCoursePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
@@ -58,7 +58,7 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
     WeakReference<Context> mContext;
     List<CourseBean> courseBeanArrayList = new ArrayList<>();
     List<TeacherBean> teacherBeanArrayList = new ArrayList<>();
-    List<TaskBean> taskBeanArrayList = new ArrayList<>();
+    List<MyjobBean> taskBeanArrayList = new ArrayList<>();
     List<CourseFeedbackBean> feedbackBeanArrayList = new ArrayList<>();
     MyCoursePresenter myCoursePresenter;
     int page = 1;
@@ -98,7 +98,7 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
                 rvItem.setAdapter(rvJiaojiaoTeacherAdapter);
 
             } else if (MYCLASS == 3) {
-                //    initdata3();
+                myCoursePresenter.getjob(page,2);
                 rvItem.setAdapter(rvJiaojiaoTaskAdapter);
 
             } else if (MYCLASS == 4) {
@@ -112,7 +112,20 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh(2000/*,false*/);//传入false表示刷新失败
+                courseBeanArrayList.clear();
+                feedbackBeanArrayList.clear();
+                taskBeanArrayList.clear();
+                teacherBeanArrayList.clear();
+                page=1;
+                if (MYCLASS == 1) {
+                    myCoursePresenter.getcourse(page, 2);
+                } else if (MYCLASS == 2) {
+                    myCoursePresenter.getTeacher(page, 2);
+                } else if (MYCLASS == 3) {
+                    myCoursePresenter.getjob(page,2);
+                } else if (MYCLASS == 4) {
+                    myCoursePresenter.getcoursefeedback(page, 2);
+                }
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -123,6 +136,7 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
                 } else if (MYCLASS == 2) {
                     myCoursePresenter.getTeacher(page, 2);
                 } else if (MYCLASS == 3) {
+                    myCoursePresenter.getjob(page,2);
                 } else if (MYCLASS == 4) {
                     myCoursePresenter.getcoursefeedback(page, 2);
                 }
@@ -152,7 +166,10 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
         rvJiaojiaoTaskAdapter.setOnItemClickListener(new RvJiaojiaoTaskAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(), CourseTaskActivity.class));
+                Intent intent = new Intent(getContext(), CourseTaskActivity.class);
+                intent.putExtra(Constants.INTENT_ID, taskBeanArrayList.get(position).getJobId());
+                intent.putExtra("TYPE",2);
+                startActivity(intent);
             }
 
             @Override
@@ -169,7 +186,7 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
             }
 
             @Override
-            public void onItemLongClick(View view, int position) {
+            public void onImTalkClick(View view, int position) {
 
             }
         });
@@ -228,13 +245,13 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
     @Override
     public void getcourse(List<CourseBean> courseBeanList) {
         courseBeanArrayList.addAll(courseBeanList);
-        if (null != rvJiaojiaoCourseAdapter) {
+        if (null != rvJiaojiaoCourseAdapter&&null != refreshLayout) {
             rvJiaojiaoCourseAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh();
         }
         page++;
         imDataisnull.setVisibility(View.GONE);
-
     }
 
     @Override
@@ -248,6 +265,7 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
         if (null != rvJiaojiaoTeacherAdapter) {
             rvJiaojiaoTeacherAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh();
         }
         page++;
         imDataisnull.setVisibility(View.GONE);
@@ -259,6 +277,19 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
         if (null != rvJiaojiaoFeedbackAdapter) {
             rvJiaojiaoFeedbackAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh();
+        }
+        page++;
+        imDataisnull.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void getMyjob(List<MyjobBean> mDatas) {
+        taskBeanArrayList.addAll(mDatas);
+        if (null != rvJiaojiaoTaskAdapter&&null!=refreshLayout) {
+            rvJiaojiaoTaskAdapter.notifyDataSetChanged();
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh();
         }
         page++;
         imDataisnull.setVisibility(View.GONE);

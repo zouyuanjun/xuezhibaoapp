@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
@@ -23,6 +25,7 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.SelectPhotoUtils;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.EditTextUtil;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
@@ -167,7 +170,7 @@ public class EditAllActivity extends TakePhotoActivity {
         String s = result.getImage().getCompressPath();
         Log.d(imgurl + s);
         sdMyphoto.setImageURI(Uri.fromFile(new File(imgurl)));
-        Network.getnetwork().uploadimg(Constants.TOKEN, Constants.URL + "/guest/image-upload", result.getImage().getCompressPath(), handler);
+        Network.getnetwork().uploadimg(Constants.TOKEN, Constants.URL + "/app/image-upload", result.getImage().getCompressPath(), handler,1);
 
     }
 
@@ -187,7 +190,7 @@ public class EditAllActivity extends TakePhotoActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_header:
-                SelectPhotoUtils.selectphoto(1, getTakePhoto());
+                showpopwindow(view);
                 break;
             case R.id.ll_address:
                 CityConfig cityConfig = new CityConfig.Builder()
@@ -196,7 +199,7 @@ public class EditAllActivity extends TakePhotoActivity {
                         .titleTextColor("#585858")//标题文字颜  色
                         .titleBackgroundColor("#E9E9E9")//标题栏背景色
                         .confirTextColor("#585858")//确认按钮文字颜色
-                        .confirmText("ok")//确认按钮文字
+                        .confirmText("确认")//确认按钮文字
                         .confirmTextSize(16)//确认按钮文字大小
                         .cancelTextColor("#585858")//取消按钮文字颜色
                         .cancelText("取消")//取消按钮文字
@@ -246,5 +249,33 @@ public class EditAllActivity extends TakePhotoActivity {
                 mPicker.showCityPicker( );
                 break;
         }
+    }
+    public void showpopwindow(View parentview){
+        final PopupWindow popupWindow= CreatPopwindows.creatpopwindows(this,R.layout.pop_selectphoto);
+        View view=popupWindow.getContentView();
+        TextView takephoto=view.findViewById(R.id.tv_take_photo);
+        TextView selectphoto=view.findViewById(R.id.tv_select_photo);
+        TextView cancle=view.findViewById(R.id.tv_cancel);
+        takephoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SelectPhotoUtils.selectphoto(2, getTakePhoto());
+                popupWindow.dismiss();
+            }
+        });
+        selectphoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SelectPhotoUtils.selectphoto(1, getTakePhoto());
+                popupWindow.dismiss();
+            }
+        });
+        cancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.showAtLocation(parentview, Gravity.BOTTOM,0,0);
     }
 }

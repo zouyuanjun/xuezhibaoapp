@@ -10,8 +10,9 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zou.fastlibrary.utils.Log;
 
 public class VideoPlayer extends StandardGSYVideoPlayer {
-    boolean canpaly=false;
+    boolean canpaly = false;
     ImageView imageButton;
+
     public VideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
     }
@@ -25,10 +26,11 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
     }
 
     @Override
-    protected void clickStartIcon() {
-        if (canpaly){
+    public void clickStartIcon() {
+        if (canpaly) {
+            Log.d("可以播放了");
             super.clickStartIcon();
-        }else {
+        } else {
             Log.d("还不能播放");
         }
 
@@ -42,13 +44,25 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
         this.canpaly = canpaly;
     }
 
-    public void imbsetListener(OnClickListener onClickListener){
-        imageButton=getBackButton();
-        imageButton.setOnClickListener(onClickListener) ;
+    public void imbsetListener(OnClickListener onClickListener) {
+        imageButton = getBackButton();
+        imageButton.setOnClickListener(onClickListener);
 
     }
 
-   public void hidstartbt(){
-       setViewShowState(mStartButton, INVISIBLE);
-   }
+    public void startbuListener(OnClickListener onClickListener) {
+        getStartButton().setOnClickListener(onClickListener);
+    }
+
+    public void hidstartbt() {
+        setViewShowState(mStartButton, INVISIBLE);
+    }
+
+    public boolean isPlay() {
+        if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_PREPAREING || mCurrentState == CURRENT_STATE_PLAYING) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

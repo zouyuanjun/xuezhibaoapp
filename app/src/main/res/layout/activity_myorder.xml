@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:leftTextVisible='false'
-        app:midText='个人轨迹'
+        app:midText='我的订单'
         app:midTextFontColor="#ffffff"
         app:midTextSizeSp="18"
         app:rightImageVisible='false'
@@ -26,6 +26,9 @@
         android:id="@+id/tab_order"
         android:layout_width="match_parent"
         android:layout_height="44dp"
+        app:tabSelectedTextColor="@color/appcolor"
+        app:tabTextColor="@color/color_black_666666"
+        app:tabIndicatorHeight="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar">

@@ -145,4 +145,7 @@ public class CoursePresenter {
         data=JsonUtils.addKeyValue(data,"classDictionaryId",classDictionaryId);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/newest-curriculum",handler,3);
     }
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }

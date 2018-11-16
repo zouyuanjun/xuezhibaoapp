@@ -48,22 +48,26 @@
                 android:layout_marginTop="16dp"
                 android:text="如何让孩子主动学习"
                 android:textColor="@color/color_black_333333"
-                android:textSize="15sp"
+                android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_aa"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/appcolor"
                 android:paddingLeft="16dp"
                 android:text="课程"
+                android:textSize="14sp"
+                android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
             <TextView
+                android:textColor="@color/color_black_666666"
+                android:textSize="14sp"
                 android:id="@+id/tv_course"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -73,6 +77,8 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_aa" />
 
             <TextView
+                android:textSize="14sp"
+                android:textColor="@color/color_grey_999999"
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,25 +89,36 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_course" />
 
             <TextView
+                android:id="@+id/tv_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:text="未完成"
+                android:textColor="@color/color_black_666666"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_time" />
+            <TextView
                 android:id="@+id/tv_task"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
                 android:lineSpacingExtra="3dp"
-                android:text="孩子天啊接受了肯德基发丝哦 撒赖咖啡碱埃里克森戴假发拉萨扩大飞机啊案件数量扩大飞机啊流口水的份就爱上了的就埃里克森点击发送旅客点击发送旅客到访啊手动阀手动阀手动阀"
+                android:text=""
                 android:textColor="@color/color_black_333333"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_time" />
 
             <LinearLayout
-                android:background="@color/fenge"
                 android:id="@+id/linearLayout15"
                 android:layout_width="0dp"
                 android:layout_height="20dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/fenge"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -116,52 +133,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout15">
 
-                <TextView
-                    android:id="@+id/tv_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="未完成"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <LinearLayout
-                    android:background="@color/fenge"
-                    android:id="@+id/linearLayout16"
-                    android:layout_width="328dp"
-                    android:layout_height="1dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_status"></LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_tasktext"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
-                    android:text="TextView"
-                    android:visibility="gone"
                     android:lineSpacingExtra="3dp"
+                    android:text="TextView"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="16sp"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout16" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:visibility="gone"
                     android:id="@+id/im_committask"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="13dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout16"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_tasktext"
                     app:srcCompat="@drawable/task_btn_submission">
 
                 </ImageView>

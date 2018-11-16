@@ -44,7 +44,7 @@ public class JsonUtils {
 		if (b) {
 			return jsonObject.getString(key);
 		} else {
-			return "没有找到这个键";
+			return "";
 		}
 	}
 

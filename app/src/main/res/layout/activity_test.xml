@@ -131,4 +131,15 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/red"
+        android:text="提示：选择后自动转下一题"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/last" />
+
 </android.support.constraint.ConstraintLayout>

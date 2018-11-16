@@ -32,11 +32,10 @@ public class MyOrderActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myorder);
         ButterKnife.bind(this);
-        tabOrder.addTab(tabOrder.newTab().setText("热门"));
-        tabOrder.addTab(tabOrder.newTab().setText("最新"));
-        tabOrder.addTab(tabOrder.newTab().setText("我的收藏"));
-        tabOrder.addTab(tabOrder.newTab().setText("我的收藏"));
-        tabOrder.setTabTextColors(0x333333,0xf87d28);
+        tabOrder.addTab(tabOrder.newTab());
+        tabOrder.addTab(tabOrder.newTab());
+        tabOrder.addTab(tabOrder.newTab());
+        tabOrder.addTab(tabOrder.newTab());
         fragmentList.add(new MyOrderFragment());
         fragmentList.add(new MyOrderFragment());
         fragmentList.add(new MyOrderFragment());

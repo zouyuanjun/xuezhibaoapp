@@ -3,6 +3,7 @@ package com.xinzhu.xuezhibao.view.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.xinzhu.xuezhibao.R;
@@ -37,6 +38,12 @@ public class QRActivity extends CaptureActivity {
         setContentView(R.layout.scan_activity);
         ButterKnife.bind(this);
         init(new WeakReference<Activity>(this).get(), (SurfaceView) findViewById(R.id.svCameraScan), (ViewfinderView) findViewById(R.id.vfvCameraScan));
+    appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            finish();
+        }
+    });
     }
 
 

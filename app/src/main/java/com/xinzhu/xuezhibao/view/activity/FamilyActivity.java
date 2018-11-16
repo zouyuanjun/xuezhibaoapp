@@ -34,10 +34,10 @@ public class FamilyActivity extends BaseActivity {
 
         setContentView(R.layout.activity_jiajiao);
         ButterKnife.bind(this);
-        tbJiajiao.addTab(tbJiajiao.newTab().setText("热门"));
-        tbJiajiao.addTab(tbJiajiao.newTab().setText("最新"));
-        tbJiajiao.addTab(tbJiajiao.newTab().setText("我的收藏"));
-        tbJiajiao.addTab(tbJiajiao.newTab().setText("我的收藏"));
+        tbJiajiao.addTab(tbJiajiao.newTab());
+        tbJiajiao.addTab(tbJiajiao.newTab());
+        tbJiajiao.addTab(tbJiajiao.newTab());
+        tbJiajiao.addTab(tbJiajiao.newTab());
         fragmentList.add(MyFamilyCourseFragment.newInstance(1));
         fragmentList.add(MyFamilyCourseFragment.newInstance(2));
         fragmentList.add(MyFamilyCourseFragment.newInstance(3));

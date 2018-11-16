@@ -6,11 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/itemfenge"
-    android:padding="15dp">
+    android:padding="10dp">
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white">
+    android:background="@drawable/ffffffrad8">
     <com.zou.fastlibrary.ui.ShapeCornerBgView
         android:id="@+id/textView12"
         android:layout_width="50dp"

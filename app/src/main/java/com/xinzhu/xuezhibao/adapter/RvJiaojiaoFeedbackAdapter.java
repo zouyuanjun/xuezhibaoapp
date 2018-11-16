@@ -40,8 +40,17 @@ public class RvJiaojiaoFeedbackAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvFeedbacktitle.setText(mDatas.get(position).getContent());
-        ((ViewHolder) holder).tvConent.setText(mDatas.get(position).getReplyContent());
-        ((ViewHolder) holder).tvNum.setText(mDatas.get(position).getReplyCount());
+        if (mDatas.get(position).getReplyContent().isEmpty()){
+            ((ViewHolder) holder).tvConent.setText("暂无回复");
+        }else {
+            ((ViewHolder) holder).tvConent.setText(mDatas.get(position).getReplyContent());
+        }
+
+        if (mDatas.get(position).getReplyCount()>0){
+            ((ViewHolder) holder).tvNum.setText(mDatas.get(position).getReplyCount()+"");
+        }else {
+           ((ViewHolder) holder).tvNum.setVisibility(View.GONE);
+        }
         ((ViewHolder) holder).tvFeedbacktheme.setText("关于课程“"+mDatas.get(position).getCurriculumTitle()+"”的反馈");
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

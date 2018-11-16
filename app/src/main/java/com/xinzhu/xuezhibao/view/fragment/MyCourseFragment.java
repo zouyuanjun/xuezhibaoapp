@@ -20,6 +20,7 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoCourseAdapter;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.CourseFeedbackBean;
+import com.xinzhu.xuezhibao.bean.MyjobBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
 import com.xinzhu.xuezhibao.presenter.MyCoursePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
@@ -167,6 +168,11 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
 
     @Override
     public void getCourseFeesback(List<CourseFeedbackBean> mDatas, String unread) {
+
+    }
+
+    @Override
+    public void getMyjob(List<MyjobBean> mDatas) {
 
     }
 }

@@ -25,11 +25,9 @@
         android:id="@+id/textView9"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="16dp"
-        android:textSize="16sp"
-        android:textColor="@color/color_black_333333"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:lineSpacingExtra="5dp"
         android:text="本测评，由美国范德比尔特注意力家长测评表，香港初小学生读写能力饰查星表等核心内容组成，针对儿童阅读能力、书写能力、注意力发展、自我控制发展、感知觉发展和情绪发展6个方面的能力对进行专业评估。
       家长根据孩子在日常学习、生活中是否存在如下的表现给予如实选择相应选项：
@@ -38,6 +36,8 @@
 【不符合】几乎没出现过描述中的情况或与描述情况不符
 
 【温馨提示】量表测评可做为初步了解孩童情况，对于儿童发展测评项发展水平做出大致评价，对可能出现的发展落后提出预警或建议，请家长根据实际情况自评填写即可。"
+        android:textColor="@color/color_black_333333"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar" />
@@ -46,7 +46,7 @@
         android:id="@+id/begintest"
         android:layout_width="180dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginBottom="32dp"
         android:text="现在开始"
         android:textColor="@color/white"
         android:textSize="25sp"

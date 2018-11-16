@@ -87,4 +87,5 @@ dependencies {
     // implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/alipaySdk-20180601.jar')
+    implementation 'cjt.library.wheel:camera:1.1.9'
 }

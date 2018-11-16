@@ -133,5 +133,7 @@ public class VideoVoiceListPresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/guest/video-newest-gratis", handler, 8);
 
     }
-
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }

@@ -10,8 +10,8 @@ public class Constants {
     public static String URL="http://192.168.1.199:8080";
     public static String APP_VERSION="1.0.0";
     public static String AlipayAccount="";
-public static String JPUSH_APPKEY = "68a8c864423f3b707c8c8da3";
- public static int EMOTICON_CLICK_TEXT = 1;
+    public static String JPUSH_APPKEY = "68a8c864423f3b707c8c8da3";
+    public static int EMOTICON_CLICK_TEXT = 1;
     public static int EMOTICON_CLICK_BIGIMAGE = 2;
     public static int SETTING_USENET=1;
     public static int SETTING_CANNOTIFITION=1;
@@ -22,6 +22,7 @@ public static String JPUSH_APPKEY = "68a8c864423f3b707c8c8da3";
     public static String INTENT_COURSE_CLASS="COURSE";
     public static String INTENT_EDITITEM="COURSE";    //修改个人资料时传入要修改的项目
     public static UserBasicInfo userBasicInfo=null;
+    public static long PLAYTIME=0;
     //支付宝私钥
     public static String privateKEY ="\n" +
             "MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDT4licaHutf7rm\n" +

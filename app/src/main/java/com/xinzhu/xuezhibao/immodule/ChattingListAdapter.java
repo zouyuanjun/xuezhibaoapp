@@ -107,7 +107,7 @@ public class ChattingListAdapter extends BaseAdapter {
         this.mMsgList = mConv.getMessagesFromNewest(0, mOffset);
         reverse(mMsgList);
         mLongClickListener = longClickListener;
-        this.mController = new ChatItemController(this, new WeakReference<>(mActivity).get(), conv, mMsgList, dm.density,
+        this.mController = new ChatItemController(new WeakReference<>(this).get(), new WeakReference<>(mActivity).get(), conv, mMsgList, dm.density,
                 longClickListener);
         mStart = mOffset;
         if (mConv.getType() == ConversationType.single) {

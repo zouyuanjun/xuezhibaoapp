@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.zou.fastlibrary.ui.CustomNavigatorBar
         android:id="@+id/appbar"
@@ -26,32 +26,31 @@
     <TextView
         android:id="@+id/tv_mypoints"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="110dp"
         android:background="@color/appcolor"
+        android:gravity="center"
         android:text="0"
         android:textColor="@color/white"
         android:textSize="50sp"
-        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar">
-    </TextView>
+        app:layout_constraintTop_toBottomOf="@+id/appbar"></TextView>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_order"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        app:tabIndicatorHeight="4dp"
-        app:tabTextColor="@color/color_black_333333"
-        app:tabSelectedTextColor="@color/appcolor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_mypoints">
+        app:layout_constraintTop_toBottomOf="@+id/tv_mypoints"
+        app:tabIndicatorHeight="4dp"
+        app:tabSelectedTextColor="@color/appcolor"
+        app:tabTextColor="@color/color_black_333333">
 
     </android.support.design.widget.TabLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_myorder"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,12 +61,20 @@
         android:id="@+id/tv_pointsrule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginEnd="24dp"
         android:text="积分规则"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/tab_order"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/itemfenge"
+        app:layout_constraintBottom_toTopOf="@+id/vp_myorder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

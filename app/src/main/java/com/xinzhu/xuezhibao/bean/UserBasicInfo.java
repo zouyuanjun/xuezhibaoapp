@@ -14,6 +14,15 @@ public class UserBasicInfo {
     int studentAge;
     String dictionaryName;
     int dictionaryId;
+    int integral;
+
+    public int getIntegral() {
+        return integral;
+    }
+
+    public void setIntegral(int integral) {
+        this.integral = integral;
+    }
 
     public int getDictionaryId() {
         return dictionaryId;

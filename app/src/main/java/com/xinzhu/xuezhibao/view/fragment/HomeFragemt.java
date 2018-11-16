@@ -99,7 +99,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     HomeVoiceAdapter homeVoiceAdapter;
     @BindView(R.id.ll_message)
     LinearLayout llMessage;
-    List<BannerImgBean> mybannerImgBean=new ArrayList<>();
+    List<BannerImgBean> mybannerImgBean = new ArrayList<>();
 
     @Override
     protected int setContentView() {
@@ -130,11 +130,15 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent=new Intent(getContext(),WebActivity.class);
-                intent.putExtra("URL","https://www.baidu.com/");
+                Intent intent = new Intent(getContext(), WebActivity.class);
+                intent.putExtra("URL", "https://www.baidu.com/");
                 startActivity(intent);
             }
         });
+        qBadgeView = new QBadgeView(MyApplication.getContext());
+        qBadgeView.bindTarget(llMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
+        messagecount=JMessageClient.getAllUnReadMsgCount();
+        qBadgeView.setBadgeNumber(messagecount);
     }
 
     @Override
@@ -142,8 +146,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
-        qBadgeView = new QBadgeView(MyApplication.getContext());
-        qBadgeView.bindTarget(llMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
         JMessageClient.registerEventReceiver(new WeakReference<>(this).get());
         Log.d("创建完毕");
         return rootView;
@@ -159,18 +161,20 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     public void onEvent(MessageEvent event) {
         //  event.getMessage().toJson();
-        messagecount++;
+        messagecount=JMessageClient.getAllUnReadMsgCount();
         qBadgeView.setBadgeNumber(messagecount);
         Log.d("收到l一条消息" + messagecount);
     }
+
     //通知栏点击事件
-    public void onEvent(NotificationClickEvent event){
+    public void onEvent(NotificationClickEvent event) {
         Intent notificationIntent = new Intent(getContext(), ChatActivity.class);
         notificationIntent.putExtra(JGApplication.TARGET_ID, event.getMessage().getTargetID());
         notificationIntent.putExtra(JGApplication.CONV_TITLE, event.getMessage().getTargetName());
         notificationIntent.putExtra(JGApplication.TARGET_APP_KEY, event.getMessage().getTargetAppKey());
         startActivity(notificationIntent);//自定义跳转到指定页面
     }
+
     @OnClick({R.id.im_scan, R.id.ed_search, R.id.im_setting, R.id.im_message, R.id.banner, R.id.im_test, R.id.ll_more_video, R.id.rv_video, R.id.ll_more_voice, R.id.rv_voice, R.id.ll_more_article, R.id.rv_article})
     public void onViewClicked(View view) {
 
@@ -184,24 +188,23 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             case R.id.im_message:
-                if (Constants.TOKEN.isEmpty()){
+                if (Constants.TOKEN.isEmpty()) {
                     shoudia();
-                }else if (null==JMessageClient.getMyInfo()){
-                    JMessageClient.login(Constants.userBasicInfo.getMemberId(), "123456", new BasicCallback() {
+                } else if (null == JMessageClient.getMyInfo()) {
+                    JMessageClient.login(Constants.userBasicInfo.getMemberId(), "xzb123456", new BasicCallback() {
                         @Override
                         public void gotResult(int responseCode, String responseMessage) {
-                            android.util.Log.d("JIM登陆响应",responseCode+responseMessage);
+                            android.util.Log.d("JIM登陆响应", responseCode + responseMessage);
                             if (responseCode == 0) {
-                               BToast.success(getContext()).text("聊天服务器登陆成功了");
+                                BToast.success(getContext()).text("聊天服务器登陆成功了");
                                 //注册时更新头像
+                            } else {
+                                BToast.error(getContext()).text("抱歉，聊天服务器出现故障，您将只能查看历史消息");
                             }
+                            startActivity(new Intent(getContext(), ConversationListActivity.class));
                         }
                     });
-                }
-
-                else {
-                    messagecount = 0;
-                    qBadgeView.setBadgeNumber(0);
+                } else {
                     startActivity(new Intent(getContext(), ConversationListActivity.class));
                 }
                 break;
@@ -229,28 +232,28 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         }
     }
 
-    public void shoudia(){
+    public void shoudia() {
 
-            CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
-            builder.setTitle("提示");
-            builder.setMessage("登陆后才可以继续操作，现在就去登陆");
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    Intent intent=new Intent(getContext(),LoginActivity.class);
-                    intent.putExtra(Constants.FROMAPP,"fss");
-                    startActivity(intent);
+        CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
+        builder.setTitle("提示");
+        builder.setMessage("登陆后才可以继续操作，现在就去登陆");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                intent.putExtra(Constants.FROMAPP, "fss");
+                startActivity(intent);
 
-                }
-            });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.create().show();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
 
     }
 
@@ -305,6 +308,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             }
         });
     }
+
     //初始化文章列表
     @Override
     public void getArticle(final List<ArticleBean> mDatas) {
@@ -334,11 +338,11 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     @Override
     public void getbanner(List<BannerImgBean> bannerImgBeans) {
         List<String> mDatas = new ArrayList<>();
-        for (BannerImgBean bannerImgBean:bannerImgBeans){
+        for (BannerImgBean bannerImgBean : bannerImgBeans) {
             mDatas.add(bannerImgBean.getAdUrl());
             mybannerImgBean.add(bannerImgBean);
         }
-        if (null!=banner){
+        if (null != banner) {
             banner.setImages(mDatas);
             banner.start();
         }
@@ -370,7 +374,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         super.onActivityResult(requestCode, resultCode, data);
         if (null != data) {
             String qrcode = data.getStringExtra("RESULT_QRCODE_STRING");
-            BToast.info(getContext()).text("扫描结果："+qrcode).show();
+            BToast.info(getContext()).text("扫描结果：" + qrcode).show();
         }
 
 

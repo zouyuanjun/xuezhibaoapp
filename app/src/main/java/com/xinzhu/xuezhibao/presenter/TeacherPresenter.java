@@ -84,5 +84,7 @@ public class TeacherPresenter {
         data=JsonUtils.addKeyValue(data,"productType",5);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/comment-find-by-productid", handler, 2);
     }
-
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }

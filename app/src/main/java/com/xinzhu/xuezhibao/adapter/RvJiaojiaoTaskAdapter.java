@@ -6,12 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.TaskBean;
+import com.xinzhu.xuezhibao.bean.MyjobBean;
 
 import java.util.List;
 
@@ -20,14 +18,14 @@ import butterknife.ButterKnife;
 
 public class RvJiaojiaoTaskAdapter extends RecyclerView.Adapter {
     protected Context mContext;
-    protected List<TaskBean> mDatas;
+    protected List<MyjobBean> mDatas;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public RvJiaojiaoTaskAdapter(Context mContext, List<TaskBean> mDatas) {
+    public RvJiaojiaoTaskAdapter(Context mContext, List<MyjobBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
@@ -41,9 +39,9 @@ public class RvJiaojiaoTaskAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((ViewHolder) holder).textView14.setText(mDatas.get(position).getTime());
-        ((ViewHolder) holder).tvStatus.setText(mDatas.get(position).getStatus());
-        ((ViewHolder) holder).tvTasktitle.setText(mDatas.get(position).getTaskname());
+        ((ViewHolder) holder).textView14.setText(mDatas.get(position).getCreateTime());
+        ((ViewHolder) holder).tvStatus.setText(mDatas.get(position).getState());
+        ((ViewHolder) holder).tvTasktitle.setText(mDatas.get(position).getJobTitle());
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

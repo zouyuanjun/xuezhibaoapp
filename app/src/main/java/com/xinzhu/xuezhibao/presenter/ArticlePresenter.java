@@ -183,4 +183,7 @@ public class ArticlePresenter {
             Network.getnetwork().postJson(data, Constants.URL + "/app/cancel-like", handler, 11);
         }
     }
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }

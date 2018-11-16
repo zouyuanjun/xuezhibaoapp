@@ -3,6 +3,7 @@ package com.xinzhu.xuezhibao.view.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
@@ -18,6 +19,9 @@ import com.xinzhu.xuezhibao.utils.OrderInfoUtil2_0;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
+import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.Map;
 
@@ -63,6 +67,16 @@ public class MyVipCentreActivity extends BaseActivity {
                     }
                     break;
                 }
+                case 2:{
+                    String result= (String) msg.obj;
+                    String data=JsonUtils.getStringValue(result,"Data");
+                    String describeContent=JsonUtils.getStringValue(data,"describeContent");
+                    if (!StringUtil.isEmpty(describeContent)){
+                        tvIntroduce.setText(Html.fromHtml(describeContent));
+                    }else {
+                        tvIntroduce.setText("获取数据失败，请稍后再试");
+                    }
+                }
                 default:
                     break;
             }
@@ -75,9 +89,16 @@ public class MyVipCentreActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vipcenter);
         ButterKnife.bind(this);
+        String data= JsonUtils.keyValueToString("describeType",2);
+        Network.getnetwork().postJson(data, Constants.URL+"/guest/integral-rules",handler,2);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         tvUsername.setText(Constants.userBasicInfo.getNickName());
         sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
-
+        tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
     }
 
     @OnClick(R.id.tv_recharge)

@@ -80,5 +80,7 @@ public class HomepagePresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-index-video", handler, 3);
         Network.getnetwork().postJson("", Constants.URL + "/guest/select-index-round", handler, 4);
     }
-
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }

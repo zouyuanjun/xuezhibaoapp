@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -18,11 +19,13 @@ public class WebActivity extends BaseActivity {
     WebView webView;
     Activity context;
     String url="";
+    CustomNavigatorBar customNavigatorBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         webView=findViewById(R.id.webview);
+        customNavigatorBar=findViewById(R.id.appbar);
         context=this;
         url=getIntent().getStringExtra("URL");
         WebSettings webSettings = webView.getSettings();//获取webview设置属性
@@ -32,7 +35,13 @@ public class WebActivity extends BaseActivity {
         webView.setWebViewClient(new MyWebViewClient());
         webView.addJavascriptInterface(this, "App");
         if (!url.isEmpty()){
-        webView.loadUrl(url); ;
+        webView.loadUrl(url);
+        customNavigatorBar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }}
 
     private class MyWebViewClient extends WebViewClient {

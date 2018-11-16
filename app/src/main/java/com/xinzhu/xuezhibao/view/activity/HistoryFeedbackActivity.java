@@ -1,7 +1,6 @@
 package com.xinzhu.xuezhibao.view.activity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,7 +11,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
@@ -55,29 +53,32 @@ public class HistoryFeedbackActivity extends BaseActivity {
 
                 String data = JsonUtils.getStringValue(result, "Data");
                 String opinionContent = JsonUtils.getStringValue(data, "opinionContent");
-                String opinionReply=JsonUtils.getStringValue(data, "opinionReply");
-                String accessoryList=JsonUtils.getStringValue(data, "accessoryList");
-                List<FeedbackPictureBean> list=JSON.parseArray(accessoryList,FeedbackPictureBean.class);
-                if (list.size()>0){
-                    for (int i=0;i<list.size();i++){
-                        if (i==0){
+                String opinionReply = JsonUtils.getStringValue(data, "opinionReply");
+                String accessoryList = JsonUtils.getStringValue(data, "accessoryList");
+                List<FeedbackPictureBean> list = JSON.parseArray(accessoryList, FeedbackPictureBean.class);
+                if (list.size() > 0) {
+                    for (int i = 0; i < list.size(); i++) {
+                        if (i == 0) {
                             im1.setVisibility(View.VISIBLE);
                             Glide.with(context).load(list.get(0).getAccessoryUrl()).
                                     into(im1);
                         }
-                        if (i==1){
+                        if (i == 1) {
                             im2.setVisibility(View.VISIBLE);
                             Glide.with(context).load(list.get(1).getAccessoryUrl()).
                                     into(im2);
                         }
-                        if (i==2){
+                        if (i == 2) {
                             im3.setVisibility(View.VISIBLE);
                             Glide.with(context).load(list.get(2).getAccessoryUrl()).
                                     into(im3);
                         }
                     }
-              }
-                wbFeedback.loadDataWithBaseURL( null, opinionReply , "text/html", "UTF-8", null ) ;
+                }
+                if (!opinionReply.isEmpty()) {
+                    llRp.setVisibility(View.VISIBLE);
+                    wbFeedback.loadDataWithBaseURL(null, opinionReply, "text/html", "UTF-8", null);
+                }
                 tvData.setText(opinionContent);
             }
         }
@@ -86,13 +87,15 @@ public class HistoryFeedbackActivity extends BaseActivity {
     TextView tvData;
     @BindView(R.id.wb_feedback)
     WebView wbFeedback;
+    @BindView(R.id.ll_rp)
+    LinearLayout llRp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historyfeedback);
         ButterKnife.bind(this);
-        context=this;
+        context = this;
         WebSettings webSettings = wbFeedback.getSettings();//获取webview设置属性
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
         webSettings.setJavaScriptEnabled(true);//支持js
@@ -111,12 +114,13 @@ public class HistoryFeedbackActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null!=handler){
+        if (null != handler) {
             handler.removeMessages(1);
-            handler=null;
+            handler = null;
         }
 
     }
+
     private class MyWebViewClient extends WebViewClient {
 
         @Override
@@ -133,6 +137,7 @@ public class HistoryFeedbackActivity extends BaseActivity {
             view.loadUrl(url);
             return true;
         }
+
         private void imgReset() {
             wbFeedback.loadUrl("javascript:(function(){" +
                     "var objs = document.getElementsByTagName('img'); " +
@@ -144,6 +149,7 @@ public class HistoryFeedbackActivity extends BaseActivity {
                     "})()");
         }
     }
+
     @JavascriptInterface
     public void resize(final float height) {
         context.runOnUiThread(new Runnable() {
@@ -152,12 +158,12 @@ public class HistoryFeedbackActivity extends BaseActivity {
                 LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) wbFeedback.getLayoutParams();
 
 
-                layoutParams.width = (int)((getResources().getDisplayMetrics().widthPixels)*0.7);
-                layoutParams.height = (int) (height * getResources().getDisplayMetrics().density)+50;
-                Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+getResources().getDisplayMetrics().density);
+                layoutParams.width = (int) ((getResources().getDisplayMetrics().widthPixels) * 0.7);
+                layoutParams.height = (int) (height * getResources().getDisplayMetrics().density) + 50;
+                Log.d(layoutParams.width + "高度是" + layoutParams.height + "原始" + height + "级" + getResources().getDisplayMetrics().density);
                 wbFeedback.setLayoutParams(layoutParams);
                 //Toast.makeText(getActivity(), height + "", Toast.LENGTH_LONG).show();
-            //    wbFeedback.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
+                //    wbFeedback.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));
             }
         });
     }

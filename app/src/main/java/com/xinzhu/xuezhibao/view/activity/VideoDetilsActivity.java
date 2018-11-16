@@ -156,58 +156,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     private void init() {
 
-        String source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
-        //外部辅助的旋转，帮助全屏
-        orientationUtils = new OrientationUtils(this, detailPlayer);
-        //初始化不打开外部的旋转
-        orientationUtils.setEnable(false);
-        ImageView imageView = new ImageView(context);
-      //  imageView.setImageBitmap(ImageUtils.createVideoThumbnail("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4", MediaStore.Images.Thumbnails.MINI_KIND));
-        GSYVideoOptionBuilder gsyVideoOption = new GSYVideoOptionBuilder();
-        gsyVideoOption.setThumbImageView(imageView).setIsTouchWiget(true)
-                .setRotateViewAuto(false)
-                .setLockLand(false)
-                .setAutoFullWithSize(true)
-                .setShowFullAnimation(false)
-                .setNeedLockFull(true)
-                .setUrl(source1)
-                .setCacheWithPlay(false)
-                .setVideoTitle("测试视频")
-                .setVideoAllCallBack(new GSYSampleCallBack() {
-                    @Override
-                    public void onPrepared(String url, Object... objects) {
-                        super.onPrepared(url, objects);
-                        //开始播放了才能旋转和全屏
-                        orientationUtils.setEnable(true);
-                        isPlay = true;
-                    }
 
-                    @Override
-                    public void onQuitFullscreen(String url, Object... objects) {
-                        super.onQuitFullscreen(url, objects);
-                        Debuger.printfError("***** onQuitFullscreen **** " + objects[0]);//title
-                        Debuger.printfError("***** onQuitFullscreen **** " + objects[1]);//当前非全屏player
-                        if (orientationUtils != null) {
-                            orientationUtils.backToProtVideo();
-                        }
-                    }
-
-                    @Override
-                    public void onClickStartIcon(String url, Object... objects) {
-                        super.onClickStartIcon(url, objects);
-                        // detailPlayer.startPlayLogic();
-                        Log.d("点击了播放按钮");
-                    }
-                })
-                .setLockClickListener(new LockClickListener() {
-                    @Override
-                    public void onClick(View view, boolean lock) {
-                        if (orientationUtils != null) {
-                            //配合下方的onConfigurationChanged
-                            orientationUtils.setEnable(!lock);
-                        }
-                    }
-                }).build(detailPlayer);
 
         detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,7 +174,19 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 onBackPressed();
             }
         });
+        detailPlayer.startbuListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailPlayer.clickStartIcon();
+                if (detailPlayer.isPlay()){
+                    Log.d("开始播放");
+                }else {
+                    Log.d("停止播放");
+                }
+            }
+        });
         detailPlayer.setCanpaly(true);
+
         smartrv.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -322,6 +283,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         //如果旋转了就全屏
+        detailPlayer.setCanpaly(true);
         if (isPlay) {
             detailPlayer.onConfigurationChanged(this, newConfig, orientationUtils, true, true);
         }
@@ -342,6 +304,51 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         tvLike.setText(videoVoiceBean.getVidelLike());
         tvReadnum.setText("播放量："+videoVoiceBean.getVideoLook());
         likenum=Integer.parseInt(videoVoiceBean.getVidelLike());
+        String source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
+        //外部辅助的旋转，帮助全屏
+        orientationUtils = new OrientationUtils(this, detailPlayer);
+        //初始化不打开外部的旋转
+        orientationUtils.setEnable(false);
+        ImageView imageView = new ImageView(context);
+        //  imageView.setImageBitmap(ImageUtils.createVideoThumbnail("http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4", MediaStore.Images.Thumbnails.MINI_KIND));
+        GSYVideoOptionBuilder gsyVideoOption = new GSYVideoOptionBuilder();
+        gsyVideoOption.setThumbImageView(imageView).setIsTouchWiget(true)
+                .setRotateViewAuto(false)
+                .setLockLand(false)
+                .setAutoFullWithSize(true)
+                .setShowFullAnimation(false)
+                .setNeedLockFull(true)
+                .setUrl(source1)
+                .setCacheWithPlay(false)
+                .setVideoTitle(videoVoiceBean.getVideoTitle())
+                .setVideoAllCallBack(new GSYSampleCallBack() {
+                    @Override
+                    public void onPrepared(String url, Object... objects) {
+                        super.onPrepared(url, objects);
+                        //开始播放了才能旋转和全屏
+                        orientationUtils.setEnable(true);
+                        isPlay = true;
+                    }
+
+                    @Override
+                    public void onQuitFullscreen(String url, Object... objects) {
+                        super.onQuitFullscreen(url, objects);
+                        Debuger.printfError("***** onQuitFullscreen **** " + objects[0]);//title
+                        Debuger.printfError("***** onQuitFullscreen **** " + objects[1]);//当前非全屏player
+                        if (orientationUtils != null) {
+                            orientationUtils.backToProtVideo();
+                        }
+                    }
+                })
+                .setLockClickListener(new LockClickListener() {
+                    @Override
+                    public void onClick(View view, boolean lock) {
+                        if (orientationUtils != null) {
+                            //配合下方的onConfigurationChanged
+                            orientationUtils.setEnable(!lock);
+                        }
+                    }
+                }).build(detailPlayer);
     }
 
     @Override
@@ -472,6 +479,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     @OnClick(R.id.tv_buyvideo)
     public void onViewClicked() {
+
     }
 }
 

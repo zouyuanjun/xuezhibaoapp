@@ -44,11 +44,11 @@ public class DataKeeper {
 	//文件缓存<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 	/**TODO 必须将fileRootPath中的包名（这里是zblibrary.demo）改为你的应用包名*/
 	public static final String fileRootPath = getSDPath() != null ? (getSDPath() + "/xuezhibao/") : null;
-	private static final String accountPath = fileRootPath + "account/";
-	private static final String audioPath = fileRootPath + "audio/";
-	private static final String videoPath = fileRootPath + "video/";
-	private static final String imagePath = fileRootPath + "image/";
-	private static final String tempPath = fileRootPath + "temp/";
+	public static final String accountPath = fileRootPath + "account/";
+	public static final String audioPath = fileRootPath + "audio/";
+	public static final String videoPath = fileRootPath + "video/";
+	public static final String imagePath = fileRootPath + "image/";
+	public static final String tempPath = fileRootPath + "temp/";
 	//文件缓存>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 	//存储文件的类型<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -97,7 +97,7 @@ public class DataKeeper {
 	}
 	
 
-	public static SharedPreferences getRootSharedPreferences() {
+	public static SharedPreferences getRootSharedPreferences(Context context) {
 		return context.getSharedPreferences(ROOT_SHARE_PREFS_, Context.MODE_PRIVATE);
 	}
 

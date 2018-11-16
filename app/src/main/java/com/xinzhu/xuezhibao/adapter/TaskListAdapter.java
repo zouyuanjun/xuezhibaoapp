@@ -6,13 +6,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.MyTaskBean;
-import com.xinzhu.xuezhibao.bean.TaskBean;
 import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
@@ -44,8 +41,8 @@ public class TaskListAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvTasktitle.setText(mDatas.get(position).getTasktitle());
-        ((MyViewHolder) holder).textView16.setText(mDatas.get(position).getJifen());
+        ((MyViewHolder) holder).tvTasktitle.setText(mDatas.get(position).getTaskTitle());
+        ((MyViewHolder) holder).textView16.setText(mDatas.get(position).getAwardIntegral()+"");
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,7 +62,6 @@ public class TaskListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        Log.d("一共有" + mDatas.size());
         return mDatas.size();
     }
 

@@ -93,4 +93,7 @@ public class CourseDetailPresenter {
         String data=JsonUtils.keyValueToString2("token",Constants.TOKEN,"curriculumId",id);
         Network.getnetwork().postJson(data, Constants.URL + "/app/curriculum-apply", handler, 4);
     }
+    public void cancelmessage(){
+        handler.removeCallbacksAndMessages(null);
+    }
 }
