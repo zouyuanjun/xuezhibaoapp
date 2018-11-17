@@ -57,7 +57,7 @@ public class CourseMyCollectAdapter extends RecyclerView.Adapter {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
         ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getVideoTeacher());
      //   ((ViewHolder) holder).tvAll.setText(mDatas.get(position).g());
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply());
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
         if (StringUtil.isEmpty(mDatas.get(position).getCurriculumPicture())) {
             RequestOptions requestOptions = RequestOptions.frameOf(0);
             requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);

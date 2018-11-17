@@ -303,29 +303,32 @@ public class UserBaseActivity extends TakePhotoActivity {
         super.onActivityResult(requestCode, resultCode, data);
         String result="";
         Log.d("返回码"+requestCode);
-        if (null==data||requestCode!=1||requestCode!=2||requestCode!=3||requestCode!=4||requestCode!=5){
+        if (null==data){
             return;
         }
-        if (null!=data){
-          result=data.getStringExtra(Constants.INTENT_EDITITEM);
+        if (requestCode==1||requestCode==2||requestCode==3||requestCode==4||requestCode==5){
+            if (null!=data){
+                result=data.getStringExtra(Constants.INTENT_EDITITEM);
+            }
+            if (requestCode==1){
+                tvVipname.setText(result);
+                Constants.userBasicInfo.setNickName(result);
+            }else if (requestCode==2){
+                tvStudenname.setText(result);
+                Constants.userBasicInfo.setStudentName(result);
+            }else if (requestCode==3){
+                tvStudennage.setText(result);
+                Constants.userBasicInfo.setStudentAge(Integer.valueOf(result));
+            }else if (requestCode==4){
+                tvFathername.setText(result);
+                Constants.userBasicInfo.setFatherName(result);
+            }else if (requestCode==5){
+                tvMothername.setText(result);
+                Constants.userBasicInfo.setMotherName(result);
+            }
+            String string=JsonUtils.objectToString(Constants.userBasicInfo);
+            Network.getnetwork().postJson(string,Constants.URL+"/app/update-member",handler,2);
         }
-        if (requestCode==1){
-            tvVipname.setText(result);
-            Constants.userBasicInfo.setNickName(result);
-        }else if (requestCode==2){
-            tvStudenname.setText(result);
-            Constants.userBasicInfo.setStudentName(result);
-        }else if (requestCode==3){
-            tvStudennage.setText(result);
-            Constants.userBasicInfo.setStudentAge(Integer.valueOf(result));
-        }else if (requestCode==4){
-            tvFathername.setText(result);
-            Constants.userBasicInfo.setFatherName(result);
-        }else if (requestCode==5){
-            tvMothername.setText(result);
-            Constants.userBasicInfo.setMotherName(result);
-        }
-        String string=JsonUtils.objectToString(Constants.userBasicInfo);
-        Network.getnetwork().postJson(string,Constants.URL+"/app/update-member",handler,2);
+
     }
 }

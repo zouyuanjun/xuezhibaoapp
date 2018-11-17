@@ -39,7 +39,6 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     MyGoodsPresenter myGoodsPresenter;
     @BindView(R.id.web_goodsdetail)
     WebView webGoodsdetail;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

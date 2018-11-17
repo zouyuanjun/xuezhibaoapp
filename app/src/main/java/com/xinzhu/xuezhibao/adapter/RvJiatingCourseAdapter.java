@@ -54,7 +54,7 @@ public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
         ((ViewHolder) holder).tvTeacher.setText("主讲："+mDatas.get(position).getVideoTeacher());
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply());
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
         ((ViewHolder) holder).tvClass.setText(mDatas.get(position).getDictionaryName());
         if (StringUtil.isEmpty(mDatas.get(position).getCurriculumPicture())) {
 
