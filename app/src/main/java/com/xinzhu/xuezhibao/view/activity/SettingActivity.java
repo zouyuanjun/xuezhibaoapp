@@ -27,7 +27,6 @@ public class SettingActivity extends BaseActivity {
     Context context;
     @BindView(R.id.tv_cachesize)
     TextView tvCachesize;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +40,7 @@ public class SettingActivity extends BaseActivity {
         });
         context = this;
         try {
-            tvCachesize.setText(DataKeeper.getTotalCacheSize(context));
+            tvCachesize.setText(DataKeeper.getTotalCacheSize(context)+"B");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -65,7 +64,7 @@ public class SettingActivity extends BaseActivity {
                 try {
                     BToast.info(context).text("已清除缓存：" + DataKeeper.getTotalCacheSize(context)).show();
                     DataKeeper.clearAllCache(context);
-                    tvCachesize.setText(DataKeeper.getTotalCacheSize(context));
+                    tvCachesize.setText(DataKeeper.getTotalCacheSize(context)+"B");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

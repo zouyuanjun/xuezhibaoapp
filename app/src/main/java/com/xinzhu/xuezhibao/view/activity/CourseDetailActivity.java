@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,8 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wx.goodview.GoodView;
@@ -111,8 +110,9 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_playcourse);
         StatusBar.setTransparent(this);
+        setContentView(R.layout.activity_playcourse);
+
         ButterKnife.bind(this);
         context = this;
         courseid = getIntent().getStringExtra(Constants.INTENT_ID);
@@ -160,12 +160,14 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
 
     @Override
     public void getCoursedetail(CourseBean courseBean) {
-        tvCreattime.setText("发布时间:"+TimeUtil.getWholeTime2(courseBean.getCreatTime()));
+        tvCreattime.setText("发布时间:"+TimeUtil.getWholeTime2(courseBean.getCreateTime()));
         webView.loadDataWithBaseURL( null, courseBean.getCurriculumExplain() , "text/html", "UTF-8", null ) ;
         tvTitle.setText(courseBean.getCurriculumTitle());
         tvCourseteacher.setText(courseBean.getVideoTeacher());
         tvPrice.setText(courseBean.getCurriculumPrice());
-        standardGSYVideoPlayer.setImageURI(courseBean.getCurriculumPicture());
+        Glide.with(context).load(courseBean.getCurriculumPicture()).
+                into(standardGSYVideoPlayer);
+      //  standardGSYVideoPlayer.setImageURI(courseBean.getCurriculumPicture());
         if (courseBean.isApply()){
             tvBuycourse.setText("已购买");
         }

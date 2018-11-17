@@ -31,19 +31,21 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true">
 
-                <com.zou.fastlibrary.ui.ClearWriteEditText
+                <EditText
                     android:id="@+id/ed_search"
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
-                    android:background="@color/appcolor"
                     android:layout_centerVertical="true"
                     android:textSize='13dp'
+                    android:background="@drawable/edsearchbg"
                     android:paddingLeft='28dp'
                     android:hint="请输入关键词搜索"
                     android:textColor="#ffffff"
                     android:textColorHint="#ffffff"
-                    app:edBgColor="#33ffffff"
-                    app:edRadius='122dp'/>
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:inputType="text"
+                   />
                 <ImageView
                     android:layout_marginLeft="10dp"
                     android:layout_centerVertical="true"

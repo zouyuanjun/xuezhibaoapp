@@ -1,11 +1,11 @@
 package com.xinzhu.xuezhibao.bean;
 
 public class CourseBean {
-    long creatTime;
+    long createTime;
     String curriculumPicture;
     String curriculumPrice;
     String curriculumTitle;
-    String curriculumApply;
+    int curriculumApply;
     String curriculumId;
     String curriculumUrl;
     String curriculumExplain;
@@ -78,12 +78,12 @@ public class CourseBean {
     public CourseBean() {
     }
 
-    public long getCreatTime() {
-        return creatTime;
+    public long getCreateTime() {
+        return createTime;
     }
 
-    public void setCreatTime(long creatTime) {
-        this.creatTime = creatTime;
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 
     public String getCurriculumId() {
@@ -150,11 +150,11 @@ public class CourseBean {
         this.curriculumTitle = curriculumTitle;
     }
 
-    public String getCurriculumApply() {
+    public int getCurriculumApply() {
         return curriculumApply;
     }
 
-    public void setCurriculumApply(String curriculumApply) {
+    public void setCurriculumApply(int curriculumApply) {
         this.curriculumApply = curriculumApply;
     }
 }

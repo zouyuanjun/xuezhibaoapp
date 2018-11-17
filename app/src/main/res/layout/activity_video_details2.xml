@@ -19,18 +19,18 @@
         </com.xinzhu.xuezhibao.view.custom.VideoPlayer>
 
         <android.support.constraint.ConstraintLayout
-            android:visibility="gone"
+          android:layout_marginTop="60dp"
             android:id="@+id/csl_buy"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_black_333333">
+            android:background="@color/black">
 
             <TextView
                 android:id="@+id/textView32"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="64dp"
+                android:layout_marginTop="14dp"
                 android:layout_marginEnd="8dp"
                 android:text="您需要先购买视频，才能观看"
                 android:textColor="@color/white"

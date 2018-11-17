@@ -20,6 +20,7 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.AllCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.FamilyActivity;
+import com.xinzhu.xuezhibao.view.activity.FamilyActivity2;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SubjectActivity;
 import com.xinzhu.xuezhibao.view.helputils.CreatDiag;
@@ -239,6 +240,9 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
 
     @Override
     public void getBanner(List<BannerImgBean> list) {
+        if (null==list&&list.size()==0){
+            return;
+        }
         for (BannerImgBean bannerImgBean:list){
             bannerlist.add(bannerImgBean.getAdUrl());
             bannerImgBeans.add(bannerImgBean);
@@ -308,7 +312,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                     CreatDiag.shoudia(getActivity());
 
                 }else {
-                    getActivity().startActivity(new Intent(getActivity(), FamilyActivity.class));
+                    getActivity().startActivity(new Intent(getActivity(), FamilyActivity2.class));
                 }
 
                 break;

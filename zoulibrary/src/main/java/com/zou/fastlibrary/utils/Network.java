@@ -3,6 +3,12 @@ package com.zou.fastlibrary.utils;
 import android.os.Handler;
 import android.os.Message;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.zou.fastlibrary.bean.NetWorkMessage;
+
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
@@ -109,8 +115,8 @@ public class Network {
      */
     public void postJson(String date, String url, final Handler handler, final int i) {
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(1000, TimeUnit.SECONDS)
-                .readTimeout(1000, TimeUnit.SECONDS)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(100, TimeUnit.SECONDS)
                 .build();//创建OkHttpClient对象。
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");//数据类型为json格式，
         String jsonStr = date;//json数据.
@@ -125,20 +131,17 @@ public class Network {
             public void onFailure(Call call, IOException e) {
                 if (e instanceof SocketTimeoutException) {
                     //判断超时异常
-                    Message message = new Message();
-                    String s = "{\"message\":\"请求超时\",\"_code\":-200,\"data\":[{}]}";
-                    message.what = i;
-                    message.obj = s;
-                    handler.sendMessage(message);
+                    EventBus.getDefault().post(new NetWorkMessage("服务器连接失败，请检查网络"));
                     Log.d("请求超时");
                 }
                 if (e instanceof ConnectException) {
                     ////判断连接异常，
-                    Message message = new Message();
-                    String s = "{\"message\":\"连接异常\",\"_code\":-100,\"data\":[{}]}";
-                    message.what = i;
-                    message.obj = s;
-                    handler.sendMessage(message);
+                    EventBus.getDefault().post(new NetWorkMessage("网络异常，请检查网络"));
+//                    Message message = new Message();
+//                    String s = "{\"message\":\"连接异常\",\"_code\":-100,\"data\":[{}]}";
+//                    message.what = i;
+//                    message.obj = s;
+//                    handler.sendMessage(message);
                     Log.d( "连接异常");
                 }
             }
@@ -147,6 +150,13 @@ public class Network {
             public void onResponse(Call call, Response response) throws IOException {
                 Message message = new Message();
                 String s = response.body().string();
+                JSONObject jsonObject = com.alibaba.fastjson.JSON.parseObject(s);
+                boolean b = jsonObject.containsKey("Data");
+                if (!b){
+                    Log.d(s);
+                    EventBus.getDefault().post(new NetWorkMessage("服务器内部错误"));
+                    return;
+                }
                 message.what = i;
                 message.obj = s;
                 handler.sendMessage(message);

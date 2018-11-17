@@ -24,6 +24,7 @@ import com.xinzhu.xuezhibao.view.activity.MyCollectActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.MyOrderActivity;
 import com.xinzhu.xuezhibao.view.activity.MyPointsActivity;
+import com.xinzhu.xuezhibao.view.activity.MyPointsActivity2;
 import com.xinzhu.xuezhibao.view.activity.MyTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.MyVideoActivity;
 import com.xinzhu.xuezhibao.view.activity.MyVipCentreActivity;
@@ -153,7 +154,7 @@ public class UserCentreFragment extends LazyLoadFragment {
                 startActivity(intent2);
                 break;
             case R.id.cl_jifen:
-                intent = new Intent(getActivity(), MyPointsActivity.class);
+                intent = new Intent(getActivity(), MyPointsActivity2.class);
                 getActivity().startActivity(intent);
                 break;
             case R.id.im_mytask:

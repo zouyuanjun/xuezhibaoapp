@@ -20,7 +20,7 @@ import me.majiajie.pagerbottomtabstrip.listener.OnTabItemSelectedListener;
 /**
  * 带Tab标签的导航主页，必须实现initview方法
  */
-public class BaseBottomTabActivity extends AppCompatActivity {
+public class BaseBottomTabActivity extends BaseActivity {
     ViewPager viewPager;
     Context context;
     Activity activity;

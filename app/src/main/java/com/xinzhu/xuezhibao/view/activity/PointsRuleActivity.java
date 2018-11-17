@@ -3,6 +3,7 @@ package com.xinzhu.xuezhibao.view.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,7 +32,7 @@ Handler handler=new Handler(){
         String data=JsonUtils.getStringValue(result,"Data");
         String describeContent=JsonUtils.getStringValue(data,"describeContent");
         if (!StringUtil.isEmpty(describeContent)){
-            textView22.setText(describeContent);
+            textView22.setText(Html.fromHtml(describeContent));
         }else {
             textView22.setText("获取数据失败，请稍后再试");
         }

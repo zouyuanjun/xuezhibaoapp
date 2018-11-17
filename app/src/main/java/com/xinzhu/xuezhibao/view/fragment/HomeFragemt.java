@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -58,6 +59,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import cn.jpush.im.android.api.JMessageClient;
+import cn.jpush.im.android.api.event.LoginStateChangeEvent;
 import cn.jpush.im.android.api.event.MessageEvent;
 import cn.jpush.im.android.api.event.NotificationClickEvent;
 import cn.jpush.im.api.BasicCallback;
@@ -73,7 +75,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     @BindView(R.id.im_scan)
     ImageView tvMessage;
     @BindView(R.id.ed_search)
-    ClearWriteEditText edSearch;
+    EditText edSearch;
     @BindView(R.id.im_setting)
     ImageView imSetting;
     @BindView(R.id.im_message)
@@ -131,14 +133,22 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             @Override
             public void OnBannerClick(int position) {
                 Intent intent = new Intent(getContext(), WebActivity.class);
-                intent.putExtra("URL", "https://www.baidu.com/");
+                intent.putExtra("URL", mybannerImgBean.get(position).getLinkAddress());
                 startActivity(intent);
             }
         });
-        qBadgeView = new QBadgeView(MyApplication.getContext());
-        qBadgeView.bindTarget(llMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
-        messagecount=JMessageClient.getAllUnReadMsgCount();
-        qBadgeView.setBadgeNumber(messagecount);
+
+        }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (null!=JMessageClient.getMyInfo()){
+            qBadgeView = new QBadgeView(MyApplication.getContext());
+            qBadgeView.bindTarget(llMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
+            messagecount=JMessageClient.getAllUnReadMsgCount();
+            qBadgeView.setBadgeNumber(messagecount);
+        }
     }
 
     @Override
@@ -147,7 +157,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         JMessageClient.registerEventReceiver(new WeakReference<>(this).get());
-        Log.d("创建完毕");
+
         return rootView;
     }
 
@@ -165,7 +175,14 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         qBadgeView.setBadgeNumber(messagecount);
         Log.d("收到l一条消息" + messagecount);
     }
+    public void onEvent(LoginStateChangeEvent event){
+        LoginStateChangeEvent.Reason message=event.getReason();
+        if (message.name().equals("user_logout")){
+            BToast.error(getContext()).text("您从其他客户端登陆，本客户端已下线").show();
 
+        }
+        //do your own business
+    }
     //通知栏点击事件
     public void onEvent(NotificationClickEvent event) {
         Intent notificationIntent = new Intent(getContext(), ChatActivity.class);
@@ -191,7 +208,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 if (Constants.TOKEN.isEmpty()) {
                     shoudia();
                 } else if (null == JMessageClient.getMyInfo()) {
-                    JMessageClient.login(Constants.userBasicInfo.getMemberId(), "xzb123456", new BasicCallback() {
+                    JMessageClient.login(Constants.userBasicInfo.getAccount(), "xzb123456", new BasicCallback() {
                         @Override
                         public void gotResult(int responseCode, String responseMessage) {
                             android.util.Log.d("JIM登陆响应", responseCode + responseMessage);

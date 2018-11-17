@@ -44,7 +44,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getArticleTitle());
-        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getArticleLike());
+        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getArticleLike()+"");
         ((MyViewHolder) holder).tvItemTime.setText(mDatas.get(position).getCreateTime());
         ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getArticleRead());
        ((MyViewHolder) holder).simpleDraweeView.setImageURI(mDatas.get(position).getArticlePicture());

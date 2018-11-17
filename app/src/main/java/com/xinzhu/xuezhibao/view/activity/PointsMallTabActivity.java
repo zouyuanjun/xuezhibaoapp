@@ -1,6 +1,8 @@
 package com.xinzhu.xuezhibao.view.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -8,10 +10,12 @@ import android.view.View;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
+import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.fragment.PotionsMallFragment;
 import com.youth.banner.Banner;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.Network;
 
 import java.util.ArrayList;
 
@@ -30,7 +34,12 @@ public class PointsMallTabActivity extends BaseActivity {
     ListViewPageAdapter listViewPageAdapter;
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
-
+Handler handler=new Handler(){
+    @Override
+    public void handleMessage(Message msg) {
+        super.handleMessage(msg);
+    }
+};
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,5 +63,12 @@ public class PointsMallTabActivity extends BaseActivity {
                 finish();
             }
         });
+        appbar.setRightTextOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToActivity(PointsMallTabActivity.this,MyPointsActivity.class);
+            }
+        });
+    //    Network.getnetwork().postJson("",Constants.URL+"",handler,1);
     }
 }

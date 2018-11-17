@@ -22,8 +22,9 @@ public class SplashActivity extends BaseActivity implements SplashInterface{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);//隐藏状态栏
-        setContentView(R.layout.activity_splash);
         StatusBar.setTransparent(this);
+        setContentView(R.layout.activity_splash);
+
         loginPresenter=new LoginPresenter(new WeakReference<SplashInterface>(this).get());
         Thread myThread=new Thread(){//创建子线程
             @Override

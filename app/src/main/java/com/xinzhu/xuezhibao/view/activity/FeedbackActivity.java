@@ -136,7 +136,7 @@ public class FeedbackActivity extends BaseActivity {
                 else {
                     BToast.error(FeedbackActivity.this).text("提交失败，请重试，错误码："+code).show();
                     cancommint=true;
-                    btLogin.setBgColor(Color.parseColor("#87d28"));
+                    btLogin.setBgColor(Color.parseColor("#f87d28"));
                 }
 
             }

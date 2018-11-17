@@ -108,7 +108,12 @@ public class HistoryFeedbackActivity extends BaseActivity {
             String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
             Network.getnetwork().postJson(data, Constants.URL + "/app/find-newest-opinion", handler, 1);
         }
-
+appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+        finish();
+    }
+});
     }
 
     @Override

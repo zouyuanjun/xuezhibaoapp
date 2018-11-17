@@ -102,9 +102,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         ButterKnife.bind(this);
         context = this;
         videoid = getIntent().getStringExtra(Constants.INTENT_ID);
-        mMusicView.setTitleText("孩子回家不吃饭");
-        mMusicView.setmContext(new WeakReference<Context>(this));
-        mMusicView.startPlayMusic("http://other.web.nf01.sycdn.kuwo.cn/resource/n2/87/0/3398589179.mp3");
+
         tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this, tvDetails));
         videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
         likeCollectPresenter = new LikeCollectPresenter(this);
@@ -215,6 +213,8 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         mMusicView.setTitleText(videoVoiceBean.getVideoTitle());
         tvLike.setText(videoVoiceBean.getVidelLike());
         likenum=Integer.parseInt(videoVoiceBean.getVidelLike());
+        mMusicView.setmContext(new WeakReference<Context>(this));
+        mMusicView.startPlayMusic(videoVoiceBean.getVideoUrl());
     }
     @Override
     public void getcomment(List<CommentBean> mDatas, int total) {

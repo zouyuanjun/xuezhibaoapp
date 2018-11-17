@@ -75,18 +75,26 @@ public class MyCollectFragment extends LazyLoadFragment implements MyCollectInte
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvItem.setLayoutManager(linearLayoutManager);
-
+        if (POSITION == 0) {
+            rvItem.setAdapter(courseMyCollectAdapter);
+        } else if (POSITION == 1) {
+            rvItem.setAdapter(articleListAdapter);
+        } else if (POSITION == 2) {
+            rvItem.setAdapter(videoVoiceListAdapter);
+        } else if (POSITION == 3) {
+            rvItem.setAdapter(videoVoiceListAdapter);
+        }
         if (isfirstload) {
-            isfirstload=false;
+            isfirstload = false;
             courseMyCollectAdapter = new CourseMyCollectAdapter(new WeakReference<Context>(getActivity()), courseBeanList);
             imLoading.setVisibility(View.VISIBLE);
             AnimationDrawable drawable = (AnimationDrawable) imLoading.getDrawable();
             drawable.start();
             if (POSITION == 0) {
-              rvItem.setAdapter(courseMyCollectAdapter);
+                rvItem.setAdapter(courseMyCollectAdapter);
                 myCollectPresenter.getCollectVCourse(page);
             } else if (POSITION == 1) {
-              rvItem.setAdapter(articleListAdapter);
+                rvItem.setAdapter(articleListAdapter);
                 myCollectPresenter.getCollectVAreticle(page);
             } else if (POSITION == 2) {
                 rvItem.setAdapter(videoVoiceListAdapter);
@@ -144,10 +152,10 @@ public class MyCollectFragment extends LazyLoadFragment implements MyCollectInte
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-courseBeanList.clear();
-videoVoiceBeanList.clear();
-articleBeanList.clear();
-page=1;
+                courseBeanList.clear();
+                videoVoiceBeanList.clear();
+                articleBeanList.clear();
+                page = 1;
                 if (POSITION == 0) {
                     myCollectPresenter.getCollectVCourse(page);
                 } else if (POSITION == 1) {
@@ -185,7 +193,7 @@ page=1;
             POSITION = getArguments().getInt("POSITION");
         }
         page = 1;
-        isfirstload=true;
+        isfirstload = true;
     }
 
     @Override
@@ -248,10 +256,13 @@ page=1;
 
     @Override
     public void nodata() {
+        articleListAdapter.notifyDataSetChanged();
+        courseMyCollectAdapter.notifyDataSetChanged();
+        videoVoiceListAdapter.notifyDataSetChanged();
         imLoading.setVisibility(View.GONE);
         refreshLayout.finishLoadMoreWithNoMoreData();
         refreshLayout.finishRefresh(false);
-        if (courseBeanList.size()==0&&videoVoiceBeanList.size()==0&&articleBeanList.size()==0){
+        if (courseBeanList.size() == 0 && videoVoiceBeanList.size() == 0 && articleBeanList.size() == 0) {
             imDataisnull.setVisibility(View.VISIBLE);
         }
 

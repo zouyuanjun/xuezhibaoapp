@@ -8,7 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bravin.btoast.BToast;
+import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.utils.Log;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 
@@ -27,12 +32,17 @@ public abstract class LazyLoadFragment extends Fragment {
         view = inflater.inflate(setContentView(), container, false);
         ButterKnife.bind(this, view);
         isInit = true;
+        EventBus.getDefault().register(this);
         /**初始化的时候去加载数据**/
         Log.d("懒加载基类onCreateView");
         isCanLoadData();
         return view;
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void netWorkMessage(NetWorkMessage messageEvent) {
+        String s=messageEvent.getMessage();
+        BToast.error(getContext()).text(s).show();
+    }
     /**
      * 视图是否已经对用户可见，系统的方法
      */
@@ -69,6 +79,7 @@ public abstract class LazyLoadFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
         isInit = false;
         isLoad = false;
 

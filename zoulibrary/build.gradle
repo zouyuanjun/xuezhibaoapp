@@ -60,4 +60,6 @@ dependencies {
     api 'liji.library.dev:citypickerview:3.1.13'
     //点赞动画
     api 'com.wx.goodview:goodview:1.0.0'
+    //事件巴士
+    api 'org.greenrobot:eventbus:3.1.1'
 }

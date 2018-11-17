@@ -40,10 +40,10 @@ public class PotionsGoodsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((RecyclerHolder) holder).tvTitle.setText(mDatas.get(position).getTitle());
-        ((RecyclerHolder) holder).tvPaynum.setText( mDatas.get(position).getPaynum());
-        ((RecyclerHolder) holder).tvPrice.setText(mDatas.get(position).getPrice());
-        ((RecyclerHolder) holder).sdvPicter.setImageURI(mDatas.get(position).getIml());
+        ((RecyclerHolder) holder).tvTitle.setText(mDatas.get(position).getProductName());
+        ((RecyclerHolder) holder).tvPaynum.setText( mDatas.get(position).getBuyNum()+"人已购买");
+        ((RecyclerHolder) holder).tvPrice.setText(mDatas.get(position).getProductPrice()+"积分");
+        ((RecyclerHolder) holder).sdvPicter.setImageURI(mDatas.get(position).getProductImg());
 
 
         if (onItemClickListener != null) {

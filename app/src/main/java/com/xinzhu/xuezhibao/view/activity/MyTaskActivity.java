@@ -98,7 +98,6 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
         taskPresenter.get100task(page100);
         taskPresenter.isclochin();
         sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
-
         taskList100Adapter.setOnItemClickListener(new TaskListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -108,10 +107,8 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
             }
             @Override
             public void onItemLongClick(View view, int position) {
-
             }
         });
-
         taskList1Adapter.setOnItemClickListener(new TaskListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

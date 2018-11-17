@@ -211,6 +211,8 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
 
     @Override
     public void nodata() {
+        refreshLayout.finishRefresh();
+        adapter.notifyDataSetChanged();
         refreshLayout.finishLoadMoreWithNoMoreData();
     }
 

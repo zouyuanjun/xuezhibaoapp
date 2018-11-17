@@ -58,8 +58,7 @@
                     android:background="@drawable/chat_bg_dialogbox_right"
                     android:lineSpacingExtra="5dp"
                     android:padding="15dp"
-                    android:text="我提了一个问题啊啊啊啊啊啊啊啊 啊啊啊啊啊啊啊啊
-             啊啊四季度覅哦啊圣诞节佛啊撒打发死哦的军事基地佛啊是大家佛爱上"
+                    android:text=""
                     android:textColor="@color/color_black_333333"
                     android:textSize="15sp" />
 
@@ -82,7 +81,7 @@
                     android:scaleType="fitXY" />
 
                 <ImageView
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="26dp"
                     android:id="@+id/im_3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

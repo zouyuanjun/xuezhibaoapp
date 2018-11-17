@@ -11,10 +11,19 @@ public class UserBasicInfo {
     String city;
     String county;
     String image;
+    String Account;
     int studentAge;
     String dictionaryName;
     int dictionaryId;
     int integral;
+
+    public String getAccount() {
+        return Account;
+    }
+
+    public void setAccount(String account) {
+        Account = account;
+    }
 
     public int getIntegral() {
         return integral;

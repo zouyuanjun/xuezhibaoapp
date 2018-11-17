@@ -156,7 +156,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     private void init() {
 
-
+        orientationUtils=new OrientationUtils(this,detailPlayer);
 
         detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -304,7 +304,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         tvLike.setText(videoVoiceBean.getVidelLike());
         tvReadnum.setText("播放量："+videoVoiceBean.getVideoLook());
         likenum=Integer.parseInt(videoVoiceBean.getVidelLike());
-        String source1 = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
+        String source1 = videoVoiceBean.getVideoUrl();
         //外部辅助的旋转，帮助全屏
         orientationUtils = new OrientationUtils(this, detailPlayer);
         //初始化不打开外部的旋转

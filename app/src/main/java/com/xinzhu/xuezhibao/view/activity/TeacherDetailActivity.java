@@ -90,8 +90,9 @@ int commentpage=1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBar.setColor(this,Color.parseColor("#f87d28"));
         setContentView(R.layout.activity_teacher_detail);
-        StatusBar.setTransparent(this);
+
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);//设置toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标

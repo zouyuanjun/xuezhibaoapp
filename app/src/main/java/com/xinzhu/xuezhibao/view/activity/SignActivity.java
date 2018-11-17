@@ -203,6 +203,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        signPresenter.cancelmessage();
     }
 
     @Override

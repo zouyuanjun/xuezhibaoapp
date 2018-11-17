@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.CourseFeedbackBean;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class RvJiaojiaoFeedbackAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvFeedbacktitle.setText(mDatas.get(position).getContent());
-        if (mDatas.get(position).getReplyContent().isEmpty()){
+        if (StringUtil.isNotEmpty(mDatas.get(position).getReplyContent(),true)){
             ((ViewHolder) holder).tvConent.setText("暂无回复");
         }else {
             ((ViewHolder) holder).tvConent.setText(mDatas.get(position).getReplyContent());

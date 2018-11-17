@@ -24,6 +24,7 @@ import com.xinzhu.xuezhibao.immodule.ConversationListView;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.MenuItemController;
 import com.xinzhu.xuezhibao.immodule.bean.Event;
+import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
@@ -63,7 +64,7 @@ public class ConversationListActivity extends IMBaseActivity {
     private PopupWindow mMenuPopWindow;
     MenuItemController mMenuController;
     private NetworkReceiver mReceiver;
-
+    CustomNavigatorBar appbar;
     protected boolean isCreate = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +72,13 @@ public class ConversationListActivity extends IMBaseActivity {
         setContentView(R.layout.fragment_conv_list);
         isCreate = true;
         mContext = this;
+        appbar=findViewById(R.id.appbar);
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
         mRootView = mContext.findViewById(R.id.conv_fragment_view).getRootView();
         mConvListView = new ConversationListView(mRootView,new WeakReference<>(mContext).get(), this);
         mConvListView.initModule();
@@ -89,10 +97,6 @@ public class ConversationListActivity extends IMBaseActivity {
         mMenuController = new MenuItemController(this);
         mMenuItemView.setListeners(mMenuController);
 
-
-
-
-
         ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeInfo = manager.getActiveNetworkInfo();
         if (null == activeInfo) {
@@ -103,16 +107,13 @@ public class ConversationListActivity extends IMBaseActivity {
             mBackgroundHandler.sendEmptyMessageDelayed(DISMISS_REFRESH_HEADER, 1000);
         }
         initReceiver();
-
     }
-
     private void initReceiver() {
         mReceiver = new NetworkReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         mContext.registerReceiver(mReceiver, filter);
     }
-
     /**
      * 监听网络状态
      */

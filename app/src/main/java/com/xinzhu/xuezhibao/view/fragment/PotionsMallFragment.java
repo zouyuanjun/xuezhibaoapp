@@ -1,18 +1,28 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.PotionsGoodsAdapter;
 import com.xinzhu.xuezhibao.bean.GoodsBean;
+import com.xinzhu.xuezhibao.presenter.MyGoodsPresenter;
+import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.GoodsDetailActivity;
+import com.xinzhu.xuezhibao.view.interfaces.MyGoodsInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,24 +31,102 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class PotionsMallFragment extends LazyLoadFragment {
+public class PotionsMallFragment extends LazyLoadFragment implements MyGoodsInterface {
     @BindView(R.id.rv_item)
     RecyclerView rvItem;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     Unbinder unbinder;
     PotionsGoodsAdapter potionsGoodsAdapter;
-    public List<GoodsBean> goodsBeanList=new ArrayList<>();
+    MyGoodsPresenter myoGoodsPresenter;
+    public List<GoodsBean> goodsBeanList = new ArrayList<>();
+    int page = 1;
+    boolean isfirstload = true;
+    int POSITION = 0;
+    @BindView(R.id.im_loading)
+    ImageView imLoading;
+    @BindView(R.id.im_dataisnull)
+    ImageView imDataisnull;
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_onlylist;
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        isfirstload = true;
+        if (getArguments() != null) {
+            POSITION = getArguments().getInt("POSITION");
+        }
+    }
+
+    @Override
     protected void lazyLoad() {
+        myoGoodsPresenter = new MyGoodsPresenter(this);
+        if (isfirstload) {
+            isfirstload = false;
+            imLoading.setVisibility(View.VISIBLE);
+            AnimationDrawable drawable = (AnimationDrawable) imLoading.getDrawable();
+            drawable.start();
+            if (POSITION == 0) {
+                myoGoodsPresenter.getGoodsList(page, 0, 100000);
+            } else if (POSITION == 1) {
+                myoGoodsPresenter.getGoodsList(page, 0, 2000);
+            } else if (POSITION == 2) {
+                myoGoodsPresenter.getGoodsList(page, 2000, 10000);
+            } else if (POSITION == 3) {
+                myoGoodsPresenter.getGoodsList(page, 10000, 100000);
+            }
+        }
         GridLayoutManager layoutManage = new GridLayoutManager(getContext(), 2);
         rvItem.setLayoutManager(layoutManage);
-        initdata();
+        potionsGoodsAdapter = new PotionsGoodsAdapter(getContext(), goodsBeanList);
+        potionsGoodsAdapter.setOnItemClickListener(new PotionsGoodsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent=new Intent(getActivity(), GoodsDetailActivity.class);
+                intent.putExtra(Constants.INTENT_ID,goodsBeanList.get(position).getProductId());
+                startActivity(intent);
+            }
+
+            @Override
+            public void onItemLongClick(View view, int position) {
+
+            }
+        });
+        rvItem.setAdapter(potionsGoodsAdapter);
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                if (POSITION == 0) {
+                    myoGoodsPresenter.getGoodsList(page, 0, 100000);
+                } else if (POSITION == 1) {
+                    myoGoodsPresenter.getGoodsList(page, 0, 2000);
+                } else if (POSITION == 2) {
+                    myoGoodsPresenter.getGoodsList(page, 2000, 10000);
+                } else if (POSITION == 3) {
+                    myoGoodsPresenter.getGoodsList(page, 10000, 100000);
+                }
+            }
+        });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                goodsBeanList.clear();
+                page = 1;
+                if (POSITION == 0) {
+                    myoGoodsPresenter.getGoodsList(page, 0, 100000);
+                } else if (POSITION == 1) {
+                    myoGoodsPresenter.getGoodsList(page, 0, 2000);
+                } else if (POSITION == 2) {
+                    myoGoodsPresenter.getGoodsList(page, 2000, 10000);
+                } else if (POSITION == 3) {
+                    myoGoodsPresenter.getGoodsList(page, 10000, 100000);
+                }
+            }
+        });
     }
 
     @Override
@@ -54,42 +142,28 @@ public class PotionsMallFragment extends LazyLoadFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-    public void initdata(){
-        String url="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=49764040,3750999451&fm=27&gp=0.jpg";
-        GoodsBean goodsBean=new GoodsBean(url,"函数的积分哈四大皆空放假放假","30000积分","2530人购买");
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        goodsBeanList.add(goodsBean);
-        potionsGoodsAdapter=new PotionsGoodsAdapter(getContext(),goodsBeanList);
-        potionsGoodsAdapter.setOnItemClickListener(new PotionsGoodsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                startActivity(new Intent(getActivity(),GoodsDetailActivity.class));
-            }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
+    @Override
+    public void getGoodsList(List<GoodsBean> list) {
+        goodsBeanList.addAll(list);
+        potionsGoodsAdapter.notifyDataSetChanged();
+        refreshLayout.finishLoadMore();
+        refreshLayout.finishRefresh();
+        page++;
+        imLoading.setVisibility(View.GONE);
+        imDataisnull.setVisibility(View.GONE);
+    }
 
-            }
-        });
-        rvItem.setAdapter(potionsGoodsAdapter);
+    @Override
+    public void noMoreData() {
+        if (goodsBeanList.size() == 0) {
+            imLoading.setVisibility(View.GONE);
+            imDataisnull.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void getGoodsDetail(GoodsBean goodsBean) {
+
     }
 }
