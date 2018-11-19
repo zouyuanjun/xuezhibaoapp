@@ -10,12 +10,19 @@ import android.widget.ImageView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.adapter.MyorderAdapter;
+import com.xinzhu.xuezhibao.bean.OrderBean;
+import com.xinzhu.xuezhibao.presenter.MyOrederPresenter;
+import com.xinzhu.xuezhibao.view.interfaces.MyOrderInterface;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class MyOrderFragment extends LazyLoadFragment {
+public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterface {
     @BindView(R.id.rv_item)
     RecyclerView rvItem;
     @BindView(R.id.refreshLayout)
@@ -24,6 +31,10 @@ public class MyOrderFragment extends LazyLoadFragment {
     int POSITION = 0;
     @BindView(R.id.im_dataisnull)
     ImageView imDataisnull;
+    MyorderAdapter myorderAdapter;
+    MyOrederPresenter myOrederPresenter;
+    List<OrderBean> orderBeanList = new ArrayList<>();
+    int page = 1;
 
     @Override
     protected int setContentView() {
@@ -32,7 +43,11 @@ public class MyOrderFragment extends LazyLoadFragment {
 
     @Override
     protected void lazyLoad() {
-
+        myorderAdapter = new MyorderAdapter(getContext(), orderBeanList);
+        myOrederPresenter = new MyOrederPresenter(this);
+        if (POSITION == 0) {
+            myOrederPresenter.getOrderList(page, 1);
+        }
     }
 
     @Override
@@ -54,5 +69,10 @@ public class MyOrderFragment extends LazyLoadFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void getOrderList(List<OrderBean> orderBeans) {
+
     }
 }

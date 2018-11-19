@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.CommentBean;
+import com.xinzhu.xuezhibao.bean.OrderBean;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
 
@@ -22,14 +22,14 @@ import butterknife.ButterKnife;
 
 public class MyorderAdapter extends RecyclerView.Adapter {
     protected Context mContext;
-    protected List<CommentBean> mDatas;
+    protected List<OrderBean> mDatas;
     private OnItemClickListener onItemClickListener;
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
-    public MyorderAdapter(Context mContext, List<CommentBean> mDatas) {
+    public MyorderAdapter(Context mContext, List<OrderBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
@@ -37,16 +37,15 @@ public class MyorderAdapter extends RecyclerView.Adapter {
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_comment, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_order, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvCreattime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
-        ((MyViewHolder) holder).tvCommentDetils.setText(mDatas.get(position).getCommentContent());
-        ((MyViewHolder) holder).tv_userName.setText(mDatas.get(position).getCreater());
-        ((MyViewHolder) holder).sdvPhoto.setImageURI(mDatas.get(position).getImage());
+        ((MyViewHolder) holder).tvTitle.setText(mDatas.get(position).getName());
+        ((MyViewHolder) holder).tvOther.setText(mDatas.get(position).getObjectId());
+        ((MyViewHolder) holder).tvPrice.setText(mDatas.get(position).getOrderPrice());
         Log.d("加载一条数据");
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +63,6 @@ public class MyorderAdapter extends RecyclerView.Adapter {
             });
         }
     }
-
     @Override
     public int getItemCount() {
         return mDatas.size();
@@ -79,22 +77,23 @@ public class MyorderAdapter extends RecyclerView.Adapter {
 
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.sdv_photo)
-        SimpleDraweeView sdvPhoto;
-        @BindView(R.id.tv_userName)
-        TextView tv_userName;
-        @BindView(R.id.im_dianzan)
-        ImageView imDianzan;
-        @BindView(R.id.tv_dianzan)
-        TextView tvDianzan;
-        @BindView(R.id.tv_creattime)
-        TextView tvCreattime;
-        @BindView(R.id.tv_comment_detils)
-        TextView tvCommentDetils;
+        @BindView(R.id.tv_ordertype)
+        TextView tvOrdertype;
+        @BindView(R.id.tv_orderstuts)
+        TextView tvOrderstuts;
+        @BindView(R.id.tv_title)
+        TextView tvTitle;
+        @BindView(R.id.tv_mintitel)
+        TextView tvMintitel;
+        @BindView(R.id.tv_price)
+        TextView tvPrice;
+        @BindView(R.id.tv_other)
+        TextView tvOther;
 
         MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
     }
+
 }
