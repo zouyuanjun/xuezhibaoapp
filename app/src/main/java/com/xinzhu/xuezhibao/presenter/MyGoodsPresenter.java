@@ -66,4 +66,7 @@ if (code==100){
         String data = JsonUtils.keyValueToString("productId", productId);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-by-id", handler, 2);
     }
+    public void pay(){
+
+    }
 }

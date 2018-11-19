@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
-        android:text="收货地址"
+        android:text="收货地址:"
         android:textColor="@color/color_black_333333"
         android:textSize="13sp"
         app:layout_constraintStart_toEndOf="@+id/imageView23"
@@ -77,13 +77,13 @@
         android:id="@+id/tv_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="64dp"
         android:gravity="right"
         android:text="TextView"
         android:textColor="@color/color_black_333333"
         android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView25"
         app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
 
     <ImageView
@@ -142,7 +142,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_ordertype"></LinearLayout>
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/imageView19"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -152,7 +152,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout24"
-            app:srcCompat="@drawable/aboutus_icon_address" />
+            app:placeholderImage="@drawable/image_default" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -220,6 +220,38 @@
             android:drawableRight="@drawable/setup_btn_more"
             android:gravity="right"
             android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="共计："
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/appcolor"/>
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="0积分"
+            android:gravity="center"
+            android:textColor="@color/appcolor"/>
+
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:text="确认兑换"
+            android:gravity="center"
+            android:background="@color/appcolor"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

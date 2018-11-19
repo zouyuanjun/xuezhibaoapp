@@ -40,7 +40,7 @@ public class MyPointsActivity2 extends BaseTopTabActivity {
         ButterKnife.bind(this);
         inittab("全部", "收入", "支出");
         initfragment(new MyPointsFragment(), new MyPointsFragment(), new MyPointsFragment());
-        bingview();
+        bingview(1);
         tvMypoints.setText(Constants.userBasicInfo.getIntegral() + "");
     }
     @OnClick(R.id.tv_pointsrule)

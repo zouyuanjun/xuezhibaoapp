@@ -209,6 +209,7 @@ public class UserCentreFragment extends LazyLoadFragment {
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.remove("PHONE");
                 editor.remove("PASSWORD");
+                editor.commit();
                 Intent intent5 = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent5);
                 getActivity().finish();

@@ -39,7 +39,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ordertype"></LinearLayout>
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView19"
         android:layout_width="80dp"
         android:layout_height="80dp"
@@ -49,7 +49,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout24"
-        app:srcCompat="@drawable/aboutus_icon_address" />
+        app:placeholderImage="@drawable/image_default"
+       />
 
     <TextView
         android:id="@+id/tv_title"
@@ -89,8 +90,6 @@
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_price" />
-
-
 
 
 </android.support.constraint.ConstraintLayout>

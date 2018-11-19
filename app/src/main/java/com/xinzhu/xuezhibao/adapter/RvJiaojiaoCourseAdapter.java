@@ -56,7 +56,7 @@ public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
         ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getVideoTeacher());
         ((ViewHolder) holder).tvAll.setText(mDatas.get(position).getSumHour() + "节");
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply());
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
         ((ViewHolder) holder).tvAlready.setText("/"+mDatas.get(position).getConsumeHour());
         Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
         if (onItemClickListener != null) {

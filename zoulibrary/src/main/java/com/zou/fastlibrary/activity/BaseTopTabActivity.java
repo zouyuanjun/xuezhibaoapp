@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.zou.fastlibrary.R;
+import com.zou.fastlibrary.adapter.ListViewPageAdapter;
 import com.zou.fastlibrary.adapter.ViewPagnorAdapter;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 
@@ -55,6 +56,11 @@ public class BaseTopTabActivity extends BaseActivity {
 
     public void bingview() {
         ViewPagnorAdapter listViewPageAdapter = new ViewPagnorAdapter(getSupportFragmentManager(), fragmentList, tablist);
+        viewPager.setAdapter(listViewPageAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+    public void bingview(int TYPE) {
+        ListViewPageAdapter listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, tablist,TYPE);
         viewPager.setAdapter(listViewPageAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }

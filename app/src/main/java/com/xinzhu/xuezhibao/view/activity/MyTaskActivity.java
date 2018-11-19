@@ -68,7 +68,7 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
     @BindView(R.id.im_nodata)
     ImageView imNodata;
     GoodView goodView;
-    boolean canshock=false;
+    boolean canshock=false; //能否签到
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -223,6 +223,7 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
     @OnClick(R.id.tv_signin)
     public void onViewClicked() {
         if (canshock){
+            canshock=false;
             taskPresenter.clockin();
         }else {
             BToast.success(MyTaskActivity.this).text("今日已签到，明天再来吧").show();
@@ -281,6 +282,7 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
 
     @Override
     public void chockfail(int code) {
+        canshock=true;
         BToast.error(this).text("签到失败,错误码：" + code);
     }
 

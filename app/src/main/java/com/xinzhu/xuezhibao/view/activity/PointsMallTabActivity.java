@@ -66,7 +66,7 @@ Handler handler=new Handler(){
         appbar.setRightTextOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToActivity(PointsMallTabActivity.this,MyPointsActivity.class);
+                goToActivity(PointsMallTabActivity.this,MyPointsActivity2.class);
             }
         });
     //    Network.getnetwork().postJson("",Constants.URL+"",handler,1);

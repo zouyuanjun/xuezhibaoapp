@@ -73,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/itemfenge"
-        app:layout_constraintBottom_toTopOf="@+id/vp_myorder"
+        app:layout_constraintBottom_toTopOf="@+id/vp_baseviewpage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"></LinearLayout>
 

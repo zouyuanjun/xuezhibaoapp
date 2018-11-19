@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface MyOrderInterface extends publiceviewinterface {
     void  getOrderList(List<OrderBean> orderBeans);
+    void noMoredata();
 }

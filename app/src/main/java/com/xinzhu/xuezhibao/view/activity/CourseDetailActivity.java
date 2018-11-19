@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wx.goodview.GoodView;
@@ -107,6 +108,9 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     int likenum;
     int commentnum;
     GoodView mGoodView;
+    @BindView(R.id.im_back)
+    ImageView imBack;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,9 +120,15 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
         ButterKnife.bind(this);
         context = this;
         courseid = getIntent().getStringExtra(Constants.INTENT_ID);
-        webView.setWebViewClient(new WebViewUtil.MyWebViewClient(this,webView));
+        webView.setWebViewClient(new WebViewUtil.MyWebViewClient(this, webView));
         mGoodView = new GoodView(this);
         init();
+        imBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -160,26 +170,26 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
 
     @Override
     public void getCoursedetail(CourseBean courseBean) {
-        tvCreattime.setText("发布时间:"+TimeUtil.getWholeTime2(courseBean.getCreateTime()));
-        webView.loadDataWithBaseURL( null, courseBean.getCurriculumExplain() , "text/html", "UTF-8", null ) ;
+        tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(courseBean.getCreateTime()));
+        webView.loadDataWithBaseURL(null, courseBean.getCurriculumExplain(), "text/html", "UTF-8", null);
         tvTitle.setText(courseBean.getCurriculumTitle());
         tvCourseteacher.setText(courseBean.getVideoTeacher());
         tvPrice.setText(courseBean.getCurriculumPrice());
         Glide.with(context).load(courseBean.getCurriculumPicture()).
                 into(standardGSYVideoPlayer);
-      //  standardGSYVideoPlayer.setImageURI(courseBean.getCurriculumPicture());
-        if (courseBean.isApply()){
+        //  standardGSYVideoPlayer.setImageURI(courseBean.getCurriculumPicture());
+        if (courseBean.isApply()) {
             tvBuycourse.setText("已购买");
         }
-        likenum=courseBean.getCurriculumLike();
-        tvLike.setText(likenum+"");
-        tvAlreadybuynum.setText(courseBean.getCurriculumApply()+"人已购买");
-        tvAllclass.setText("共"+courseBean.getSumHour()+"节/"+courseBean.getConsumeHour());
+        likenum = courseBean.getCurriculumLike();
+        tvLike.setText(likenum + "");
+        tvAlreadybuynum.setText(courseBean.getCurriculumApply() + "人已购买");
+        tvAllclass.setText("共" + courseBean.getSumHour() + "节/" + courseBean.getConsumeHour());
     }
 
     @Override
     public void getcomment(List<CommentBean> mDatas, int total) {
-        commentnum=total;
+        commentnum = total;
         tvCommentNum.setText("全部评论(" + total + ")");
         commentBeanList.addAll(mDatas);
         commentAdapter.notifyDataSetChanged();
@@ -275,7 +285,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
         }
     }
 
-    @OnClick({R.id.im_talkabout, R.id.ll_comment, R.id.ll_dianzan, R.id.ll_shoucan,R.id.tv_buycourse})
+    @OnClick({R.id.im_talkabout, R.id.ll_comment, R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_buycourse})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_talkabout:
@@ -290,15 +300,15 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
                     if (islike) {
                         islike = false;
                         likenum--;
-                        tvLike.setText(likenum+"");
+                        tvLike.setText(likenum + "");
                         likeCollectPresenter.cancellike(courseid, "4");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
                     } else {
                         islike = true;
                         likenum++;
-                        mGoodView.setTextInfo("+1",Color.parseColor("#f87d28"),25);
+                        mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
                         mGoodView.show(view);
-                        tvLike.setText(likenum+"");
+                        tvLike.setText(likenum + "");
                         likeCollectPresenter.like(courseid, "4");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
                     }
@@ -323,7 +333,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
             case R.id.tv_buycourse:
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
-                }else {
+                } else {
                     coursePlayPresenter.buycourse(courseid);
                 }
                 break;

@@ -6,13 +6,24 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/standardGSYVideoPlayer"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:scaleType="fitXY">
+        android:layout_height="wrap_content">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/standardGSYVideoPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="fitXY">
+        </com.facebook.drawee.view.SimpleDraweeView>
+        <ImageView
+            android:id="@+id/im_back"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nav_btn_arrow"/>
+    </FrameLayout>
 
-    </com.facebook.drawee.view.SimpleDraweeView>
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/NestedScrollView"

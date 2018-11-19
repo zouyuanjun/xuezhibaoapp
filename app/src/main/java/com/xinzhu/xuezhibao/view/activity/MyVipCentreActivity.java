@@ -68,14 +68,19 @@ public class MyVipCentreActivity extends BaseActivity {
                     break;
                 }
                 case 2:{
-                    String result= (String) msg.obj;
-                    String data=JsonUtils.getStringValue(result,"Data");
-                    String describeContent=JsonUtils.getStringValue(data,"describeContent");
-                    if (!StringUtil.isEmpty(describeContent)){
-                        tvIntroduce.setText(Html.fromHtml(describeContent));
-                    }else {
+                    try {
+                        String result= (String) msg.obj;
+                        String data=JsonUtils.getStringValue(result,"Data");
+                        String describeContent=JsonUtils.getStringValue(data,"describeContent");
+                        if (!StringUtil.isEmpty(describeContent)){
+                            tvIntroduce.setText(Html.fromHtml(describeContent));
+                        }else {
+                            tvIntroduce.setText("获取数据失败，请稍后再试");
+                        }
+                    }catch (Exception e){
                         tvIntroduce.setText("获取数据失败，请稍后再试");
                     }
+
                 }
                 default:
                     break;
