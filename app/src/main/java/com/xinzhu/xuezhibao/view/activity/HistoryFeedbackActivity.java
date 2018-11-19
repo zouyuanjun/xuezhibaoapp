@@ -50,13 +50,12 @@ public class HistoryFeedbackActivity extends BaseActivity {
             Log.d(result);
             int code = JsonUtils.getIntValue(result, "_code");
             if (code == 100) {
-
                 String data = JsonUtils.getStringValue(result, "Data");
                 String opinionContent = JsonUtils.getStringValue(data, "opinionContent");
                 String opinionReply = JsonUtils.getStringValue(data, "opinionReply");
                 String accessoryList = JsonUtils.getStringValue(data, "accessoryList");
                 List<FeedbackPictureBean> list = JSON.parseArray(accessoryList, FeedbackPictureBean.class);
-                if (list.size() > 0) {
+                if (null!=list&&list.size() > 0) {
                     for (int i = 0; i < list.size(); i++) {
                         if (i == 0) {
                             im1.setVisibility(View.VISIBLE);

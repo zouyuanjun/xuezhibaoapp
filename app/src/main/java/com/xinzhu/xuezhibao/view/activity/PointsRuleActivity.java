@@ -23,22 +23,23 @@ public class PointsRuleActivity extends BaseActivity {
     CustomNavigatorBar appbar;
     @BindView(R.id.textView22)
     TextView textView22;
-Handler handler=new Handler(){
-    @Override
-    public void handleMessage(Message msg) {
-        super.handleMessage(msg);
-        String result= (String) msg.obj;
-        int what=msg.what;
-        String data=JsonUtils.getStringValue(result,"Data");
-        String describeContent=JsonUtils.getStringValue(data,"describeContent");
-        if (!StringUtil.isEmpty(describeContent)){
-            textView22.setText(Html.fromHtml(describeContent));
-        }else {
-            textView22.setText("获取数据失败，请稍后再试");
-        }
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String result = (String) msg.obj;
+            int what = msg.what;
+            String data = JsonUtils.getStringValue(result, "Data");
+            String describeContent = JsonUtils.getStringValue(data, "describeContent");
+            if (!StringUtil.isEmpty(describeContent)) {
+                textView22.setText(Html.fromHtml(describeContent));
 
-    }
-};
+            } else {
+                textView22.setText("获取数据失败，请稍后再试");
+            }
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +51,7 @@ Handler handler=new Handler(){
                 finish();
             }
         });
-        String data= JsonUtils.keyValueToString("describeType",1);
-        Network.getnetwork().postJson(data, Constants.URL+"/guest/integral-rules",handler,1);
+        String data = JsonUtils.keyValueToString("describeType", 1);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/integral-rules", handler, 1);
     }
 }
