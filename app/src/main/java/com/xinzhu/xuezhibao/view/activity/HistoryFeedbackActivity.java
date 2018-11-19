@@ -56,6 +56,7 @@ public class HistoryFeedbackActivity extends BaseActivity {
                 String accessoryList = JsonUtils.getStringValue(data, "accessoryList");
                 List<FeedbackPictureBean> list = JSON.parseArray(accessoryList, FeedbackPictureBean.class);
                 if (null!=list&&list.size() > 0) {
+                    Log.d("List不为空");
                     for (int i = 0; i < list.size(); i++) {
                         if (i == 0) {
                             im1.setVisibility(View.VISIBLE);

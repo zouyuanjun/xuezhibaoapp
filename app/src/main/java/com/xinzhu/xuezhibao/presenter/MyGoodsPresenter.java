@@ -28,31 +28,35 @@ public class MyGoodsPresenter extends BasePresenter {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String result = (String) msg.obj;
-                int what=msg.what;
+                int what = msg.what;
                 Log.d(result);
                 int code;
                 code = JsonUtils.getIntValue(result, "_code");
-                if (what==1) {
-                    if (code==100) {
+                if (what == 1) {
+                    if (code == 100) {
                         String data = JsonUtils.getStringValue(result, "Data");
                         data = JsonUtils.getStringValue(data, "rows");
                         List<GoodsBean> list = JSON.parseArray(data, GoodsBean.class);
-                        if (null!=list&&list.size() > 0) {
+                        if (null != list && list.size() > 0) {
                             myorderInterface.getGoodsList(list);
-                        }else {
+                        } else {
                             myorderInterface.noMoreData();
                         }
 
                     }
-                }else if (what==2){
-if (code==100){
-    String data = JsonUtils.getStringValue(result, "Data");
-    GoodsBean goodsBean=JsonUtils.stringToObject(data,GoodsBean.class);
-    myorderInterface.getGoodsDetail(goodsBean);
-}
+                } else if (what == 2) {
+                    if (code == 100) {
+                        String data = JsonUtils.getStringValue(result, "Data");
+                        GoodsBean goodsBean = JsonUtils.stringToObject(data, GoodsBean.class);
+                        if (null!=goodsBean){
+                            myorderInterface.getGoodsDetail(goodsBean);
+                        }
+                        }
+                }else if (what == 3) {
+                    if (code == 100) {
+                        String data = JsonUtils.getStringValue(result, "Data");
+                    }
                 }
-
-
             }
         };
     }
@@ -62,11 +66,11 @@ if (code==100){
         data = JsonUtils.addKeyValue(data, "maxNum", max);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-list", handler, 1);
     }
-    public void getGoodDetail(String productId ){
+
+    public void getGoodDetail(String productId) {
         String data = JsonUtils.keyValueToString("productId", productId);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-by-id", handler, 2);
     }
-    public void pay(){
 
-    }
+
 }

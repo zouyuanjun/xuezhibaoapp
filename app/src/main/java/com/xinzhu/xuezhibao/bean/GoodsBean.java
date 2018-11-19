@@ -1,8 +1,9 @@
 package com.xinzhu.xuezhibao.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GoodsBean {
+public class GoodsBean implements Serializable {
     String iml;
     String productName;
     String productImg;

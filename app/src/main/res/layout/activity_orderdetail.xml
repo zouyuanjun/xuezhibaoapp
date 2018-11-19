@@ -171,6 +171,7 @@
             app:placeholderImage="@drawable/image_default" />
 
         <TextView
+            android:textColor="@color/color_black_333333"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -186,6 +187,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/tv_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
@@ -196,6 +198,7 @@
             android:layout_marginTop="56dp"
             android:layout_marginEnd="28dp"
             android:text="TextView"
+            android:textColor="@color/appcolor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout24" />
 
@@ -224,6 +227,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout29">
 
         <TextView
+            android:textColor="@color/color_black_333333"
             android:id="@+id/textView28"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -231,6 +235,7 @@
             android:text="配送方式" />
 
         <TextView
+            android:textColor="@color/color_black_333333"
             android:id="@+id/tv_express"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -238,7 +243,7 @@
             android:layout_marginEnd="16dp"
             android:drawableRight="@drawable/setup_btn_more"
             android:gravity="right"
-            android:text="TextView" />
+            android:text="快递￥0.00" />
     </LinearLayout>
 
     <LinearLayout

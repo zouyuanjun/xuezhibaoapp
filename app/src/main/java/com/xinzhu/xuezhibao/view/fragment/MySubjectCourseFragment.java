@@ -193,7 +193,10 @@ public class MySubjectCourseFragment extends LazyLoadFragment implements MyCours
         rvJiaojiaoFeedbackAdapter.setOnItemClickListener(new RvJiaojiaoFeedbackAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                startActivity(new Intent(getContext(), CourseFeedbackActivity.class));
+                Intent intent=new Intent(getContext(), CourseFeedbackActivity.class);
+                intent.putExtra(Constants.INTENT_ID,feedbackBeanArrayList.get(position));
+                startActivity(intent);
+
             }
 
             @Override

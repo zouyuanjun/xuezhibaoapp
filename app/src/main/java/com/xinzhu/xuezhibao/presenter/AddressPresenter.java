@@ -58,7 +58,6 @@ public class AddressPresenter extends BasePresenter {
                 String data = JsonUtils.getStringValue(result, "Data");
                 if (what == 1) {
                     if (code == 100) {
-                        data = JsonUtils.getStringValue(data, "rows");
                         List<AddressBean> mDatas = JSON.parseArray(data, AddressBean.class);
                         if (null != mDatas && mDatas.size() > 0) {
                             addressInterface.getaddressList(mDatas);
