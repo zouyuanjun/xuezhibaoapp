@@ -86,9 +86,9 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
         myorderAdapter.setOnItemClickListener(new MyorderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-//                Intent intent=new Intent(getContext(),OrderDetailActivity.class);
-//                intent.putExtra(Constants.INTENT_ID,orderBeanList.get(position));
-//                startActivity(intent);
+                Intent intent=new Intent(getContext(),OrderDetailActivity.class);
+                intent.putExtra(Constants.INTENT_ID,orderBeanList.get(position));
+                startActivity(intent);
             }
 
             @Override

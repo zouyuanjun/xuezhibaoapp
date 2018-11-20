@@ -73,6 +73,12 @@ public abstract class LazyLoadFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
     /**
      * 视图销毁的时候讲Fragment是否初始化的状态变为false
      */

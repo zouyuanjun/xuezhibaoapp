@@ -13,6 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.AddressBean;
 import com.xinzhu.xuezhibao.bean.GoodsBean;
+import com.xinzhu.xuezhibao.bean.OrderBean;
 import com.xinzhu.xuezhibao.presenter.MyOrederPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.PayOrderInterface;
@@ -60,14 +61,8 @@ public class OrderDetailActivity extends BaseActivity implements PayOrderInterfa
     LinearLayout linearLayout29;
     @BindView(R.id.textView28)
     TextView textView28;
-    @BindView(R.id.tv_express)
-    TextView tvExpress;
-    @BindView(R.id.tv_totleprice)
-    TextView tvTotleprice;
-    @BindView(R.id.tv_affirmpay)
-    TextView tvAffirmpay;
     MyOrederPresenter myOrederPresenter;
-    GoodsBean goodsBean;
+    OrderBean orderBean;
     String myaddressid;
 
     @Override
@@ -75,34 +70,22 @@ public class OrderDetailActivity extends BaseActivity implements PayOrderInterfa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderdetail);
         ButterKnife.bind(this);
-        goodsBean = (GoodsBean) getIntent().getSerializableExtra(Constants.INTENT_ID);
-        if (null != goodsBean) {
-            tvPrice.setText(goodsBean.getProductPrice() + "积分");
-            imageView19.setImageURI(goodsBean.getProductImg());
-            tvTitle.setText(goodsBean.getProductName());
-            tvTotleprice.setText(goodsBean.getProductPrice() + "积分");
+        orderBean = (OrderBean) getIntent().getSerializableExtra(Constants.INTENT_ID);
+        if (null != orderBean) {
+            tvPrice.setText(orderBean.getPrice() + "积分");
+            imageView19.setImageURI(orderBean.getPicture());
+            tvTitle.setText(orderBean.getName());
         }
         myOrederPresenter = new MyOrederPresenter(this);
-        myOrederPresenter.getdefendaddress();
+        myOrederPresenter.selectbyid(orderBean.getObjectId());
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
-    @OnClick({R.id.csl_address, R.id.tv_affirmpay})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.csl_address:
-                Intent intent=new Intent(this,MyAddressActivity.class);
-                intent.putExtra(Constants.INTENT_ID,"Order");
-                startActivityForResult(intent,1);
-                break;
-            case R.id.tv_affirmpay:
-                if (null == myaddressid) {
-                    BToast.error(this).text("请先选择地址").show();
-                    return;
-                }
-                myOrederPresenter.pay(myaddressid, goodsBean.getProductId());
-                break;
-        }
-    }
 
     @Override
     public void getaddress(AddressBean addressBean) {

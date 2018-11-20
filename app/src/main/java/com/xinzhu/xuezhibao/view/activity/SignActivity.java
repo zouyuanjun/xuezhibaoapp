@@ -102,7 +102,26 @@ public class SignActivity extends BaseActivity implements SignInterface {
                 cansend = true;
             }
         };
+        etPassword.addTextChangedListener(new TextWatcherAdapter() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                super.onTextChanged(s, start, before, count);
+                password = etConfirmPassword.getText().toString();
+                if (s.toString().equals(password)) {
+                    passwordisture = true;
+                    imPasswordtrue.setVisibility(View.VISIBLE);
+                    etConfirmPassword.setTextColor(Color.parseColor("#900000"));
 
+                    tvSignup.setBgColor(Color.parseColor("#f87d26"));
+                } else {
+                    passwordisture = false;
+                    etConfirmPassword.setTextColor(Color.RED);
+                    imPasswordtrue.setVisibility(View.GONE);
+                    tvSignup.setBgColor(Color.parseColor("#999999"));
+                }
+                ;
+            }
+        });
         etConfirmPassword.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -153,7 +172,9 @@ public class SignActivity extends BaseActivity implements SignInterface {
                     BToast.error(view.getContext()).text("请填写完整信息再注册").show();
                 } else if (!isconsent) {
                     BToast.error(view.getContext()).text("必须同意学之宝用户协议才可以注册哦").show();
-                } else {
+                } else if (!passwordisture){
+                    BToast.error(view.getContext()).text("请确认密码是否一样").show();
+                }else {
                     signPresenter.sign(new SignBean(phone, password, code));
                 }
                 break;

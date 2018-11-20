@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fenge">
+
     <com.zou.fastlibrary.ui.CustomNavigatorBar
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -27,10 +28,10 @@
         android:id="@+id/csl_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/appbar">
 
 
@@ -116,17 +117,17 @@
         android:layout_width="0dp"
         android:layout_height="10dp"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
         android:background="@color/fenge"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/csl_address"></LinearLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:background="@color/white"
         android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -171,13 +172,13 @@
             app:placeholderImage="@drawable/image_default" />
 
         <TextView
-            android:textColor="@color/color_black_333333"
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="16dp"
             android:text="TextView"
+            android:textColor="@color/color_black_333333"
             app:layout_constraintStart_toEndOf="@+id/imageView19"
             app:layout_constraintTop_toTopOf="@+id/imageView19" />
 
@@ -207,7 +208,7 @@
     <LinearLayout
         android:id="@+id/linearLayout29"
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="10dp"
         android:background="@color/fenge"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -215,35 +216,50 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"></LinearLayout>
 
     <LinearLayout
-        android:background="@color/white"
         android:layout_width="0dp"
-        android:layout_height="44dp"
-
-
+        android:layout_height="wrap_content"
+        android:background="@color/white"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout29">
 
         <TextView
-            android:textColor="@color/color_black_333333"
             android:id="@+id/textView28"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            android:text="配送方式" />
+            android:gravity="center"
+            android:text="订单详情"
+            android:textColor="@color/color_black_333333" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/fenge"></LinearLayout>
 
         <TextView
-            android:textColor="@color/color_black_333333"
-            android:id="@+id/tv_express"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="16dp"
-            android:drawableRight="@drawable/setup_btn_more"
-            android:gravity="right"
-            android:text="快递￥0.00" />
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:textColor="@color/color_black_666666"
+            android:text="订单编号"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:textColor="@color/color_black_666666"
+            android:text="下单时间"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:gravity="center"
+            android:textColor="@color/color_black_666666"
+            android:text="发货时间"/>
     </LinearLayout>
 
     <LinearLayout
@@ -256,29 +272,30 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="共计："
-            android:textColor="@color/black" />
+            android:layout_weight="1" />
 
         <TextView
-            android:id="@+id/tv_totleprice"
+            android:id="@+id/tv_actiontwo"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:background="@drawable/dialogbg_nor"
             android:gravity="center_vertical"
-            android:text="0积分"
+            android:text=""
             android:textColor="@color/appcolor" />
 
         <TextView
-            android:id="@+id/tv_affirmpay"
+            android:id="@+id/tv_actionone"
             android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:background="@color/appcolor"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/feedbacktextbg"
             android:gravity="center"
-            android:text="确认兑换"
+            android:text="确认收货"
             android:textColor="@color/white" />
     </LinearLayout>
 

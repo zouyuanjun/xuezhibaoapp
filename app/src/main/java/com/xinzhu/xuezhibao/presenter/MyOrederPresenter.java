@@ -96,7 +96,7 @@ public class MyOrederPresenter extends BasePresenter{
        data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
        Network.getnetwork().postJson(data, Constants.URL + "/app/apply-refund", handler, 4);
    }
-    public void selectbyid(String id,String re){
+    public void selectbyid(String id){
         String data = JsonUtils.keyValueToString2("applyId", id, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/select-my-apply-by-id", handler, 5);
     }

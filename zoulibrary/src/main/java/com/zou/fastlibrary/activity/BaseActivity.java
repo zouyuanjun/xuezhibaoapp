@@ -33,10 +33,17 @@ public class BaseActivity extends AppCompatActivity {
         String s=messageEvent.getMessage();
         BToast.error(context).text(s).show();
        }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+
         // 结束Activity&从栈中移除该Activity
         AtyContainer.getInstance().removeActivity(this);
     }

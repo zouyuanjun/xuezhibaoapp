@@ -103,7 +103,25 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
                 }
             }
         });
-
+        etPassword.addTextChangedListener(new TextWatcherAdapter() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                super.onTextChanged(s, start, before, count);
+                password = etConfirmPassword.getText().toString();
+                if (s.toString().equals(password)) {
+                    passwordisture = true;
+                    imPasswordtrue.setVisibility(View.VISIBLE);
+                    etConfirmPassword.setTextColor(Color.parseColor("#900000"));
+                    tvUppassword.setBgColor(Color.parseColor("#f87d26"));
+                } else {
+                    passwordisture = false;
+                    etConfirmPassword.setTextColor(Color.RED);
+                    imPasswordtrue.setVisibility(View.GONE);
+                    tvUppassword.setBgColor(Color.parseColor("#999999"));
+                }
+                ;
+            }
+        });
         etConfirmPassword.addTextChangedListener(new TextWatcherAdapter() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
