@@ -7,15 +7,20 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.RvJiatingCourseAdapter;
 import com.xinzhu.xuezhibao.bean.CourseBean;
@@ -24,7 +29,9 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
 import com.xinzhu.xuezhibao.view.interfaces.FamilyCourseInterface;
 import com.zou.fastlibrary.ui.spinner.NiceSpinner;
+import com.zou.fastlibrary.utils.EditTextUtil;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -54,6 +61,9 @@ public class FamilyCourseFragment extends LazyLoadFragment implements FamilyCour
     int TYPE = 0;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.im_nodata)
+    ImageView imNodata;
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_jiating;
@@ -67,12 +77,14 @@ public class FamilyCourseFragment extends LazyLoadFragment implements FamilyCour
         if (getArguments() != null) {
             TYPE = getArguments().getInt("TYPE");
         }
+        coursePresenter = new CoursePresenter(this);
+        initdata();
 
     }
 
     @Override
     protected void lazyLoad() {
-        coursePresenter = new CoursePresenter(this);
+
         mContext = new WeakReference(getActivity());
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(mContext.get());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
@@ -87,29 +99,21 @@ public class FamilyCourseFragment extends LazyLoadFragment implements FamilyCour
                 Log.d("选择了" + i);
             }
         });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 1;
+                beanList.clear();
+                initdata();
+            }
+        });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (TYPE == 1) {
-                    coursePresenter.getFamilyHotCourse(page);
-                } else if (TYPE == 2) {
-                    coursePresenter.getFamilyNewCourse(page);
-                } else if (TYPE == 3) {
-                    coursePresenter.getFamilyRecommendCourse(page);
-                } else if (TYPE == 4) {
-                    coursePresenter.getFamilyCourse(page);
-                }
+                initdata();
             }
         });
-        if (TYPE == 1) {
-            coursePresenter.getFamilyHotCourse(page);
-        } else if (TYPE == 2) {
-            coursePresenter.getFamilyNewCourse(page);
-        } else if (TYPE == 3) {
-            coursePresenter.getFamilyRecommendCourse(page);
-        } else if (TYPE == 4) {
-            coursePresenter.getFamilyCourse(page);
-        }
+
         adapter.setOnItemClickListener(new RvJiatingCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -122,7 +126,26 @@ public class FamilyCourseFragment extends LazyLoadFragment implements FamilyCour
             public void onItemLongClick(View view, int position) {
             }
         });
+        edSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                if (i == EditorInfo.IME_ACTION_SEARCH) {
+                    String s = edSearch.getText().toString();
+                    if (!StringUtil.isEmpty(s)) {
+                        page = 1;
+                        beanList.clear();
+                        EditTextUtil.hideKeyboard(getContext(), textView);
+                        coursePresenter.getSubjectSearchCourse(page, s);
+                    }
+                    return true;
+                }
+
+
+                return false;
+            }
+        });
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
@@ -141,14 +164,36 @@ public class FamilyCourseFragment extends LazyLoadFragment implements FamilyCour
     @Override
     public void getFamilyCourse(List<CourseBean> list) {
         beanList.addAll(list);
-        adapter.notifyDataSetChanged();
-        page++;
-        refreshLayout.finishLoadMore();
+        if (null != adapter) {
+            adapter.notifyDataSetChanged();
+            page++;
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh();
+            imNodata.setVisibility(View.GONE);
+        }
+
     }
 
 
     @Override
     public void noMoreData() {
+        adapter.notifyDataSetChanged();
+        if (beanList.size() == 0) {
+            imNodata.setVisibility(View.VISIBLE);
+        }
         refreshLayout.finishLoadMoreWithNoMoreData();
+        refreshLayout.finishRefresh();
+    }
+
+    public void initdata() {
+        if (TYPE == 1) {
+            coursePresenter.getFamilyHotCourse(page);
+        } else if (TYPE == 2) {
+            coursePresenter.getFamilyNewCourse(page);
+        } else if (TYPE == 3) {
+            coursePresenter.getFamilyRecommendCourse(page);
+        } else if (TYPE == 4) {
+            coursePresenter.getFamilyCourse(page);
+        }
     }
 }

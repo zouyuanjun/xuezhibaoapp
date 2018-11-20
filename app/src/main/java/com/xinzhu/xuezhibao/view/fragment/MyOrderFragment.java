@@ -76,9 +76,9 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (POSITION == 0) {
                     myOrederPresenter.getOrderList(page, 100);
-                } else if (POSITION == 1) {
-                    myOrederPresenter.getOrderList(page, 3);
                 } else if (POSITION == 2) {
+                    myOrederPresenter.getOrderList(page, 3);
+                } else if (POSITION == 3) {
                     myOrederPresenter.getOrderList(page, 4);
                 }
             }
@@ -172,9 +172,9 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
         orderBeanList.clear();
         if (POSITION == 0) {
             myOrederPresenter.getOrderList(page, 100);
-        } else if (POSITION == 1) {
-            myOrederPresenter.getOrderList(page, 3);
         } else if (POSITION == 2) {
+            myOrederPresenter.getOrderList(page, 3);
+        } else if (POSITION == 3) {
             myOrederPresenter.getOrderList(page, 4);
         }
     }

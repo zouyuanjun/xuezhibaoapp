@@ -53,6 +53,8 @@
                 android:background="@color/white"
                 android:id="@+id/ed_search"
                 android:maxLines="1"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:layout_weight="1"
                 android:layout_marginRight="10dp"
                 android:layout_marginLeft="10dp"
@@ -72,7 +74,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout13">
     </LinearLayout>
-
+<ImageView
+    android:id="@+id/im_nodata"
+    android:visibility="gone"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/blank"/>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"

@@ -48,32 +48,27 @@ public class XuebaoPresenter {
                 if (what==1){
                     List<CourseBean> list=JSON.parseArray(data,CourseBean.class);
                     if (null!=list&&list.size()>0){
-
                         xuebaoInterface.getAllCourse(list);
                     }
                 } else if (what==2){
                     List<CourseBean> list=JSON.parseArray(data,CourseBean.class);
                     if (null!=list&&list.size()>0){
-
                         xuebaoInterface.getRecommentCourse(list);
                     }
                 }else if (what==3){
                     List<CourseBean> list=JSON.parseArray(data,CourseBean.class);
                     if (null!=list&&list.size()>0){
-
                         xuebaoInterface.getNewCourse(list);
                     }
                 }else if (what==4){
                     List<CourseBean> list=JSON.parseArray(data,CourseBean.class);
                     if (null!=list&&list.size()>0){
-
                         xuebaoInterface.getHotCourse(list);
                     }
                 }else if (what == 5) {
                     List<BannerImgBean> mDatas = JSON.parseArray(data, BannerImgBean.class);
                     if (null!=mDatas&&mDatas.size()>0){
                         xuebaoInterface.getBanner(mDatas);
-
                     }
                 }
             }

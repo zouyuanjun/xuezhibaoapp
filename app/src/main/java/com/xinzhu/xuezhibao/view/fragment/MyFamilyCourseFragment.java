@@ -2,6 +2,7 @@ package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -64,7 +65,10 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
     int page = 1;
     @BindView(R.id.im_dataisnull)
     ImageView imDataisnull;
-boolean isfirstload=true;
+    boolean isfirstload = true;
+    @BindView(R.id.im_loading)
+    ImageView imLoading;
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_onlylist;
@@ -87,8 +91,11 @@ boolean isfirstload=true;
         rvJiaojiaoCourseAdapter = new RvJiaojiaoCourseAdapter(mContext, courseBeanArrayList);
         rvJiaojiaoTeacherAdapter = new RvJiaojiaoTeacherAdapter(mContext.get(), teacherBeanArrayList);
         rvJiaojiaoFeedbackAdapter = new RvJiaojiaoFeedbackAdapter(mContext.get(), feedbackBeanArrayList);
-        if (isfirstload){
-            isfirstload=false;
+        if (isfirstload) {
+            isfirstload = false;
+            AnimationDrawable animationDrawable= (AnimationDrawable) imLoading.getDrawable();
+            animationDrawable.start();
+            imDataisnull.setVisibility(View.VISIBLE);
             if (MYCLASS == 1) {
                 myCoursePresenter.getcourse(page, 1);
                 rvItem.setAdapter(rvJiaojiaoCourseAdapter);
@@ -97,7 +104,7 @@ boolean isfirstload=true;
                 rvItem.setAdapter(rvJiaojiaoTeacherAdapter);
 
             } else if (MYCLASS == 3) {
-                myCoursePresenter.getjob(page,1);
+                myCoursePresenter.getjob(page, 1);
                 rvItem.setAdapter(rvJiaojiaoTaskAdapter);
 
             } else if (MYCLASS == 4) {
@@ -107,7 +114,6 @@ boolean isfirstload=true;
         }
 
 
-
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -115,13 +121,13 @@ boolean isfirstload=true;
                 feedbackBeanArrayList.clear();
                 taskBeanArrayList.clear();
                 teacherBeanArrayList.clear();
-                page=1;
+                page = 1;
                 if (MYCLASS == 1) {
                     myCoursePresenter.getcourse(page, 1);
                 } else if (MYCLASS == 2) {
                     myCoursePresenter.getTeacher(page, 1);
                 } else if (MYCLASS == 3) {
-                    myCoursePresenter.getjob(page,1);
+                    myCoursePresenter.getjob(page, 1);
                 } else if (MYCLASS == 4) {
                     myCoursePresenter.getcoursefeedback(page, 1);
                 }
@@ -136,7 +142,7 @@ boolean isfirstload=true;
                 } else if (MYCLASS == 2) {
                     myCoursePresenter.getTeacher(page, 1);
                 } else if (MYCLASS == 3) {
-                    myCoursePresenter.getjob(page,1);
+                    myCoursePresenter.getjob(page, 1);
                 } else if (MYCLASS == 4) {
                     myCoursePresenter.getcoursefeedback(page, 1);
                 }
@@ -168,7 +174,7 @@ boolean isfirstload=true;
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), CourseTaskActivity.class);
                 intent.putExtra(Constants.INTENT_ID, taskBeanArrayList.get(position).getJobId());
-                intent.putExtra("TYPE",2);
+                intent.putExtra("TYPE", 2);
                 startActivity(intent);
             }
 
@@ -180,8 +186,8 @@ boolean isfirstload=true;
         rvJiaojiaoTeacherAdapter.setOnItemClickListener(new RvJiaojiaoTeacherAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), TeacherDetailActivity.class);
-                intent.putExtra(Constants.INTENT_ID,teacherBeanArrayList.get(position).getUserId());
+                Intent intent = new Intent(getContext(), TeacherDetailActivity.class);
+                intent.putExtra(Constants.INTENT_ID, teacherBeanArrayList.get(position).getUserId());
                 startActivity(intent);
             }
 
@@ -193,8 +199,8 @@ boolean isfirstload=true;
         rvJiaojiaoFeedbackAdapter.setOnItemClickListener(new RvJiaojiaoFeedbackAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), CourseFeedbackActivity.class);
-                intent.putExtra(Constants.INTENT_ID,feedbackBeanArrayList.get(position));
+                Intent intent = new Intent(getContext(), CourseFeedbackActivity.class);
+                intent.putExtra(Constants.INTENT_ID, feedbackBeanArrayList.get(position));
                 startActivity(intent);
             }
 
@@ -211,7 +217,7 @@ boolean isfirstload=true;
         Log.d("MyFamailyCourseFragment到这里来了");
         super.onCreate(savedInstanceState);
         page = 1;
-        isfirstload=true;
+        isfirstload = true;
         if (getArguments() != null) {
             MYCLASS = getArguments().getInt(TITLE);
         }
@@ -226,7 +232,7 @@ boolean isfirstload=true;
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
-        if (teacherBeanArrayList.size()>0||taskBeanArrayList.size()>0||courseBeanArrayList.size()>0||feedbackBeanArrayList.size()>0){
+        if (teacherBeanArrayList.size() > 0 || taskBeanArrayList.size() > 0 || courseBeanArrayList.size() > 0 || feedbackBeanArrayList.size() > 0) {
             imDataisnull.setVisibility(View.GONE);
         }
         return rootView;
@@ -237,24 +243,25 @@ boolean isfirstload=true;
         myCoursePresenter.cancelmessage();
         super.onDestroyView();
         unbinder.unbind();
-        page=1;
+        page = 1;
         feedbackBeanArrayList.clear();
         courseBeanArrayList.clear();
         taskBeanArrayList.clear();
         teacherBeanArrayList.clear();
-        isfirstload=true;
+        isfirstload = true;
     }
 
 
     @Override
     public void getcourse(List<CourseBean> courseBeanList) {
         courseBeanArrayList.addAll(courseBeanList);
-        if (null != rvJiaojiaoCourseAdapter&&null!=refreshLayout) {
+        if (null != rvJiaojiaoCourseAdapter && null != refreshLayout) {
             rvJiaojiaoCourseAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
         }
         page++;
+        imLoading.setVisibility(View.GONE);
         imDataisnull.setVisibility(View.GONE);
 
     }
@@ -262,41 +269,54 @@ boolean isfirstload=true;
     @Override
     public void nodata() {
         refreshLayout.finishLoadMoreWithNoMoreData();
+        if (MYCLASS == 1&&courseBeanArrayList.size()==0) {
+            imDataisnull.setVisibility(View.VISIBLE);
+        } else if (MYCLASS == 2&&teacherBeanArrayList.size()>0) {
+            imDataisnull.setVisibility(View.VISIBLE);
+        } else if (MYCLASS == 3&&taskBeanArrayList.size()==0) {
+            imDataisnull.setVisibility(View.VISIBLE);
+        } else if (MYCLASS == 4&&feedbackBeanArrayList.size()==0) {
+            imDataisnull.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
     public void getTeacher(List<TeacherBean> mDatas) {
         teacherBeanArrayList.addAll(mDatas);
-        if (null != rvJiaojiaoTeacherAdapter&&null!=refreshLayout) {
+        if (null != rvJiaojiaoTeacherAdapter && null != refreshLayout) {
             rvJiaojiaoTeacherAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
         }
         page++;
+        imLoading.setVisibility(View.GONE);
         imDataisnull.setVisibility(View.GONE);
     }
 
     @Override
     public void getCourseFeesback(List<CourseFeedbackBean> mDatas, String unread) {
         feedbackBeanArrayList.addAll(mDatas);
-        if (null != rvJiaojiaoFeedbackAdapter&&null!=refreshLayout) {
+        if (null != rvJiaojiaoFeedbackAdapter && null != refreshLayout) {
             rvJiaojiaoFeedbackAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
         }
         page++;
+        imLoading.setVisibility(View.GONE);
         imDataisnull.setVisibility(View.GONE);
     }
 
     @Override
     public void getMyjob(List<MyjobBean> mDatas) {
         taskBeanArrayList.addAll(mDatas);
-        if (null != rvJiaojiaoTaskAdapter&&null!=refreshLayout) {
+        if (null != rvJiaojiaoTaskAdapter && null != refreshLayout) {
             rvJiaojiaoTaskAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
         }
         page++;
+        imLoading.setVisibility(View.GONE);
         imDataisnull.setVisibility(View.GONE);
     }
 }
