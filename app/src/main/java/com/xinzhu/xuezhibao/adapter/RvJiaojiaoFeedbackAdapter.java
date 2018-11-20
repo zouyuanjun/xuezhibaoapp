@@ -41,7 +41,7 @@ public class RvJiaojiaoFeedbackAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvFeedbacktitle.setText(mDatas.get(position).getContent());
-        if (StringUtil.isNotEmpty(mDatas.get(position).getReplyContent(),true)){
+        if (StringUtil.isEmpty(mDatas.get(position).getReplyContent(),true)){
             ((ViewHolder) holder).tvConent.setText("暂无回复");
         }else {
             ((ViewHolder) holder).tvConent.setText(mDatas.get(position).getReplyContent());

@@ -39,7 +39,7 @@ MyJobDetailInterpace myJobDetailInterpace;
             com.zou.fastlibrary.utils.Log.d(result);
             int code = -999;
             try {
-                code = JsonUtils.getIntValue(result, "_code");
+                code = JsonUtils.getIntValue(result, "Code");
             } catch (Exception e) {
                 com.zou.fastlibrary.utils.Log.d("异常了");
                 if (null!=myCourseInterface){
@@ -76,14 +76,19 @@ MyJobDetailInterpace myJobDetailInterpace;
                     }
 
                 }else if (what==2){
-                    String unread=JsonUtils.getStringValue(data,"unread");
-                    data=JsonUtils.getStringValue(data,"list");
-                    List<CourseFeedbackBean> mDatas = JSON.parseArray(data, CourseFeedbackBean.class);
-                    if (null!=mDatas&&mDatas.size()>0){
-                        myCourseInterface.getCourseFeesback(mDatas,unread);
-                    }else {
+                    try {
+                        String unread=JsonUtils.getStringValue(data,"unread");
+                        data=JsonUtils.getStringValue(data,"list");
+                        List<CourseFeedbackBean> mDatas = JSON.parseArray(data, CourseFeedbackBean.class);
+                        if (null!=mDatas&&mDatas.size()>0){
+                            myCourseInterface.getCourseFeesback(mDatas,unread);
+                        }else {
+                            myCourseInterface.nodata();
+                        }
+                    }catch (Exception e){
                         myCourseInterface.nodata();
                     }
+
                 }else if (what==3){
                     List<TeacherBean> mDatas = JSON.parseArray(data, TeacherBean.class);
                     if (null!=mDatas&&mDatas.size()>0){
@@ -92,7 +97,6 @@ MyJobDetailInterpace myJobDetailInterpace;
                         myCourseInterface.nodata();
                     }
                 }else if (what==4){
-                    data = JsonUtils.getStringValue(data, "rows");
                     List<MyjobBean> mDatas = JSON.parseArray(data, MyjobBean.class);
                     if (null!=mDatas&&mDatas.size()>0){
                         myCourseInterface.getMyjob(mDatas);

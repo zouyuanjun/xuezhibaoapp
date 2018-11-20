@@ -126,6 +126,7 @@
         <activity android:name=".view.activity.MyPointsActivity2" />
         <activity android:name=".view.activity.RefundActivity" />
         <activity android:name=".view.activity.PayOrderActivity" />
+        <activity android:name=".view.activity.GoodsFeedbackActivity" />
 
 
         <provider

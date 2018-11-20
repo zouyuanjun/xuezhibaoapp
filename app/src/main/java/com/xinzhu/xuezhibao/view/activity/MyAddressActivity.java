@@ -19,6 +19,7 @@ import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class MyAddressActivity extends BaseActivity implements AddressInterface 
     AddressPresenter addressPresenter;
     MyAddressAdapter addressAdapter;
     List<AddressBean> addressBeanList = new ArrayList<>();
-String source; //标记是否由下订单页面跳转过来
+String source=""; //标记是否由下订单页面跳转过来
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +70,7 @@ String source; //标记是否由下订单页面跳转过来
         addressAdapter.setOnItemClickListener(new MyAddressAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-            if (source.isEmpty()){
+            if (StringUtil.isEmpty(source)){
                 return;
             }
             Intent intent=new Intent();

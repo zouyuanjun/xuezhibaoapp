@@ -89,7 +89,12 @@ public class ArticlePresenter {
                     int total = JsonUtils.getIntValue(data, "total");
                     data = JsonUtils.getStringValue(data, "rows");
                     List<CommentBean> mDatas = JSON.parseArray(data, CommentBean.class);
-                    articleInterface.getcomment(mDatas, total);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        articleInterface.getcomment(mDatas, total);
+                    }else {
+                        articleInterface.getcommentfail();
+                    }
+
                 }
 
             } else if (what == 7) {

@@ -54,7 +54,9 @@
             android:paddingLeft="10dp"
             android:paddingRight="18dp"
             android:textColorLink="#157BFB"
-            android:visibility="gone"/>
+            android:text="sdfsdfsdfsdfsdfsdfsdfsdfsdfsf"
+            android:visibility="gone"
+           />
 
         <LinearLayout
             android:id="@+id/ll_businessCard"

@@ -57,7 +57,12 @@ public class VideoVoiceDetailPresenter {
                     int total = JsonUtils.getIntValue(data, "total");
                     data = JsonUtils.getStringValue(data, "rows");
                     List<CommentBean> mDatas = JSON.parseArray(data, CommentBean.class);
-                    videoVoiceDetailInterface.getcomment(mDatas, total);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        videoVoiceDetailInterface.getcomment(mDatas, total);
+                    }else {
+                        videoVoiceDetailInterface.getcommentfail();
+                    }
+
                 }
 
             } else if (what == 2) {
@@ -65,7 +70,6 @@ public class VideoVoiceDetailPresenter {
                 VideoVoiceBean videoVoiceBean = (VideoVoiceBean) JsonUtils.stringToObject(data, VideoVoiceBean.class);
                 videoVoiceDetailInterface.getVoicedetail(videoVoiceBean);
             } else if (what == 6) {
-
                 if (code == 100) {
                     videoVoiceDetailInterface.successbuy();
                 } else if (code == 6) {

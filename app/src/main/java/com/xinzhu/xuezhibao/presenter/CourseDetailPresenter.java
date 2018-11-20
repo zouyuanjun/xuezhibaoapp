@@ -55,7 +55,12 @@ public class CourseDetailPresenter {
                     int  total = JsonUtils.getIntValue(data, "total");
                     data = JsonUtils.getStringValue(data, "rows");
                     List<CommentBean> mDatas = JSON.parseArray(data, CommentBean.class);
-                    coursePlayInterface.getcomment(mDatas, total);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        coursePlayInterface.getcomment(mDatas, total);
+                    }else {
+                        coursePlayInterface.getcommentfail();
+                    }
+
                 }
             }
         }

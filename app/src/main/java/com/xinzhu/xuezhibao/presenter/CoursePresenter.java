@@ -70,6 +70,8 @@ public class CoursePresenter {
                     List<CourseBean> list=JSON.parseArray(data,CourseBean.class);
                     if (null!=list&&list.size()>0){
                         familyCourseInterface.getFamilyCourse(list);
+                    }else {
+                        familyCourseInterface.noMoreData();
                     }
 
                 }else if (what==2){
@@ -113,9 +115,9 @@ public class CoursePresenter {
         String data=JsonUtils.keyValueToString2("pageNo",page,"isRecommend",1);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/newest-curriculum",handler,1);
     }
-    public void getSubjectSearchCourse(int page){
-        String data=JsonUtils.keyValueToString("pageNo",page);
-        Network.getnetwork().postJson(data,Constants.URL+"/guest/hottest-curriculum",handler,1);
+    public void getSubjectSearchCourse(int page,String curriculumTitle){
+        String data=JsonUtils.keyValueToString2("pageNo",page,"curriculumTitle",curriculumTitle);
+        Network.getnetwork().postJson(data,Constants.URL+"/guest/all-curriculum",handler,1);
     }
     public void getSubjectGradeCourse(int page){
 

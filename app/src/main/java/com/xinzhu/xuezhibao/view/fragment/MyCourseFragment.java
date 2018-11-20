@@ -159,6 +159,9 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
     @Override
     public void nodata() {
         refreshLayout.finishLoadMore();
+        if (courseBeanList.size()==0){
+            imDataisnull.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

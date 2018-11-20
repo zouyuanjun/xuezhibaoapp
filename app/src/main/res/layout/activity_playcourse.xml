@@ -8,32 +8,27 @@
     android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/standardGSYVideoPlayer"
-            android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:scaleType="fitXY">
-        </com.facebook.drawee.view.SimpleDraweeView>
-        <ImageView
-            android:id="@+id/im_back"
-            android:layout_marginTop="40dp"
-            android:layout_marginStart="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/orderdetail_btn_return"/>
-    </FrameLayout>
-
-
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/NestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1">
+
+
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
          >
+
+            <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/standardGSYVideoPlayer"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="fitXY">
+        </com.facebook.drawee.view.SimpleDraweeView>
+
             <LinearLayout
                 android:id="@+id/linearLayout22"
                 android:layout_width="0dp"
@@ -41,8 +36,9 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@+id/standardGSYVideoPlayer">
 
                 <TextView
                     android:id="@+id/tv_price"
@@ -105,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="发布时间"
                 android:textColor="@color/color_grey_999999"
                 android:textSize="13sp"
@@ -117,7 +113,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -180,7 +176,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="主讲人："
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />
@@ -220,6 +216,16 @@
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+        <ImageView
+            android:id="@+id/im_back"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/orderdetail_btn_return"/>
+    </FrameLayout>
+
     <LinearLayout
         android:id="@+id/linearLayout14"
         android:layout_width="match_parent"
@@ -229,8 +235,6 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"></LinearLayout>
-
-
     <LinearLayout
         android:id="@+id/linearLayout12"
         android:layout_width="match_parent"

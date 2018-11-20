@@ -26,7 +26,7 @@ public class MyOrderActivity extends BaseActivity {
     TabLayout tabOrder;
     @BindView(R.id.vp_myorder)
     ViewPager vpMyorder;
-    String [] title={"已完成","待收货","待评价"};
+    String [] title={"已完成","待发货","待收货","待评价"};
     ArrayList<Fragment> fragmentList=new ArrayList<>();
     ListViewPageAdapter listViewPageAdapter;
     @Override
@@ -39,6 +39,7 @@ public class MyOrderActivity extends BaseActivity {
         tabOrder.addTab(tabOrder.newTab());
         tabOrder.addTab(tabOrder.newTab());
         tabOrder.addTab(tabOrder.newTab());
+        fragmentList.add(new MyOrderFragment());
         fragmentList.add(new MyOrderFragment());
         fragmentList.add(new MyOrderFragment());
         fragmentList.add(new MyOrderFragment());

@@ -14,20 +14,29 @@ public class OrderBean implements Serializable {
     String objectId;
     String dictionaryName;
     String name;
-    String price;
+    String orderId;
+    int price;
 
     public OrderBean() {
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getOrdertype() {
         return ordertype;
     }
 
-    public String getPrice() {
+    public int getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(int price) {
         this.price = price;
     }
 

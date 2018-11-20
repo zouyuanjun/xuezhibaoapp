@@ -39,13 +39,18 @@ public class JsonUtils {
 	 * @return
 	 */
 	public static String getStringValue(String jsonString, String key) {
-		JSONObject jsonObject = JSON.parseObject(jsonString);
-		boolean b = jsonObject.containsKey(key);
-		if (b) {
-			return jsonObject.getString(key);
-		} else {
+		if (com.zou.fastlibrary.utils.JSON.isJsonCorrect(jsonString)){
+			JSONObject jsonObject = JSON.parseObject(jsonString);
+			boolean b = jsonObject.containsKey(key);
+			if (b) {
+				return jsonObject.getString(key);
+			} else {
+				return "";
+			}
+		}else {
 			return "";
 		}
+
 	}
 
 	/**
