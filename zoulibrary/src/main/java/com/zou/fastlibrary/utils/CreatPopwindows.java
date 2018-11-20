@@ -1,6 +1,7 @@
 package com.zou.fastlibrary.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,28 @@ public class CreatPopwindows {
         });
         return mPopWindow;
     }
-
+    public static PopupWindow creatWWpopwindows(final Activity activity, int ViewID){
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+        lp.alpha = 0.4f;
+        activity.getWindow().setAttributes(lp);
+        View contentView = LayoutInflater.from(activity).inflate(ViewID, null);
+        PopupWindow mPopWindow = new PopupWindow();
+        mPopWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopWindow.setContentView(contentView);
+        mPopWindow.setFocusable(true);
+        mPopWindow.setOutsideTouchable(true);
+        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+                lp.alpha = 1.0f;
+                activity.getWindow().setAttributes(lp);
+            }
+        });
+        return mPopWindow;
+    }
     /**
      * 创建限制宽高的popwindow
      * @param activity

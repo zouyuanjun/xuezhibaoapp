@@ -1,6 +1,8 @@
 package com.xinzhu.xuezhibao.bean;
 
-public class FeedbackPictureBean {
+import java.io.Serializable;
+
+public class FeedbackPictureBean implements Serializable {
     String accessoryUrl;
 
     public FeedbackPictureBean() {

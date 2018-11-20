@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
@@ -11,6 +12,7 @@ import com.xinzhu.xuezhibao.view.fragment.HomeVideoVoiceListFragment;
 import com.xinzhu.xuezhibao.view.fragment.MyOrderFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.StatusBar;
 
 import java.util.ArrayList;
 
@@ -24,12 +26,13 @@ public class MyOrderActivity extends BaseActivity {
     TabLayout tabOrder;
     @BindView(R.id.vp_myorder)
     ViewPager vpMyorder;
-    String [] title={"已完成","待收货","已取消","待评价"};
+    String [] title={"已完成","待收货","待评价"};
     ArrayList<Fragment> fragmentList=new ArrayList<>();
     ListViewPageAdapter listViewPageAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_myorder);
         ButterKnife.bind(this);
         tabOrder.addTab(tabOrder.newTab());
@@ -39,9 +42,14 @@ public class MyOrderActivity extends BaseActivity {
         fragmentList.add(new MyOrderFragment());
         fragmentList.add(new MyOrderFragment());
         fragmentList.add(new MyOrderFragment());
-        fragmentList.add(new MyOrderFragment());
         listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,2);
         vpMyorder.setAdapter(listViewPageAdapter);
         tabOrder.setupWithViewPager(vpMyorder);
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

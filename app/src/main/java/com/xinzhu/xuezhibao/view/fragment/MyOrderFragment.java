@@ -22,6 +22,7 @@ import com.xinzhu.xuezhibao.bean.OrderBean;
 import com.xinzhu.xuezhibao.presenter.MyOrederPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.OrderDetailActivity;
+import com.xinzhu.xuezhibao.view.activity.RefundActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyOrderInterface;
 
 import java.util.ArrayList;
@@ -56,11 +57,11 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
     protected void lazyLoad() {
         myorderAdapter = new MyorderAdapter(getContext(), orderBeanList);
         myOrederPresenter = new MyOrederPresenter(this);
-
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvItem.setLayoutManager(linearLayoutManager);
         rvItem.setAdapter(myorderAdapter);
+        imLoading.setVisibility(View.VISIBLE);
         AnimationDrawable animationDrawable = (AnimationDrawable) imLoading.getDrawable();
         animationDrawable.start();
         initdata();
@@ -78,8 +79,6 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
                 } else if (POSITION == 1) {
                     myOrederPresenter.getOrderList(page, 3);
                 } else if (POSITION == 2) {
-                    myOrederPresenter.getOrderList(page, 3);
-                } else if (POSITION == 3) {
                     myOrederPresenter.getOrderList(page, 4);
                 }
             }
@@ -87,13 +86,26 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
         myorderAdapter.setOnItemClickListener(new MyorderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(),OrderDetailActivity.class);
-                intent.putExtra(Constants.INTENT_ID,orderBeanList.get(position).getObjectId());
-                startActivity(intent);
+//                Intent intent=new Intent(getContext(),OrderDetailActivity.class);
+//                intent.putExtra(Constants.INTENT_ID,orderBeanList.get(position));
+//                startActivity(intent);
             }
 
             @Override
-            public void onItemLongClick(View view, int position) {
+            public void onactionOneClick(View view, int position) {
+                if (POSITION == 0) {
+                    Intent intent=new Intent(getContext(),RefundActivity.class);
+                    intent.putExtra(Constants.INTENT_ID,orderBeanList.get(position));
+                    startActivity(intent);
+                } else if (POSITION == 1) {
+
+                } else if (POSITION == 2) {
+
+                }
+            }
+
+            @Override
+            public void onactionTwoClick(View view, int position) {
 
             }
         });
@@ -145,6 +157,16 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
 
     }
 
+    @Override
+    public void applyrefund() {
+
+    }
+
+    @Override
+    public void applyrefundfail() {
+
+    }
+
     public void initdata() {
         page = 1;
         orderBeanList.clear();
@@ -153,8 +175,6 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
         } else if (POSITION == 1) {
             myOrederPresenter.getOrderList(page, 3);
         } else if (POSITION == 2) {
-            myOrederPresenter.getOrderList(page, 3);
-        } else if (POSITION == 3) {
             myOrederPresenter.getOrderList(page, 4);
         }
     }

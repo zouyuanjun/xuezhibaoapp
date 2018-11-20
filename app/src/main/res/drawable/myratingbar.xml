@@ -1,0 +1,14 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+   <item android:id="@android:id/background"
+       android:drawable="@drawable/videodetails_btn_collection_nor">
+
+   </item>
+    <item
+        android:id="@android:id/secondaryProgress"
+        android:drawable="@drawable/videodetails_btn_collection_sel">
+    </item>
+    <item
+        android:id="@android:id/progress"
+        android:drawable="@drawable/videodetails_btn_collection_nor">
+    </item>
+</layer-list>

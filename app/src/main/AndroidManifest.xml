@@ -124,6 +124,8 @@
         <activity android:name=".view.activity.AddAddressActivity" />
         <activity android:name=".view.activity.FamilyActivity2" />
         <activity android:name=".view.activity.MyPointsActivity2" />
+        <activity android:name=".view.activity.RefundActivity" />
+        <activity android:name=".view.activity.PayOrderActivity" />
 
 
         <provider

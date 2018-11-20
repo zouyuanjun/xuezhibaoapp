@@ -91,6 +91,7 @@ public class OrderDetailActivity extends BaseActivity implements PayOrderInterfa
         switch (view.getId()) {
             case R.id.csl_address:
                 Intent intent=new Intent(this,MyAddressActivity.class);
+                intent.putExtra(Constants.INTENT_ID,"Order");
                 startActivityForResult(intent,1);
                 break;
             case R.id.tv_affirmpay:
@@ -106,15 +107,35 @@ public class OrderDetailActivity extends BaseActivity implements PayOrderInterfa
     @Override
     public void getaddress(AddressBean addressBean) {
         tvPhone.setText(addressBean.getLinkPhone());
-        tvAddress.setText(addressBean.getAddress());
+        tvAddress.setText(addressBean.getProvince()+addressBean.getCity()+addressBean.getCounty()+addressBean.getAddress());
         myaddressid = addressBean.getAddressId();
+    }
+
+    @Override
+    public void noMorepoint() {
+        BToast.error(this).text("您的积分不足，无法下单").show();
+    }
+
+    @Override
+    public void payfail() {
+        BToast.error(this).text("奖品兑换失败，请稍后再试").show();
+    }
+
+    @Override
+    public void paysuccessful() {
+        BToast.error(this).text("下单成功").show();
+        finish();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==1&&null!=data){
-            myaddressid=data.getStringExtra(Constants.INTENT_ID);
+            AddressBean addressBean= (AddressBean) data.getSerializableExtra(Constants.INTENT_ID);
+            tvPhone.setText(addressBean.getLinkPhone());
+            tvAddress.setText(addressBean.getProvince()+addressBean.getCity()+addressBean.getCounty()+addressBean.getAddress());
+            myaddressid = addressBean.getAddressId();
+
         }
     }
 }

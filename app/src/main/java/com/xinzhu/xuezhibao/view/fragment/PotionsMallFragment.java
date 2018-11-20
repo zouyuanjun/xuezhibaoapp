@@ -19,6 +19,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.PotionsGoodsAdapter;
 import com.xinzhu.xuezhibao.bean.GoodsBean;
+import com.xinzhu.xuezhibao.bean.GoodsComment;
 import com.xinzhu.xuezhibao.presenter.MyGoodsPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.GoodsDetailActivity;
@@ -164,6 +165,16 @@ public class PotionsMallFragment extends LazyLoadFragment implements MyGoodsInte
 
     @Override
     public void getGoodsDetail(GoodsBean goodsBean) {
+
+    }
+
+    @Override
+    public void getgrade(float grade) {
+        
+    }
+
+    @Override
+    public void getcomment(List<GoodsComment> list) {
 
     }
 }

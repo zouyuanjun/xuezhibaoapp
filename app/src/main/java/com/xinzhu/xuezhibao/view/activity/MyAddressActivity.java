@@ -38,7 +38,7 @@ public class MyAddressActivity extends BaseActivity implements AddressInterface 
     AddressPresenter addressPresenter;
     MyAddressAdapter addressAdapter;
     List<AddressBean> addressBeanList = new ArrayList<>();
-
+String source; //标记是否由下订单页面跳转过来
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +57,7 @@ public class MyAddressActivity extends BaseActivity implements AddressInterface 
                 startActivityForResult(intent, 1);
             }
         });
+        source=getIntent().getStringExtra(Constants.INTENT_ID);
         addressAdapter = new MyAddressAdapter(this, addressBeanList);
         addressPresenter = new AddressPresenter(this);
         addressPresenter.getaddresslist();
@@ -68,7 +69,13 @@ public class MyAddressActivity extends BaseActivity implements AddressInterface 
         addressAdapter.setOnItemClickListener(new MyAddressAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+            if (source.isEmpty()){
+                return;
+            }
+            Intent intent=new Intent();
+            intent.putExtra(Constants.INTENT_ID,addressBeanList.get(position));
+            setResult(2,intent);
+            finish();
             }
             @Override
             public void onDetalClick(View view, int position) {

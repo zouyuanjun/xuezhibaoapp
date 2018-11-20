@@ -1,6 +1,8 @@
 package com.xinzhu.xuezhibao.bean;
 
-public class OrderBean {
+import java.io.Serializable;
+
+public class OrderBean implements Serializable {
     String ordertype;
     String orderTime;
     String orderNum;
@@ -10,7 +12,9 @@ public class OrderBean {
     String shipmentsTime;
     String state;
     String objectId;
+    String dictionaryName;
     String name;
+    String price;
 
     public OrderBean() {
     }
@@ -19,12 +23,28 @@ public class OrderBean {
         return ordertype;
     }
 
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
     public void setOrdertype(String ordertype) {
         this.ordertype = ordertype;
     }
 
     public String getOrderTime() {
         return orderTime;
+    }
+
+    public String getDictionaryName() {
+        return dictionaryName;
+    }
+
+    public void setDictionaryName(String dictionaryName) {
+        this.dictionaryName = dictionaryName;
     }
 
     public void setOrderTime(String orderTime) {

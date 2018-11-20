@@ -6,6 +6,10 @@ import android.os.Message;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,7 @@ import com.xinzhu.xuezhibao.utils.OrderInfoUtil2_0;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
+import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.StringUtil;
@@ -109,25 +114,47 @@ public class MyVipCentreActivity extends BaseActivity {
     @OnClick(R.id.tv_recharge)
     public void onViewClicked() {
 
-        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(Constants.ALAPPID, true);
-        String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
-        String sign = OrderInfoUtil2_0.getSign(params, Constants.privateKEY, true);
-        final String orderInfo = orderParam + "&" + sign;
-        Runnable payRunnable = new Runnable() {
-
+        final PopupWindow popupWindow=CreatPopwindows.creatWWpopwindows(this,R.layout.pop_pay);
+        View view=popupWindow.getContentView();
+        RadioGroup radioGroup=view.findViewById(R.id.rg_pay);
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void run() {
-                PayTask alipay = new PayTask(MyVipCentreActivity.this);
-                Map<String, String> result = alipay.payV2(orderInfo, true);
-                Log.i("msp", result.toString());
-                Message msg = new Message();
-                msg.what = 1;
-                msg.obj = result;
-                handler.sendMessage(msg);
-            }
-        };
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i){
+                    case R.id.rd_alipay:
 
-        Thread payThread = new Thread(payRunnable);
-        payThread.start();
+                        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(Constants.ALAPPID, true);
+                        String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
+                        String sign = OrderInfoUtil2_0.getSign(params, Constants.privateKEY, true);
+                        final String orderInfo = orderParam + "&" + sign;
+                        Runnable payRunnable = new Runnable() {
+
+                            @Override
+                            public void run() {
+                                PayTask alipay = new PayTask(MyVipCentreActivity.this);
+                                Map<String, String> result = alipay.payV2(orderInfo, true);
+                                Log.i("msp", result.toString());
+                                Message msg = new Message();
+                                msg.what = 1;
+                                msg.obj = result;
+                                handler.sendMessage(msg);
+                            }
+                        };
+
+                        Thread payThread = new Thread(payRunnable);
+                        payThread.start();
+                        popupWindow.dismiss();
+                        break;
+                    case R.id.rd_wxpay:
+                        popupWindow.dismiss();
+                        break;
+                }
+            }
+        });
+
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+
+
     }
 }

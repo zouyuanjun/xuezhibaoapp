@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/ffffffrad8"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<LinearLayout
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+android:lineSpacingExtra="5dp"
+        android:textColor="@color/color_black_333333"
+        android:text="您已申请成功
+请耐心等待老师跟您联系"/>
+    <com.zou.fastlibrary.ui.ShapeCornerBgView
+        android:id="@+id/scb_iknow"
+        android:layout_width="230dp"
+        android:layout_height="35dp"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        app:appBgColor="@color/appcolor"
+        android:textColor="@color/white"
+        android:text="我知道了"
+        app:appRadius="4dp"
+        android:layout_marginBottom="10dp"/>
+</LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

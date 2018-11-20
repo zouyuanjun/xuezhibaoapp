@@ -5,6 +5,7 @@ import android.os.Message;
 
 import com.alibaba.fastjson.JSONException;
 import com.xinzhu.xuezhibao.bean.GoodsBean;
+import com.xinzhu.xuezhibao.bean.GoodsComment;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.MyGoodsInterface;
 import com.zou.fastlibrary.utils.JSON;
@@ -48,13 +49,24 @@ public class MyGoodsPresenter extends BasePresenter {
                     if (code == 100) {
                         String data = JsonUtils.getStringValue(result, "Data");
                         GoodsBean goodsBean = JsonUtils.stringToObject(data, GoodsBean.class);
-                        if (null!=goodsBean){
+                        if (null != goodsBean) {
                             myorderInterface.getGoodsDetail(goodsBean);
                         }
-                        }
-                }else if (what == 3) {
+                    }
+                } else if (what == 3) {
                     if (code == 100) {
                         String data = JsonUtils.getStringValue(result, "Data");
+                    }
+                }else if (what == 4) {
+                    if (code == 100) {
+                        String data = JsonUtils.getStringValue(result, "Data");
+                        data=JsonUtils.getStringValue(data, "rows");
+                        List<GoodsComment> list=JSON.parseArray(data,GoodsComment.class);
+                        if (null!=list&&list.size()>0){
+                            myorderInterface.getcomment(list);
+                        }else {
+                            myorderInterface.noMoreData();
+                        }
                     }
                 }
             }
@@ -72,5 +84,13 @@ public class MyGoodsPresenter extends BasePresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-by-id", handler, 2);
     }
 
+    public void getgrade(String id) {
+        String data = JsonUtils.keyValueToString("productId", id);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-score", handler, 3);
+    }
 
+    public void getgoodscomment(int page, String id) {
+        String data = JsonUtils.keyValueToString2("pageNo", page, "productId", id);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-evaluate", handler, 4);
+    }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
@@ -42,6 +43,12 @@ public class MyPointsActivity2 extends BaseTopTabActivity {
         initfragment(new MyPointsFragment(), new MyPointsFragment(), new MyPointsFragment());
         bingview(1);
         tvMypoints.setText(Constants.userBasicInfo.getIntegral() + "");
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
     @OnClick(R.id.tv_pointsrule)
     public void onViewClicked() {

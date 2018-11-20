@@ -36,22 +36,39 @@ public class MyOrederPresenter extends BasePresenter{
                 String result= (String) msg.obj;
                 Log.d(result);
                 int what=msg.what;
+                int code=JsonUtils.getIntValue(result,"_code");
                 if (what==1){
-                    String data=JsonUtils.getStringValue(result,"Data");
-                    data=JsonUtils.getStringValue(data,"rows");
-                    List<OrderBean> list=JSON.parseArray(data,OrderBean.class);
-                    if (null!=list&&list.size()>0){
-                        myOrderInterface.getOrderList(list);
-                    }else {
-                        myOrderInterface.noMoredata();
+                    if (code==100){
+                        String data=JsonUtils.getStringValue(result,"Data");
+                        data=JsonUtils.getStringValue(data,"rows");
+                        List<OrderBean> list=JSON.parseArray(data,OrderBean.class);
+                        if (null!=list&&list.size()>0){
+                            myOrderInterface.getOrderList(list);
+                        }else {
+                            myOrderInterface.noMoredata();
+                        }
                     }
 
                 }if (what==2){
-                    String data=JsonUtils.getStringValue(result,"Data");
-                    AddressBean addressBean=JsonUtils.stringToObject(data,AddressBean.class);
-                    if (null!=payOrderInterface){
-                        payOrderInterface.getaddress(addressBean);
+                    if (code==100){
+                        String data=JsonUtils.getStringValue(result,"Data");
+                        AddressBean addressBean=JsonUtils.stringToObject(data,AddressBean.class);
+                        if (null!=payOrderInterface){
+                            payOrderInterface.getaddress(addressBean);
+                        }
                     }
+
+                }else if (what==3){
+                    String data=JsonUtils.getStringValue(result,"Data");
+                    if (null!=payOrderInterface){
+                        if (code==203){
+                            payOrderInterface.noMorepoint();
+                        }else if (code==100){
+                            payOrderInterface.paysuccessful();
+                        }
+                    }
+                }else if (what==4){
+
                 }
             }
 
@@ -72,5 +89,15 @@ public class MyOrederPresenter extends BasePresenter{
         String data = JsonUtils.keyValueToString2("addressId", addressid, "objectId", productid);
         data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/exchange-product", handler, 3);
+    }
+
+   public void applyrefund(String id,String re){
+       String data = JsonUtils.keyValueToString2("applyId", id, "refundCause", re);
+       data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
+       Network.getnetwork().postJson(data, Constants.URL + "/app/apply-refund", handler, 4);
+   }
+    public void selectbyid(String id,String re){
+        String data = JsonUtils.keyValueToString2("applyId", id, "token", Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/select-my-apply-by-id", handler, 5);
     }
 }
