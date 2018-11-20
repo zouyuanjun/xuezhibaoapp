@@ -76,7 +76,7 @@ public abstract class LazyLoadFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-
+        EventBus.getDefault().unregister(this);
     }
 
     /**

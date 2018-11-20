@@ -82,7 +82,7 @@ SplashInterface splashInterface;
                 }else {
                     loginInterface.loginfail(code);
                 }
-            }else   if (what == 2) {
+            }else if (what == 2) {
                 if (code==100){
                     String data=JsonUtils.getStringValue(result,"Data");
                     Constants.TOKEN=JsonUtils.getStringValue(data,"token");
@@ -91,7 +91,6 @@ SplashInterface splashInterface;
                     DataKeeper.save(sharedPreferences,"PHONE",myphone);
                     DataKeeper.save(sharedPreferences,"PASSWORD",mypassword);
                     splashInterface.login();
-
                 }else {
                     splashInterface.loginfall();
                 }

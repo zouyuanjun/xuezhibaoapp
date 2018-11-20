@@ -117,6 +117,7 @@
 
         <LinearLayout
             android:id="@+id/ll_pingjia"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -145,8 +146,18 @@
                     android:layout_marginLeft="16dp"
                     android:numStars="5"
                     android:rating="1.5"></RatingBar>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/fenge"></LinearLayout>
             </LinearLayout>
-
+<TextView
+    android:layout_gravity="center"
+    android:padding="10dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/tv_nocomment"
+    android:text="暂无评价"/>
 <com.scwang.smartrefresh.layout.SmartRefreshLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -171,7 +182,6 @@
             android:id="@+id/web_goodsdetail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"></WebView>
     </android.support.design.widget.CoordinatorLayout>
 

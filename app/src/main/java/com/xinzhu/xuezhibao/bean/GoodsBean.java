@@ -7,7 +7,7 @@ public class GoodsBean implements Serializable {
     String iml;
     String productName;
     String productImg;
-    String buyNum;
+    int buyNum;
     String productDetails;
     String productId;
     String sellNumber;
@@ -57,12 +57,7 @@ String productPrice;
         this.productPrice = productPrice;
     }
 
-    public GoodsBean(String iml, String productName, String price, String paynum) {
-        this.iml = iml;
-        this.productName = productName;
-        this.productImg = price;
-        this.buyNum = paynum;
-    }
+
 
     public String getIml() {
         return iml;
@@ -88,11 +83,11 @@ String productPrice;
         this.productImg = productImg;
     }
 
-    public String getBuyNum() {
+    public int getBuyNum() {
         return buyNum;
     }
 
-    public void setBuyNum(String buyNum) {
+    public void setBuyNum(int buyNum) {
         this.buyNum = buyNum;
     }
 }

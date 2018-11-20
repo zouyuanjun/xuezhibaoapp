@@ -12,6 +12,7 @@ import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
 
+import java.util.IllegalFormatCodePointException;
 import java.util.List;
 
 /**
@@ -31,6 +32,7 @@ public class TaskPresenter extends BasePresenter {
         this.taskInterface = taskInterface;
         taskPresenter();
     }
+
     public void taskPresenter() {
         super.handler = new Handler() {
             @Override
@@ -41,7 +43,7 @@ public class TaskPresenter extends BasePresenter {
                 com.zou.fastlibrary.utils.Log.d(result);
                 int code = -999;
                 try {
-                    code = JsonUtils.getIntValue(result, "_code");
+                    code = JsonUtils.getIntValue(result, "Code");
                 } catch (Exception e) {
                     com.zou.fastlibrary.utils.Log.d("异常了");
                     if (null != taskInterface) {
@@ -65,29 +67,45 @@ public class TaskPresenter extends BasePresenter {
                     if (what == 1) {
 
                         List<MyTaskBean> mDatas = JSON.parseArray(data, MyTaskBean.class);
-                        taskInterface.get100task(mDatas);
+                        if (null != mDatas && mDatas.size() > 0) {
+                            taskInterface.get100task(mDatas);
+                        } else {
+                            if (null != taskInterface) {
+                                taskInterface.nomoredata();
+                            }
+                        }
                     } else if (what == 2) {
-
                         List<MyTaskBean> mDatas = JSON.parseArray(data, MyTaskBean.class);
-                        taskInterface.get1task(mDatas);
+                        if (null != mDatas && mDatas.size() > 0) {
+                            taskInterface.get1task(mDatas);
+                        } else {
+                            if (null != taskInterface) {
+                                taskInterface.nomoredata();
+                            }
+                        }
                     } else if (what == 3) {
                         List<MyTaskBean> mDatas = JSON.parseArray(data, MyTaskBean.class);
-                        taskInterface.get2task(mDatas);
+                        if (null != mDatas && mDatas.size() > 0) {
+                            taskInterface.get2task(mDatas);
+                        } else {
+                            if (null != taskInterface) {
+                                taskInterface.nomoredata();
+                            }
+                        }
                     } else if (what == 4) {
                         taskInterface.chocksuccessful();
                     } else if (what == 5) {
                         getTaskInterface.accepttask();
                     } else if (what == 6) {
                         taskInterface.ischock(data);
-                    }else if (what == 7) {
-                        MyTaskBean myTaskBean=JsonUtils.stringToObject(data,MyTaskBean.class);
+                    } else if (what == 7) {
+                        MyTaskBean myTaskBean = JsonUtils.stringToObject(data, MyTaskBean.class);
                         getTaskInterface.gettaskdetails(myTaskBean);
                     } else if (what == 8) {
-                        Constants.userBasicInfo= (UserBasicInfo) JsonUtils.stringToObject(data,UserBasicInfo.class);
+                        Constants.userBasicInfo = (UserBasicInfo) JsonUtils.stringToObject(data, UserBasicInfo.class);
                     }
-                    
                 } else if (code == 203) {
-                    if (null!=taskInterface){
+                    if (null != taskInterface) {
                         taskInterface.nomoredata();
                     }
 
@@ -129,17 +147,18 @@ public class TaskPresenter extends BasePresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/app/check-clock-in", handler, 6);
     }
 
-    public void cancelmessage(){
+    public void cancelmessage() {
         handler.removeCallbacksAndMessages(null);
     }
-    public void gettaskdetail(String id,int state,String mytaskid){
-        String data=JsonUtils.keyValueToString2("taskId",id,"stateType",state);
-        data=JsonUtils.addKeyValue(data,"token",Constants.TOKEN);
-        data=JsonUtils.addKeyValue(data,"myTaskId",mytaskid);
-        Network.getnetwork().postJson(data,Constants.URL+"/app/select-task-by-id",handler,7);
+
+    public void gettaskdetail(String id, int state, String mytaskid) {
+        String data = JsonUtils.keyValueToString2("taskId", id, "stateType", state);
+        data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
+        data = JsonUtils.addKeyValue(data, "myTaskId", mytaskid);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/select-task-by-id", handler, 7);
     }
 
-    public void updatauserbasic(){
+    public void updatauserbasic() {
         String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/find-by-account", handler, 8);
     }

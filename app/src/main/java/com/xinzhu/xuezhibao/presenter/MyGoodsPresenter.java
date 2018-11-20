@@ -32,11 +32,10 @@ public class MyGoodsPresenter extends BasePresenter {
                 int what = msg.what;
                 Log.d(result);
                 int code;
-                code = JsonUtils.getIntValue(result, "_code");
+                code = JsonUtils.getIntValue(result, "Code");
                 if (what == 1) {
                     if (code == 100) {
                         String data = JsonUtils.getStringValue(result, "Data");
-                        data = JsonUtils.getStringValue(data, "rows");
                         List<GoodsBean> list = JSON.parseArray(data, GoodsBean.class);
                         if (null != list && list.size() > 0) {
                             myorderInterface.getGoodsList(list);
@@ -56,6 +55,10 @@ public class MyGoodsPresenter extends BasePresenter {
                 } else if (what == 3) {
                     if (code == 100) {
                         String data = JsonUtils.getStringValue(result, "Data");
+                        if (!data.isEmpty()){
+                            myorderInterface.getgrade(Float.parseFloat(data));
+                        }
+
                     }
                 }else if (what == 4) {
                     if (code == 100) {

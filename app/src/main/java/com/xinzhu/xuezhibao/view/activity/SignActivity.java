@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -55,7 +56,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
     @BindView(R.id.tv_signup)
     ShapeCornerBgView tvSignup;
     @BindView(R.id.radioButton)
-    RadioButton radioButton;
+    CheckBox radioButton;
     boolean isconsent = false; //是否同意用户协议
     boolean cansend = true;  //能否发送验证码
     boolean passwordisture=false; //验证码是否一致
@@ -64,6 +65,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
     ImageView imCodeistrue;
     @BindView(R.id.im_passwordtrue)
     ImageView imPasswordtrue;
+    boolean cansignin=true;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -174,7 +176,10 @@ public class SignActivity extends BaseActivity implements SignInterface {
                     BToast.error(view.getContext()).text("必须同意学之宝用户协议才可以注册哦").show();
                 } else if (!passwordisture){
                     BToast.error(view.getContext()).text("请确认密码是否一样").show();
-                }else {
+                }else if (password.length()<6){
+                    BToast.error(view.getContext()).text("密码必须大于6位").show();
+                }else if (cansignin){
+                    cansignin=false;
                     signPresenter.sign(new SignBean(phone, password, code));
                 }
                 break;
@@ -218,6 +223,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
 
     @Override
     public void signinfail(int code) {
+        cansignin=true;
         BToast.info(context).target(etCode).text("注册失败，错误码"+code).show();
     }
 

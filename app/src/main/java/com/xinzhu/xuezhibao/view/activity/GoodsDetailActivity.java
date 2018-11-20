@@ -72,6 +72,8 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     List<GoodsComment> goodsCommentList = new ArrayList<>();
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.tv_nocomment)
+    TextView tvNocomment;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -138,7 +140,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                page=1;
+                page = 1;
                 goodsCommentList.clear();
                 myGoodsPresenter.getgoodscomment(page, googdsid);
             }
@@ -181,16 +183,19 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
 
     @Override
     public void getgrade(float grade) {
-
+        ratingBar.setRating(grade);
     }
 
     @Override
     public void getcomment(List<GoodsComment> list) {
-        goodsCommentList.addAll(list);
-        goodsCommentAdapter.notifyDataSetChanged();
-        refreshLayout.finishLoadMore();
-        refreshLayout.finishRefresh();
-        page++;
+        if (list.size()>0){
+            tvNocomment.setVisibility(View.GONE);
+            goodsCommentList.addAll(list);
+            goodsCommentAdapter.notifyDataSetChanged();
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh();
+            page++;}
+
     }
 
     @OnClick({R.id.im_back, R.id.tv_pay})

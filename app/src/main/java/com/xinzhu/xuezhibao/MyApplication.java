@@ -21,10 +21,10 @@ public class MyApplication  extends Application{
         Fresco.initialize(this.getApplicationContext());
         Bugly.init(getApplicationContext(), "15d797d434", false);
         SDKInitializer.initialize(this);  //初始化百度地图
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            return;
+//        }
+//        LeakCanary.install(this);
         JPushInterface.setDebugMode(true);
         JMessageClient.init(this,true);
         JPushInterface.init(this);
