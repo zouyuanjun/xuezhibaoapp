@@ -8,5 +8,7 @@ public interface MyOrderInterface extends publiceviewinterface {
     void  getOrderList(List<OrderBean> orderBeans);
     void noMoredata();
     void applyrefund();
-    void applyrefundfail();
+    void applyrefundfail(String tip);
+    void confirmReceipt();
+    void confirmReceiptfail(String tip);
 }

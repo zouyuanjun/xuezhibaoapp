@@ -131,6 +131,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
                 } else if (MYCLASS == 4) {
                     myCoursePresenter.getcoursefeedback(page, 1);
                 }
+                refreshLayout.finishRefresh(3000);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -146,6 +147,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
                 } else if (MYCLASS == 4) {
                     myCoursePresenter.getcoursefeedback(page, 1);
                 }
+                refreshLayout.finishLoadMore(3000);
             }
         });
         rvJiaojiaoCourseAdapter.setOnItemClickListener(new RvJiaojiaoCourseAdapter.OnItemClickListener() {

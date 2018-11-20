@@ -81,6 +81,12 @@ public class VideoVoiceListPresenter {
                     } else {
                         homeVideoVoiceListInterface.getVideo(mDatas);
                     }
+                }else {
+                    if (null!=videoFragmentInterface){
+                        videoFragmentInterface.noData();
+                    }else if (null!=homeVideoVoiceListInterface){
+                        homeVideoVoiceListInterface.nodata();
+                    }
                 }
 
             }

@@ -7,10 +7,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -24,6 +26,7 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.OrderDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.RefundActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyOrderInterface;
+import com.zou.fastlibrary.utils.CreatPopwindows;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +50,8 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
     int page = 1;
     @BindView(R.id.im_loading)
     ImageView imLoading;
-
+PopupWindow popupWindow;
+int itemposition;
     @Override
     protected int setContentView() {
         return R.layout.fragment_onlylist;
@@ -69,6 +73,7 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 initdata();
+                refreshLayout.finishRefresh(3000);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -76,11 +81,14 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (POSITION == 0) {
                     myOrederPresenter.getOrderList(page, 100);
-                } else if (POSITION == 2) {
+                } else if (POSITION == 1) {
+                    myOrederPresenter.getOrderList(page, 2);
+                }else if (POSITION == 2) {
                     myOrederPresenter.getOrderList(page, 3);
                 } else if (POSITION == 3) {
                     myOrederPresenter.getOrderList(page, 4);
                 }
+                refreshLayout.finishRefresh(3000);
             }
         });
         myorderAdapter.setOnItemClickListener(new MyorderAdapter.OnItemClickListener() {
@@ -100,7 +108,10 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
                 } else if (POSITION == 1) {
 
                 } else if (POSITION == 2) {
-
+                    myOrederPresenter.confirmReceipt(orderBeanList.get(position).getOrderId());
+                    itemposition=position;
+                   popupWindow= CreatPopwindows.creatpopwindows(getActivity(),R.layout.pop_loading);
+                   popupWindow.showAtLocation(view,Gravity.CENTER,0,0);
                 }
             }
 
@@ -163,7 +174,19 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
     }
 
     @Override
-    public void applyrefundfail() {
+    public void applyrefundfail(String tip) {
+
+    }
+
+    @Override
+    public void confirmReceipt() {
+        orderBeanList.remove(itemposition);
+        myorderAdapter.notifyItemChanged(itemposition);
+        popupWindow.dismiss();
+    }
+
+    @Override
+    public void confirmReceiptfail(String tip) {
 
     }
 
@@ -172,7 +195,9 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
         orderBeanList.clear();
         if (POSITION == 0) {
             myOrederPresenter.getOrderList(page, 100);
-        } else if (POSITION == 2) {
+        } else if (POSITION == 1) {
+            myOrederPresenter.getOrderList(page, 2);
+        }else if (POSITION == 2) {
             myOrederPresenter.getOrderList(page, 3);
         } else if (POSITION == 3) {
             myOrederPresenter.getOrderList(page, 4);

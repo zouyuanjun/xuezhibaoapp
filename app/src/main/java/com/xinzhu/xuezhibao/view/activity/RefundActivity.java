@@ -107,7 +107,17 @@ boolean cancommint=true;
     }
 
     @Override
-    public void applyrefundfail() {
+    public void applyrefundfail(String tip) {
+
+    }
+
+    @Override
+    public void confirmReceipt() {
+
+    }
+
+    @Override
+    public void confirmReceiptfail(String tip) {
 
     }
 }

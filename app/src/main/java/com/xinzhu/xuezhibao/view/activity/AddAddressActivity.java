@@ -67,6 +67,12 @@ public class AddAddressActivity extends BaseActivity {
             tvSelectaddress.setText(addressBean.getProvince()+addressBean.getCity()+addressBean.getCounty());
             edAddressdetail.setText(addressBean.getAddress());
         }
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @OnClick({R.id.tv_selectaddress, R.id.tv_commint})
@@ -97,7 +103,7 @@ public class AddAddressActivity extends BaseActivity {
 //                        .setCustomItemLayout(R.layout.item_city)//自定义item的布局
 //                        .setCustomItemTextViewId(R.id.item_city_name_tv)//自定义item布局里面的textViewid
                         .drawShadows(false)//滚轮不显示模糊效果
-                        .setLineColor("#03a9f4")//中间横线的颜色
+                        .setLineColor("#f87d28")//中间横线的颜色
                         .setLineHeigh(5)//中间横线的高度
                         .setShowGAT(true)//是否显示港澳台数据，默认不显示
                         .build();
