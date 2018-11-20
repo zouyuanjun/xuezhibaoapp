@@ -76,7 +76,7 @@ public class MyOrederPresenter extends BasePresenter {
                     }else {
                         myOrderInterface.applyrefundfail(tip);
                     }
-                }else if (what == 5) {
+                }else if (what == 6) {
                     if (code == 100) {
                         myOrderInterface.confirmReceipt();
                     }else {
@@ -124,9 +124,9 @@ public class MyOrederPresenter extends BasePresenter {
         String data = JsonUtils.keyValueToString2("applyId", id, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/select-my-apply-by-id", handler, 5);
     }
-
+//确认收获
     public void confirmReceipt(String id) {
         String data = JsonUtils.keyValueToString2("orderId", id, "token", Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/select-my-apply-by-id", handler, 6);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/confirm-receipt", handler, 6);
     }
 }
