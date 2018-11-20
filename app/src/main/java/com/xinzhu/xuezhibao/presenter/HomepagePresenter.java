@@ -54,19 +54,27 @@ public class HomepagePresenter {
                 if (what == 1) {
                     String data = JsonUtils.getStringValue(result, "Data");
                     List<ArticleBean> mDatas = JSON.parseArray(data, ArticleBean.class);
-                    homepageInterface.getArticle(mDatas);
+                    if (null != mDatas && mDatas.size() > 0) {
+                        homepageInterface.getArticle(mDatas);
+                    }
                 } else if (what == 2) {
                     String data = JsonUtils.getStringValue(result, "Data");
                     List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
-                    homepageInterface.getVideodata(mDatas);
+                    if (null != mDatas && mDatas.size() > 0) {
+                        homepageInterface.getVideodata(mDatas);
+                    }
                 } else if (what == 3) {
                     String data = JsonUtils.getStringValue(result, "Data");
                     List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
-                    homepageInterface.getVoicedata(mDatas);
-                }else if (what == 4) {
+                    if (null != mDatas && mDatas.size() > 0) {
+                        homepageInterface.getVoicedata(mDatas);
+                    }
+                } else if (what == 4) {
                     String data = JsonUtils.getStringValue(result, "Data");
                     List<BannerImgBean> mDatas = JSON.parseArray(data, BannerImgBean.class);
-                    homepageInterface.getbanner(mDatas);
+                    if (null != mDatas && mDatas.size() > 0) {
+                        homepageInterface.getbanner(mDatas);
+                    }
                 }
             }
         }
@@ -80,7 +88,8 @@ public class HomepagePresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-index-video", handler, 3);
         Network.getnetwork().postJson("", Constants.URL + "/guest/select-index-round", handler, 4);
     }
-    public void cancelmessage(){
+
+    public void cancelmessage() {
         handler.removeCallbacksAndMessages(null);
     }
 }

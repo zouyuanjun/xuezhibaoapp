@@ -69,19 +69,36 @@ MyJobDetailInterpace myJobDetailInterpace;
                 String data = JsonUtils.getStringValue(result, "Data");
                 if (what == 1) {
                     List<CourseBean> mDatas = JSON.parseArray(data, CourseBean.class);
-                    myCourseInterface.getcourse(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        myCourseInterface.getcourse(mDatas);
+                    }else {
+                        myCourseInterface.nodata();
+                    }
+
                 }else if (what==2){
                     String unread=JsonUtils.getStringValue(data,"unread");
                     data=JsonUtils.getStringValue(data,"list");
                     List<CourseFeedbackBean> mDatas = JSON.parseArray(data, CourseFeedbackBean.class);
-                    myCourseInterface.getCourseFeesback(mDatas,unread);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        myCourseInterface.getCourseFeesback(mDatas,unread);
+                    }else {
+                        myCourseInterface.nodata();
+                    }
                 }else if (what==3){
                     List<TeacherBean> mDatas = JSON.parseArray(data, TeacherBean.class);
-                    myCourseInterface.getTeacher(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        myCourseInterface.getTeacher(mDatas);
+                    }else {
+                        myCourseInterface.nodata();
+                    }
                 }else if (what==4){
                     data = JsonUtils.getStringValue(data, "rows");
                     List<MyjobBean> mDatas = JSON.parseArray(data, MyjobBean.class);
-                    myCourseInterface.getMyjob(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        myCourseInterface.getMyjob(mDatas);
+                    }else {
+                        myCourseInterface.nodata();
+                    }
                 }else if (what==5){
                     MyjobBean mDatas = JsonUtils.stringToObject(data,MyjobBean.class);
                     myJobDetailInterpace.getjobbyid(mDatas);

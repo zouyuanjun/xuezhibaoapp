@@ -189,8 +189,6 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
         isfistaddtab = true;
         type = 0;
         freepage = 1;
-        isfirstloadpay = true;
-        isfirstloadfree = true;
     }
 
     @Override

@@ -73,14 +73,16 @@ public class VideoVoiceListPresenter {
             if (code == 100) {
                 String data = JsonUtils.getStringValue(result, "Data");
                 List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
-                if (what == 7) {
-
-                    videoFragmentInterface.getFreeVideo(mDatas);
-                } else if (what == 8) {
-                    videoFragmentInterface.getpayVideo(mDatas);
-                } else {
-                    homeVideoVoiceListInterface.getVideo(mDatas);
+                if (null!=mDatas&&mDatas.size()>0){
+                    if (what == 7) {
+                        videoFragmentInterface.getFreeVideo(mDatas);
+                    } else if (what == 8) {
+                        videoFragmentInterface.getpayVideo(mDatas);
+                    } else {
+                        homeVideoVoiceListInterface.getVideo(mDatas);
+                    }
                 }
+
             }
 
         }

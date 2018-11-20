@@ -68,16 +68,22 @@ public class CoursePresenter {
                 String data=JsonUtils.getStringValue(result,"Data");
                 if (what==1){
                     List<CourseBean> list=JSON.parseArray(data,CourseBean.class);
-                    familyCourseInterface.getFamilyCourse(list);
+                    if (null!=list&&list.size()>0){
+                        familyCourseInterface.getFamilyCourse(list);
+                    }
+
                 }else if (what==2){
                       String classtype=JsonUtils.getStringValue(data,"class_type");
                     String course_type=JsonUtils.getStringValue(data,"subject_type");
                     List<SelectConditionBean> classtypelist=JSON.parseArray(classtype,SelectConditionBean.class);
-                    List<SelectConditionBean>coursetypelist=JSON.parseArray(course_type,SelectConditionBean.class);
+                    List<SelectConditionBean> coursetypelist=JSON.parseArray(course_type,SelectConditionBean.class);
                     subjectCourseInterface.getSeachCondition(classtypelist,coursetypelist);
                 }else if (what==3){
                     List<CourseBean> list=JSON.parseArray(data,CourseBean.class);
-                    subjectCourseInterface.getSubjectCourse(list);
+                    if (null!=list&&list.size()>0){
+                        subjectCourseInterface.getSubjectCourse(list);
+                    }
+
                 }
             }else if (code==203){
                 if (null!=subjectCourseInterface){

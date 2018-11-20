@@ -309,6 +309,7 @@ public class TestActivity extends BaseActivity {
                     builder.create().show();
                     return;
                 }
+                finish();
             }
         });
     }

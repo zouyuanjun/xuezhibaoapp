@@ -57,19 +57,38 @@ public class MyCollectPresenter {
             }
             if (code == 100) {
                 String data = JsonUtils.getStringValue(result, "Data");
-
                 if (what == 1) {
                     List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
-                    myCollectInterface.getvideo(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        myCollectInterface.getvideo(mDatas);
+                    }else {
+                        myCollectInterface.nodata();
+                    }
+
                 } else if (what == 2) {
                     List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
-                    myCollectInterface.getvoice(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        myCollectInterface.getvoice(mDatas);
+                    }else {
+                        myCollectInterface.nodata();
+                    }
+
                 } else if (what == 3) {
                     List<ArticleBean> mDatas = JSON.parseArray(data, ArticleBean.class);
-                    myCollectInterface.getarticle(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        myCollectInterface.getarticle(mDatas);
+                    }else {
+                        myCollectInterface.nodata();
+                    }
+
                 } else if (what == 4) {
                     List<CourseBean> mDatas = JSON.parseArray(data, CourseBean.class);
-                    myCollectInterface.getcourse(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        myCollectInterface.getcourse(mDatas);
+                    }else {
+                        myCollectInterface.nodata();
+                    }
+
                 }
             }
 
