@@ -113,7 +113,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         Log.d("懒加载开始");
         EditTextUtil.hideKeyboard(MyApplication.getContext(), edSearch);
         homepagePresenter = new HomepagePresenter(this, MyApplication.getContext());
-        homepagePresenter.initdata();
+
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
@@ -149,6 +149,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             messagecount=JMessageClient.getAllUnReadMsgCount();
             qBadgeView.setBadgeNumber(messagecount);
         }
+        homepagePresenter.initdata();
     }
 
     @Override
