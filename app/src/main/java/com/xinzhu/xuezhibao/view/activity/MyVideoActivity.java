@@ -51,10 +51,15 @@ public class MyVideoActivity extends BaseActivity {
             if (code == 100) {
                 String data = JsonUtils.getStringValue(result, "Data");
                 List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
-                videoVoiceBeanList.addAll(mDatas);
-                videoVoiceListAdapter.notifyDataSetChanged();
-                page++;
-                refreshLayout.finishLoadMore();
+                if (null!=mDatas&&mDatas.size()>0){
+                    videoVoiceBeanList.addAll(mDatas);
+                    videoVoiceListAdapter.notifyDataSetChanged();
+                    page++;
+                    refreshLayout.finishLoadMore();
+                }else {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                }
+
             }else {
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
