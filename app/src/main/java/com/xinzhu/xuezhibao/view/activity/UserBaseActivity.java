@@ -51,7 +51,7 @@ public class UserBaseActivity extends TakePhotoActivity {
             com.zou.fastlibrary.utils.Log.d(result);
             int code=0;
             try {
-                code = JsonUtils.getIntValue(result, "_code");
+                code = JsonUtils.getIntValue(result, "Code");
             }catch (Exception e){
                 BToast.custom(activity).text("服务器发送错误"+result).show();
             }

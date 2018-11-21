@@ -16,7 +16,8 @@ public class UserBasicInfo {
     String dictionaryName;
     int dictionaryId;
     int integral;
-
+    public UserBasicInfo() {
+    }
     public String getAccount() {
         return Account;
     }
@@ -49,17 +50,6 @@ public class UserBasicInfo {
         this.dictionaryName = dictionaryName;
     }
 
-    public UserBasicInfo() {
-    }
-
-    public UserBasicInfo(String nickName, String studentName, String fatherName, String motherName, String regionId, int studentAge) {
-        this.nickName = nickName;
-        this.studentName = studentName;
-        this.fatherName = fatherName;
-        this.motherName = motherName;
-        this.province = regionId;
-        this.studentAge = studentAge;
-    }
 
     public String getCity() {
         return city;

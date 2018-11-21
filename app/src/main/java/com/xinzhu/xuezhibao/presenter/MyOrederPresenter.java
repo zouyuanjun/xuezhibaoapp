@@ -42,7 +42,6 @@ public class MyOrederPresenter extends BasePresenter {
                 if (what == 1) {
                     if (code == 100) {
                         String data = JsonUtils.getStringValue(result, "Data");
-                        data = JsonUtils.getStringValue(data, "rows");
                         List<OrderBean> list = JSON.parseArray(data, OrderBean.class);
                         if (null != list && list.size() > 0) {
                             myOrderInterface.getOrderList(list);

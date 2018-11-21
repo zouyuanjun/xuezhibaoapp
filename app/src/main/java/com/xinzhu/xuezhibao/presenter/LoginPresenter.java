@@ -75,8 +75,8 @@ SplashInterface splashInterface;
                 if (code==100){
                     try {
                         String data=JsonUtils.getStringValue(result,"Data");
+                        Constants.userBasicInfo=JsonUtils.stringToObject(data,UserBasicInfo.class);
                         Constants.TOKEN=JsonUtils.getStringValue(data,"token");
-                        Constants.userBasicInfo= (UserBasicInfo) JsonUtils.stringToObject(data,UserBasicInfo.class);
                         loginInterface.loginsuccessful();
                         SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());
                         DataKeeper.save(sharedPreferences,"PHONE",myphone);

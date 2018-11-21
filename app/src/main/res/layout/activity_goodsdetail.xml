@@ -208,6 +208,7 @@
         android:layout_height="48dp">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/imageView25"
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -226,6 +227,7 @@
             app:srcCompat="@drawable/tutor_btn_contact" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/textView29"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -268,7 +270,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
+            android:text="0"
             android:textColor="@color/appcolor"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
