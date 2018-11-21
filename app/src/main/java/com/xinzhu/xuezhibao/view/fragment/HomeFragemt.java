@@ -179,7 +179,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         LoginStateChangeEvent.Reason message=event.getReason();
         if (message.name().equals("user_logout")){
             BToast.error(getContext()).text("您从其他客户端登陆，本客户端已下线").show();
-
         }
         //do your own business
     }

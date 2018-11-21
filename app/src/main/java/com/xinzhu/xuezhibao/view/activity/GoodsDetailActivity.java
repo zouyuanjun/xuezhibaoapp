@@ -104,7 +104,6 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
         webGoodsdetail.setWebViewClient(new WebViewUtil.MyWebViewClient(this, webGoodsdetail));
-        tvMypoints.setText(Constants.userBasicInfo.getIntegral() + "积分");
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvGoodsevaluate.setLayoutManager(linearLayoutManager);
@@ -121,14 +120,11 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                     llPingjia.setVisibility(View.VISIBLE);
                 }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -145,6 +141,12 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                 myGoodsPresenter.getgoodscomment(page, googdsid);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        tvMypoints.setText(Constants.userBasicInfo.getIntegral() + "积分");
     }
 
     @Override
