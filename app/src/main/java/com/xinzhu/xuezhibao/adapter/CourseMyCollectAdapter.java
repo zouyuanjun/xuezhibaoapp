@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,8 +17,6 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.CourseBean;
-import com.xinzhu.xuezhibao.bean.JiaojiaoCourseBean;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
@@ -55,7 +52,7 @@ public class CourseMyCollectAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
-        ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getVideoTeacher());
+        ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getSpeakerTeacher());
      //   ((ViewHolder) holder).tvAll.setText(mDatas.get(position).g());
         ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
         if (StringUtil.isEmpty(mDatas.get(position).getCurriculumPicture())) {

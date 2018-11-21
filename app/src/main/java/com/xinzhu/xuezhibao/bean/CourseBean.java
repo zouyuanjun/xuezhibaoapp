@@ -10,7 +10,7 @@ public class CourseBean {
     String curriculumUrl;
     String curriculumExplain;
     int curriculumLike;
-    String videoTeacher;
+    String speakerTeacher;
     int curriculumKind;
     String dictionaryName;
     String subjectDictionaryName;
@@ -118,12 +118,12 @@ public class CourseBean {
         this.curriculumLike = curriculumLike;
     }
 
-    public String getVideoTeacher() {
-        return videoTeacher;
+    public String getSpeakerTeacher() {
+        return speakerTeacher;
     }
 
-    public void setVideoTeacher(String videoTeacher) {
-        this.videoTeacher = videoTeacher;
+    public void setSpeakerTeacher(String speakerTeacher) {
+        this.speakerTeacher = speakerTeacher;
     }
 
     public String getCurriculumPicture() {

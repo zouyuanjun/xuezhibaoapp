@@ -74,8 +74,12 @@ public class ArticlePresenter {
                 } else if (code == 100) {
                     String data = JsonUtils.getStringValue(result, "Data");
                     List<ArticleBean> mDatas = JSON.parseArray(data, ArticleBean.class);
-                    Log.d(mDatas.toString() + mDatas.size());
-                    articleListInterface.getDataSuccessful(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        articleListInterface.getDataSuccessful(mDatas);
+                    }else {
+                        articleListInterface.getDataFail();
+                    }
+
                 }
             } else if (what == 3) {
                 String data = JsonUtils.getStringValue(result, "Data");

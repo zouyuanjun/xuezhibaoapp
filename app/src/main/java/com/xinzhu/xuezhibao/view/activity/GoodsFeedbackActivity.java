@@ -29,6 +29,7 @@ import com.bravin.btoast.BToast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.FeedBackDictionaryBean;
+import com.xinzhu.xuezhibao.bean.OrderBean;
 import com.xinzhu.xuezhibao.immodule.utils.RequestCode;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.Glide4Engine;
@@ -41,6 +42,7 @@ import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
 import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.StringUtil;
 
@@ -57,8 +59,6 @@ import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class GoodsFeedbackActivity extends BaseActivity {
-
-    ShapeCornerBgView btLogin;
     Context mContext;
     List<String> mSelected = new ArrayList<>();   //已选择的照片
     HashMap<String, String> map = new HashMap<>();
@@ -82,36 +82,23 @@ public class GoodsFeedbackActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String result = (String) msg.obj;
+            Log.d(result);
             int what = msg.what;
             if (what == 1) {
-                int code = 500;
+                cancommint = true;
+                int code = 600;
                 try {
-                    code = JsonUtils.getIntValue(result, "_code");
+                    code = JsonUtils.getIntValue(result, "Code");
                 } catch (JSONException exception) {
                     BToast.error(GoodsFeedbackActivity.this).text("提交失败，服务器内部错误，错误码：" + code).show();
                     return;
                 }
                 if (code == 100) {
-                    BToast.success(GoodsFeedbackActivity.this).text("提交成功").show();
-                    cancommint = true;
-                    im1.setVisibility(View.INVISIBLE);
-                    imClean1.setVisibility(View.INVISIBLE);
-                    im1canuse = true;
-                    map.clear();
-                    im2.setVisibility(View.INVISIBLE);
-                    imClean2.setVisibility(View.INVISIBLE);
-                    im2canuse = true;
-                    im3.setVisibility(View.INVISIBLE);
-                    imClean3.setVisibility(View.INVISIBLE);
-                    im3canuse = true;
-                    canSelectCount = 3;
-                    tvCanselectcount.setText(3 - canSelectCount + "/3");
-                    edFeedback.setText("");
-                    btLogin.setBgColor(Color.parseColor("#f87d28"));
+                    BToast.success(GoodsFeedbackActivity.this).text("评价成功").show();
+                    finish();
                 } else {
                     BToast.error(GoodsFeedbackActivity.this).text("提交失败，请重试，错误码：" + code).show();
-                    cancommint = true;
-                    btLogin.setBgColor(Color.parseColor("#f87d28"));
+
                 }
             }
         }
@@ -132,6 +119,7 @@ public class GoodsFeedbackActivity extends BaseActivity {
     ImageView im2;
     @BindView(R.id.im_3)
     ImageView im3;
+    OrderBean orderBean;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -139,6 +127,7 @@ public class GoodsFeedbackActivity extends BaseActivity {
         mSelected.clear();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pushgoodscomment);
+        orderBean= (OrderBean) getIntent().getSerializableExtra(Constants.INTENT_ID);
         mContext = this;
         ButterKnife.bind(this);
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
@@ -150,8 +139,6 @@ public class GoodsFeedbackActivity extends BaseActivity {
         appbar.setRightTextOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                btLogin.setBgColor(Color.parseColor("#f2f2f2"));
                 HashMap<String, String> data = new HashMap<>();
                 for (String key : map.keySet()) {
                     mSelected.add(map.get(key));
@@ -186,11 +173,13 @@ public class GoodsFeedbackActivity extends BaseActivity {
                     });
                     builder.create().show();
                 } else {
-                    data.put("opinionContent", feedback);
+                    data.put("content", feedback);
                     data.put("token", Constants.TOKEN);
-                    data.put("dictionaryId", selectDictionaryid);
+                    data.put("orderId", orderBean.getOrderId());
+                    data.put("productGrade",ratingBar.getNumStars()+"");
+                    data.put("logisticsGrade",ratingBar2.getNumStars()+"");
                     cancommint = false;
-                    Network.getnetwork().uploadimg(data, Constants.URL + "/guest/opinion-insert", mSelected, handler, 1);
+                    Network.getnetwork().uploadimg(data, Constants.URL + "/guest/insert-order-evaluate", mSelected, handler, 1);
                     // Network.getnetwork().uploadimg(data,"http://192.168.1.200:8080/upload",mSelected,handler);
                 }
             }
@@ -198,7 +187,7 @@ public class GoodsFeedbackActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.im_clean1, R.id.im_clean2, R.id.im_clean3, R.id.ed_feedback, R.id.im_addim, R.id.im_1, R.id.im_2, R.id.im_3, R.id.bt_login})
+    @OnClick({R.id.im_clean1, R.id.im_clean2, R.id.im_clean3, R.id.ed_feedback, R.id.im_addim, R.id.im_1, R.id.im_2, R.id.im_3})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ed_feedback:

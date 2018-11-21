@@ -17,7 +17,6 @@ import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.CourseBean;
-import com.xinzhu.xuezhibao.bean.JiatingCourseBean;
 import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
@@ -53,7 +52,7 @@ public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
-        ((ViewHolder) holder).tvTeacher.setText("主讲："+mDatas.get(position).getVideoTeacher());
+        ((ViewHolder) holder).tvTeacher.setText("主讲："+mDatas.get(position).getSpeakerTeacher());
         ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
         if (!StringUtil.isEmpty(mDatas.get(position).getDictionaryName())){
             ((ViewHolder) holder).tvClass.setVisibility(View.VISIBLE);
