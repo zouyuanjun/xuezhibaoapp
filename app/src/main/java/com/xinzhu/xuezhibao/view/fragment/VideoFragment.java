@@ -192,27 +192,36 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
 
     @Override
     public void getFreeVideo(List<VideoVoiceBean> List) {
-        freeBeanList.addAll(List);
-        freeadapter.notifyDataSetChanged();
-        freepage++;
-        refreshLayout.finishLoadMore();
-        refreshLayout.finishRefresh(true);
+        if (null!=refreshLayout){
+            freeBeanList.addAll(List);
+            freeadapter.notifyDataSetChanged();
+            freepage++;
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh(true);
+        }
+
     }
 
     @Override
     public void getpayVideo(List<VideoVoiceBean> List) {
-        payBeanList.addAll(List);
-        payadapter.notifyDataSetChanged();
-        paypage++;
-        refreshLayout.finishLoadMore();
-        refreshLayout.finishRefresh(true);
+        if (null!=refreshLayout){
+            payBeanList.addAll(List);
+            payadapter.notifyDataSetChanged();
+            paypage++;
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh(true);
+        }
+
     }
 
     @Override
     public void noData() {
-        refreshLayout.finishRefresh(true);
-        refreshLayout.finishLoadMoreWithNoMoreData();
-    }
+        if (null!=refreshLayout){
+            refreshLayout.finishRefresh(true);
+            refreshLayout.finishLoadMoreWithNoMoreData();
+        }
+        }
+
 
     @Override
     public void networktimeout() {
