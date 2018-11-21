@@ -74,7 +74,7 @@ boolean cancommint=true;
                     AnimationDrawable animationDrawable= (AnimationDrawable) imLoading.getDrawable();
                     animationDrawable.start();
                     myOrederPresenter = new MyOrederPresenter(RefundActivity.this);
-                    myOrederPresenter.applyrefund(orderBean.getObjectId(), s);
+                    myOrederPresenter.applyrefund(orderBean.getOrderId(), s);
                 }
 
             }

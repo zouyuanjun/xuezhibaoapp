@@ -166,6 +166,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     public void onDestroyView() {
         super.onDestroyView();
         JMessageClient.unRegisterEventReceiver(new WeakReference<>(this).get());
+        homepagePresenter.cancelmessage();
         unbinder.unbind();
     }
 
@@ -303,27 +304,29 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     @Override
     public void getVoicedata(final List<VideoVoiceBean> mDatas) {
+        if (null!=rvVoice) {
 //        初始化音频列表
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(MyApplication.getContext());
-        linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rvVoice.setNestedScrollingEnabled(false);
-        rvVoice.setLayoutManager(linearLayoutManager2);
-        homeVoiceAdapter = new HomeVoiceAdapter(MyApplication.getContext(), mDatas);
-        rvVoice.setAdapter(homeVoiceAdapter);
-        homeVoiceAdapter.setOnItemClickListener(new HomeVoiceAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                String id = mDatas.get(position).getVideoId();
-                Intent intent = new Intent(getContext(), VoiceDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID, id);
-                startActivity(intent);
-            }
+            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(MyApplication.getContext());
+            linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+            rvVoice.setNestedScrollingEnabled(false);
+            rvVoice.setLayoutManager(linearLayoutManager2);
+            homeVoiceAdapter = new HomeVoiceAdapter(MyApplication.getContext(), mDatas);
+            rvVoice.setAdapter(homeVoiceAdapter);
+            homeVoiceAdapter.setOnItemClickListener(new HomeVoiceAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    String id = mDatas.get(position).getVideoId();
+                    Intent intent = new Intent(getContext(), VoiceDetilsActivity.class);
+                    intent.putExtra(Constants.INTENT_ID, id);
+                    startActivity(intent);
+                }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
+                @Override
+                public void onItemLongClick(View view, int position) {
 
-            }
-        });
+                }
+            });
+        }
     }
 
     //初始化文章列表

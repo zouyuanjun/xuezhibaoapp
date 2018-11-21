@@ -81,22 +81,7 @@ public class UserCentreFragment extends LazyLoadFragment {
     TextView tvMyaddress;
     @BindView(R.id.tv_lognout)
     TextView tvLognout;
-Handler handler=new Handler(){
-    @Override
-    public void handleMessage(Message msg) {
-        super.handleMessage(msg);
-        String result= (String) msg.obj;
-        int code=JsonUtils.getIntValue(result,"Code");
-        if (code==100){
-            String data=JsonUtils.getStringValue(result,"Data");
-            Constants.userBasicInfo = (UserBasicInfo) JsonUtils.stringToObject(data, UserBasicInfo.class);
-            tvUsername.setText(Constants.userBasicInfo.getNickName());
-            tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
-            sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
-            tvMyjifen.setText(Constants.userBasicInfo.getIntegral()+"");
-        }
-    }
-};
+Handler handler;
     @Override
     protected int setContentView() {
         return R.layout.fragment_usercentre;
@@ -114,9 +99,6 @@ Handler handler=new Handler(){
             clJifen.setVisibility(View.GONE);
             tvLoginbutton.setVisibility(View.VISIBLE);
         } else {
-            String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
-            Network.getnetwork().postJson(data, Constants.URL + "/app/find-by-account", handler, 8);
-
             tvLoginbutton.setVisibility(View.GONE);
             llUser.setVisibility(View.VISIBLE);
             clJifen.setVisibility(View.VISIBLE);
@@ -125,6 +107,27 @@ Handler handler=new Handler(){
             sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
             tvMyjifen.setText(Constants.userBasicInfo.getIntegral()+"");
         }
+        handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                String result= (String) msg.obj;
+                int code=JsonUtils.getIntValue(result,"Code");
+                if (code==100){
+                    String data=JsonUtils.getStringValue(result,"Data");
+                    Constants.userBasicInfo = (UserBasicInfo) JsonUtils.stringToObject(data, UserBasicInfo.class);
+                    if (null!=tvUsername){
+                        tvUsername.setText(Constants.userBasicInfo.getNickName());
+                        tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
+                        sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
+                        tvMyjifen.setText(Constants.userBasicInfo.getIntegral()+"");
+                    }
+
+                }
+            }
+        };
+        String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/find-by-account", handler, 8);
     }
 
     @Override

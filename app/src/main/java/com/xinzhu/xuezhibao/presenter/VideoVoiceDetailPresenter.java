@@ -57,9 +57,9 @@ public class VideoVoiceDetailPresenter {
                     int total = JsonUtils.getIntValue(data, "total");
                     data = JsonUtils.getStringValue(data, "rows");
                     List<CommentBean> mDatas = JSON.parseArray(data, CommentBean.class);
-                    if (null!=mDatas&&mDatas.size()>0){
+                    if (null != mDatas && mDatas.size() > 0) {
                         videoVoiceDetailInterface.getcomment(mDatas, total);
-                    }else {
+                    } else {
                         videoVoiceDetailInterface.getcommentfail();
                     }
 
@@ -127,7 +127,16 @@ public class VideoVoiceDetailPresenter {
         String data = JsonUtils.keyValueToString2("videoId", id, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/buy-video", handler, 6);
     }
-    public void cancelmessage(){
+
+    public void cancelmessage() {
         handler.removeCallbacksAndMessages(null);
+    }
+
+    //报告看了多久的视频
+    public void playtime() {
+        String data = JsonUtils.keyValueToString2("dictionaryId", 24, "token", Constants.TOKEN);
+        long time = Constants.PLAYTIME / 1000 / 60;
+        data = JsonUtils.addKeyValue(data, "time", time);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/complete-my-task", handler, 6);
     }
 }

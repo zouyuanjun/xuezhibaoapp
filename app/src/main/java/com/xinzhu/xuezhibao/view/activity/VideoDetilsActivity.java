@@ -117,16 +117,18 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     GoodView mGoodView;
     long startplaytime;
     long stopplaytime;
+    boolean haseplay=false; //是否观看过
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_details2);
         ButterKnife.bind(this);
         context = this;
-        tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this,tvDetails));
+        tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this, tvDetails));
         videoid = getIntent().getStringExtra(Constants.INTENT_ID);
         mGoodView = new GoodView(this);
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -158,7 +160,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     private void init() {
 
-        orientationUtils=new OrientationUtils(this,detailPlayer);
+        orientationUtils = new OrientationUtils(this, detailPlayer);
 
         detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,14 +182,15 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             @Override
             public void onClick(View view) {
                 detailPlayer.clickStartIcon();
-                if (detailPlayer.isPlay()){
+                if (detailPlayer.isPlay()) {
                     Log.d("开始播放");
-                    startplaytime=System.currentTimeMillis();
-                }else {
+                    startplaytime = System.currentTimeMillis();
+                    haseplay=true;
+                } else {
                     Log.d("停止播放");
-                    stopplaytime=System.currentTimeMillis();
-                    Constants.PLAYTIME=Constants.PLAYTIME+stopplaytime-startplaytime;
-                    startplaytime=stopplaytime;
+                    stopplaytime = System.currentTimeMillis();
+                    Constants.PLAYTIME = Constants.PLAYTIME + stopplaytime - startplaytime;
+                    startplaytime = stopplaytime;
                 }
             }
         });
@@ -210,7 +213,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         });
     }
 
-    @OnClick({R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_detail_comment,R.id.tv_buyvideo})
+    @OnClick({R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_detail_comment, R.id.tv_buyvideo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_dianzan:
@@ -219,15 +222,15 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 } else {
                     if (islike) {
                         likenum--;
-                        tvLike.setText(likenum+"");
+                        tvLike.setText(likenum + "");
                         islike = false;
                         likeCollectPresenter.cancellike(videoid, "2");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
                     } else {
-                        mGoodView.setTextInfo("+1",Color.parseColor("#f87d28"),25);
+                        mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
                         mGoodView.show(view);
                         likenum++;
-                        tvLike.setText(likenum+"");
+                        tvLike.setText(likenum + "");
                         islike = true;
                         likeCollectPresenter.like(videoid, "2");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
@@ -256,7 +259,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             case R.id.tv_buyvideo:
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
-                }else {
+                } else {
                     videoVoiceDetailPresenter.buyVideo(videoid);
                 }
 
@@ -269,11 +272,19 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoManager.releaseAllVideos();
-        if (orientationUtils != null){
+        if (orientationUtils != null) {
             orientationUtils.releaseListener();
         }
-            stopplaytime=System.currentTimeMillis();
-        Constants.PLAYTIME=Constants.PLAYTIME+stopplaytime-startplaytime;
+        if (haseplay){
+            stopplaytime = System.currentTimeMillis();
+            Constants.PLAYTIME = Constants.PLAYTIME + stopplaytime - startplaytime;
+            Log.d("观看时间" + Constants.PLAYTIME+"jieshu"+stopplaytime+"kaishi"+startplaytime);
+            if (Constants.PLAYTIME > 1*60*1000) {
+                videoVoiceDetailPresenter.playtime();
+            }
+        }
+        videoVoiceDetailPresenter.cancelmessage();
+
     }
 
     @Override
@@ -299,19 +310,19 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     @Override
     public void getVideodetail(VideoVoiceBean videoVoiceBean) {
-        tvCreattime.setText("发布时间："+TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
-        tvDetails.loadDataWithBaseURL( null, videoVoiceBean.getVideoDetails() , "text/html", "UTF-8", null ) ;
+        tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
+        tvDetails.loadDataWithBaseURL(null, videoVoiceBean.getVideoDetails(), "text/html", "UTF-8", null);
 
         tvTitle.setText(videoVoiceBean.getVideoTitle());
-        if (videoVoiceBean.getVideoType()==1){
+        if (videoVoiceBean.getVideoType() == 1) {
             cslBuy.setVisibility(View.VISIBLE);
         }
-        if (videoVoiceBean.isBuy()){
+        if (videoVoiceBean.isBuy()) {
             cslBuy.setVisibility(View.GONE);
         }
         tvLike.setText(videoVoiceBean.getVidelLike());
-        tvReadnum.setText("播放量："+videoVoiceBean.getVideoLook());
-        likenum=Integer.parseInt(videoVoiceBean.getVidelLike());
+        tvReadnum.setText("播放量：" + videoVoiceBean.getVideoLook());
+        likenum = Integer.parseInt(videoVoiceBean.getVidelLike());
         String source1 = videoVoiceBean.getVideoUrl();
         //外部辅助的旋转，帮助全屏
         orientationUtils = new OrientationUtils(this, detailPlayer);
@@ -366,7 +377,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     @Override
     public void getcomment(List<CommentBean> mDatas, int total) {
-        commentnum=total;
+        commentnum = total;
         tvCommentNum.setText("全部评论(" + total + ")");
         commentBeanArrayList.addAll(mDatas);
         if (commentAdapter != null) {
@@ -449,7 +460,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
                     CommentBean commentBean = new CommentBean(Constants.userBasicInfo.getImage(), Constants.userBasicInfo.getNickName(), System.currentTimeMillis(), commend, "", "111");
-                  commentnum++;
+                    commentnum++;
                     tvCommentNum.setText("全部评论(" + commentnum + ")");
                     commentBeanArrayList.addFirst(commentBean);
                     commentAdapter.notifyItemInserted(0);
