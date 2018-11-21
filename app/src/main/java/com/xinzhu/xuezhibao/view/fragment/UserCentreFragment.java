@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.constraint.ConstraintLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.bean.UserBasicInfo;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.EditAllActivity;
 import com.xinzhu.xuezhibao.view.activity.LoginActivity;
@@ -79,7 +81,22 @@ public class UserCentreFragment extends LazyLoadFragment {
     TextView tvMyaddress;
     @BindView(R.id.tv_lognout)
     TextView tvLognout;
-
+Handler handler=new Handler(){
+    @Override
+    public void handleMessage(Message msg) {
+        super.handleMessage(msg);
+        String result= (String) msg.obj;
+        int code=JsonUtils.getIntValue(result,"Code");
+        if (code==100){
+            String data=JsonUtils.getStringValue(result,"Data");
+            Constants.userBasicInfo = (UserBasicInfo) JsonUtils.stringToObject(data, UserBasicInfo.class);
+            tvUsername.setText(Constants.userBasicInfo.getNickName());
+            tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
+            sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
+            tvMyjifen.setText(Constants.userBasicInfo.getIntegral()+"");
+        }
+    }
+};
     @Override
     protected int setContentView() {
         return R.layout.fragment_usercentre;
@@ -97,6 +114,9 @@ public class UserCentreFragment extends LazyLoadFragment {
             clJifen.setVisibility(View.GONE);
             tvLoginbutton.setVisibility(View.VISIBLE);
         } else {
+            String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
+            Network.getnetwork().postJson(data, Constants.URL + "/app/find-by-account", handler, 8);
+
             tvLoginbutton.setVisibility(View.GONE);
             llUser.setVisibility(View.VISIBLE);
             clJifen.setVisibility(View.VISIBLE);
@@ -224,4 +244,5 @@ public class UserCentreFragment extends LazyLoadFragment {
                 break;
         }
     }
+
 }

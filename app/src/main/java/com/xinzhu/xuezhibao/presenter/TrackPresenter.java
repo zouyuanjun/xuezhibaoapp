@@ -54,7 +54,6 @@ public class TrackPresenter {
             if (code==100){
                 if (what==1){
                     String data = JsonUtils.getStringValue(result, "Data");
-                    data = JsonUtils.getStringValue(data, "rows");
                     List<TrickBean> mDatas = JSON.parseArray(data, TrickBean.class);
                     trackInterface.getMyTrack(mDatas);
                 }

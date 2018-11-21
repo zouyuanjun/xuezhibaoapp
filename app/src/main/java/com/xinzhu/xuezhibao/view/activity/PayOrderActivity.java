@@ -106,7 +106,7 @@ public class PayOrderActivity extends BaseActivity implements PayOrderInterface 
 
     @Override
     public void getaddress(AddressBean addressBean) {
-        tvPhone.setText(addressBean.getLinkPhone());
+        tvPhone.setText(addressBean.getLinkman()+"  "+addressBean.getLinkPhone());
         tvAddress.setText(addressBean.getProvince()+addressBean.getCity()+addressBean.getCounty()+addressBean.getAddress());
         myaddressid = addressBean.getAddressId();
     }
@@ -124,6 +124,7 @@ public class PayOrderActivity extends BaseActivity implements PayOrderInterface 
     @Override
     public void paysuccessful() {
         BToast.error(this).text("下单成功").show();
+        Constants.userBasicInfo.setIntegral(Constants.userBasicInfo.getIntegral()-Integer.parseInt(goodsBean.getProductPrice()));
         finish();
     }
 

@@ -101,6 +101,12 @@ public class MyVipCentreActivity extends BaseActivity {
         ButterKnife.bind(this);
         String data= JsonUtils.keyValueToString("describeType",2);
         Network.getnetwork().postJson(data, Constants.URL+"/guest/integral-rules",handler,2);
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
