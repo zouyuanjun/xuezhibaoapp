@@ -169,7 +169,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
         tvGoodsprice.setText(goodsBean.getProductPrice() + "积分");
         tvPaynum.setText(goodsBean.getBuyNum() + "人已购买");
         List<String> img = new ArrayList<>();
-        if (null != img && img.size() > 0) {
+        if (null != goodsBean.getAccessoryList() && goodsBean.getAccessoryList().size() > 0) {
             for (FeedbackPictureBean s : goodsBean.getAccessoryList()) {
                 img.add(s.getAccessoryUrl());
             }

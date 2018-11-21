@@ -58,21 +58,21 @@ boolean cancommint=true;
         if (null != orderBean) {
             sdvPhoto.setImageURI(orderBean.getPicture());
             tvTitle.setText(orderBean.getName());
-            tvPrice.setText("￥" + orderBean.getOrderPrice());
+            tvPrice.setText("￥" + orderBean.getPrice());
         }
         appbar.setRightTextOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String s = edConent.getText().toString();
+                if (StringUtil.isEmpty(s)) {
+                    BToast.error(RefundActivity.this).text("必须填写退款理由").show();
+                    return;
+                }
                 if (cancommint){
                     cancommint=false;
                     imLoading.setVisibility(View.VISIBLE);
                     AnimationDrawable animationDrawable= (AnimationDrawable) imLoading.getDrawable();
                     animationDrawable.start();
-                    String s = edConent.getText().toString();
-                    if (StringUtil.isEmpty(s)) {
-                        BToast.error(RefundActivity.this).text("必须填写退款理由").show();
-                        return;
-                    }
                     myOrederPresenter = new MyOrederPresenter(RefundActivity.this);
                     myOrederPresenter.applyrefund(orderBean.getObjectId(), s);
                 }

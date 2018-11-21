@@ -161,6 +161,8 @@ public class PotionsMallFragment extends LazyLoadFragment implements MyGoodsInte
             imLoading.setVisibility(View.GONE);
             imDataisnull.setVisibility(View.VISIBLE);
         }
+        refreshLayout.finishLoadMore();
+        refreshLayout.finishRefresh();
     }
 
     @Override

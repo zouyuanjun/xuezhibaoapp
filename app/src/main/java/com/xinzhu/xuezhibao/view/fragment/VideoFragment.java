@@ -210,6 +210,7 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
 
     @Override
     public void noData() {
+        refreshLayout.finishRefresh(true);
         refreshLayout.finishLoadMoreWithNoMoreData();
     }
 
