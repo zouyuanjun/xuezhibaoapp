@@ -7,7 +7,7 @@ public class ArticleBean {
     String articleContent;
     int articleLike;
     String articleId;
-    String createTime;
+    long createTime;
     String creater;
 
     public ArticleBean() {
@@ -19,22 +19,12 @@ public class ArticleBean {
         this.articleRead = readnum;
     }
 
-    public ArticleBean(String articlePicture, String articleTitle, String articleRead, String articleContent, int articleLike, String articleId, String createTime, String creater) {
-        this.articlePicture = articlePicture;
-        this.articleTitle = articleTitle;
-        this.articleRead = articleRead;
-        this.articleContent = articleContent;
-        this.articleLike = articleLike;
-        this.articleId = articleId;
-        this.createTime = createTime;
-        this.creater = creater;
-    }
 
-    public String getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 

@@ -17,6 +17,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/simpleDraweesssView"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/mengban"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/tv_item_title"
         android:layout_width="0dp"
@@ -88,8 +97,9 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginStart="8dp"
+        android:background="@drawable/videolist_icon_time"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_time"
         app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_time"
-        android:background="@drawable/videolist_icon_time" />
+        app:layout_constraintTop_toTopOf="@+id/tv_item_time" />
 
 </android.support.constraint.ConstraintLayout>

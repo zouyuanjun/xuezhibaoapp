@@ -198,7 +198,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         if (null!=articleBean){
             tvTitle.setText(articleBean.getArticleTitle());
             tvReadnum.setText("阅读：" + articleBean.getArticleRead());
-            tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(Long.parseLong(articleBean.getCreateTime())));
+            tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(articleBean.getCreateTime()));
             tvDetails.loadDataWithBaseURL( null, articleBean.getArticleContent() , "text/html", "UTF-8", null ) ;
             tvLike.setText(articleBean.getArticleLike()+"");
             likenum=articleBean.getArticleLike();

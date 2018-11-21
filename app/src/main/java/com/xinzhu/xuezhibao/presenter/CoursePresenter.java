@@ -13,7 +13,7 @@ import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
 
 import java.util.List;
-
+//游客课程Presenter
 public class CoursePresenter {
     FamilyCourseInterface familyCourseInterface;
     SubjectCourseInterface subjectCourseInterface;
@@ -99,7 +99,7 @@ public class CoursePresenter {
     };
 
     public void getFamilyCourse(int page){
-        String data=JsonUtils.keyValueToString("pageNo",page);
+        String data=JsonUtils.keyValueToString2("pageNo",page,"curriculumKind",1);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/all-curriculum",handler,1);
     }
     public void getFamilyHotCourse(int page){

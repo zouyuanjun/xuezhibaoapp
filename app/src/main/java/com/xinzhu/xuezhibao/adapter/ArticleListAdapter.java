@@ -13,6 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -45,7 +46,7 @@ public class ArticleListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getArticleTitle());
         ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getArticleLike()+"");
-        ((MyViewHolder) holder).tvItemTime.setText(mDatas.get(position).getCreateTime());
+        ((MyViewHolder) holder).tvItemTime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
         ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getArticleRead());
        ((MyViewHolder) holder).simpleDraweeView.setImageURI(mDatas.get(position).getArticlePicture());
 
