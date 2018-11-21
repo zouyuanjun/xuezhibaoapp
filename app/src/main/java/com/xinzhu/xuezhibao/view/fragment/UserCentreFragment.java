@@ -37,6 +37,7 @@ import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.utils.DataKeeper;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -126,8 +127,11 @@ Handler handler;
                 }
             }
         };
-        String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/find-by-account", handler, 8);
+        if (!StringUtil.isEmpty(Constants.TOKEN)){
+            String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
+            Network.getnetwork().postJson(data, Constants.URL + "/app/find-by-account", handler, 8);
+        }
+
     }
 
     @Override
