@@ -115,6 +115,8 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     int likenum;  //点赞数
     int commentnum; //评论数
     GoodView mGoodView;
+    long startplaytime;
+    long stopplaytime;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -180,8 +182,12 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 detailPlayer.clickStartIcon();
                 if (detailPlayer.isPlay()){
                     Log.d("开始播放");
+                    startplaytime=System.currentTimeMillis();
                 }else {
                     Log.d("停止播放");
+                    stopplaytime=System.currentTimeMillis();
+                    Constants.PLAYTIME=Constants.PLAYTIME+stopplaytime-startplaytime;
+                    startplaytime=stopplaytime;
                 }
             }
         });
@@ -263,8 +269,11 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoManager.releaseAllVideos();
-        if (orientationUtils != null)
+        if (orientationUtils != null){
             orientationUtils.releaseListener();
+        }
+            stopplaytime=System.currentTimeMillis();
+        Constants.PLAYTIME=Constants.PLAYTIME+stopplaytime-startplaytime;
     }
 
     @Override
@@ -278,7 +287,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         detailPlayer.setVideoAllCallBack(null);
         super.onBackPressed();
     }
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);

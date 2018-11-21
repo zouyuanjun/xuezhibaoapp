@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wx.goodview.GoodView;
@@ -41,7 +40,6 @@ import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
-import com.zou.fastlibrary.utils.StatusBar;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.zou.fastlibrary.utils.WebViewUtil;
 
@@ -177,7 +175,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
         tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(courseBean.getCreateTime()));
         webView.loadDataWithBaseURL(null, courseBean.getCurriculumExplain(), "text/html", "UTF-8", null);
         tvTitle.setText(courseBean.getCurriculumTitle());
-        tvCourseteacher.setText(courseBean.getVideoTeacher());
+        tvCourseteacher.setText(courseBean.getSpeakerTeacher());
         tvPrice.setText(courseBean.getCurriculumPrice());
         Glide.with(context).load(courseBean.getCurriculumPicture()).
                 into(standardGSYVideoPlayer);

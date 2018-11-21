@@ -25,6 +25,7 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.interfaces.VideoFragmentInterface;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -85,6 +86,7 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
         tabVideo.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                Log.d("初始化选择");
                 int position = tab.getPosition();
                 if (position == 0) {
                     type = 0;
@@ -93,7 +95,7 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
                     type = 1;
                     rvVideocourselist.setAdapter(payadapter);
                 }
-                loaddata();
+
             }
 
             @Override
@@ -186,9 +188,6 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        isfistaddtab = true;
-        type = 0;
-        freepage = 1;
     }
 
     @Override

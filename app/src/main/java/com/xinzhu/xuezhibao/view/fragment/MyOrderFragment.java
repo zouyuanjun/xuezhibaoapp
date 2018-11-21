@@ -23,6 +23,7 @@ import com.xinzhu.xuezhibao.adapter.MyorderAdapter;
 import com.xinzhu.xuezhibao.bean.OrderBean;
 import com.xinzhu.xuezhibao.presenter.MyOrederPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.view.activity.GoodsFeedbackActivity;
 import com.xinzhu.xuezhibao.view.activity.OrderDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.RefundActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyOrderInterface;
@@ -112,6 +113,10 @@ int itemposition;
                     itemposition=position;
                    popupWindow= CreatPopwindows.creatpopwindows(getActivity(),R.layout.pop_loading);
                    popupWindow.showAtLocation(view,Gravity.CENTER,0,0);
+                }else   if (POSITION == 3) {
+                    Intent intent=new Intent(getContext(),GoodsFeedbackActivity.class);
+                    intent.putExtra(Constants.INTENT_ID,orderBeanList.get(position));
+                    startActivity(intent);
                 }
             }
 

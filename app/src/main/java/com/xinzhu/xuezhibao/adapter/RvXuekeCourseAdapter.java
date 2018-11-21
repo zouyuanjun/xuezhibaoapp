@@ -1,8 +1,6 @@
 package com.xinzhu.xuezhibao.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.media.MediaMetadataRetriever;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,21 +10,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
-import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.bumptech.glide.request.RequestOptions;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.CourseBean;
-import com.xinzhu.xuezhibao.bean.XuekeCourseBean;
 
 import java.lang.ref.WeakReference;
-import java.security.MessageDigest;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
 public class RvXuekeCourseAdapter extends RecyclerView.Adapter {
     protected WeakReference<Context> mContext;
@@ -52,7 +43,7 @@ public class RvXuekeCourseAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
-        ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getVideoTeacher());
+        ((ViewHolder) holder).tvTeacher.setText("主讲"+mDatas.get(position).getSpeakerTeacher());
         ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
         ((ViewHolder) holder).tvClass.setText(mDatas.get(position).getClassDictionaryName());
         ((ViewHolder) holder).tvClass2.setText(mDatas.get(position).getSubjectDictionaryName());

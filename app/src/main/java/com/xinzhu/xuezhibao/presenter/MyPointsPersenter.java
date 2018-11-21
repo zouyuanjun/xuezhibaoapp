@@ -50,23 +50,28 @@ public class MyPointsPersenter extends BasePresenter {
                 if (code==100){
                     String data=JsonUtils.getStringValue(result,"Data");
                     if (what==1){
-                        data=JsonUtils.getStringValue(data,"rows");
                         List<MyPointsBean> list= JSON.parseArray(data,MyPointsBean.class);
-                        List<MyPointsBean> list2=new ArrayList<>();
-                        for (MyPointsBean myPointsBean:list){
-                            String content=myPointsBean.getTrackContent();
-                            int index=content.indexOf("+");
-                            if (index>0){
-                            }else {
-                                index=content.indexOf("-");
+                        if (null!=list&&list.size()>0){
+                            List<MyPointsBean> list2=new ArrayList<>();
+                            for (MyPointsBean myPointsBean:list){
+                                String content=myPointsBean.getTrackContent();
+                                int index=content.indexOf("+");
+                                if (index>0){
+                                }else {
+                                    index=content.indexOf("-");
+                                }
+                                String title=content.substring(0,index);
+                                String num=content.substring(index);
+                                myPointsBean.setTrackContent(title);
+                                myPointsBean.setPointnum(num);
+                                list2.add(myPointsBean);
+                                pointsInterface.getdata(list2);
                             }
-                            String title=content.substring(0,index);
-                            String num=content.substring(index);
-                            myPointsBean.setTrackContent(title);
-                            myPointsBean.setPointnum(num);
-                            list2.add(myPointsBean);
+                        }else {
+                            pointsInterface.nomoredata();
                         }
-                        pointsInterface.getdata(list2);
+
+
                     }
                 }if (code==203){
                     pointsInterface.nomoredata();

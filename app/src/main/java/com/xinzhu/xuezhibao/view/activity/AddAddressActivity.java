@@ -61,6 +61,12 @@ public class AddAddressActivity extends BaseActivity {
         mPicker.init(this);
         addressBean= (AddressBean) getIntent().getSerializableExtra(Constants.INTENT_ID);
         if (null!=addressBean){
+            city=addressBean.getCity();
+            province=addressBean.getProvince();
+            county=addressBean.getCounty();
+        }
+
+        if (null!=addressBean){
             EDITMODE=2;
             tvName.setText(addressBean.getLinkman());
             edPhone.setText(addressBean.getLinkPhone());
@@ -116,13 +122,13 @@ public class AddAddressActivity extends BaseActivity {
                         super.onSelected(provinc, citys, district);
                         //省份
                         if (provinc != null) {
-                            citysrt=provinc.getName().replace("省","");
+                            citysrt=provinc.getName();
                             province=provinc.getName();
                         }
                         //城市
                         if (citys != null) {
                             city=citys.getName();
-                            citysrt=citysrt+"·"+citys.getName().replace("市","");
+                            citysrt=citysrt+"·"+citys.getName();
                         }
                         //地区
                         if (district != null) {
@@ -139,7 +145,8 @@ public class AddAddressActivity extends BaseActivity {
                 String name=tvName.getText().toString();
                 String phone=edPhone.getText().toString();
                 String details=edAddressdetail.getText().toString();
-                if (StringUtil.isEmpty(name)||StringUtil.isEmpty(phone)||StringUtil.isEmpty(details)||StringUtil.isEmpty(citysrt)){
+                String address=tvSelectaddress.getText().toString();
+                if (StringUtil.isEmpty(name)||StringUtil.isEmpty(phone)||StringUtil.isEmpty(details)||StringUtil.isEmpty(address)){
                     BToast.error(this).text("请填写完整在提交").show();
                 }else {
                     if (EDITMODE==1){
