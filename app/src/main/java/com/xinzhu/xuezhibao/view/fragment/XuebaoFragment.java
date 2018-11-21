@@ -143,24 +143,27 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         //初始化最热课程列表
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rvHotCourse.setLayoutManager(linearLayoutManager);
-        rvHotCourse.setNestedScrollingEnabled(false);
-        XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
-        rvHotCourse.setAdapter(courseAdapter);
-        courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), CourseDetailActivity.class);
-                intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
-                startActivity(intent);
-            }
+        if (null!=rvHotCourse){
+            rvHotCourse.setLayoutManager(linearLayoutManager);
+            rvHotCourse.setNestedScrollingEnabled(false);
+            XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
+            rvHotCourse.setAdapter(courseAdapter);
+            courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Intent intent=new Intent(getContext(), CourseDetailActivity.class);
+                    intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                    startActivity(intent);
+                }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
+                @Override
+                public void onItemLongClick(View view, int position) {
 
-            }
-        });
-        progressBar1.setVisibility(View.GONE);
+                }
+            });
+            progressBar1.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -168,24 +171,27 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         //初始化最热课程列表
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rvNewCourse.setLayoutManager(linearLayoutManager);
-        rvNewCourse.setNestedScrollingEnabled(false);
-        XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
-        rvNewCourse.setAdapter(courseAdapter);
-        courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), CourseDetailActivity.class);
-                intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
-                startActivity(intent);
-            }
+        if (null!=rvNewCourse){
+            rvNewCourse.setLayoutManager(linearLayoutManager);
+            rvNewCourse.setNestedScrollingEnabled(false);
+            XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
+            rvNewCourse.setAdapter(courseAdapter);
+            courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Intent intent=new Intent(getContext(), CourseDetailActivity.class);
+                    intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                    startActivity(intent);
+                }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
+                @Override
+                public void onItemLongClick(View view, int position) {
 
-            }
-        });
-        progressBar2.setVisibility(View.GONE);
+                }
+            });
+            progressBar2.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -193,24 +199,27 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         //初始化推荐课程列表
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rvRecommendCourse.setLayoutManager(linearLayoutManager);
-        rvRecommendCourse.setNestedScrollingEnabled(false);
-        XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
-        rvRecommendCourse.setAdapter(courseAdapter);
-        courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), CourseDetailActivity.class);
-                intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
-                startActivity(intent);
-            }
+        if (null!=rvRecommendCourse){
+            rvRecommendCourse.setLayoutManager(linearLayoutManager);
+            rvRecommendCourse.setNestedScrollingEnabled(false);
+            XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
+            rvRecommendCourse.setAdapter(courseAdapter);
+            courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Intent intent=new Intent(getContext(), CourseDetailActivity.class);
+                    intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                    startActivity(intent);
+                }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
+                @Override
+                public void onItemLongClick(View view, int position) {
 
-            }
-        });
-        progressBar3.setVisibility(View.GONE);
+                }
+            });
+            progressBar3.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -218,24 +227,27 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         //初始化最热课程列表
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rvAllCourse.setLayoutManager(linearLayoutManager);
-        rvAllCourse.setNestedScrollingEnabled(false);
-        XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
-        rvAllCourse.setAdapter(courseAdapter);
-        courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(), CourseDetailActivity.class);
-                intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
-                startActivity(intent);
-            }
+        if (null!=rvAllCourse){
+            rvAllCourse.setLayoutManager(linearLayoutManager);
+            rvAllCourse.setNestedScrollingEnabled(false);
+            XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
+            rvAllCourse.setAdapter(courseAdapter);
+            courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Intent intent=new Intent(getContext(), CourseDetailActivity.class);
+                    intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                    startActivity(intent);
+                }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
+                @Override
+                public void onItemLongClick(View view, int position) {
 
-            }
-        });
-        progressBar4.setVisibility(View.GONE);
+                }
+            });
+            progressBar4.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -243,12 +255,15 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         if (null==list&&list.size()==0){
             return;
         }
-        for (BannerImgBean bannerImgBean:list){
-            bannerlist.add(bannerImgBean.getAdUrl());
-            bannerImgBeans.add(bannerImgBean);
+        if (null!=banner){
+            for (BannerImgBean bannerImgBean:list){
+                bannerlist.add(bannerImgBean.getAdUrl());
+                bannerImgBeans.add(bannerImgBean);
+            }
+            banner.setImages(bannerlist);
+            banner.start();
         }
-        banner.setImages(bannerlist);
-        banner.start();
+
     }
 
 

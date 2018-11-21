@@ -170,7 +170,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         unbinder.unbind();
     }
 
-
     public void onEvent(MessageEvent event) {
         //  event.getMessage().toJson();
         messagecount=JMessageClient.getAllUnReadMsgCount();
@@ -182,7 +181,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         if (message.name().equals("user_logout")){
             BToast.error(getContext()).text("您从其他客户端登陆，本客户端已下线").show();
         }
-        //do your own business
     }
     //通知栏点击事件
     public void onEvent(NotificationClickEvent event) {
