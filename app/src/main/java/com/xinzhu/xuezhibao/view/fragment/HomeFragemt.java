@@ -282,41 +282,16 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        rvVideo.setLayoutManager(linearLayoutManager);
-        rvVideo.setNestedScrollingEnabled(false);
-        homeVideoAdapter = new HomeVideoAdapter(MyApplication.getContext(), mDatas);
-        rvVideo.setAdapter(homeVideoAdapter);
-        homeVideoAdapter.setOnItemClickListener(new HomeVideoAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                String id = mDatas.get(position).getVideoId();
-                Intent intent = new Intent(getContext(), VideoDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID, id);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
-        });
-    }
-
-    @Override
-    public void getVoicedata(final List<VideoVoiceBean> mDatas) {
-        if (null!=rvVoice) {
-//        初始化音频列表
-            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(MyApplication.getContext());
-            linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-            rvVoice.setNestedScrollingEnabled(false);
-            rvVoice.setLayoutManager(linearLayoutManager2);
-            homeVoiceAdapter = new HomeVoiceAdapter(MyApplication.getContext(), mDatas);
-            rvVoice.setAdapter(homeVoiceAdapter);
-            homeVoiceAdapter.setOnItemClickListener(new HomeVoiceAdapter.OnItemClickListener() {
+        if (null!=rvVideo){
+            rvVideo.setLayoutManager(linearLayoutManager);
+            rvVideo.setNestedScrollingEnabled(false);
+            homeVideoAdapter = new HomeVideoAdapter(MyApplication.getContext(), mDatas);
+            rvVideo.setAdapter(homeVideoAdapter);
+            homeVideoAdapter.setOnItemClickListener(new HomeVideoAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
                     String id = mDatas.get(position).getVideoId();
-                    Intent intent = new Intent(getContext(), VoiceDetilsActivity.class);
+                    Intent intent = new Intent(getContext(), VideoDetilsActivity.class);
                     intent.putExtra(Constants.INTENT_ID, id);
                     startActivity(intent);
                 }
@@ -327,6 +302,37 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 }
             });
         }
+
+    }
+
+    @Override
+    public void getVoicedata(final List<VideoVoiceBean> mDatas) {
+        if (null!=rvVoice) {
+//        初始化音频列表
+            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(MyApplication.getContext());
+            linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+            if (null!=rvVoice){
+                rvVoice.setNestedScrollingEnabled(false);
+                rvVoice.setLayoutManager(linearLayoutManager2);
+                homeVoiceAdapter = new HomeVoiceAdapter(MyApplication.getContext(), mDatas);
+                rvVoice.setAdapter(homeVoiceAdapter);
+                homeVoiceAdapter.setOnItemClickListener(new HomeVoiceAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        String id = mDatas.get(position).getVideoId();
+                        Intent intent = new Intent(getContext(), VoiceDetilsActivity.class);
+                        intent.putExtra(Constants.INTENT_ID, id);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+
+                    }
+                });
+            }
+
+        }
     }
 
     //初始化文章列表
@@ -335,24 +341,27 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
-        rvArticle.setLayoutManager(linearLayoutManager3);
-        rvArticle.setNestedScrollingEnabled(false);
-        homeArticleAdapter = new HomeArticleAdapter(MyApplication.getContext(), mDatas);
-        rvArticle.setAdapter(homeArticleAdapter);
-        homeArticleAdapter.setOnItemClickListener(new HomeArticleAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                String id = mDatas.get(position).getArticleId();
-                Intent intent = new Intent(getActivity(), ArticleDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID, id);
-                getActivity().startActivity(intent);
-            }
+        if (null!=rvArticle){
+            rvArticle.setLayoutManager(linearLayoutManager3);
+            rvArticle.setNestedScrollingEnabled(false);
+            homeArticleAdapter = new HomeArticleAdapter(MyApplication.getContext(), mDatas);
+            rvArticle.setAdapter(homeArticleAdapter);
+            homeArticleAdapter.setOnItemClickListener(new HomeArticleAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    String id = mDatas.get(position).getArticleId();
+                    Intent intent = new Intent(getActivity(), ArticleDetilsActivity.class);
+                    intent.putExtra(Constants.INTENT_ID, id);
+                    getActivity().startActivity(intent);
+                }
 
-            @Override
-            public void onItemLongClick(View view, int position) {
+                @Override
+                public void onItemLongClick(View view, int position) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
     @Override
