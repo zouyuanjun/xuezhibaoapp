@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 public class FamilyActivity2 extends BaseTopTabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState,R.layout.activity_jiajiao);
         inittab("课程", "老师", "任务", "反馈");
         initfragment(MyFamilyCourseFragment.newInstance(1), MyFamilyCourseFragment.newInstance(2), MyFamilyCourseFragment.newInstance(3), MyFamilyCourseFragment.newInstance(4));
         bingview();

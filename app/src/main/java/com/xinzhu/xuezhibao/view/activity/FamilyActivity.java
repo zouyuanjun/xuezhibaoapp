@@ -23,9 +23,9 @@ public class FamilyActivity extends BaseActivity {
     String[] title = {"课程", "老师", "任务","反馈"};
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
-    @BindView(R.id.tb_jiajiao)
+    @BindView(R.id.tb_basetablayout)
     TabLayout tbJiajiao;
-    @BindView(R.id.vp_jiajiao)
+    @BindView(R.id.vp_baseviewpage)
     ViewPager vpJiajiao;
 
     @Override

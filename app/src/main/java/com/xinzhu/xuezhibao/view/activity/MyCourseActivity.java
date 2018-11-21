@@ -26,9 +26,9 @@ public class MyCourseActivity extends BaseActivity {
     String[] title = {"家庭教育", "学科教育"};
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
-    @BindView(R.id.tb_jiajiao)
+    @BindView(R.id.tb_basetablayout)
     TabLayout tbJiajiao;
-    @BindView(R.id.vp_jiajiao)
+    @BindView(R.id.vp_baseviewpage)
     ViewPager vpJiajiao;
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -84,6 +84,8 @@ public class CoursePresenter {
                     List<CourseBean> list=JSON.parseArray(data,CourseBean.class);
                     if (null!=list&&list.size()>0){
                         subjectCourseInterface.getSubjectCourse(list);
+                    }else {
+                        subjectCourseInterface.noMoreData();
                     }
 
                 }
