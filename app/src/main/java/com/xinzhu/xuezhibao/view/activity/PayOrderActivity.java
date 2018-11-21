@@ -84,6 +84,12 @@ public class PayOrderActivity extends BaseActivity implements PayOrderInterface 
         }
         myOrederPresenter = new MyOrederPresenter(this);
         myOrederPresenter.getdefendaddress();
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @OnClick({R.id.csl_address, R.id.tv_affirmpay})

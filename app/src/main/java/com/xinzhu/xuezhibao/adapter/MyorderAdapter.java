@@ -42,7 +42,7 @@ public class MyorderAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((MyViewHolder) holder).tvTitle.setText(mDatas.get(position).getName());
-        ((MyViewHolder) holder).tvOther.setText("—"+mDatas.get(position).getOrderPrice()+"积分");
+        ((MyViewHolder) holder).tvOther.setText("-"+mDatas.get(position).getOrderPrice()+"积分");
         ((MyViewHolder) holder).tvPrice.setText("￥"+mDatas.get(position).getPrice());
         ((MyViewHolder) holder).tvOrdertype.setText(mDatas.get(position).getDictionaryName());
         if (null!=mDatas.get(position).getDictionaryName()&&mDatas.get(position).getDictionaryName().equals("学科课程") && mDatas.get(position).getState().equals("100")) {
@@ -53,7 +53,7 @@ public class MyorderAdapter extends RecyclerView.Adapter {
         if (mDatas.get(position).getState().equals("2")){
             ((MyViewHolder) holder).tvOrderstuts.setText("等待商城发货");
             ((MyViewHolder) holder).tvOrdertype.setText("积分商城");
-            ((MyViewHolder) holder).tvOther.setText("—"+mDatas.get(position).getOrderPrice()+"积分");
+            ((MyViewHolder) holder).tvOther.setText("-"+mDatas.get(position).getOrderPrice()+"积分");
         }
         if (mDatas.get(position).getState().equals("3")){
             ((MyViewHolder) holder).cslAction.setVisibility(View.VISIBLE);
@@ -66,7 +66,7 @@ public class MyorderAdapter extends RecyclerView.Adapter {
             ((MyViewHolder) holder).tvOrderstuts.setText("待评价");
             ((MyViewHolder) holder).tvActionone.setText("发表评价");
             ((MyViewHolder) holder).tvOrdertype.setText("积分商城");
-            ((MyViewHolder) holder).tvOther.setText("—"+mDatas.get(position).getOrderPrice()+"积分");
+            ((MyViewHolder) holder).tvOther.setText("-"+mDatas.get(position).getOrderPrice()+"积分");
         }
         ((MyViewHolder) holder).imageView19.setImageURI(mDatas.get(position).getPicture());
         Log.d("加载一条数据");

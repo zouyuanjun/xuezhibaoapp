@@ -6,7 +6,7 @@ public class OrderBean implements Serializable {
     String ordertype;
     String orderTime;
     String orderNum;
-    String orderPrice;
+    int orderPrice;
     String payTime;
     String picture;
     String shipmentsTime;
@@ -68,11 +68,11 @@ public class OrderBean implements Serializable {
         this.orderNum = orderNum;
     }
 
-    public String getOrderPrice() {
+    public int getOrderPrice() {
         return orderPrice;
     }
 
-    public void setOrderPrice(String orderPrice) {
+    public void setOrderPrice(int orderPrice) {
         this.orderPrice = orderPrice;
     }
 
