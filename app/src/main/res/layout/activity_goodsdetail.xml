@@ -10,8 +10,7 @@
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:fitsSystemWindows="true">
+        android:layout_weight="1">
 
         <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
@@ -23,6 +22,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_scrollFlags="scroll">
+
+
+
+                <com.youth.banner.Banner
+                    android:id="@+id/sdv_goodspicter"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
                 <ImageView
                     android:id="@+id/im_back"
                     android:layout_width="wrap_content"
@@ -32,15 +41,6 @@
                     android:background="@drawable/orderdetail_btn_return"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
-
-                <com.youth.banner.Banner
-                    android:id="@+id/sdv_goodspicter"
-                    android:layout_width="match_parent"
-                    android:layout_height="260dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <TextView
                     android:id="@+id/tv_goodstitle"
                     android:layout_width="0dp"
@@ -95,12 +95,12 @@
             <android.support.design.widget.TabLayout
                 android:id="@+id/tb_goodstab"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
+                app:layout_scrollFlags="exitUntilCollapsed"
                 app:tabIndicatorHeight="3dp"
                 app:tabSelectedTextColor="@color/appcolor"
                 app:tabTextAppearance="@style/TabLayoutTextStyle"
-                app:tabTextColor="@color/color_black_333333"
-                app:layout_scrollFlags="exitUntilCollapsed">
+                app:tabTextColor="@color/color_black_333333">
 
                 <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
@@ -116,86 +116,92 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_pingjia"
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/ns_pingjia"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
+                android:id="@+id/ll_pingjia"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginRight="26dp"
-                    android:text="综合评分" />
-
-                <RatingBar
-                    android:id="@+id/ratingBar"
-                    style="@style/myRatingBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="16dp"
-                    android:clickable="false"
-                    android:numStars="5"
-                    android:rating="1.5"></RatingBar>
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/fenge"></LinearLayout>
+                    android:layout_height="44dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginRight="26dp"
+                        android:text="综合评分" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        style="@style/myRatingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:clickable="false"
+                        android:numStars="5"
+                        android:rating="1.5"></RatingBar>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/fenge"></LinearLayout>
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_nocomment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:text="暂无评价" />
+
+                <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                    android:id="@+id/refreshLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rv_goodsevaluate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </android.support.v7.widget.RecyclerView>
+
+                    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    </com.scwang.smartrefresh.layout.footer.ClassicsFooter>
+                </com.scwang.smartrefresh.layout.SmartRefreshLayout>
             </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
 
-            <TextView
-                android:id="@+id/tv_nocomment"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:text="暂无评价" />
-
-            <com.scwang.smartrefresh.layout.SmartRefreshLayout
-                android:id="@+id/refreshLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_goodsevaluate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </android.support.v7.widget.RecyclerView>
-
-                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                </com.scwang.smartrefresh.layout.footer.ClassicsFooter>
-            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-        </LinearLayout>
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
             <WebView
-                android:layout_marginBottom="20dp"
                 android:id="@+id/web_goodsdetail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                >
-            </WebView>
+                android:layout_marginBottom="20dp"></WebView>
 
         </android.support.v4.widget.NestedScrollView>
-          </android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"

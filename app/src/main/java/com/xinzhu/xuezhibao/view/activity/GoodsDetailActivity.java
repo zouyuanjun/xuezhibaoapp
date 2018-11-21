@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -65,8 +66,8 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     TabLayout tbGoodstab;
     @BindView(R.id.ratingBar)
     RatingBar ratingBar;
-    @BindView(R.id.ll_pingjia)
-    LinearLayout llPingjia;
+    @BindView(R.id.ns_pingjia)
+    NestedScrollView ns_pingjia;
     GoodsCommentAdapter goodsCommentAdapter;
     int page = 1;
     List<GoodsComment> goodsCommentList = new ArrayList<>();
@@ -114,10 +115,10 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                 int POSITION = tab.getPosition();
                 if (POSITION == 0) {
                     webGoodsdetail.setVisibility(View.VISIBLE);
-                    llPingjia.setVisibility(View.GONE);
+                    ns_pingjia.setVisibility(View.GONE);
                 } else {
                     webGoodsdetail.setVisibility(View.GONE);
-                    llPingjia.setVisibility(View.VISIBLE);
+                    ns_pingjia.setVisibility(View.VISIBLE);
                 }
             }
             @Override
