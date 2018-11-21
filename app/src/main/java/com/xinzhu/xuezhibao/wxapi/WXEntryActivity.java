@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.wxapi;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -133,7 +134,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler{
 	// 第三方应用发送到微信的请求处理后的响应结果，会回调到该方法
 	@Override
 	public void onResp(BaseResp resp) {
-		int result = 0;
+		if(resp.getType()==ConstantsAPI.COMMAND_PAY_BY_WX){
+			Log.d("微信支付的结果","onPayFinish,errCode="+resp.errCode);
+		}
+
 		switch (resp.errCode) {
 			case BaseResp.ErrCode.ERR_OK:
 				Log.d("5555","用户授权");
