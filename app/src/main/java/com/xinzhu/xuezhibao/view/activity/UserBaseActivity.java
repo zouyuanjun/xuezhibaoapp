@@ -258,6 +258,7 @@ public class UserBaseActivity extends TakePhotoActivity {
                         Constants.userBasicInfo.setProvince(sheng);
                         Constants.userBasicInfo.setCity(shi);
                         Constants.userBasicInfo.setCounty(qu);
+                        Constants.userBasicInfo.setToken(Constants.TOKEN);
                         String string=JsonUtils.objectToString(Constants.userBasicInfo);
                         Network.getnetwork().postJson(string,Constants.URL+"/app/update-member",handler,2);
                     }
@@ -326,6 +327,7 @@ public class UserBaseActivity extends TakePhotoActivity {
                 tvMothername.setText(result);
                 Constants.userBasicInfo.setMotherName(result);
             }
+            Constants.userBasicInfo.setToken(Constants.TOKEN);
             String string=JsonUtils.objectToString(Constants.userBasicInfo);
             Network.getnetwork().postJson(string,Constants.URL+"/app/update-member",handler,2);
         }
