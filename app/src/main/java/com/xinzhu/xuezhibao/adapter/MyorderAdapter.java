@@ -44,10 +44,11 @@ public class MyorderAdapter extends RecyclerView.Adapter {
         ((MyViewHolder) holder).tvTitle.setText(mDatas.get(position).getName());
         ((MyViewHolder) holder).tvOther.setText("-"+mDatas.get(position).getOrderPrice()+"积分");
         ((MyViewHolder) holder).tvPrice.setText("￥"+mDatas.get(position).getPrice());
-        ((MyViewHolder) holder).tvOrdertype.setText(mDatas.get(position).getDictionaryName());
-        if (null!=mDatas.get(position).getDictionaryName()&&mDatas.get(position).getDictionaryName().equals("学科课程") && mDatas.get(position).getState().equals("100")) {
+        if (null!=mDatas.get(position).getDictionaryName()&&mDatas.get(position).getType().equals("1") && mDatas.get(position).getState().equals("100")) {
             ((MyViewHolder) holder).cslAction.setVisibility(View.VISIBLE);
             ((MyViewHolder) holder).tvActionone.setText("申请退款");
+            ((MyViewHolder) holder).tvOther.setVisibility(View.GONE);
+            ((MyViewHolder) holder).tvOrdertype.setText(mDatas.get(position).getDictionaryName());
             ((MyViewHolder) holder).tvActionone.setBackground(ContextCompat.getDrawable(MyApplication.getContext(),R.drawable.dialogbg_nor));
         }
         if (mDatas.get(position).getState().equals("2")){

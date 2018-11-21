@@ -151,6 +151,7 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
         if (null != rvJiaojiaoCourseAdapter) {
             rvJiaojiaoCourseAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh();
         }
         page++;
         imDataisnull.setVisibility(View.GONE);
@@ -162,6 +163,7 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
         if (courseBeanList.size()==0){
             imDataisnull.setVisibility(View.VISIBLE);
         }
+        refreshLayout.finishLoadMoreWithNoMoreData();
     }
 
     @Override

@@ -136,6 +136,7 @@ public class MyPointsFragment extends LazyLoadFragment implements PointsInterfac
             imDataisnull.setVisibility(View.VISIBLE);
         }
         refreshLayout.finishLoadMoreWithNoMoreData();
+        refreshLayout.finishRefresh();
     }
 
     @Override

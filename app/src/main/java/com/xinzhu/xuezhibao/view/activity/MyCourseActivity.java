@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 我的课程
+ */
 public class MyCourseActivity extends BaseActivity {
 
     ArrayList<Fragment> fragmentList = new ArrayList<>();

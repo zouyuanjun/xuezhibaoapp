@@ -15,13 +15,20 @@ public class OrderBean implements Serializable {
     String dictionaryName;
     String name;
     String orderId;
+    String type;
     int price;
-
     public OrderBean() {
     }
-
     public String getOrderId() {
         return orderId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setOrderId(String orderId) {
