@@ -52,7 +52,20 @@ public class JsonUtils {
 		}
 
 	}
+	public static boolean getbooleValue(String jsonString, String key) {
+		if (com.zou.fastlibrary.utils.JSON.isJsonCorrect(jsonString)){
+			JSONObject jsonObject = JSON.parseObject(jsonString);
+			boolean b = jsonObject.containsKey(key);
+			if (b) {
+				return jsonObject.getBooleanValue(key);
+			} else {
+				return false;
+			}
+		}else {
+			return false;
+		}
 
+	}
 	/**
 	 * biao'zhunlistjson转成List<T>对象
 	 * 

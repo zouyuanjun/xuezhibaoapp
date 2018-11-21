@@ -52,16 +52,12 @@ public class LikeCollectPresenter {
                 return;
             }
             else if (what == 7) {
-                if (code == 6) {
-                    likeCollectInterface.islike(false);
-                }else if (code==100){
-                    likeCollectInterface.islike(true);
+                if (code==100){
+                    likeCollectInterface.islike(JsonUtils.getbooleValue(result,"Data"));
                 }
             }else if (what == 9) {
-                if (code == 6) {
-                    likeCollectInterface.iscollect(false);
-                }else if (code==100){
-                    likeCollectInterface.iscollect(true);
+                if (code==100){
+                    likeCollectInterface.iscollect(JsonUtils.getbooleValue(result,"Data"));
                 }
             }
     };

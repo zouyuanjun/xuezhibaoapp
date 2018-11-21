@@ -138,6 +138,7 @@ Handler handler=new Handler(){
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        handler.removeCallbacksAndMessages(null);
         unbinder.unbind();
     }
 
