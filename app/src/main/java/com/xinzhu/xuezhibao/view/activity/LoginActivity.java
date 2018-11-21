@@ -128,9 +128,10 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
     }
 
     @Override
-    public void loginfail(int code) {
-        BToast.error(context).text("错误码："+code+",账号或密码错误").show();
+    public void loginfail(int code, String tip) {
+        BToast.error(context).text("错误码："+code+tip).show();
     }
+
 
     @Override
     public void networktimeout() {

@@ -43,8 +43,10 @@ SplashInterface splashInterface;
             String result = (String) msg.obj;
             com.zou.fastlibrary.utils.Log.d(result);
             int code=-999;
+            String tip = null;
             try {
-                code = JsonUtils.getIntValue(result, "_code");
+                code = JsonUtils.getIntValue(result, "Code");
+                tip=JsonUtils.getStringValue(result,"Tips");
             }catch (com.alibaba.fastjson.JSONException e){
                 com.zou.fastlibrary.utils.Log.d("异常了");
                 if (null!=loginInterface){
@@ -71,16 +73,19 @@ SplashInterface splashInterface;
             }
             if (what == 1) {
                 if (code==100){
-                    String data=JsonUtils.getStringValue(result,"Data");
-                    Constants.TOKEN=JsonUtils.getStringValue(data,"token");
-                    Constants.userBasicInfo= (UserBasicInfo) JsonUtils.stringToObject(data,UserBasicInfo.class);
-                    loginInterface.loginsuccessful();
-                    SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());
-                    DataKeeper.save(sharedPreferences,"PHONE",myphone);
-                    DataKeeper.save(sharedPreferences,"PASSWORD",mypassword);
-
+                    try {
+                        String data=JsonUtils.getStringValue(result,"Data");
+                        Constants.TOKEN=JsonUtils.getStringValue(data,"token");
+                        Constants.userBasicInfo= (UserBasicInfo) JsonUtils.stringToObject(data,UserBasicInfo.class);
+                        loginInterface.loginsuccessful();
+                        SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());
+                        DataKeeper.save(sharedPreferences,"PHONE",myphone);
+                        DataKeeper.save(sharedPreferences,"PASSWORD",mypassword);
+                    }catch (Exception e){
+                        loginInterface.loginfail(code,tip);
+                    }
                 }else {
-                    loginInterface.loginfail(code);
+                    loginInterface.loginfail(code,tip);
                 }
             }else if (what == 2) {
                 if (code==100){
