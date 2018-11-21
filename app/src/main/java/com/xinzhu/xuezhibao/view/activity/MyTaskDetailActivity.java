@@ -2,6 +2,7 @@ package com.xinzhu.xuezhibao.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -55,6 +56,12 @@ public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterfa
             tvTaskstatu.setText("领取任务");
         }
         webTaskdetail.setWebViewClient(new WebViewUtil.MyWebViewClient(this,webTaskdetail));
+       appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               finish();
+           }
+       });
     }
 
     @OnClick(R.id.tv_taskstatu)

@@ -32,7 +32,6 @@ public class SplashActivity extends BaseActivity implements SplashInterface{
                 try{
                     sleep(1000);
                   loginPresenter.autologin();
-                    goToActivity(SplashActivity.this,MainActivity.class);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
