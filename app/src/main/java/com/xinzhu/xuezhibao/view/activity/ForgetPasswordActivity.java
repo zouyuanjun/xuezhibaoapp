@@ -168,6 +168,10 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
                 break;
             case R.id.tv_uppassword:
                 if (codeisture&&passwordisture){
+                    if (password.length()<6){
+                        BToast.error(view.getContext()).text("密码长度不能小于6位").show();
+                        return;
+                    }
                     phone = etPhone.getText().toString();
                     password = etPassword.getText().toString();
                     code = etCode.getText().toString();
