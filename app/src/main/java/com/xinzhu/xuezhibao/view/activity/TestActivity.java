@@ -45,7 +45,7 @@ public class TestActivity extends BaseActivity {
     @BindView(R.id.radiogroup)
     RadioGroup radiogroup;
     Integer crrentindex = 0;
-    boolean issyschangecheck = false;
+    boolean issyschangecheck = false;    //是否时由于系统清除选择时的
     boolean iscommit = false;
     double yuedu = 0;
     double shumian = 0;
@@ -108,6 +108,9 @@ public class TestActivity extends BaseActivity {
                             crrentindex++;
                             handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
                         } else {
+                            ans3.setClickable(true);
+                            ans2.setClickable(true);
+                            ans1.setClickable(true);
                             textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
                         }
 
@@ -127,6 +130,9 @@ public class TestActivity extends BaseActivity {
                             crrentindex++;
                             handler.sendMessageDelayed(handler.obtainMessage(1), 100);
                         } else {
+                            ans3.setClickable(true);
+                            ans2.setClickable(true);
+                            ans1.setClickable(true);
                             textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
                         }
 
@@ -146,6 +152,9 @@ public class TestActivity extends BaseActivity {
                             crrentindex++;
                             handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
                         } else {
+                            ans3.setClickable(true);
+                            ans2.setClickable(true);
+                            ans1.setClickable(true);
                             textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
                         }
 
@@ -185,45 +194,13 @@ public class TestActivity extends BaseActivity {
                     }
                     Log.d("题目是" + key + ",答案是：" + ansmap.get(key));
                 }
-                yuedu = 5 + 2 * (yuedu - 6.713) / 3.167;
-                shumian = 5 + 2 * (shumian - 6.713) / 3.167;
-                zhuyili = 5 + 2 * (zhuyili - 6.713) / 3.167;
-                duodong = 5 + 2 * (duodong - 6.713) / 3.167;
-                xuexi = 5 + 2 * (xuexi - 6.713) / 3.167;
-                qingxu = 5 + 2 * (qingxu - 3.727) / 1.753;
-                if (yuedu > 9) {
-                    yuedu = 9;
-                }
-                if (shumian > 9) {
-                    shumian = 9;
-                }
-                if (zhuyili > 9) {
-                    zhuyili = 9;
-                }
-                if (duodong > 9) {
-                    duodong = 9;
-                }
-                if (xuexi ==0) {
-                    xuexi = 1;
-                }
-                if (qingxu ==0) {
-                    qingxu = 1;
-                }
-                if (shumian ==0) {
-                    shumian = 1;
-                }
-                if (zhuyili ==0) {
-                    zhuyili = 1;
-                }
-                if (duodong ==0) {
-                    duodong = 1;
-                }
-                if (xuexi ==0) {
-                    xuexi = 1;
-                }
-                if (qingxu ==0) {
-                    qingxu =1;
-                }
+                yuedu = calculate(yuedu);
+                shumian = calculate(shumian);
+                zhuyili = calculate(zhuyili);
+                duodong = calculate(duodong);
+                xuexi = calculate(xuexi);
+                qingxu =calculate(qingxu);
+
                 if (yuedu <= 3) {
                     result = result + "\n\n阅读理解：" + (int)yuedu + "分\n" + anslist.get(0);
                 }
@@ -331,7 +308,16 @@ public class TestActivity extends BaseActivity {
             }
         });
     }
-
+private  double calculate(double data){
+    data = 5 + 2 * (data - 6.713) / 3.167;
+    if (data>9){
+        return 9;
+    } else if (data<1) {
+        return 1;
+    }else {
+        return data;
+    }
+}
 
     void initdata() {
         String s1 = "1.阅读速度明显慢于同年龄正常水平。";
