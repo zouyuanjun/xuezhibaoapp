@@ -25,6 +25,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -574,8 +575,9 @@ public class ChattingListAdapter extends BaseAdapter {
                     }
                 });
             } else {
-               holder.headIcon.setImageURI(Uri.parse("res://com.xinzhu.xuezhibao/" + R.drawable.jmui_head_icon));
+                holder.headIcon.setImageURI(Uri.parse("res://com.xinzhu.xuezhibao/" + R.drawable.jmui_head_icon));
             }
+
 
             // 点击头像跳转到个人信息界面
             holder.headIcon.setOnClickListener(new View.OnClickListener() {
@@ -594,7 +596,7 @@ public class ChattingListAdapter extends BaseAdapter {
                 }
             });
 
-           // holder.headIcon.setTag(position);
+            // holder.headIcon.setTag(position);
             holder.headIcon.setOnLongClickListener(mLongClickListener);
         }
         switch (msg.getContentType()) {
@@ -660,6 +662,7 @@ public class ChattingListAdapter extends BaseAdapter {
         }
         return convertView;
     }
+
     private void resendTextOrVoice(final ViewHolder holder, Message msg) {
         holder.resend.setVisibility(View.GONE);
         holder.sendingIv.setVisibility(View.VISIBLE);
@@ -750,7 +753,7 @@ public class ChattingListAdapter extends BaseAdapter {
                     public void gotResult(final int status, String desc) {
                         holder.progressTv.setVisibility(View.GONE);
                         //此方法是api21才添加的如果低版本会报错找不到此方法.升级api或者使用ContextCompat.getDrawable
-                        holder.contentLl.setBackground(ContextCompat.getDrawable(mContext,R.drawable.jmui_msg_send_bg));
+                        holder.contentLl.setBackground(ContextCompat.getDrawable(mContext, R.drawable.jmui_msg_send_bg));
                         if (status != 0) {
                             HandleResponseCode.onHandle(mContext, status, false);
                             holder.resend.setVisibility(View.VISIBLE);

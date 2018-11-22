@@ -75,7 +75,6 @@
         <activity android:name=".view.activity.VideoDetilsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"/>
         <activity android:name=".view.activity.VoiceDetilsActivity" />
-        <activity android:name=".view.activity.FamilyActivity" />
         <activity android:name=".view.activity.SubjectActivity" />
         <activity android:name=".view.activity.AllCourseActivity" />
         <activity android:name=".view.activity.SendCommentActivity" />
@@ -95,7 +94,6 @@
         <activity android:name=".view.activity.TestActivity" />
         <activity android:name=".view.activity.MyVipCentreActivity" />
         <activity android:name=".view.activity.MyOrderActivity" />
-        <activity android:name=".view.activity.MyPointsActivity" />
         <activity android:name=".view.activity.PointsRuleActivity" />
         <activity android:name=".view.activity.TestBeforeActivity" />
         <activity
@@ -122,8 +120,8 @@
             android:configChanges="keyboardHidden|orientation|screenSize|locale"/>
         <activity android:name=".view.activity.MyAddressActivity" />
         <activity android:name=".view.activity.AddAddressActivity" />
-        <activity android:name=".view.activity.FamilyActivity2" />
-        <activity android:name=".view.activity.MyPointsActivity2" />
+        <activity android:name=".view.activity.MyFamilyCourseActivity" />
+        <activity android:name=".view.activity.MyPointsActivity" />
         <activity android:name=".view.activity.RefundActivity" />
         <activity android:name=".view.activity.PayOrderActivity" />
         <activity android:name=".view.activity.GoodsFeedbackActivity" />

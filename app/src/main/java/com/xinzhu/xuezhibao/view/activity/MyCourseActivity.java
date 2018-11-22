@@ -48,6 +48,7 @@ public class MyCourseActivity extends BaseActivity {
                 finish();
             }
         });
+        appbar.setMidText("我的课程");
     }
 
 }

@@ -22,6 +22,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 课程任务
+ */
 public class CourseTaskActivity extends BaseActivity implements MyJobDetailInterpace {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;

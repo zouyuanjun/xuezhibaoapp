@@ -21,6 +21,9 @@ import com.zou.fastlibrary.utils.StringUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 修改单项个人资料
+ */
 public class EditUserBasicActivity extends BaseActivity {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;

@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 我的收藏
+ */
 public class MyCollectActivity extends BaseActivity {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;

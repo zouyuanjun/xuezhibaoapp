@@ -32,6 +32,8 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
+import com.xinzhu.xuezhibao.immodule.JGApplication;
+import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.presenter.CourseDetailPresenter;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
@@ -109,6 +111,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     GoodView mGoodView;
     @BindView(R.id.im_back)
     ImageView imBack;
+    CourseBean mycourse;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -172,21 +175,24 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
 
     @Override
     public void getCoursedetail(CourseBean courseBean) {
-        tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(courseBean.getCreateTime()));
-        webView.loadDataWithBaseURL(null, courseBean.getCurriculumExplain(), "text/html", "UTF-8", null);
-        tvTitle.setText(courseBean.getCurriculumTitle());
-        tvCourseteacher.setText(courseBean.getSpeakerTeacher());
-        tvPrice.setText(courseBean.getCurriculumPrice());
-        Glide.with(context).load(courseBean.getCurriculumPicture()).
-                into(standardGSYVideoPlayer);
-        //  standardGSYVideoPlayer.setImageURI(courseBean.getCurriculumPicture());
-        if (courseBean.isApply()) {
-            tvBuycourse.setText("已购买");
+        this.mycourse=courseBean;
+        if (null!=tvAllclass){
+            tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(courseBean.getCreateTime()));
+            webView.loadDataWithBaseURL(null, courseBean.getCurriculumExplain(), "text/html", "UTF-8", null);
+            tvTitle.setText(courseBean.getCurriculumTitle());
+            tvCourseteacher.setText(courseBean.getSpeakerTeacher());
+            tvPrice.setText(courseBean.getCurriculumPrice());
+            Glide.with(context).load(courseBean.getCurriculumPicture()).
+                    into(standardGSYVideoPlayer);
+            //  standardGSYVideoPlayer.setImageURI(courseBean.getCurriculumPicture());
+            if (courseBean.isApply()) {
+                tvBuycourse.setText("已购买");
+            }
+            likenum = courseBean.getCurriculumLike();
+            tvLike.setText(likenum + "");
+            tvAlreadybuynum.setText(courseBean.getCurriculumApply() + "人已购买");
+            tvAllclass.setText("共" + courseBean.getSumHour() + "节/" + courseBean.getConsumeHour());
         }
-        likenum = courseBean.getCurriculumLike();
-        tvLike.setText(likenum + "");
-        tvAlreadybuynum.setText(courseBean.getCurriculumApply() + "人已购买");
-        tvAllclass.setText("共" + courseBean.getSumHour() + "节/" + courseBean.getConsumeHour());
     }
 
     @Override
@@ -291,6 +297,12 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_talkabout:
+                Intent notificationIntent = new Intent(CourseDetailActivity.this, ChatActivity.class);
+                notificationIntent.putExtra(JGApplication.TARGET_ID, mycourse.getTeacherPhone());
+                notificationIntent.putExtra(JGApplication.CONV_TITLE, mycourse.getSpeakerTeacher()+"老师");
+                notificationIntent.putExtra(JGApplication.TARGET_APP_KEY,Constants.JPUSH_APPKEY);
+                startActivity(notificationIntent);//自定义跳转到指定页面
+
                 break;
             case R.id.ll_comment:
                 showpop(view);

@@ -18,6 +18,15 @@ public class CourseBean {
     int sumHour;
     int consumeHour;
     boolean isApply;
+    String teacherPhone;
+
+    public String getTeacherPhone() {
+        return teacherPhone;
+    }
+
+    public void setTeacherPhone(String teacherPhone) {
+        this.teacherPhone = teacherPhone;
+    }
 
     public boolean isApply() {
         return isApply;

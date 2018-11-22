@@ -34,6 +34,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 会员中心
+ */
 public class MyVipCentreActivity extends BaseActivity {
     @BindView(R.id.tv_username)
     TextView tvUsername;

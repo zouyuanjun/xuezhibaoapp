@@ -99,6 +99,8 @@ public class JGApplication  {
     public static List<UserInfo> alreadyRead = new ArrayList<>();
     public static List<UserInfo> unRead = new ArrayList<>();
     public static List<String> forAddFriend = new ArrayList<>();
+public static String RECEIVE_HEADER="";
+
 
     public static void setPicturePath(String appKey) {
         if (!SharePreferenceManager.getCachedAppKey().equals(appKey)) {

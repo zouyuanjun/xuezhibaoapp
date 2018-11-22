@@ -17,7 +17,6 @@ import com.xinzhu.xuezhibao.view.fragment.PotionsMallFragment;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
@@ -115,7 +114,7 @@ Handler handler=new Handler(){
         appbar.setRightTextOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToActivity(PointsMallTabActivity.this,MyPointsActivity2.class);
+                goToActivity(PointsMallTabActivity.this,MyPointsActivity.class);
             }
         });
         Network.getnetwork().postJson("",Constants.URL+"/guest/select-product-index-round",handler,1);

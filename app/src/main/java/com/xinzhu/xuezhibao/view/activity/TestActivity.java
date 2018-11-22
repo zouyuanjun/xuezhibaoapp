@@ -124,10 +124,11 @@ public class TestActivity extends BaseActivity {
                         ansmap.put(crrentindex, 1);
                         if (crrentindex < 49) {
                             crrentindex++;
+                            handler.sendMessageDelayed(handler.obtainMessage(1), 100);
                         } else {
                             textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
                         }
-                        handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
+
                         break;
                     case R.id.ans3:
                         if (issyschangecheck) {

@@ -30,6 +30,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 历史反馈
+ */
 public class HistoryFeedbackActivity extends BaseActivity {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;

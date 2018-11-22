@@ -2,7 +2,6 @@ package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
@@ -15,7 +14,6 @@ import android.view.ViewGroup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
-import com.scwang.smartrefresh.layout.listener.OnMultiPurposeListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.VideoVoiceListAdapter;
@@ -43,7 +41,6 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
     VideoVoiceListAdapter freeadapter;
     VideoVoiceListAdapter payadapter;
     Unbinder unbinder;
-    boolean isfistaddtab = true;
     List<VideoVoiceBean> freeBeanList = new ArrayList<>();
     List<VideoVoiceBean> payBeanList = new ArrayList<>();
     int type = 0;
@@ -54,8 +51,7 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     VideoVoiceListPresenter videoVoiceListPresenter;
-    boolean isfirstloadfree = true;
-    boolean isfirstloadpay = true;
+    boolean isfirstload = true;
 
     @Override
     protected int setContentView() {
@@ -66,12 +62,6 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
     @Override
     public void onStart() {
         super.onStart();
-        if (isfistaddtab) {
-            tabVideo.addTab(tabVideo.newTab().setText("免费视频"));
-            tabVideo.addTab(tabVideo.newTab().setText("付费视频"));
-            tabVideo.setTabTextColors(Color.parseColor("#333333"), Color.parseColor("#f87d28"));
-            isfistaddtab = false;
-        }
     }
 
     @Override
@@ -159,21 +149,18 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
     }
 
     private void loaddata() {
-        if (type == 0) {
-            if (isfirstloadfree) {
-                videoVoiceListPresenter.getfreeVideo(1);
-                isfirstloadfree = false;
+        if (isfirstload){
+            videoVoiceListPresenter.getfreeVideo(1);
+            videoVoiceListPresenter.getpayVideo(1);
+            isfirstload =false;
+        }else {
+            if (type == 0) {
+                    videoVoiceListPresenter.getfreeVideo(freepage);
             } else {
-                videoVoiceListPresenter.getfreeVideo(freepage);
-            }
-        } else {
-            if (isfirstloadpay) {
-                videoVoiceListPresenter.getpayVideo(1);
-                isfirstloadpay = false;
-            } else {
-                videoVoiceListPresenter.getpayVideo(paypage);
+                    videoVoiceListPresenter.getpayVideo(paypage);
             }
         }
+
     }
 
     @Override

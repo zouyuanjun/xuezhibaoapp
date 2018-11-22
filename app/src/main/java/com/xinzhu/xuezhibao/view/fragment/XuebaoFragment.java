@@ -19,8 +19,7 @@ import com.xinzhu.xuezhibao.presenter.XuebaoPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.AllCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
-import com.xinzhu.xuezhibao.view.activity.FamilyActivity;
-import com.xinzhu.xuezhibao.view.activity.FamilyActivity2;
+import com.xinzhu.xuezhibao.view.activity.MyFamilyCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SubjectActivity;
 import com.xinzhu.xuezhibao.view.helputils.CreatDiag;
@@ -256,6 +255,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
             return;
         }
         if (null!=banner){
+            bannerlist.clear();
             for (BannerImgBean bannerImgBean:list){
                 bannerlist.add(bannerImgBean.getAdUrl());
                 bannerImgBeans.add(bannerImgBean);
@@ -327,7 +327,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                     CreatDiag.shoudia(getActivity());
 
                 }else {
-                    getActivity().startActivity(new Intent(getActivity(), FamilyActivity2.class));
+                    getActivity().startActivity(new Intent(getActivity(), MyFamilyCourseActivity.class));
                 }
 
                 break;

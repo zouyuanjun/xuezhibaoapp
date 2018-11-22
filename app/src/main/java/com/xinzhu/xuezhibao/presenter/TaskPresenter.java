@@ -158,7 +158,7 @@ public class TaskPresenter extends BasePresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/app/select-task-by-id", handler, 7);
     }
 
-    public void updatauserbasic() {
+    public void updatauserbasic(){
         String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/find-by-account", handler, 8);
     }

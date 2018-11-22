@@ -26,7 +26,6 @@ import com.xinzhu.xuezhibao.view.activity.MyCollectActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.MyOrderActivity;
 import com.xinzhu.xuezhibao.view.activity.MyPointsActivity;
-import com.xinzhu.xuezhibao.view.activity.MyPointsActivity2;
 import com.xinzhu.xuezhibao.view.activity.MyTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.MyVideoActivity;
 import com.xinzhu.xuezhibao.view.activity.MyVipCentreActivity;
@@ -36,6 +35,7 @@ import com.xinzhu.xuezhibao.view.activity.UserBaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.utils.DataKeeper;
 import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.StringUtil;
 
@@ -122,6 +122,7 @@ Handler handler;
                         tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
                         sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
                         tvMyjifen.setText(Constants.userBasicInfo.getIntegral()+"");
+                        Log.d("更新了用户信息");
                     }
 
                 }
@@ -182,7 +183,7 @@ Handler handler;
                 startActivity(intent2);
                 break;
             case R.id.cl_jifen:
-                intent = new Intent(getActivity(), MyPointsActivity2.class);
+                intent = new Intent(getActivity(), MyPointsActivity.class);
                 getActivity().startActivity(intent);
                 break;
             case R.id.im_mytask:
