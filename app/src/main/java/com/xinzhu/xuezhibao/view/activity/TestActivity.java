@@ -135,7 +135,6 @@ public class TestActivity extends BaseActivity {
                             ans1.setClickable(true);
                             textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
                         }
-
                         break;
                     case R.id.ans3:
                         if (issyschangecheck) {
@@ -157,7 +156,6 @@ public class TestActivity extends BaseActivity {
                             ans1.setClickable(true);
                             textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
                         }
-
                         break;
                 }
 
@@ -199,61 +197,61 @@ public class TestActivity extends BaseActivity {
                 zhuyili = calculate(zhuyili);
                 duodong = calculate(duodong);
                 xuexi = calculate(xuexi);
-                qingxu =calculate(qingxu);
+                qingxu = calculate(qingxu);
 
                 if (yuedu <= 3) {
-                    result = result + "\n\n阅读理解：" + (int)yuedu + "分\n" + anslist.get(0);
+                    result = result + "\n\n阅读理解：" + (int) yuedu + "分\n" + anslist.get(0);
                 }
                 if (yuedu > 3 && yuedu < 7) {
-                    result = result + "\n\n阅读理解：" + (int)yuedu + "分\n" + anslist.get(1);
+                    result = result + "\n\n阅读理解：" + (int) yuedu + "分\n" + anslist.get(1);
                 }
                 if (yuedu > 7 && yuedu < 14) {
-                    result = result + "\n\n阅读理解：" + (int)yuedu + "分\n" + anslist.get(2);
+                    result = result + "\n\n阅读理解：" + (int) yuedu + "分\n" + anslist.get(2);
                 }
                 if (shumian <= 3) {
-                    result = result + "\n\n书面表达与写作：" +(int) shumian + "分\n" + anslist.get(3);
+                    result = result + "\n\n书面表达与写作：" + (int) shumian + "分\n" + anslist.get(3);
                 }
                 if (shumian > 3 && shumian < 7) {
-                    result = result + "\n\n书面表达与写作：" +(int) shumian + "分\n" + anslist.get(4);
+                    result = result + "\n\n书面表达与写作：" + (int) shumian + "分\n" + anslist.get(4);
                 }
                 if (shumian > 7 && shumian < 14) {
-                    result = result + "\n\n书面表达与写作：" + (int)shumian + "分\n" + anslist.get(5);
+                    result = result + "\n\n书面表达与写作：" + (int) shumian + "分\n" + anslist.get(5);
                 }
                 if (zhuyili <= 3) {
-                    result = result + "\n\n注意力：" + (int)zhuyili + "分\n" + anslist.get(6);
+                    result = result + "\n\n注意力：" + (int) zhuyili + "分\n" + anslist.get(6);
                 }
                 if (zhuyili > 3 && zhuyili < 7) {
-                    result = result + "\n\n注意力：" + (int)zhuyili + "分\n" + anslist.get(7);
+                    result = result + "\n\n注意力：" + (int) zhuyili + "分\n" + anslist.get(7);
                 }
                 if (zhuyili > 7 && zhuyili < 14) {
-                    result = result + "\n\n注意力：" + (int)zhuyili + "分\n" + anslist.get(8);
+                    result = result + "\n\n注意力：" + (int) zhuyili + "分\n" + anslist.get(8);
                 }
                 if (duodong <= 3) {
-                    result = result + "\n\n多动与抑制：" + (int)duodong + "分\n" + anslist.get(9);
+                    result = result + "\n\n多动与抑制：" + (int) duodong + "分\n" + anslist.get(9);
                 }
                 if (duodong > 3 && duodong < 7) {
-                    result = result + "\n\n多动与抑制：" + (int)duodong + "分\n" + anslist.get(10);
+                    result = result + "\n\n多动与抑制：" + (int) duodong + "分\n" + anslist.get(10);
                 }
                 if (duodong > 7 && duodong < 14) {
-                    result = result + "\n\n多动与抑制：" + (int)duodong + "分\n" + anslist.get(11);
+                    result = result + "\n\n多动与抑制：" + (int) duodong + "分\n" + anslist.get(11);
                 }
                 if (xuexi <= 3) {
-                    result = result + "\n\n学习和感知：" + (int)xuexi + "分\n" + anslist.get(12);
+                    result = result + "\n\n学习和感知：" + (int) xuexi + "分\n" + anslist.get(12);
                 }
                 if (xuexi > 3 && xuexi < 7) {
-                    result = result + "\n\n学习和感知：" + (int)xuexi + "分\n" + anslist.get(13);
+                    result = result + "\n\n学习和感知：" + (int) xuexi + "分\n" + anslist.get(13);
                 }
                 if (xuexi > 7 && xuexi < 14) {
-                    result = result + "\n\n学习和感知：" + (int)xuexi + "分\n" + anslist.get(14);
+                    result = result + "\n\n学习和感知：" + (int) xuexi + "分\n" + anslist.get(14);
                 }
                 if (qingxu <= 3) {
-                    result = result + "\n\n情绪：" + (int)qingxu + "分\n" + anslist.get(15);
+                    result = result + "\n\n情绪：" + (int) qingxu + "分\n" + anslist.get(15);
                 }
                 if (qingxu > 3 && qingxu < 7) {
-                    result = result + "\n\n情绪：" + (int)qingxu + "分\n" + anslist.get(16);
+                    result = result + "\n\n情绪：" + (int) qingxu + "分\n" + anslist.get(16);
                 }
                 if (qingxu > 7 && qingxu < 14) {
-                    result = result + "\n\n情绪：" + (int)qingxu + "分\n" + anslist.get(17);
+                    result = result + "\n\n情绪：" + (int) qingxu + "分\n" + anslist.get(17);
                 }
                 tvResult.setText(result);
                 nestedScrollView.setVisibility(View.VISIBLE);
@@ -308,16 +306,17 @@ public class TestActivity extends BaseActivity {
             }
         });
     }
-private  double calculate(double data){
-    data = 5 + 2 * (data - 6.713) / 3.167;
-    if (data>9){
-        return 9;
-    } else if (data<1) {
-        return 1;
-    }else {
-        return data;
+
+    private double calculate(double data) {
+        data = 5 + 2 * (data - 6.713) / 3.167;
+        if (data > 9) {
+            return 9;
+        } else if (data < 1) {
+            return 1;
+        } else {
+            return data;
+        }
     }
-}
 
     void initdata() {
         String s1 = "1.阅读速度明显慢于同年龄正常水平。";

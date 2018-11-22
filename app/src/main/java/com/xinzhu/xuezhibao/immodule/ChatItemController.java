@@ -234,7 +234,7 @@ public class ChatItemController {
             holder.resend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //     mAdapter.showResendDialog(holder, msg);
+                        mAdapter.showResendDialog(holder, msg);
                 }
             });
         }
@@ -333,7 +333,7 @@ public class ChatItemController {
 
                 @Override
                 public void onClick(View v) {
-                    //   mAdapter.showResendDialog(holder, msg);
+                       mAdapter.showResendDialog(holder, msg);
                 }
             });
         }
@@ -474,7 +474,7 @@ public class ChatItemController {
 
                 @Override
                 public void onClick(View v) {
-                    //   mAdapter.showResendDialog(holder, msg);
+                       mAdapter.showResendDialog(holder, msg);
                 }
             });
         }
@@ -526,7 +526,7 @@ public class ChatItemController {
 
                     Message message = mConv.getMessage(msg.getId());
                     mMsgList.set(mMsgList.indexOf(msg), message);
-//                    notifyDataSetChanged();
+          //          notifyDataSetChanged();
                 }
             });
 
@@ -621,7 +621,7 @@ public class ChatItemController {
                 @Override
                 public void onClick(View arg0) {
                     if (msg.getContent() != null) {
-                        //  mAdapter.showResendDialog(holder, msg);
+                          mAdapter.showResendDialog(holder, msg);
                     } else {
                         Toast.makeText(mContext, R.string.jmui_sdcard_not_exist_toast, Toast.LENGTH_SHORT).show();
                     }
@@ -711,7 +711,7 @@ public class ChatItemController {
                 @Override
                 public void onClick(View arg0) {
                     if (msg.getContent() != null) {
-                        //     mAdapter.showResendDialog(holder, msg);
+                            mAdapter.showResendDialog(holder, msg);
                     } else {
                         Toast.makeText(mContext, R.string.jmui_sdcard_not_exist_toast, Toast.LENGTH_SHORT).show();
                     }
@@ -856,7 +856,7 @@ public class ChatItemController {
             holder.resend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //     mAdapter.showResendDialog(holder, msg);
+                         mAdapter.showResendDialog(holder, msg);
                 }
             });
 
@@ -1024,7 +1024,7 @@ public class ChatItemController {
                 @Override
                 public void onClick(View v) {
                     if (msg.getDirect() == MessageDirect.send) {
-                        //  mAdapter.showResendDialog(holder, msg);
+                          mAdapter.showResendDialog(holder, msg);
                     } else {
                         holder.contentLl.setBackgroundColor(Color.parseColor("#86222222"));
                         holder.progressTv.setText("0%");

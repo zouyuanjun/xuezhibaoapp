@@ -13,7 +13,9 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +26,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.immodule.utils.IdHelper;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StringUtil;
 
@@ -662,7 +665,43 @@ public class ChattingListAdapter extends BaseAdapter {
         }
         return convertView;
     }
-
+    //重发对话框
+    public void showResendDialog(final ViewHolder holder, final Message msg) {
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    mDialog.dismiss();
+                    switch (msg.getContentType()) {
+                        case text:
+                        case voice:
+                            resendTextOrVoice(holder, msg);
+                            break;
+                        case image:
+                            resendImage(holder, msg);
+                            break;
+                        case file:
+                            resendFile(holder, msg);
+                            break;
+                    }
+            }
+        };
+        mDialog =createResendDialog(mContext, listener);
+        mDialog.getWindow().setLayout((int) (0.8 * mWidth), WindowManager.LayoutParams.WRAP_CONTENT);
+        mDialog.show();
+    }
+    public static Dialog createResendDialog(Context context, View.OnClickListener listener) {
+        Dialog dialog = new Dialog(context, IdHelper.getStyle(context, "jmui_default_dialog_style"));
+        View view = LayoutInflater.from(context).inflate(
+                IdHelper.getLayout(context, "jmui_dialog_base_with_button"), null);
+        dialog.setContentView(view);
+        Button cancelBtn = (Button) view.findViewById(IdHelper.getViewID(context, "jmui_cancel_btn"));
+        Button resendBtn = (Button) view.findViewById(IdHelper.getViewID(context, "jmui_commit_btn"));
+        cancelBtn.setOnClickListener(listener);
+        resendBtn.setOnClickListener(listener);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        return dialog;
+    }
     private void resendTextOrVoice(final ViewHolder holder, Message msg) {
         holder.resend.setVisibility(View.GONE);
         holder.sendingIv.setVisibility(View.VISIBLE);

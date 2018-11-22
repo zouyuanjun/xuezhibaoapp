@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.zou.fastlibrary.bean.NetWorkMessage;
 
@@ -150,16 +151,27 @@ public class Network {
             public void onResponse(Call call, Response response) throws IOException {
                 Message message = new Message();
                 String s = response.body().string();
-                JSONObject jsonObject = com.alibaba.fastjson.JSON.parseObject(s);
+                Log.d(s);
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = com.alibaba.fastjson.JSON.parseObject(s);
+                }catch (JSONException e){
+                    EventBus.getDefault().post(new NetWorkMessage("服务器内部错误"));
+                    return;
+                }
+
                 boolean b = jsonObject.containsKey("Data");
                 if (!b){
                     Log.d(s);
                     EventBus.getDefault().post(new NetWorkMessage("服务器内部错误"));
                     return;
                 }
-                message.what = i;
-                message.obj = s;
-                handler.sendMessage(message);
+                if (null!=handler){
+                    message.what = i;
+                    message.obj = s;
+                    handler.sendMessage(message);
+                }
+
             }
         });
     }

@@ -25,6 +25,8 @@ import android.util.Log;
  * @warn 修改服务器地址（URL_SERVER_ADDRESS_NORMAL_HTTP等）
  */
 public final class SettingUtil {
+	public static int USERTIME=0;
+	public static  String TOKEN="";
 	private static final String TAG = "SettingUtil";
 
 	public static final boolean isReleased = false;//应用已发布

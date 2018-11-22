@@ -17,6 +17,7 @@ import com.xinzhu.xuezhibao.view.interfaces.SplashInterface;
 import com.zou.fastlibrary.utils.DataKeeper;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.SettingUtil;
 
 import org.json.JSONException;
 
@@ -76,6 +77,7 @@ SplashInterface splashInterface;
                     try {
                         String data=JsonUtils.getStringValue(result,"Data");
                         Constants.TOKEN=JsonUtils.getStringValue(data,"token");
+                        SettingUtil.TOKEN=Constants.TOKEN;
                         Constants.userBasicInfo=JsonUtils.stringToObject(data,UserBasicInfo.class);
                         Constants.userBasicInfo.setToken(Constants.TOKEN);
                         loginInterface.loginsuccessful();
@@ -92,6 +94,7 @@ SplashInterface splashInterface;
                 if (code==100){
                     String data=JsonUtils.getStringValue(result,"Data");
                     Constants.TOKEN=JsonUtils.getStringValue(data,"token");
+                    SettingUtil.TOKEN=Constants.TOKEN;
                     Constants.userBasicInfo= (UserBasicInfo) JsonUtils.stringToObject(data,UserBasicInfo.class);
                     Constants.userBasicInfo.setToken(Constants.TOKEN);
                     SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());

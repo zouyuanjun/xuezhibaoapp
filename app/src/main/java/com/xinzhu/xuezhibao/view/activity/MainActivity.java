@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.view.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.server.LivelyServer;
 import com.xinzhu.xuezhibao.view.fragment.HomeFragemt;
 import com.xinzhu.xuezhibao.view.fragment.TestFragment;
 import com.xinzhu.xuezhibao.view.fragment.UserCentreFragment;
@@ -63,5 +65,6 @@ public class MainActivity extends BaseBottomTabActivity {
                 != PackageManager.PERMISSION_GRANTED)) {
             EasyPermissions.requestPermissions(this, "允许必要权限才可以正常使用哦", 1, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
+
     }
 }

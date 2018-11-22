@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.bravin.btoast.BToast;
 import com.zou.fastlibrary.bean.NetWorkMessage;
+import com.zou.fastlibrary.server.LivelyServer;
 import com.zou.fastlibrary.utils.Log;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,19 +21,38 @@ import java.util.List;
 
 public class BaseActivity extends AppCompatActivity {
     Context context;
+    Intent serverintent;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 添加Activity到堆栈
+
         AtyContainer.getInstance().addActivity(this);
         EventBus.getDefault().register(this);
         context=this;
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("BaseActivity的onResume》》》》》》》》");
+        serverintent=new Intent(BaseActivity.this,LivelyServer.class);
+        startService(serverintent);
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void netWorkMessage(NetWorkMessage messageEvent) {
         String s=messageEvent.getMessage();
         BToast.error(context).text(s).show();
        }
+
+    @Override
+    protected void onPause() {
+        Log.d("BaseActivity的onPause》》》》》》》》");
+        stopService(serverintent);
+        super.onPause();
+    }
 
     @Override
     protected void onStop() {
@@ -59,17 +79,12 @@ public class BaseActivity extends AppCompatActivity {
     public void networkerr(){
         BToast.error(context).text("网络连接失败···").show();
     }
-
     public void servererr(){
         BToast.error(context).text("服务器内部错误，正在紧急修复中···").show();
     }
-
     public  void finishAllActivity(){
         AtyContainer.getInstance().finishAllActivity();
     }
-
-
-
 }
 
 class AtyContainer {

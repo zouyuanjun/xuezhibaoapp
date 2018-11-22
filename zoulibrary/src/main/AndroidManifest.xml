@@ -9,5 +9,6 @@
         >
 
         <activity android:name=".ui.WebActivity" />
+        <service android:name=".server.LivelyServer"></service>
     </application>
 </manifest>

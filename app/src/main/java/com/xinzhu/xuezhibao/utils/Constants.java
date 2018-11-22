@@ -23,6 +23,7 @@ public class Constants {
     public static String INTENT_EDITITEM="COURSE";    //修改个人资料时传入要修改的项目
     public static UserBasicInfo userBasicInfo=null;
     public static long PLAYTIME=0;
+
     //支付宝私钥
     public static String privateKEY ="\n" +
             "MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDT4licaHutf7rm\n" +
