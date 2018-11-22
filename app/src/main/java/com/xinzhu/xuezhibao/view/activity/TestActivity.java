@@ -106,10 +106,11 @@ public class TestActivity extends BaseActivity {
                         ans2.setClickable(false);
                         if (crrentindex < 49) {
                             crrentindex++;
+                            handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
                         } else {
                             textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
                         }
-                        handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
+
                         break;
                     case R.id.ans2:
                         if (issyschangecheck) {
@@ -143,10 +144,11 @@ public class TestActivity extends BaseActivity {
                         ansmap.put(crrentindex, 0);
                         if (crrentindex < 49) {
                             crrentindex++;
+                            handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
                         } else {
                             textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
                         }
-                        handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
+
                         break;
                 }
 
@@ -201,11 +203,26 @@ public class TestActivity extends BaseActivity {
                 if (duodong > 9) {
                     duodong = 9;
                 }
-                if (xuexi > 9) {
-                    xuexi = 9;
+                if (xuexi ==0) {
+                    xuexi = 1;
                 }
-                if (qingxu > 9) {
-                    qingxu = 9;
+                if (qingxu ==0) {
+                    qingxu = 1;
+                }
+                if (shumian ==0) {
+                    shumian = 1;
+                }
+                if (zhuyili ==0) {
+                    zhuyili = 1;
+                }
+                if (duodong ==0) {
+                    duodong = 1;
+                }
+                if (xuexi ==0) {
+                    xuexi = 1;
+                }
+                if (qingxu ==0) {
+                    qingxu =1;
                 }
                 if (yuedu <= 3) {
                     result = result + "\n\n阅读理解：" + (int)yuedu + "分\n" + anslist.get(0);
