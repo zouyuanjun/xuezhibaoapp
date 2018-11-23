@@ -8,7 +8,6 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -26,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.EnvUtils;
+import com.bravin.btoast.BToast;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -39,19 +40,26 @@ import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
+import com.xinzhu.xuezhibao.bean.PayResquestBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
+import com.xinzhu.xuezhibao.presenter.AlipayPresenter;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
 import com.xinzhu.xuezhibao.presenter.VideoVoiceDetailPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.custom.VideoPlayer;
 import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
+import com.xinzhu.xuezhibao.view.interfaces.PayInterface;
 import com.xinzhu.xuezhibao.view.interfaces.VideoVoiceDetailInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.ui.CustomDialog;
-import com.zou.fastlibrary.utils.ImageUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.zou.fastlibrary.utils.WebViewUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -60,9 +68,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetailInterface, LikeCollectInterface {
-
-
+public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetailInterface, LikeCollectInterface, PayInterface {
     @BindView(R.id.standardGSYVideoPlayer)
     VideoPlayer detailPlayer;
     @BindView(R.id.tv_title)
@@ -117,9 +123,13 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     GoodView mGoodView;
     long startplaytime;
     long stopplaytime;
-    boolean haseplay=false; //是否观看过
+    boolean haseplay = false; //是否观看过
+    @BindView(R.id.im_back)
+    ImageView imBack;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_details2);
         ButterKnife.bind(this);
@@ -127,6 +137,14 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this, tvDetails));
         videoid = getIntent().getStringExtra(Constants.INTENT_ID);
         mGoodView = new GoodView(this);
+        imBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
+        videoVoiceDetailPresenter.getVideoComment(videoid, 1);
     }
 
     @Override
@@ -134,14 +152,10 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         super.onPause();
         detailPlayer.onVideoPause();
     }
-
     @Override
     protected void onResume() {
         super.onResume();
-
-        videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
         likeCollectPresenter = new LikeCollectPresenter(this);
-        videoVoiceDetailPresenter.getVideoComment(videoid, 1);
         commentAdapter = new CommentAdapter(this, commentBeanArrayList);
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this);
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
@@ -150,7 +164,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         rvComment.setAdapter(commentAdapter);
 
         detailPlayer = findViewById(R.id.standardGSYVideoPlayer);
-
+detailPlayer.hidstartbt();
         videoVoiceDetailPresenter.getVideoDetail(videoid);
         likeCollectPresenter.islike(videoid, "2");
         likeCollectPresenter.iscollect(videoid, "2");
@@ -185,7 +199,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 if (detailPlayer.isPlay()) {
                     Log.d("开始播放");
                     startplaytime = System.currentTimeMillis();
-                    haseplay=true;
+                    haseplay = true;
                 } else {
                     Log.d("停止播放");
                     stopplaytime = System.currentTimeMillis();
@@ -267,7 +281,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         }
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -275,14 +288,15 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         if (orientationUtils != null) {
             orientationUtils.releaseListener();
         }
-        if (haseplay){
+        if (haseplay) {
             stopplaytime = System.currentTimeMillis();
             Constants.PLAYTIME = Constants.PLAYTIME + stopplaytime - startplaytime;
-            Log.d("观看时间" + Constants.PLAYTIME+"jieshu"+stopplaytime+"kaishi"+startplaytime);
-            if (Constants.PLAYTIME > 1*60*1000) {
+            Log.d("观看时间" + Constants.PLAYTIME + "jieshu" + stopplaytime + "kaishi" + startplaytime);
+            if (Constants.PLAYTIME > 1 * 60 * 1000) {
                 videoVoiceDetailPresenter.playtime();
             }
         }
+        EventBus.getDefault().unregister(this);
         videoVoiceDetailPresenter.cancelmessage();
 
     }
@@ -298,6 +312,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         detailPlayer.setVideoAllCallBack(null);
         super.onBackPressed();
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -368,6 +383,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                         }
                     }
                 }).build(detailPlayer);
+        detailPlayer.showstartbt();
     }
 
     @Override
@@ -414,8 +430,9 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     }
 
     @Override
-    public void successbuy() {
-        cslBuy.setVisibility(View.GONE);
+    public void successbuy(PayResquestBean payResquestBean) {
+        AlipayPresenter alipayPresenter = new AlipayPresenter(VideoDetilsActivity.this);
+        alipayPresenter.alipay(payResquestBean, VideoDetilsActivity.this);
     }
 
     @Override
@@ -500,5 +517,21 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     public void onViewClicked() {
 
     }
+
+    @Override
+    public void alipaysuccessful() {
+
+    }
+
+    @Override
+    public void alipayfail() {
+
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void netWorkMessage(NetWorkMessage messageEvent) {
+        String s=messageEvent.getMessage();
+        BToast.error(context).text(s).show();
+    }
+
 }
 

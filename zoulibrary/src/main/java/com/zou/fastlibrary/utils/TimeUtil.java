@@ -189,7 +189,14 @@ public class TimeUtil {
 		return new SimpleDateFormat("hh:mm:ss").format(new Date(date));
 	}
 
-
+	/**获取时间,hh:mm:ss
+	 *
+	 * @return
+	 */
+	public static String getWholeTime() {
+		long date=System.currentTimeMillis();
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(date));
+	}
 
 	/**获取完整时间
 	 * @param date

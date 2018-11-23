@@ -151,7 +151,6 @@ public class Network {
             public void onResponse(Call call, Response response) throws IOException {
                 Message message = new Message();
                 String s = response.body().string();
-                Log.d(s);
                 JSONObject jsonObject = null;
                 try {
                     jsonObject = com.alibaba.fastjson.JSON.parseObject(s);

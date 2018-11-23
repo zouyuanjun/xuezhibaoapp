@@ -11,7 +11,6 @@ import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import butterknife.BindView;
 
 public class MyFamilyCourseActivity extends BaseTopTabActivity {
-    @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
 
     @Override
@@ -20,6 +19,7 @@ public class MyFamilyCourseActivity extends BaseTopTabActivity {
         inittab("课程", "老师", "任务", "反馈");
         initfragment(MyFamilyCourseFragment.newInstance(1), MyFamilyCourseFragment.newInstance(2), MyFamilyCourseFragment.newInstance(3), MyFamilyCourseFragment.newInstance(4));
         bingview();
+        appbar=findViewById(R.id.appbar);
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -132,26 +132,7 @@ public class MyVipCentreActivity extends BaseActivity {
                 switch (i){
                     case R.id.rd_alipay:
 
-                        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(Constants.ALAPPID, true);
-                        String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
-                        String sign = OrderInfoUtil2_0.getSign(params, Constants.privateKEY, true);
-                        final String orderInfo = orderParam + "&" + sign;
-                        Runnable payRunnable = new Runnable() {
 
-                            @Override
-                            public void run() {
-                                PayTask alipay = new PayTask(MyVipCentreActivity.this);
-                                Map<String, String> result = alipay.payV2(orderInfo, true);
-                                Log.i("msp", result.toString());
-                                Message msg = new Message();
-                                msg.what = 1;
-                                msg.obj = result;
-                                handler.sendMessage(msg);
-                            }
-                        };
-
-                        Thread payThread = new Thread(payRunnable);
-                        payThread.start();
                         popupWindow.dismiss();
                         break;
                     case R.id.rd_wxpay:

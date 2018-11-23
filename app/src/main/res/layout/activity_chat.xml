@@ -31,7 +31,7 @@
                     android:id="@+id/jmui_return_btn"
                     android:layout_width="@dimen/title_bar_height"
                     android:layout_height="match_parent"
-                    android:background="@drawable/jmui_back_btn_bg"
+                    android:background="@color/appcolor"
                     android:src="@drawable/back" />
 
 

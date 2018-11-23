@@ -31,6 +31,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 我购买的视频
+ */
 public class MyVideoActivity extends BaseActivity {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;

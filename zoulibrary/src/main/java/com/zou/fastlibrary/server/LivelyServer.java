@@ -25,13 +25,13 @@ boolean exit=true;
             public void run() {
                 while (exit){
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(60000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                     stoptime=System.currentTimeMillis();
-                    SettingUtil.USERTIME = (int) ((stoptime-starttime)/1000/60);
-                    Log.d("停留了"+SettingUtil.USERTIME);
+                    starttime=stoptime;
+                    SettingUtil.USERTIME =  SettingUtil.USERTIME+(int) ((stoptime-starttime)/1000/60);
 
                 }
 
@@ -52,11 +52,11 @@ boolean exit=true;
     public void onDestroy() {
         Log.d("即时服务停止");
         exit=false;
-        if (SettingUtil.USERTIME>1){
+        if (SettingUtil.USERTIME>=1){
             if (!StringUtil.isEmpty(SettingUtil.TOKEN)){
                 String data = JsonUtils.keyValueToString2("dictionaryId", 25, "token", SettingUtil.TOKEN);
                 data = JsonUtils.addKeyValue(data, "time", SettingUtil.USERTIME);
-                Network.getnetwork().postJson(data, "192.168.1.159" + "/app/complete-my-task", null, 6);
+                Network.getnetwork().postJson(data, "http://192.168.1.159" + "/app/complete-my-task", null, 6);
             }
         }
 

@@ -37,7 +37,6 @@ public class XuebaoCourseAdapter extends RecyclerView.Adapter {
         View view = LayoutInflater.from(mContext).inflate(R.layout.item_course, parent, false);
         return new RecyclerHolder(view);
     }
-
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((RecyclerHolder) holder).tvTitle.setText(mDatas.get(position).getCurriculumTitle());

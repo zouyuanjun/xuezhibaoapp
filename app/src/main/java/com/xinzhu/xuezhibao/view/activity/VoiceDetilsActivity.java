@@ -30,6 +30,7 @@ import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
+import com.xinzhu.xuezhibao.bean.PayResquestBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
 import com.xinzhu.xuezhibao.presenter.VideoVoiceDetailPresenter;
@@ -255,7 +256,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
     }
 
     @Override
-    public void successbuy() {
+    public void successbuy(PayResquestBean payResquestBean) {
 
     }
 

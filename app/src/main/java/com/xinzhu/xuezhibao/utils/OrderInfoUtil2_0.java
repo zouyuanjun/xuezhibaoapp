@@ -1,5 +1,7 @@
 package com.xinzhu.xuezhibao.utils;
 
+import com.zou.fastlibrary.utils.TimeUtil;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -63,12 +65,12 @@ public class OrderInfoUtil2_0 {
 
 	 * @return
 	 */
-	public static Map<String, String> buildOrderParamMap(String app_id, boolean rsa2) {
+	public static Map<String, String> buildOrderParamMap(String biz_content,String app_id, boolean rsa2) {
 		Map<String, String> keyValues = new HashMap<String, String>();
 
 		keyValues.put("app_id", app_id);
 
-		keyValues.put("biz_content", "{\"timeout_express\":\"30m\",\"product_code\":\"QUICK_MSECURITY_PAY\",\"total_amount\":\"0.01\",\"subject\":\"1\",\"body\":\"我是测试数据\",\"out_trade_no\":\"" + getOutTradeNo() +  "\"}");
+		keyValues.put("biz_content", biz_content);
 		
 		keyValues.put("charset", "utf-8");
 
@@ -76,7 +78,7 @@ public class OrderInfoUtil2_0 {
 
 		keyValues.put("sign_type", rsa2 ? "RSA2" : "RSA");
 
-		keyValues.put("timestamp", "2016-07-29 16:55:53");
+		keyValues.put("timestamp", TimeUtil.getWholeTime());
 
 		keyValues.put("version", "1.0");
 		

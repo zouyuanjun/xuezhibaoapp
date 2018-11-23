@@ -706,7 +706,6 @@ public class ChattingListAdapter extends BaseAdapter {
         holder.resend.setVisibility(View.GONE);
         holder.sendingIv.setVisibility(View.VISIBLE);
         holder.sendingIv.startAnimation(mController.mSendingAnim);
-
         if (!msg.isSendCompleteCallbackExists()) {
             msg.setOnSendCompleteCallback(new BasicCallback() {
                 @Override

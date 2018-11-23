@@ -57,6 +57,9 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
     public void hidstartbt() {
         setViewShowState(mStartButton, INVISIBLE);
     }
+    public void showstartbt() {
+        setViewShowState(mStartButton, VISIBLE);
+    }
 
     public boolean isPlay() {
         if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_PREPAREING || mCurrentState == CURRENT_STATE_PLAYING) {

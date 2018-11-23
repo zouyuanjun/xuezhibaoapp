@@ -32,6 +32,7 @@ import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.VoiceDetilsActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyCollectInterface;
+import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class MyCollectFragment extends LazyLoadFragment implements MyCollectInte
     ImageView imDataisnull;
     @BindView(R.id.im_loading)
     ImageView imLoading;
-
+boolean nodata=false;
     @Override
     protected int setContentView() {
         return R.layout.fragment_onlylist;
@@ -69,24 +70,12 @@ public class MyCollectFragment extends LazyLoadFragment implements MyCollectInte
 
     @Override
     protected void lazyLoad() {
-        myCollectPresenter = new MyCollectPresenter(this);
-        articleListAdapter = new ArticleListAdapter(new WeakReference<Context>(getActivity()), articleBeanList);
-        videoVoiceListAdapter = new VideoVoiceListAdapter(new WeakReference<Context>(getActivity()), videoVoiceBeanList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvItem.setLayoutManager(linearLayoutManager);
-        if (POSITION == 0) {
-            rvItem.setAdapter(courseMyCollectAdapter);
-        } else if (POSITION == 1) {
-            rvItem.setAdapter(articleListAdapter);
-        } else if (POSITION == 2) {
-            rvItem.setAdapter(videoVoiceListAdapter);
-        } else if (POSITION == 3) {
-            rvItem.setAdapter(videoVoiceListAdapter);
+          if (nodata){
+            imDataisnull.setVisibility(View.VISIBLE);
         }
+
         if (isfirstload) {
             isfirstload = false;
-            courseMyCollectAdapter = new CourseMyCollectAdapter(new WeakReference<Context>(getActivity()), courseBeanList);
             imLoading.setVisibility(View.VISIBLE);
             AnimationDrawable drawable = (AnimationDrawable) imLoading.getDrawable();
             drawable.start();
@@ -192,6 +181,14 @@ public class MyCollectFragment extends LazyLoadFragment implements MyCollectInte
         if (getArguments() != null) {
             POSITION = getArguments().getInt("POSITION");
         }
+        Log.d("收餐"+POSITION);
+        courseMyCollectAdapter = new CourseMyCollectAdapter(new WeakReference<Context>(getActivity()), courseBeanList);
+        myCollectPresenter = new MyCollectPresenter(this);
+        articleListAdapter = new ArticleListAdapter(new WeakReference<Context>(getActivity()), articleBeanList);
+        videoVoiceListAdapter = new VideoVoiceListAdapter(new WeakReference<Context>(getActivity()), videoVoiceBeanList);
+
+
+
         page = 1;
         isfirstload = true;
     }
@@ -201,12 +198,25 @@ public class MyCollectFragment extends LazyLoadFragment implements MyCollectInte
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        rvItem.setLayoutManager(linearLayoutManager);
+        if (POSITION == 0) {
+            rvItem.setAdapter(courseMyCollectAdapter);
+        } else if (POSITION == 1) {
+            rvItem.setAdapter(articleListAdapter);
+        } else if (POSITION == 2) {
+            rvItem.setAdapter(videoVoiceListAdapter);
+        } else if (POSITION == 3) {
+            rvItem.setAdapter(videoVoiceListAdapter);
+        }
         return rootView;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Log.d("onDestroyView");
         unbinder.unbind();
     }
 
@@ -264,6 +274,7 @@ public class MyCollectFragment extends LazyLoadFragment implements MyCollectInte
         refreshLayout.finishRefresh(false);
         if (courseBeanList.size() == 0 && videoVoiceBeanList.size() == 0 && articleBeanList.size() == 0) {
             imDataisnull.setVisibility(View.VISIBLE);
+            nodata=true;
         }
 
 

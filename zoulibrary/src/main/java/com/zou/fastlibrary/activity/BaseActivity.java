@@ -26,7 +26,6 @@ public class BaseActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // 添加Activity到堆栈
-
         AtyContainer.getInstance().addActivity(this);
         EventBus.getDefault().register(this);
         context=this;

@@ -34,7 +34,6 @@ public abstract class LazyLoadFragment extends Fragment {
         isInit = true;
         EventBus.getDefault().register(this);
         /**初始化的时候去加载数据**/
-        Log.d("懒加载基类onCreateView");
         isCanLoadData();
         return view;
     }

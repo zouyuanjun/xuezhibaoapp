@@ -5,6 +5,7 @@ import android.os.Message;
 
 import com.lljjcoder.Constant;
 import com.xinzhu.xuezhibao.bean.CommentBean;
+import com.xinzhu.xuezhibao.bean.PayResquestBean;
 import com.xinzhu.xuezhibao.bean.SendCommentBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.utils.Constants;
@@ -71,7 +72,9 @@ public class VideoVoiceDetailPresenter {
                 videoVoiceDetailInterface.getVoicedetail(videoVoiceBean);
             } else if (what == 6) {
                 if (code == 100) {
-                    videoVoiceDetailInterface.successbuy();
+                    String data = JsonUtils.getStringValue(result, "Data");
+                    PayResquestBean payResquestBean =  JsonUtils.stringToObject(data, PayResquestBean.class);
+                    videoVoiceDetailInterface.successbuy(payResquestBean);
                 } else if (code == 6) {
                     videoVoiceDetailInterface.alreadlybuy();
                 }
