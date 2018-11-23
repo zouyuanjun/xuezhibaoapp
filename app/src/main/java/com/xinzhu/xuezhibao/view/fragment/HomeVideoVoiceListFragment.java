@@ -68,38 +68,72 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
 
     @Override
     protected void lazyLoad() {
-        homeVideoVoiceListPresenter = new VideoVoiceListPresenter(this);
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(MyApplication.getContext());
+        linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
+        rvItem.setLayoutManager(linearLayoutManager3);
+        rvItem.setAdapter(adapter);
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                loaddata(true);
+                refreshlayout.finishRefresh(2000);
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(RefreshLayout refreshlayout) {
+                loaddata(false);
+                refreshlayout.finishLoadMore(2000);
+            }
+        });
+
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        loaddata(true);
+    }
+    public void loaddata(boolean isfirstload) {
         if (isfirstload) {
-            isfirstload = false;
+            page = 1;
             list.clear();
-            if (TYPE == 1) {
-                if (POSITION == 0) {
-                    homeVideoVoiceListPresenter.getHotVideo(page);
-                } else if (POSITION == 1) {
-                    homeVideoVoiceListPresenter.getNewVideo(page);
-                } else if (POSITION == 2) {
-                    if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
-                        BToast.error(getContext()).text("请登陆后再查看").show();
-                    } else {
-                        homeVideoVoiceListPresenter.getLikeVideo(page);
-                    }
-
+            adapter.notifyDataSetChanged();
+        }
+        if (TYPE == 1) {
+            if (POSITION == 0) {
+                homeVideoVoiceListPresenter.getHotVideo(page);
+            } else if (POSITION == 1) {
+                homeVideoVoiceListPresenter.getNewVideo(page);
+            } else if (POSITION == 2) {
+                if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
+                    BToast.error(getContext()).text("请登陆后再查看").show();
+                } else {
+                    homeVideoVoiceListPresenter.getLikeVideo(page);
                 }
-            } else if (TYPE == 2) {
-                if (POSITION == 0) {
-                    homeVideoVoiceListPresenter.getHotVoice(page);
-                } else if (POSITION == 1) {
-                    homeVideoVoiceListPresenter.getNewVoice(page);
-                } else if (POSITION == 2) {
-                    if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
-                        BToast.error(getContext()).text("请登陆后再查看").show();
-                    } else {
-                        homeVideoVoiceListPresenter.getLikeVoice(page);
-                    }
 
+            }
+        } else if (TYPE == 2) {
+            if (POSITION == 0) {
+                homeVideoVoiceListPresenter.getHotVoice(page);
+            } else if (POSITION == 1) {
+                homeVideoVoiceListPresenter.getNewVoice(page);
+            } else if (POSITION == 2) {
+                if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
+                    BToast.error(getContext()).text("请登陆后再查看").show();
+                } else {
+                    homeVideoVoiceListPresenter.getLikeVoice(page);
                 }
+
             }
         }
+    }
+
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        homeVideoVoiceListPresenter = new VideoVoiceListPresenter(this);
         adapter = new VideoVoiceListAdapter(new WeakReference(MyApplication.getContext()), list);
         adapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
             @Override
@@ -121,62 +155,6 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
 
             }
         });
-        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(MyApplication.getContext());
-        linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
-        rvItem.setLayoutManager(linearLayoutManager3);
-        rvItem.setAdapter(adapter);
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                page = 1;
-                list.clear();
-                if (TYPE == 1) {
-                    if (POSITION == 0) {
-                        homeVideoVoiceListPresenter.getHotVideo(page);
-                    } else if (POSITION == 1) {
-                        homeVideoVoiceListPresenter.getNewVideo(page);
-                    } else if (POSITION == 2) {
-                        homeVideoVoiceListPresenter.getLikeVideo(page);
-                    }
-                } else if (TYPE == 2) {
-                    if (POSITION == 0) {
-                        homeVideoVoiceListPresenter.getHotVoice(page);
-                    } else if (POSITION == 1) {
-                        homeVideoVoiceListPresenter.getNewVoice(page);
-                    } else if (POSITION == 2) {
-                        homeVideoVoiceListPresenter.getLikeVoice(page);
-                    }
-                }
-            }
-        });
-        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore(RefreshLayout refreshlayout) {
-                if (TYPE == 1) {
-                    if (POSITION == 0) {
-                        homeVideoVoiceListPresenter.getHotVideo(page);
-                    } else if (POSITION == 1) {
-                        homeVideoVoiceListPresenter.getNewVideo(page);
-                    } else if (POSITION == 2) {
-                        homeVideoVoiceListPresenter.getLikeVideo(page);
-                    }
-                } else if (TYPE == 2) {
-                    if (POSITION == 0) {
-                        homeVideoVoiceListPresenter.getHotVoice(page);
-                    } else if (POSITION == 1) {
-                        homeVideoVoiceListPresenter.getNewVoice(page);
-                    } else if (POSITION == 2) {
-                        homeVideoVoiceListPresenter.getLikeVoice(page);
-                    }
-                }
-            }
-        });
-
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         return rootView;

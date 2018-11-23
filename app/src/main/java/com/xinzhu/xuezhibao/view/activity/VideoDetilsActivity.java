@@ -331,9 +331,11 @@ detailPlayer.hidstartbt();
         tvTitle.setText(videoVoiceBean.getVideoTitle());
         if (videoVoiceBean.getVideoType() == 1) {
             cslBuy.setVisibility(View.VISIBLE);
+            detailPlayer.setCanpaly(false);
         }
         if (videoVoiceBean.isBuy()) {
             cslBuy.setVisibility(View.GONE);
+            detailPlayer.setCanpaly(true);
         }
         tvLike.setText(videoVoiceBean.getVidelLike());
         tvReadnum.setText("播放量：" + videoVoiceBean.getVideoLook());

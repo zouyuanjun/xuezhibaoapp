@@ -107,7 +107,7 @@ public class VideoVoiceListPresenter {
     public void getLikeVideo(int page) {
         if (!StringUtil.isEmpty(Constants.TOKEN)){
             String data = JsonUtils.keyValueToString2("pageNo", page,"token",Constants.TOKEN);
-            data=JsonUtils.addKeyValue(data,"type",1);
+            data=JsonUtils.addKeyValue(data,"type",2);
             Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-videos", handler, 3);
         }
     }

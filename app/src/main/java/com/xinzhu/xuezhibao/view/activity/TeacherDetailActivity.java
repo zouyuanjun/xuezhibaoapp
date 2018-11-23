@@ -82,15 +82,17 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
     WebView wbFeedback;
     @BindView(R.id.teacherhead)
     SimpleDraweeView teacherhead;
-int coursepage =1;
-int commentpage=1;
-    List<CourseBean> courseBeanList=new ArrayList<>();
-    LinkedList<CommentBean> commentBeanList=new LinkedList<>();
+    int coursepage = 1;
+    int commentpage = 1;
+    List<CourseBean> courseBeanList = new ArrayList<>();
+    LinkedList<CommentBean> commentBeanList = new LinkedList<>();
     Activity activity;
+    TeacherBean teacherBean;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBar.setColor(this,Color.parseColor("#f87d28"));
+        StatusBar.setColor(this, Color.parseColor("#f87d28"));
         setContentView(R.layout.activity_teacher_detail);
 
         ButterKnife.bind(this);
@@ -99,9 +101,9 @@ int commentpage=1;
         getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
         teacherPresenter = new TeacherPresenter(this);
         teacherId = getIntent().getStringExtra(Constants.INTENT_ID);
-        coursepage =1;
-        commentpage=1;
-        activity=this;
+        coursepage = 1;
+        commentpage = 1;
+        activity = this;
         collapsingToolbar.setExpandedTitleColor(Color.BLACK);//设置展开后标题的颜色
         collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);//设置收缩后标题的颜色
         tabTecher.addTab(tabTecher.newTab().setText("简介"));
@@ -110,7 +112,7 @@ int commentpage=1;
         mContext = new WeakReference(this);
 
         commentAdapter = new CommentAdapter(this, commentBeanList);
-         adapter = new RvJiatingCourseAdapter(mContext, courseBeanList);
+        adapter = new RvJiatingCourseAdapter(mContext, courseBeanList);
 
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this);
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
@@ -152,8 +154,8 @@ int commentpage=1;
         adapter.setOnItemClickListener(new RvJiatingCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(TeacherDetailActivity.this,CourseDetailActivity.class);
-                intent.putExtra(Constants.INTENT_ID,courseBeanList.get(position).getCurriculumId());
+                Intent intent = new Intent(TeacherDetailActivity.this, CourseDetailActivity.class);
+                intent.putExtra(Constants.INTENT_ID, courseBeanList.get(position).getCurriculumId());
                 startActivity(intent);
             }
 
@@ -168,7 +170,6 @@ int commentpage=1;
         wbFeedback.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         wbFeedback.setWebViewClient(new MyWebViewClient());
         wbFeedback.addJavascriptInterface(this, "App");
-        initdata();
     }
 
     @Override
@@ -187,9 +188,9 @@ int commentpage=1;
                 break;
             case R.id.im_talk:
                 Intent notificationIntent = new Intent(activity, ChatActivity.class);
-                notificationIntent.putExtra(JGApplication.TARGET_ID, "123456789");
-                notificationIntent.putExtra(JGApplication.CONV_TITLE, "XX老师");
-                notificationIntent.putExtra(JGApplication.TARGET_APP_KEY,Constants.JPUSH_APPKEY);
+                notificationIntent.putExtra(JGApplication.TARGET_ID, teacherBean.getMainPhone());
+                notificationIntent.putExtra(JGApplication.CONV_TITLE, teacherBean.getRealName()+"老师");
+                notificationIntent.putExtra(JGApplication.TARGET_APP_KEY, Constants.JPUSH_APPKEY);
                 startActivity(notificationIntent);//自定义跳转到指定页面
                 break;
             case R.id.tv_commend:
@@ -198,47 +199,28 @@ int commentpage=1;
         }
     }
 
-    public List<JiatingCourseBean> initdata() {
-
-        List<JiatingCourseBean> list = new ArrayList<>();
-        String url = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
-        String title = "哈哈哈这是什么和水水水水";
-        JiatingCourseBean itemBean = new JiatingCourseBean("12123165", url, title, "2235", "主讲老师：搜索", "注意力训练");
-        list.add(itemBean);
-        list.add(itemBean);
-        list.add(itemBean);
-        list.add(itemBean);
-        list.add(itemBean);
-        list.add(itemBean);
-        list.add(itemBean);
-        list.add(itemBean);
-        list.add(itemBean);
-        list.add(itemBean);
-        return list;
-    }
-
     @Override
     public void getTeacherDetail(TeacherBean teacherBean) {
         if (null != teacherBean) {
             collapsingToolbar.setTitle(teacherBean.getRealName() + "老师");//设置标题的名字
             teacherhead.setImageURI(teacherBean.getHeadPortraitUrl());
-            wbFeedback.loadDataWithBaseURL( null, teacherBean.getDescribeInfo() , "text/html", "UTF-8", null ) ;
-
+            wbFeedback.loadDataWithBaseURL(null, teacherBean.getDescribeInfo(), "text/html", "UTF-8", null);
+            this.teacherBean=teacherBean;
         }
     }
 
     @Override
     public void getTeacherCourse(List<CourseBean> list) {
-            if (null!=list){
-                courseBeanList.addAll(list);
-                adapter.notifyDataSetChanged();
-                coursepage++;
-            }
+        if (null != list) {
+            courseBeanList.addAll(list);
+            adapter.notifyDataSetChanged();
+            coursepage++;
+        }
     }
 
     @Override
     public void getTeacherComment(List<CommentBean> list, String total) {
-        if (null!=list){
+        if (null != list) {
             commentBeanList.addAll(list);
             adapter.notifyDataSetChanged();
             commentpage++;
@@ -254,6 +236,7 @@ int commentpage=1;
     public void err(int code) {
 
     }
+
     //弹出发送评论对话框
     private void showpop(View view) {
         if (Constants.TOKEN.isEmpty()) {
@@ -284,16 +267,12 @@ int commentpage=1;
     }
 
     private class MyWebViewClient extends WebViewClient {
-
         @Override
         public void onPageFinished(WebView view, String url) {
             imgReset();
             wbFeedback.loadUrl("javascript:App.resize(document.body.getBoundingClientRect().height)");
             super.onPageFinished(view, url);
-
-
         }
-
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
@@ -310,15 +289,16 @@ int commentpage=1;
                     "})()");
         }
     }
+
     @JavascriptInterface
     public void resize(final float height) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) wbFeedback.getLayoutParams();
-                layoutParams.width = (int)((getResources().getDisplayMetrics().widthPixels));
-                layoutParams.height = (int) (height * getResources().getDisplayMetrics().density)+50;
-                Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+getResources().getDisplayMetrics().density);
+                layoutParams.width = (int) ((getResources().getDisplayMetrics().widthPixels));
+                layoutParams.height = (int) (height * getResources().getDisplayMetrics().density) + 50;
+                Log.d(layoutParams.width + "高度是" + layoutParams.height + "原始" + height + "级" + getResources().getDisplayMetrics().density);
                 wbFeedback.setLayoutParams(layoutParams);
                 //Toast.makeText(getActivity(), height + "", Toast.LENGTH_LONG).show();
                 //    wbFeedback.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));

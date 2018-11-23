@@ -140,6 +140,6 @@ public class VideoVoiceDetailPresenter {
         String data = JsonUtils.keyValueToString2("dictionaryId", 24, "token", Constants.TOKEN);
         long time = Constants.PLAYTIME / 1000 / 60;
         data = JsonUtils.addKeyValue(data, "time", time);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/complete-my-task", handler, 6);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/complete-my-task", handler, 7);
     }
 }

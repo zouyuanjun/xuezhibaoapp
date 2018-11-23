@@ -121,7 +121,7 @@ public class UserBaseActivity extends TakePhotoActivity {
             tvStudennage.setText(Constants.userBasicInfo.getStudentAge()+"岁");
             tvFathername.setText(Constants.userBasicInfo.getFatherName());
             tvMothername.setText(Constants.userBasicInfo.getMotherName());
-            tvAddress.setText(Constants.userBasicInfo.getProvince());
+            tvAddress.setText(Constants.userBasicInfo.getProvince()+Constants.userBasicInfo.getCity()+Constants.userBasicInfo.getCounty());
             sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
         }
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
@@ -241,12 +241,12 @@ public class UserBaseActivity extends TakePhotoActivity {
                         //省份
                         if (province != null) {
                             sheng=province.getName();
-                            citysrt=province.getName().replace("省","");
+                            citysrt=province.getName();
                         }
                         //城市
                         if (city != null) {
                             shi=city.getName();
-                            citysrt=citysrt+"·"+city.getName().replace("市","");
+                            citysrt=citysrt+"·"+city.getName();
                         }
                         //地区
                         if (district != null) {

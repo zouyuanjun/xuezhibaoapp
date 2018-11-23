@@ -112,7 +112,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     protected void lazyLoad() {
         Log.d("懒加载开始");
         EditTextUtil.hideKeyboard(MyApplication.getContext(), edSearch);
-        homepagePresenter = new HomepagePresenter(this, MyApplication.getContext());
+
 
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
@@ -158,7 +158,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         unbinder = ButterKnife.bind(this, rootView);
         JMessageClient.registerEventReceiver(new WeakReference<>(this).get());
-
+        homepagePresenter = new HomepagePresenter(this, MyApplication.getContext());
         return rootView;
     }
 

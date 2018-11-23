@@ -30,9 +30,8 @@ boolean exit=true;
                         e.printStackTrace();
                     }
                     stoptime=System.currentTimeMillis();
-                    starttime=stoptime;
                     SettingUtil.USERTIME =  SettingUtil.USERTIME+(int) ((stoptime-starttime)/1000/60);
-
+                    starttime=stoptime;
                 }
 
 
@@ -52,6 +51,7 @@ boolean exit=true;
     public void onDestroy() {
         Log.d("即时服务停止");
         exit=false;
+        Log.d(SettingUtil.USERTIME+">>>>>>>>>>>>>");
         if (SettingUtil.USERTIME>=1){
             if (!StringUtil.isEmpty(SettingUtil.TOKEN)){
                 String data = JsonUtils.keyValueToString2("dictionaryId", 25, "token", SettingUtil.TOKEN);

@@ -21,7 +21,7 @@ import com.xinzhu.xuezhibao.view.activity.AllCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.MyFamilyCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
-import com.xinzhu.xuezhibao.view.activity.SubjectActivity;
+import com.xinzhu.xuezhibao.view.activity.MySubjectActivity;
 import com.xinzhu.xuezhibao.view.helputils.CreatDiag;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
 import com.xinzhu.xuezhibao.view.interfaces.XuebaoInterface;
@@ -335,7 +335,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 if (StringUtil.isEmpty(Constants.TOKEN)){
                     CreatDiag.shoudia(getActivity());
                 }else {
-                    getActivity().startActivity(new Intent(getActivity(), SubjectActivity.class));
+                    getActivity().startActivity(new Intent(getActivity(), MySubjectActivity.class));
                 }
 
                 break;

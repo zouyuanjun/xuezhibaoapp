@@ -8,14 +8,16 @@ public class TeacherBean  {
     String memberId;
     String userId;
     String describeInfo;
-
+String mainPhone;
     public TeacherBean() {
     }
 
-    public TeacherBean(String imurl, String name, String course) {
-        this.headPortraitUrl = imurl;
-        this.realName = name;
-        this.curriculumTitle = course;
+    public String getMainPhone() {
+        return mainPhone;
+    }
+
+    public void setMainPhone(String mainPhone) {
+        this.mainPhone = mainPhone;
     }
 
     public String getDescribeInfo() {

@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 /**
  * 主页学宝标签的学科页面
  */
-public class SubjectActivity extends BaseActivity {
+public class MySubjectActivity extends BaseActivity {
 
     ArrayList<Fragment> fragmentList = new ArrayList<>();
     String[] title = {"课程", "老师", "作业","反馈"};

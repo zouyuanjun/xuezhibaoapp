@@ -26,6 +26,8 @@ import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.CourseFeedbackBean;
 import com.xinzhu.xuezhibao.bean.MyjobBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
+import com.xinzhu.xuezhibao.immodule.JGApplication;
+import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.presenter.MyCoursePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
@@ -195,6 +197,11 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
 
             @Override
             public void onImTalkClick(View view, int position) {
+                Intent notificationIntent = new Intent(getActivity(), ChatActivity.class);
+                notificationIntent.putExtra(JGApplication.TARGET_ID,teacherBeanArrayList.get(position).getMainPhone());
+                notificationIntent.putExtra(JGApplication.CONV_TITLE, teacherBeanArrayList.get(position).getRealName()+"老师");
+                notificationIntent.putExtra(JGApplication.TARGET_APP_KEY,Constants.JPUSH_APPKEY);
+                startActivity(notificationIntent);//自定义跳转到指定页面
 
             }
         });

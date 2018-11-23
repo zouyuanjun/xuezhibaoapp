@@ -76,7 +76,7 @@
         <activity android:name=".view.activity.VideoDetilsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"/>
         <activity android:name=".view.activity.VoiceDetilsActivity" />
-        <activity android:name=".view.activity.SubjectActivity" />
+        <activity android:name=".view.activity.MySubjectActivity" />
         <activity android:name=".view.activity.AllCourseActivity" />
         <activity android:name=".view.activity.SendCommentActivity" />
         <activity android:name=".view.activity.LoginActivity" />

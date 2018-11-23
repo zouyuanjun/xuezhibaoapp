@@ -51,16 +51,17 @@ public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
+
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
         ((ViewHolder) holder).tvTeacher.setText("主讲："+mDatas.get(position).getSpeakerTeacher());
         ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
+
         if (!StringUtil.isEmpty(mDatas.get(position).getDictionaryName())){
             ((ViewHolder) holder).tvClass.setVisibility(View.VISIBLE);
             ((ViewHolder) holder).tvClass.setText(mDatas.get(position).getDictionaryName());
         }
 
         if (StringUtil.isEmpty(mDatas.get(position).getCurriculumPicture())) {
-
             RequestOptions requestOptions = RequestOptions.frameOf(0);
             requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
             requestOptions.transform(new BitmapTransformation() {
@@ -82,6 +83,7 @@ public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
         }else {
             Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
         }
+
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

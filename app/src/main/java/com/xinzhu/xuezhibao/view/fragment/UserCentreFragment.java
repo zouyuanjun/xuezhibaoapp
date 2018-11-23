@@ -99,6 +99,7 @@ Handler handler;
             llUser.setVisibility(View.GONE);
             clJifen.setVisibility(View.GONE);
             tvLoginbutton.setVisibility(View.VISIBLE);
+            tvLognout.setVisibility(View.GONE);
         } else {
             tvLoginbutton.setVisibility(View.GONE);
             llUser.setVisibility(View.VISIBLE);
