@@ -445,12 +445,15 @@ public class TestActivity extends BaseActivity {
 
     @OnClick(R.id.last)
     public void onViewClicked() {
-        crrentindex--;
-        tvTitle.setText(datalist.get(crrentindex));
-        radiogroup.setClickable(true);
-        ans3.setClickable(true);
-        ans2.setClickable(true);
-        ans1.setClickable(true);
-        radiogroup.clearCheck();
+        if (crrentindex>0){
+            crrentindex--;
+            tvTitle.setText(datalist.get(crrentindex));
+            radiogroup.setClickable(true);
+            ans3.setClickable(true);
+            ans2.setClickable(true);
+            ans1.setClickable(true);
+            radiogroup.clearCheck();
+        }
+
     }
 }
