@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -40,7 +41,13 @@ public class RvJiaojiaoTaskAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).textView14.setText(mDatas.get(position).getCreateTime());
-        ((ViewHolder) holder).tvStatus.setText(mDatas.get(position).getState());
+        if (mDatas.get(position).getState().equals("100")){
+            ((ViewHolder) holder).tvStatus.setText("未完成");
+        }else {
+            ((ViewHolder) holder).tvStatus.setText("已完成");
+            ((ViewHolder) holder).tvStatus.setTextColor(Color.parseColor("#12cd8e"));
+        }
+
         ((ViewHolder) holder).tvTasktitle.setText(mDatas.get(position).getJobTitle());
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

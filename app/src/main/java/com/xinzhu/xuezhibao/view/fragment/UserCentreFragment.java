@@ -108,6 +108,7 @@ Handler handler;
             tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
             sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
             tvMyjifen.setText(Constants.userBasicInfo.getIntegral()+"");
+            tvLognout.setVisibility(View.VISIBLE);
         }
         handler=new Handler(){
             @Override

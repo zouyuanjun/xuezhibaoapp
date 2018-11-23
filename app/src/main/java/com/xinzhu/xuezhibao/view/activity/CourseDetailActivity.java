@@ -191,7 +191,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
             likenum = courseBean.getCurriculumLike();
             tvLike.setText(likenum + "");
             tvAlreadybuynum.setText(courseBean.getCurriculumApply() + "人已购买");
-            tvAllclass.setText("共" + courseBean.getConsumeHour()+ courseBean.getSumHour() + "节/" );
+            tvAllclass.setText("共" + courseBean.getConsumeHour()+"/"+ courseBean.getSumHour() + "节" );
         }
     }
 

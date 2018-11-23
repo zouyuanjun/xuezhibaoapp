@@ -33,6 +33,7 @@ import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 
 import java.io.File;
@@ -69,6 +70,12 @@ public class EditTaskActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String result = (String) msg.obj;
+            int code = JsonUtils.getIntValue(result, "Code");
+            if (code == 100) {
+                BToast.error(EditTaskActivity.this).text("提交成功").show();
+                finish();
+            }
+            Log.d(result);
         }
     };
     @BindView(R.id.appbar)
@@ -83,7 +90,8 @@ public class EditTaskActivity extends BaseActivity {
     ImageView im2;
     @BindView(R.id.im_3)
     ImageView im3;
-String jobid="";
+    String jobid = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         map.clear();
@@ -92,7 +100,7 @@ String jobid="";
         setContentView(R.layout.activity_edittask);
         mContext = this;
         ButterKnife.bind(this);
-        jobid=getIntent().getStringExtra(Constants.INTENT_ID);
+        jobid = getIntent().getStringExtra(Constants.INTENT_ID);
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,6 +116,7 @@ String jobid="";
                 }
                 String feedback = edFeedback.getText().toString();
                 if (feedback.isEmpty()) {
+                    BToast.error(EditTaskActivity.this).text("请输入内容").show();
                     return;
                 }
                 if (Constants.TOKEN.isEmpty()) {
@@ -132,13 +141,10 @@ String jobid="";
                     });
                     builder.create().show();
                 } else {
-
-
                     data.put("jobId", jobid);
-                    data.put("replyContent",feedback);
+                    data.put("replyContent", feedback);
                     data.put("token", Constants.TOKEN);
-                    Network.getnetwork().uploadimg(data, Constants.URL + "/guest/reply-curriculumJob", mSelected, handler,1);
-                    // Network.getnetwork().uploadimg(data,"http://192.168.1.200:8080/upload",mSelected,handler);
+                    Network.getnetwork().uploadimg(data, Constants.URL + "/guest/reply-curriculumJob", mSelected, handler, 1);
                 }
             }
         });
@@ -192,6 +198,7 @@ String jobid="";
                 break;
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) {
@@ -236,6 +243,7 @@ String jobid="";
             }
         }
     }
+
     public static String getRealFilePath(final Context context, final Uri uri) {
         if (null == uri) return null;
         final String scheme = uri.getScheme();

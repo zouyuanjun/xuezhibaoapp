@@ -159,7 +159,7 @@ public class Network {
                     return;
                 }
 
-                boolean b = jsonObject.containsKey("Data");
+                boolean b = jsonObject.containsKey("Code");
                 if (!b){
                     Log.d(s);
                     EventBus.getDefault().post(new NetWorkMessage("服务器内部错误"));
