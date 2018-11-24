@@ -177,17 +177,17 @@ public class TestActivity extends BaseActivity {
                 iscommit = true;
                 appbar.setRightTextVisible(false);
                 for (Integer key : ansmap.keySet()) {
-                    if (key <= 9 && key >= 0) {
+                    if (key <= 8 && key >= 0) {
                         yuedu = yuedu + ansmap.get(key);
-                    } else if (key > 9 && key <= 18) {
+                    } else if (key > 8 && key <= 17) {
                         shumian = shumian + ansmap.get(key);
-                    } else if (key > 18 && key <= 27) {
+                    } else if (key > 17 && key <= 26) {
                         zhuyili = zhuyili + ansmap.get(key);
-                    } else if (key > 27 && key <= 36) {
+                    } else if (key > 26 && key <= 35) {
                         duodong = duodong + ansmap.get(key);
-                    } else if (key > 36 && key <= 45) {
+                    } else if (key > 35 && key <= 44) {
                         xuexi = xuexi + ansmap.get(key);
-                    } else if (key > 46 && key <= 50) {
+                    } else if (key > 45 && key <= 49) {
                         qingxu = qingxu + ansmap.get(key);
                     }
                     Log.d("题目是" + key + ",答案是：" + ansmap.get(key));
@@ -197,8 +197,15 @@ public class TestActivity extends BaseActivity {
                 zhuyili = calculate(zhuyili);
                 duodong = calculate(duodong);
                 xuexi = calculate(xuexi);
+
                 qingxu = calculate(qingxu);
 
+                qingxu = 5 + 2 * (qingxu - 3.727) /1.753;
+                if (qingxu > 9) {
+                    qingxu= 9;
+                } else if (qingxu < 1) {
+                    qingxu= 1;
+                }
                 if (yuedu <= 3) {
                     result = result + "\n\n阅读理解：" + (int) yuedu + "分\n" + anslist.get(0);
                 }

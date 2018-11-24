@@ -8,7 +8,5 @@ import java.util.List;
 public interface XuebaoInterface extends publiceviewinterface{
    void getHotCourse(List<CourseBean> list);
    void getNewCourse(List<CourseBean> list);
-   void  getRecommentCourse(List<CourseBean> list);
-   void getAllCourse(List<CourseBean> list);
    void getBanner(List<BannerImgBean> list);
 }

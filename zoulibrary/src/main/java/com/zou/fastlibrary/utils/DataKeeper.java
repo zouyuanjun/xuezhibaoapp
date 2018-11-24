@@ -220,7 +220,14 @@ public class DataKeeper {
 		}
 		return path;
 	}
-
+	public static String getDiskCachePath(Context context) {
+		if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+				|| !Environment.isExternalStorageRemovable()) {
+			return context.getExternalCacheDir().getPath();
+		} else {
+			return context.getCacheDir().getPath();
+		}
+	}
 	/**判断是否有SD卡*/
 	public static boolean hasSDCard() {
 		return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);

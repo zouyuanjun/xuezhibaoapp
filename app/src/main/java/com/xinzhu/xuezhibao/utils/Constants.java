@@ -7,7 +7,7 @@ public class Constants {
     public static final String APP_ID="wx46b14ff64afefa78";
     public static IWXAPI api;   //第三方和微信通信的接口
    // public static String URL="http://192.168.1.112:8080/";
-    public static String URL="http://192.168.1.159:8080";
+    public static String URL="http://192.168.1.199:8080";
     public static String APP_VERSION="1.0.0";
     public static String AlipayAccount="";
     public static String JPUSH_APPKEY = "68a8c864423f3b707c8c8da3";
@@ -52,6 +52,4 @@ public class Constants {
             "YxBZvM9jVhUkBikZsiGjs+TPgHFLKHQ+Hx8NdEYFZgVUZvOIk9PyGYCA+CYe1Vq0\n" +
             "cwoTwZlvgv/RSjtdf7nYA0Aulj1wJ0Z/mnlKyh2/AG/G6BPa1AbfJLJM/WhIwK+Y\n" +
             "CVFd1uSBSUX1YESUbf3i4Q==";
-    //支付宝应用公钥
-    public static String APPSHAKEY="MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0+JYnGh7rX+65pU0qkcOTRHKcs2iQNcRXApf0yPA+mhVpXo4ZLMic6wosRKspmLssyRihWVTeiqSVHsA2qYFKUSXr1vmlZK+z0srGMlyTqkQBATOFkAc8TP7wINDH9mthbsv4fJDDDgwby4EB5yujPIh/fIHPV4SZzWPNzVcGUDO5fgU7pMnZQa05SD8DRazLiq0u9bsELNtKy6w/4kO3BmPBYS4cWTZhpWPqhOWcppLj9j2YGe4Zd9FpKSfmJhILh+Rdhn0DCP98XqbZolPfGh8XRoa5+/yQtTufKtWMvhots3y/0JAygWJ2DtXL2pLJElLCgk71PClo1+B1tG1/QIDAQAB";
-}
+  }

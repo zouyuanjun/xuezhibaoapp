@@ -56,14 +56,6 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
     LinearLayout imMoreVoice;
     @BindView(R.id.rv_new_course)
     RecyclerView rvNewCourse;
-    @BindView(R.id.ll_more_recommend)
-    LinearLayout imMoreArticle;
-    @BindView(R.id.rv_recommend_course)
-    RecyclerView rvRecommendCourse;
-    @BindView(R.id.im_more_all_course)
-    LinearLayout imMoreAllCourse;
-    @BindView(R.id.rv_all_course)
-    RecyclerView rvAllCourse;
     @BindView(R.id.im_jiajiao)
     ImageView imJiajiao;
     @BindView(R.id.im_xueke)
@@ -73,10 +65,6 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
     ProgressBar progressBar1;
     @BindView(R.id.progressBar2)
     ProgressBar progressBar2;
-    @BindView(R.id.progressBar3)
-    ProgressBar progressBar3;
-    @BindView(R.id.progressBar4)
-    ProgressBar progressBar4;
     List<BannerImgBean> bannerImgBeans=new ArrayList<>();
     List<String> bannerlist=new ArrayList<>();
     @Override
@@ -192,63 +180,6 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         }
 
     }
-
-    @Override
-    public void getRecommentCourse(final List<CourseBean> list) {
-        //初始化推荐课程列表
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        if (null!=rvRecommendCourse){
-            rvRecommendCourse.setLayoutManager(linearLayoutManager);
-            rvRecommendCourse.setNestedScrollingEnabled(false);
-            XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
-            rvRecommendCourse.setAdapter(courseAdapter);
-            courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    Intent intent=new Intent(getContext(), CourseDetailActivity.class);
-                    intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onItemLongClick(View view, int position) {
-
-                }
-            });
-            progressBar3.setVisibility(View.GONE);
-        }
-
-    }
-
-    @Override
-    public void getAllCourse(final List<CourseBean> list) {
-        //初始化最热课程列表
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        if (null!=rvAllCourse){
-            rvAllCourse.setLayoutManager(linearLayoutManager);
-            rvAllCourse.setNestedScrollingEnabled(false);
-            XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
-            rvAllCourse.setAdapter(courseAdapter);
-            courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    Intent intent=new Intent(getContext(), CourseDetailActivity.class);
-                    intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onItemLongClick(View view, int position) {
-
-                }
-            });
-            progressBar4.setVisibility(View.GONE);
-        }
-
-    }
-
     @Override
     public void getBanner(List<BannerImgBean> list) {
         if (null==list&&list.size()==0){
@@ -299,7 +230,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
 
     }
 
-    @OnClick({R.id.im_more_video, R.id.im_more_voice, R.id.ll_more_recommend, R.id.im_more_all_course, R.id.im_jiajiao, R.id.im_xueke})
+    @OnClick({R.id.im_more_video, R.id.im_more_voice, R.id.im_jiajiao, R.id.im_xueke})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_more_video:
@@ -311,16 +242,6 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 Intent intent2 = new Intent(getActivity(), AllCourseActivity.class);
                 intent2.putExtra(Constants.INTENT_COURSE_CLASS, 2);
                 getActivity().startActivity(intent2);
-                break;
-            case R.id.ll_more_recommend:
-                Intent intent3 = new Intent(getActivity(), AllCourseActivity.class);
-                intent3.putExtra(Constants.INTENT_COURSE_CLASS, 3);
-                getActivity().startActivity(intent3);
-                break;
-            case R.id.im_more_all_course:
-                Intent intent4 = new Intent(getActivity(), AllCourseActivity.class);
-                intent4.putExtra(Constants.INTENT_COURSE_CLASS, 4);
-                getActivity().startActivity(intent4);
                 break;
             case R.id.im_jiajiao:
                 if (StringUtil.isEmpty(Constants.TOKEN)){

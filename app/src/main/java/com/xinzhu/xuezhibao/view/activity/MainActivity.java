@@ -37,19 +37,19 @@ public class MainActivity extends BaseBottomTabActivity {
         Fresco.initialize(this.getApplicationContext());
         StatusBar.setColor(this,0xFFf87d28);
         tabTextlist.add("首页");
-        tabTextlist.add("视频课程");
+        tabTextlist.add("精品课");
         tabTextlist.add("学宝");
-        tabTextlist.add("测评");
+        tabTextlist.add("家长荟");
         tabTextlist.add("我的");
         iocdef.add(R.drawable.tab_btn_home_nor);
-        iocdef.add(R.drawable.tab_btn_study_nor);
         iocdef.add(R.drawable.tab_btn_video_nor);
-        iocdef.add(R.drawable.tab_btn_evaluation_nor);
+        iocdef.add(R.drawable.tab_btn_study_nor);
+        iocdef.add(R.drawable.tab_btn_study_nor);
         iocdef.add(R.drawable.tab_btn_my_nor);
         iocsel.add(R.drawable.tab_btn_home_sel);
-        iocsel.add(R.drawable.tab_btn_study_sel);
         iocsel.add(R.drawable.tab_btn_video_sel);
-        iocsel.add(R.drawable.tab_btn_evaluation_sel);
+        iocsel.add(R.drawable.tab_btn_study_sel);
+        iocsel.add(R.drawable.tab_btn_study_sel);
         iocsel.add(R.drawable.tab_btn_my_sel);
 
         creatNormalTab(iocdef,iocsel,tabTextlist);

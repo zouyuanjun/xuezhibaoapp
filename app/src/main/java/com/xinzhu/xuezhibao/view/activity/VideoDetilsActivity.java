@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.EnvUtils;
@@ -53,6 +54,7 @@ import com.xinzhu.xuezhibao.view.interfaces.VideoVoiceDetailInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.ui.CustomDialog;
+import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.zou.fastlibrary.utils.WebViewUtil;
@@ -228,7 +230,7 @@ detailPlayer.hidstartbt();
     }
 
     @OnClick({R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_detail_comment, R.id.tv_buyvideo})
-    public void onViewClicked(View view) {
+    public void onViewClicked(final View view) {
         switch (view.getId()) {
             case R.id.ll_dianzan:
                 if (Constants.TOKEN.isEmpty()) {
@@ -274,7 +276,33 @@ detailPlayer.hidstartbt();
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
                 } else {
-                    videoVoiceDetailPresenter.buyVideo(videoid);
+                    final PopupWindow popupWindow=CreatPopwindows.creatWWpopwindows(this,R.layout.pop_pay);
+                    final View myview=popupWindow.getContentView();
+                    RadioGroup radioGroup=myview.findViewById(R.id.rg_pay);
+                    radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                            switch (i){
+                                case R.id.rd_alipay:
+                                    videoVoiceDetailPresenter.aLiBuyVideo(videoid,2);
+                                    popupWindow.dismiss();
+                                    final PopupWindow loading2=CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this,R.layout.pop_loading);
+                                    loading2.showAtLocation(view, Gravity.CENTER, 0, 0);
+                                    break;
+                                case R.id.rd_wxpay:
+                                    videoVoiceDetailPresenter.WxBuyVideo(videoid,1);
+                                    popupWindow.dismiss();
+                                    final PopupWindow loading=CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this,R.layout.pop_loading);
+                                    loading.showAtLocation(view, Gravity.CENTER, 0, 0);
+                                    break;
+                            }
+                        }
+                    });
+
+                    popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+
+
                 }
 
                 break;

@@ -240,9 +240,9 @@
     <style name="SplashStyle" parent="Theme.AppCompat.Light.NoActionBar">
         <!--<item name="android:windowDisablePreview">true</item>-->
         <item name="android:windowNoTitle">true</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="windowActionBar">false</item>
+        <item name="android:windowActionBar">false</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@drawable/splogo</item>
+        <item name="android:windowIsTranslucent">true</item>
+
     </style>
 </resources>

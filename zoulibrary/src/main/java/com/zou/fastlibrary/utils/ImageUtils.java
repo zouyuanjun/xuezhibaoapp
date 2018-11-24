@@ -144,6 +144,13 @@ public class ImageUtils {
         }
         return map;
     }
+    public static File saveBitmapFile(Bitmap bitmap, String filepath,String filename) {
+        File file = new File(filepath);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return saveBitmapFile(bitmap,filepath+filename);
+    }
 
     /**
      * 把batmap 转file
