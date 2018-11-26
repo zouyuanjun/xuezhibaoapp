@@ -17,31 +17,6 @@
         app:rightImageVisible='false'
         app:rightTextVisible='false'
         app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_video"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        app:tabIndicatorHeight="4dp"
-        app:tabSelectedTextColor="@color/appcolor"
-        app:tabTextColor="@color/color_black_333333">
-
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="免费视频" />
-
-        <android.support.design.widget.TabItem
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="付费视频" />
-    </android.support.design.widget.TabLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/itemfenge"></LinearLayout>
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"

@@ -15,11 +15,14 @@ import android.widget.Toast;
 
 import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
+import com.bravin.btoast.BToast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.PayResult;
+import com.xinzhu.xuezhibao.presenter.AlipayPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.OrderInfoUtil2_0;
+import com.xinzhu.xuezhibao.view.interfaces.PayInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
@@ -37,7 +40,7 @@ import butterknife.OnClick;
 /**
  * 会员中心
  */
-public class MyVipCentreActivity extends BaseActivity {
+public class MyVipCentreActivity extends BaseActivity implements PayInterface {
     @BindView(R.id.tv_username)
     TextView tvUsername;
     @BindView(R.id.tv_viplv)
@@ -57,24 +60,6 @@ public class MyVipCentreActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 1: {
-                    @SuppressWarnings("unchecked")
-                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
-                    /**
-                     对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
-                     */
-                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
-                    String resultStatus = payResult.getResultStatus();
-                    // 判断resultStatus 为9000则代表支付成功
-                    if (TextUtils.equals(resultStatus, "9000")) {
-                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        Toast.makeText(MyVipCentreActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                    } else {
-                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
-                        Toast.makeText(MyVipCentreActivity.this, "支付失败", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                }
                 case 2:{
                     try {
                         String result= (String) msg.obj;
@@ -95,7 +80,8 @@ public class MyVipCentreActivity extends BaseActivity {
             }
         }
     };
-
+AlipayPresenter alipayPresenter;
+PopupWindow loadingPop;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
@@ -110,6 +96,7 @@ public class MyVipCentreActivity extends BaseActivity {
                 finish();
             }
         });
+        alipayPresenter=new AlipayPresenter(this);
     }
 
     @Override
@@ -119,7 +106,7 @@ public class MyVipCentreActivity extends BaseActivity {
         sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
         tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
     }
-
+//充值会员
     @OnClick(R.id.tv_recharge)
     public void onViewClicked() {
 
@@ -131,12 +118,17 @@ public class MyVipCentreActivity extends BaseActivity {
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
                 switch (i){
                     case R.id.rd_alipay:
-
-
+                        alipayPresenter.alimemberup();
                         popupWindow.dismiss();
+                        loadingPop =CreatPopwindows.creatMMpopwindows(MyVipCentreActivity.this,R.layout.pop_loading);
+
+                        loadingPop.showAtLocation(tvViplv, Gravity.CENTER, 0, 0);
                         break;
                     case R.id.rd_wxpay:
+                        alipayPresenter.wxmemberup();
                         popupWindow.dismiss();
+                        loadingPop =CreatPopwindows.creatMMpopwindows(MyVipCentreActivity.this,R.layout.pop_loading);
+                        loadingPop.showAtLocation(tvViplv, Gravity.CENTER, 0, 0);
                         break;
                 }
             }
@@ -145,6 +137,19 @@ public class MyVipCentreActivity extends BaseActivity {
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
 
+
+    }
+
+    @Override
+    public void alipaysuccessful() {
+        if (null!=loadingPop&&loadingPop.isShowing()){
+            loadingPop.dismiss();
+        }
+        BToast.success(this).text("支付成功").show();
+    }
+
+    @Override
+    public void alipayfail() {
 
     }
 }

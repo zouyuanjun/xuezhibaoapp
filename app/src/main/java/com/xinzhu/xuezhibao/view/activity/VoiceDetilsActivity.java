@@ -255,15 +255,6 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         smartrv.finishLoadMoreWithNoMoreData();
     }
 
-    @Override
-    public void successbuy(PayResquestBean payResquestBean) {
-
-    }
-
-    @Override
-    public void alreadlybuy() {
-
-    }
 
     @Override
     public void islike(boolean like) {
@@ -302,7 +293,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
                     CommentBean commentBean = new CommentBean(Constants.userBasicInfo.getImage(), Constants.userBasicInfo.getNickName(), System.currentTimeMillis(), commend, "", "111");
-                   commentnum++;
+                    commentnum++;
                     tvCommentNum.setText("全部评论(" + commentnum + ")");
                     commentBeanArrayList.addFirst(commentBean);
                     commentAdapter.notifyItemInserted(0);

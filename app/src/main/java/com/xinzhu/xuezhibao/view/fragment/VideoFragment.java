@@ -36,12 +36,8 @@ import butterknife.Unbinder;
 public class VideoFragment extends LazyLoadFragment implements VideoFragmentInterface {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
-    @BindView(R.id.tab_video)
-    TabLayout tabVideo;
-    VideoVoiceListAdapter freeadapter;
     VideoVoiceListAdapter payadapter;
     Unbinder unbinder;
-    List<VideoVoiceBean> freeBeanList = new ArrayList<>();
     List<VideoVoiceBean> payBeanList = new ArrayList<>();
     int type = 0;
     int freepage = 1;
@@ -70,44 +66,13 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvVideocourselist.setLayoutManager(linearLayoutManager3);
-        freeadapter = new VideoVoiceListAdapter(new WeakReference<Context>(getContext()).get(), freeBeanList, 2);
         payadapter = new VideoVoiceListAdapter(new WeakReference<>(getContext()).get(), payBeanList, 2);
-        rvVideocourselist.setAdapter(freeadapter);
-        tabVideo.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                Log.d("初始化选择");
-                int position = tab.getPosition();
-                if (position == 0) {
-                    type = 0;
-                    rvVideocourselist.setAdapter(freeadapter);
-                } else {
-                    type = 1;
-                    rvVideocourselist.setAdapter(payadapter);
-                }
-
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        rvVideocourselist.setAdapter(payadapter);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                if (type==0){
-                    freeBeanList.clear();
-                    freepage=1;
-                }else {
                     payBeanList.clear();
                     paypage=1;
-                }
                 loaddata();
             }
         });
@@ -132,33 +97,14 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
 
             }
         });
-        freeadapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                String id = freeBeanList.get(position).getVideoId();
-                Intent intent = new Intent(getContext(), VideoDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID, id);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
-        });
     }
 
     private void loaddata() {
         if (isfirstload){
-            videoVoiceListPresenter.getfreeVideo(1);
             videoVoiceListPresenter.getpayVideo(1);
             isfirstload =false;
         }else {
-            if (type == 0) {
-                    videoVoiceListPresenter.getfreeVideo(freepage);
-            } else {
                     videoVoiceListPresenter.getpayVideo(paypage);
-            }
         }
 
     }
@@ -177,17 +123,6 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
         unbinder.unbind();
     }
 
-    @Override
-    public void getFreeVideo(List<VideoVoiceBean> List) {
-        if (null!=refreshLayout){
-            freeBeanList.addAll(List);
-            freeadapter.notifyDataSetChanged();
-            freepage++;
-            refreshLayout.finishLoadMore();
-            refreshLayout.finishRefresh(true);
-        }
-
-    }
 
     @Override
     public void getpayVideo(List<VideoVoiceBean> List) {

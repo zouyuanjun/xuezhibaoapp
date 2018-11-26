@@ -27,6 +27,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 课程申请退款
+ */
 public class RefundActivity extends BaseActivity implements MyOrderInterface {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;

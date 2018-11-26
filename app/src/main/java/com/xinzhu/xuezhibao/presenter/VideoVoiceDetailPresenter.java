@@ -3,9 +3,7 @@ package com.xinzhu.xuezhibao.presenter;
 import android.os.Handler;
 import android.os.Message;
 
-import com.lljjcoder.Constant;
 import com.xinzhu.xuezhibao.bean.CommentBean;
-import com.xinzhu.xuezhibao.bean.PayResquestBean;
 import com.xinzhu.xuezhibao.bean.SendCommentBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.utils.Constants;
@@ -70,14 +68,6 @@ public class VideoVoiceDetailPresenter {
                 String data = JsonUtils.getStringValue(result, "Data");
                 VideoVoiceBean videoVoiceBean = (VideoVoiceBean) JsonUtils.stringToObject(data, VideoVoiceBean.class);
                 videoVoiceDetailInterface.getVoicedetail(videoVoiceBean);
-            } else if (what == 6) {
-//                if (code == 100) {
-//                    String data = JsonUtils.getStringValue(result, "Data");
-//                    PayResquestBean payResquestBean =  JsonUtils.stringToObject(data, PayResquestBean.class);
-//                    videoVoiceDetailInterface.successbuy(payResquestBean);
-//                } else if (code == 6) {
-//                    videoVoiceDetailInterface.alreadlybuy();
-//                }
             }
         }
     };
@@ -124,17 +114,6 @@ public class VideoVoiceDetailPresenter {
         String data = JsonUtils.keyValueToString2("pageNo", page, "productId", id);
         data = JsonUtils.addKeyValue(data, "productType", 3);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/comment-find-by-productid", handler, 5);
-    }
-
-    public void aLiBuyVideo(String id, int dealWay) {
-        String data = JsonUtils.keyValueToString2("videoId", id, "token", Constants.TOKEN);
-        data =JsonUtils.addKeyValue(data,"dealWay",dealWay);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/buy-video", handler, 6);
-    }
-    public void WxBuyVideo(String id, int dealWay) {
-        String data = JsonUtils.keyValueToString2("videoId", id, "token", Constants.TOKEN);
-        data =JsonUtils.addKeyValue(data,"dealWay",dealWay);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/buy-video", handler, 8);
     }
 
     public void cancelmessage() {

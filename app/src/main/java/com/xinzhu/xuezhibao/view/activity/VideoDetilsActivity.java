@@ -41,7 +41,6 @@ import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
-import com.xinzhu.xuezhibao.bean.PayResquestBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.presenter.AlipayPresenter;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
@@ -56,6 +55,7 @@ import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.ScreenUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.zou.fastlibrary.utils.WebViewUtil;
 
@@ -128,7 +128,8 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     boolean haseplay = false; //是否观看过
     @BindView(R.id.im_back)
     ImageView imBack;
-
+     PopupWindow loadingPop = null;
+    AlipayPresenter alipayPresenter ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
@@ -146,7 +147,9 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             }
         });
         videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
+        alipayPresenter = new AlipayPresenter(VideoDetilsActivity.this);
         videoVoiceDetailPresenter.getVideoComment(videoid, 1);
+
     }
 
     @Override
@@ -276,30 +279,38 @@ detailPlayer.hidstartbt();
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
                 } else {
-                    final PopupWindow popupWindow=CreatPopwindows.creatWWpopwindows(this,R.layout.pop_pay);
+                    final PopupWindow popupWindow=CreatPopwindows.creatpopwindows(this,R.layout.pop_pay);
                     final View myview=popupWindow.getContentView();
                     RadioGroup radioGroup=myview.findViewById(R.id.rg_pay);
+                    TextView textView=myview.findViewById(R.id.tv_cancle);
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                        }
+                    });
                     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(RadioGroup radioGroup, int i) {
                             switch (i){
                                 case R.id.rd_alipay:
-                                    videoVoiceDetailPresenter.aLiBuyVideo(videoid,2);
+                                    alipayPresenter.aLiBuyVideo(videoid);
                                     popupWindow.dismiss();
-                                    final PopupWindow loading2=CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this,R.layout.pop_loading);
-                                    loading2.showAtLocation(view, Gravity.CENTER, 0, 0);
+                                    loadingPop =CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this,R.layout.pop_loading);
+
+                                    loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
                                     break;
                                 case R.id.rd_wxpay:
-                                    videoVoiceDetailPresenter.WxBuyVideo(videoid,1);
+                                    alipayPresenter.WxBuyVideo(videoid);
                                     popupWindow.dismiss();
-                                    final PopupWindow loading=CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this,R.layout.pop_loading);
-                                    loading.showAtLocation(view, Gravity.CENTER, 0, 0);
+                                    loadingPop =CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this,R.layout.pop_loading);
+                                    loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
                                     break;
                             }
                         }
                     });
 
-                    popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                    popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, ScreenUtil.getNavigationBarHeight(VideoDetilsActivity.this));
 
 
 
@@ -460,17 +471,6 @@ detailPlayer.hidstartbt();
     }
 
     @Override
-    public void successbuy(PayResquestBean payResquestBean) {
-        AlipayPresenter alipayPresenter = new AlipayPresenter(VideoDetilsActivity.this);
-        alipayPresenter.alipay(payResquestBean, VideoDetilsActivity.this);
-    }
-
-    @Override
-    public void alreadlybuy() {
-        cslBuy.setVisibility(View.GONE);
-    }
-
-    @Override
     public void islike(boolean like) {
         islike = like;
         if (like) {
@@ -484,7 +484,6 @@ detailPlayer.hidstartbt();
         if (collect) {
             imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
         }
-
     }
 
     //弹出发送评论对话框
@@ -542,20 +541,23 @@ detailPlayer.hidstartbt();
         });
         builder.create().show();
     }
-
-    @OnClick(R.id.tv_buyvideo)
-    public void onViewClicked() {
-
-    }
-
     @Override
     public void alipaysuccessful() {
-
+        if (null!=loadingPop&&loadingPop.isShowing()){
+            loadingPop.dismiss();
+        }
+        BToast.success(this).text("购买成功").show();
+        cslBuy.setVisibility(View.GONE);
+        detailPlayer.setCanpaly(true);
+        detailPlayer.showstartbt();
     }
 
     @Override
     public void alipayfail() {
-
+        BToast.success(this).text("支付失败").show();
+        cslBuy.setVisibility(View.VISIBLE);
+        detailPlayer.setCanpaly(false);
+        detailPlayer.hidstartbt();
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void netWorkMessage(NetWorkMessage messageEvent) {

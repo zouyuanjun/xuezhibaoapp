@@ -71,6 +71,7 @@
         <activity android:name=".view.activity.AboutUsActivity" />
         <activity android:name=".view.activity.SettingActivity" />
         <activity android:name=".view.activity.HomeListActivity" />
+        <activity android:name=".view.activity.TestIntroduceActivity"></activity>
         <activity android:name=".view.activity.HistoryFeedbackActivity" />
         <activity android:name=".view.activity.FeedbackActivity" />
         <activity android:name=".view.activity.VideoDetilsActivity"

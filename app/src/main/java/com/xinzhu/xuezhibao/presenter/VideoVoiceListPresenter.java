@@ -74,9 +74,7 @@ public class VideoVoiceListPresenter {
                 String data = JsonUtils.getStringValue(result, "Data");
                 List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
                 if (null!=mDatas&&mDatas.size()>0){
-                    if (what == 7) {
-                        videoFragmentInterface.getFreeVideo(mDatas);
-                    } else if (what == 8) {
+                  if (what == 8) {
                         videoFragmentInterface.getpayVideo(mDatas);
                     } else {
                         homeVideoVoiceListInterface.getVideo(mDatas);
@@ -128,12 +126,6 @@ public class VideoVoiceListPresenter {
         data=JsonUtils.addKeyValue(data,"type",1);
         Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-videos", handler, 6);
         }
-    }
-
-    public void getfreeVideo(int page) {
-        String data = JsonUtils.keyValueToString2("pageNo", page,"videoType",0);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/video-newest-gratis", handler, 7);
-
     }
 
     public void getpayVideo(int page) {

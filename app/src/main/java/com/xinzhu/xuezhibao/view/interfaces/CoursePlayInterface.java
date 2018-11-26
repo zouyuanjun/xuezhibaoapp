@@ -11,4 +11,7 @@ public  interface CoursePlayInterface extends publiceviewinterface {
     void getcomment(List<CommentBean> mDatas, int total);
     void getcommentfail();
 
+    void requestPayInfo(String payinfo, String ordernum);
+
+    void alreadlybuy();
 }

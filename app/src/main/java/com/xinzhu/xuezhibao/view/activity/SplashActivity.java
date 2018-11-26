@@ -61,8 +61,8 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                          //     imLogo.setImageBitmap(resource);
-                                ImageUtils.saveBitmapFile(resource, path,"splogo.jpg");
+                            //  imLogo.setImageBitmap(resource);
+                              ImageUtils.saveBitmapFile(resource, path,"splogo.jpg");
                             }
                         });
 

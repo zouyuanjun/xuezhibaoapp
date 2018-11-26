@@ -21,8 +21,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.EnvUtils;
+import com.bravin.btoast.BToast;
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -34,14 +37,18 @@ import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
+import com.xinzhu.xuezhibao.presenter.AlipayPresenter;
 import com.xinzhu.xuezhibao.presenter.CourseDetailPresenter;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.CoursePlayInterface;
 import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
+import com.xinzhu.xuezhibao.view.interfaces.PayInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
+import com.zou.fastlibrary.utils.CreatPopwindows;
+import com.zou.fastlibrary.utils.ScreenUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.zou.fastlibrary.utils.WebViewUtil;
 
@@ -52,7 +59,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CourseDetailActivity extends BaseActivity implements CoursePlayInterface, LikeCollectInterface {
+public class CourseDetailActivity extends BaseActivity implements CoursePlayInterface, LikeCollectInterface, PayInterface {
     CommentAdapter commentAdapter;
     Context context;
     String courseid = "";
@@ -112,16 +119,17 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     @BindView(R.id.im_back)
     ImageView imBack;
     CourseBean mycourse;
-
+    PopupWindow loadingPop = null;
+    AlipayPresenter alipayPresenter ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
         setContentView(R.layout.activity_playcourse);
-
         ButterKnife.bind(this);
         context = this;
         courseid = getIntent().getStringExtra(Constants.INTENT_ID);
@@ -134,6 +142,8 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
                 finish();
             }
         });
+        alipayPresenter = new AlipayPresenter(CourseDetailActivity.this,CourseDetailActivity.this);
+
     }
 
     @Override
@@ -175,8 +185,8 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
 
     @Override
     public void getCoursedetail(CourseBean courseBean) {
-        this.mycourse=courseBean;
-        if (null!=tvAllclass){
+        this.mycourse = courseBean;
+        if (null != tvAllclass) {
             tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(courseBean.getCreateTime()));
             webView.loadDataWithBaseURL(null, courseBean.getCurriculumExplain(), "text/html", "UTF-8", null);
             tvTitle.setText(courseBean.getCurriculumTitle());
@@ -191,7 +201,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
             likenum = courseBean.getCurriculumLike();
             tvLike.setText(likenum + "");
             tvAlreadybuynum.setText(courseBean.getCurriculumApply() + "人已购买");
-            tvAllclass.setText("共" + courseBean.getConsumeHour()+"/"+ courseBean.getSumHour() + "节" );
+            tvAllclass.setText("共" + courseBean.getConsumeHour() + "/" + courseBean.getSumHour() + "节");
         }
     }
 
@@ -209,6 +219,21 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     @Override
     public void getcommentfail() {
         SmartRefreshLayout.finishLoadMoreWithNoMoreData();
+    }
+
+    @Override
+    public void requestPayInfo(String payinfo, String ordernum) {
+
+        alipayPresenter.alipay(payinfo, CourseDetailActivity.this);
+        if (null != loadingPop) {
+            loadingPop.dismiss();
+        }
+
+    }
+
+    @Override
+    public void alreadlybuy() {
+
     }
 
     @Override
@@ -241,6 +266,156 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     @Override
     public void servererr() {
         super.servererr();
+    }
+
+    @OnClick({R.id.im_talkabout, R.id.ll_comment, R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_buycourse})
+    public void onViewClicked(final View view) {
+        switch (view.getId()) {
+            case R.id.im_talkabout:
+                Intent notificationIntent = new Intent(CourseDetailActivity.this, ChatActivity.class);
+                notificationIntent.putExtra(JGApplication.TARGET_ID, mycourse.getTeacherPhone());
+                notificationIntent.putExtra(JGApplication.CONV_TITLE, mycourse.getSpeakerTeacher() + "老师");
+                notificationIntent.putExtra(JGApplication.TARGET_APP_KEY, Constants.JPUSH_APPKEY);
+                startActivity(notificationIntent);//自定义跳转到指定页面
+
+                break;
+            case R.id.ll_comment:
+                showpop(view);
+                break;
+            case R.id.ll_dianzan:
+                if (Constants.TOKEN.isEmpty()) {
+                    showdia();
+                } else {
+                    if (islike) {
+                        islike = false;
+                        likenum--;
+                        tvLike.setText(likenum + "");
+                        likeCollectPresenter.cancellike(courseid, "4");
+                        imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
+                    } else {
+                        islike = true;
+                        likenum++;
+                        mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
+                        mGoodView.show(view);
+                        tvLike.setText(likenum + "");
+                        likeCollectPresenter.like(courseid, "4");
+                        imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+                    }
+
+                }
+                break;
+            case R.id.ll_shoucan:
+                if (Constants.TOKEN.isEmpty()) {
+                    showdia();
+                } else {
+                    if (iscollect) {
+                        iscollect = false;
+                        likeCollectPresenter.cancelcollect(courseid, "4");
+                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_nor);
+                    } else {
+                        iscollect = true;
+                        likeCollectPresenter.collect(courseid, "4");
+                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
+                    }
+                }
+                break;
+            case R.id.tv_buycourse:
+                if (mycourse.isApply()) {
+                    BToast.success(CourseDetailActivity.this).text("您已购买该课程，无需重复购买").show();
+                    return;
+                }
+                if (Constants.TOKEN.isEmpty()) {
+                    showdia();
+                } else {
+                    final PopupWindow popupWindow = CreatPopwindows.creatpopwindows(this, R.layout.pop_pay);
+                    final View myview = popupWindow.getContentView();
+                    RadioGroup radioGroup = myview.findViewById(R.id.rg_pay);
+                    TextView textView = myview.findViewById(R.id.tv_cancle);
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            popupWindow.dismiss();
+                        }
+                    });
+                    radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                            switch (i) {
+                                case R.id.rd_alipay:
+                                    alipayPresenter.Alibuycourse(courseid);
+                                    popupWindow.dismiss();
+                                    loadingPop = CreatPopwindows.creatMMpopwindows(CourseDetailActivity.this, R.layout.pop_loading);
+                                    loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
+                                    break;
+                                case R.id.rd_wxpay:
+                                    alipayPresenter.Wxbuycourse(courseid);
+                                    popupWindow.dismiss();
+                                    loadingPop = CreatPopwindows.creatMMpopwindows(CourseDetailActivity.this, R.layout.pop_loading);
+                                    loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
+                                    break;
+                            }
+                        }
+                    });
+
+                    popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, ScreenUtil.getNavigationBarHeight(CourseDetailActivity.this));
+                }
+                break;
+        }
+    }
+
+    public void showdia() {
+        CustomDialog.Builder builder = new CustomDialog.Builder(this);
+        builder.setTitle("提示");
+        builder.setMessage("登陆后才能继续，现在登陆?");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(CourseDetailActivity.this, LoginActivity.class);
+                intent.putExtra(Constants.FROMAPP, "fss");
+                startActivity(intent);
+
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+    }
+
+    @OnClick(R.id.tv_buycourse)
+    public void onViewClicked() {
+
+    }
+
+    @Override
+    public void alipaysuccessful() {
+        if (null!=loadingPop&&loadingPop.isShowing()){
+            loadingPop.dismiss();
+        }
+        BToast.success(this).text("购买成功").show();
+        tvBuycourse.setText("已购买");
+        mycourse.setApply(true);
+    }
+
+    @Override
+    public void alipayfail() {
+        if (null!=loadingPop&&loadingPop.isShowing()){
+            loadingPop.dismiss();
+        }
+        BToast.error(this).text("支付失败").show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null!=loadingPop&&loadingPop.isShowing()){
+            loadingPop.dismiss();
+        }
+
     }
 
     //弹出发送评论对话框
@@ -293,93 +468,5 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
         }
     }
 
-    @OnClick({R.id.im_talkabout, R.id.ll_comment, R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_buycourse})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.im_talkabout:
-                Intent notificationIntent = new Intent(CourseDetailActivity.this, ChatActivity.class);
-                notificationIntent.putExtra(JGApplication.TARGET_ID, mycourse.getTeacherPhone());
-                notificationIntent.putExtra(JGApplication.CONV_TITLE, mycourse.getSpeakerTeacher()+"老师");
-                notificationIntent.putExtra(JGApplication.TARGET_APP_KEY,Constants.JPUSH_APPKEY);
-                startActivity(notificationIntent);//自定义跳转到指定页面
-
-                break;
-            case R.id.ll_comment:
-                showpop(view);
-                break;
-            case R.id.ll_dianzan:
-                if (Constants.TOKEN.isEmpty()) {
-                    showdia();
-                } else {
-                    if (islike) {
-                        islike = false;
-                        likenum--;
-                        tvLike.setText(likenum + "");
-                        likeCollectPresenter.cancellike(courseid, "4");
-                        imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
-                    } else {
-                        islike = true;
-                        likenum++;
-                        mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
-                        mGoodView.show(view);
-                        tvLike.setText(likenum + "");
-                        likeCollectPresenter.like(courseid, "4");
-                        imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
-                    }
-
-                }
-                break;
-            case R.id.ll_shoucan:
-                if (Constants.TOKEN.isEmpty()) {
-                    showdia();
-                } else {
-                    if (iscollect) {
-                        iscollect = false;
-                        likeCollectPresenter.cancelcollect(courseid, "4");
-                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_nor);
-                    } else {
-                        iscollect = true;
-                        likeCollectPresenter.collect(courseid, "4");
-                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
-                    }
-                }
-                break;
-            case R.id.tv_buycourse:
-                if (Constants.TOKEN.isEmpty()) {
-                    showdia();
-                } else {
-                    coursePlayPresenter.buycourse(courseid);
-                }
-                break;
-        }
-    }
-
-    public void showdia() {
-        CustomDialog.Builder builder = new CustomDialog.Builder(this);
-        builder.setTitle("提示");
-        builder.setMessage("登陆后才能继续，现在登陆?");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Intent intent = new Intent(CourseDetailActivity.this, LoginActivity.class);
-                intent.putExtra(Constants.FROMAPP, "fss");
-                startActivity(intent);
-
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
-    }
-
-    @OnClick(R.id.tv_buycourse)
-    public void onViewClicked() {
-
-    }
 }
 

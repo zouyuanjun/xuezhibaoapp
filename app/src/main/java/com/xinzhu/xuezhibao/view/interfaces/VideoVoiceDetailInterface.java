@@ -12,7 +12,5 @@ public  interface VideoVoiceDetailInterface extends publiceviewinterface {
     void getcomment(List<CommentBean> mDatas, int total);
     void nologin();
     void getcommentfail();
-    void successbuy(PayResquestBean payResquestBean);
-    void alreadlybuy();
 
 }

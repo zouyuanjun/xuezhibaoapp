@@ -36,6 +36,7 @@ import com.xinzhu.xuezhibao.view.activity.LoginActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SettingActivity;
 import com.xinzhu.xuezhibao.view.activity.TestBeforeActivity;
+import com.xinzhu.xuezhibao.view.activity.TestIntroduceActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.VoiceDetilsActivity;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
@@ -227,7 +228,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             case R.id.banner:
                 break;
             case R.id.im_test:
-                Intent intent11 = new Intent(getContext(), TestBeforeActivity.class);
+                Intent intent11 = new Intent(getContext(), TestIntroduceActivity.class);
                 startActivity(intent11);
                 break;
             case R.id.ll_more_video:

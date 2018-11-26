@@ -62,6 +62,15 @@ public class CourseDetailPresenter {
                     }
 
                 }
+            }else if (what==4){
+                if (code == 100) {
+                    String data = JsonUtils.getStringValue(result, "Data");
+                    String payinfo=JsonUtils.getStringValue(data, "data");
+                    String ordernum=JsonUtils.getStringValue(data, "orderNum");
+                    coursePlayInterface.requestPayInfo(payinfo,ordernum);
+                } else if (code == 6) {
+                    coursePlayInterface.alreadlybuy();
+                }
             }
         }
     };
@@ -91,12 +100,18 @@ public class CourseDetailPresenter {
         data=JsonUtils.addKeyValue(data,"productType",4);
         Network.getnetwork().postJson(data, Constants.URL + "/app/insert-comment", handler, 3);
     }
-    public void buycourse(String id){
+    public void Alibuycourse(String id){
         if (StringUtil.isEmpty(Constants.TOKEN)){
             return;
         }
         String data=JsonUtils.keyValueToString2("token",Constants.TOKEN,"curriculumId",id);
+        data=JsonUtils.addKeyValue(data,"dealWay",2);
         Network.getnetwork().postJson(data, Constants.URL + "/app/curriculum-apply", handler, 4);
+    }
+    public void Wxbuycourse(String id) {
+        String data = JsonUtils.keyValueToString2("videoId", id, "token", Constants.TOKEN);
+        data =JsonUtils.addKeyValue(data,"dealWay",1);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/curriculum-apply", handler, 5);
     }
     public void cancelmessage(){
         handler.removeCallbacksAndMessages(null);
