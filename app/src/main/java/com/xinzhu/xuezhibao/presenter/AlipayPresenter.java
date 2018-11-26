@@ -4,11 +4,7 @@ import android.app.Activity;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
-import android.widget.Toast;
 
-import com.xinzhu.xuezhibao.MyApplication;
-import com.xinzhu.xuezhibao.bean.AliPayBean;
-import com.xinzhu.xuezhibao.bean.PayResquestBean;
 import com.xinzhu.xuezhibao.bean.PayResult;
 import com.xinzhu.xuezhibao.utils.AliPay;
 import com.xinzhu.xuezhibao.utils.Constants;
@@ -19,7 +15,6 @@ import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.Map;
-import java.util.logging.LogRecord;
 
 public class AlipayPresenter extends BasePresenter {
     PayInterface payInterface;
@@ -27,10 +22,6 @@ public class AlipayPresenter extends BasePresenter {
     String ordernum;
     int tpye;
     int trycount = 1;
-
-    public AlipayPresenter(PayInterface payInterface) {
-        this.payInterface = payInterface;
-    }
 
     public AlipayPresenter(PayInterface payInterface, Activity activity) {
         this.payInterface = payInterface;
@@ -62,7 +53,7 @@ public class AlipayPresenter extends BasePresenter {
                     }
                     break;
                 }
-                case 2: {
+                case 2: {   //支付宝支付请求回来的支付参数
                     String result = (String) msg.obj;
                     int code = JsonUtils.getIntValue(result, "Code");
                     if (code == 100) {
@@ -73,7 +64,13 @@ public class AlipayPresenter extends BasePresenter {
                     }
                     break;
                 }
-                case 5: {
+                case 3:{
+                    String result = (String) msg.obj;
+                    int code = JsonUtils.getIntValue(result, "Code");
+                    Log.d(result);
+                    break;
+                }
+                case 5: {  //查询的支付宝支付结果
                     String result = (String) msg.obj;
                     int code = JsonUtils.getIntValue(result, "Code");
                     if (code == 100) {
@@ -109,7 +106,6 @@ public class AlipayPresenter extends BasePresenter {
     }
 
     public void Wxbuycourse(String id) {
-
         String data = JsonUtils.keyValueToString2("videoId", id, "token", Constants.TOKEN);
         data = JsonUtils.addKeyValue(data, "dealWay", 1);
         Network.getnetwork().postJson(data, Constants.URL + "/app/curriculum-apply", handler, 3);
@@ -142,10 +138,10 @@ public class AlipayPresenter extends BasePresenter {
 
     public void alimemberup(){
         String data = JsonUtils.keyValueToString2("dealWay", 2, "token", Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/check-alipay", handler, 2);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/member-top-up", handler, 2);
     }
     public void wxmemberup(){
         String data = JsonUtils.keyValueToString2("dealWay", 1, "token", Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/check-alipay", handler, 3);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/member-top-up", handler, 3);
     }
 }

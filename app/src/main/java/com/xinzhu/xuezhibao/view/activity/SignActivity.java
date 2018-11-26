@@ -121,7 +121,6 @@ public class SignActivity extends BaseActivity implements SignInterface {
                     imPasswordtrue.setVisibility(View.GONE);
                     tvSignup.setBgColor(Color.parseColor("#999999"));
                 }
-                ;
             }
         });
         etConfirmPassword.addTextChangedListener(new TextWatcherAdapter() {
@@ -141,7 +140,6 @@ public class SignActivity extends BaseActivity implements SignInterface {
                     imPasswordtrue.setVisibility(View.GONE);
                     tvSignup.setBgColor(Color.parseColor("#999999"));
                 }
-                ;
             }
         });
 

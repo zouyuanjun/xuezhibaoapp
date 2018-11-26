@@ -42,7 +42,7 @@ public class VideoVoiceDetailPresenter {
             if (what == 1) {
                 if (code == 100) {
                     String data = JsonUtils.getStringValue(result, "Data");
-                    VideoVoiceBean videoVoiceBean = (VideoVoiceBean) JsonUtils.stringToObject(data, VideoVoiceBean.class);
+                    VideoVoiceBean videoVoiceBean = JsonUtils.stringToObject(data, VideoVoiceBean.class);
                     videoVoiceDetailInterface.getVideodetail(videoVoiceBean);
                 } else if (code == 205) {
                     videoVoiceDetailInterface.nologin();
@@ -66,7 +66,7 @@ public class VideoVoiceDetailPresenter {
 
             } else if (what == 2) {
                 String data = JsonUtils.getStringValue(result, "Data");
-                VideoVoiceBean videoVoiceBean = (VideoVoiceBean) JsonUtils.stringToObject(data, VideoVoiceBean.class);
+                VideoVoiceBean videoVoiceBean = JsonUtils.stringToObject(data, VideoVoiceBean.class);
                 videoVoiceDetailInterface.getVoicedetail(videoVoiceBean);
             }
         }

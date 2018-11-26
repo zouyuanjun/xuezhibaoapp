@@ -97,7 +97,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
             @Override
             public void afterTextChanged(Editable s) {
                 super.afterTextChanged(s);
-                if (s.length() > 4) {
+                if (s.length() > 5) {
                     phone=etPhone.getText().toString();
                     signPresenter.iscodeture(phone, s.toString());
                 }
@@ -119,7 +119,6 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
                     imPasswordtrue.setVisibility(View.GONE);
                     tvUppassword.setBgColor(Color.parseColor("#999999"));
                 }
-                ;
             }
         });
         etConfirmPassword.addTextChangedListener(new TextWatcherAdapter() {
@@ -141,7 +140,6 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
                     imPasswordtrue.setVisibility(View.GONE);
                     tvUppassword.setBgColor(Color.parseColor("#999999"));
                 }
-                ;
             }
         });
     }
@@ -206,7 +204,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
 
     @Override
     public void codeistrue() {
-        if (passwordisture){
+        if (passwordisture&&passwordisture){
             tvUppassword.setBgColor(Color.parseColor("#f87d26"));
         }
         imCodeistrue.setVisibility(View.VISIBLE);
@@ -218,6 +216,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
         tvUppassword.setBgColor(Color.parseColor("#999999"));
         imCodeistrue.setVisibility(View.GONE);
         codeisture=false;
+        BToast.error(this).text("验证码错误").show();
     }
 
     @Override

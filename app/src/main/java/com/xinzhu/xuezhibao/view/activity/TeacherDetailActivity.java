@@ -296,7 +296,7 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
             @Override
             public void run() {
                 CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) wbFeedback.getLayoutParams();
-                layoutParams.width = (int) ((getResources().getDisplayMetrics().widthPixels));
+                layoutParams.width = (getResources().getDisplayMetrics().widthPixels);
                 layoutParams.height = (int) (height * getResources().getDisplayMetrics().density) + 50;
                 Log.d(layoutParams.width + "高度是" + layoutParams.height + "原始" + height + "级" + getResources().getDisplayMetrics().density);
                 wbFeedback.setLayoutParams(layoutParams);

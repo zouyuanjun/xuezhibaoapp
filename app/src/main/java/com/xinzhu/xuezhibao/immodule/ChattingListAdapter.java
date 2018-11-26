@@ -694,8 +694,8 @@ public class ChattingListAdapter extends BaseAdapter {
         View view = LayoutInflater.from(context).inflate(
                 IdHelper.getLayout(context, "jmui_dialog_base_with_button"), null);
         dialog.setContentView(view);
-        Button cancelBtn = (Button) view.findViewById(IdHelper.getViewID(context, "jmui_cancel_btn"));
-        Button resendBtn = (Button) view.findViewById(IdHelper.getViewID(context, "jmui_commit_btn"));
+        Button cancelBtn = view.findViewById(IdHelper.getViewID(context, "jmui_cancel_btn"));
+        Button resendBtn = view.findViewById(IdHelper.getViewID(context, "jmui_commit_btn"));
         cancelBtn.setOnClickListener(listener);
         resendBtn.setOnClickListener(listener);
         dialog.setCancelable(true);

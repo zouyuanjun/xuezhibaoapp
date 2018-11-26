@@ -311,7 +311,7 @@ public class DataKeeper {
 	// 获取文件大小
 	//Context.getExternalFilesDir() --> SDCard/Android/data/你的应用的包名/files/ 目录，一般放一些长时间保存的数据
 	//Context.getExternalCacheDir() --> SDCard/Android/data/你的应用包名/cache/目录，一般存放临时缓存数据
-	private static long getFolderSize(File file) throws Exception {
+	private static long getFolderSize(File file) {
 		long size = 0;
 		try {
 			File[] fileList = file.listFiles();

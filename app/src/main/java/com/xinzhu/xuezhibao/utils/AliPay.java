@@ -6,8 +6,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.alipay.sdk.app.PayTask;
-import com.xinzhu.xuezhibao.bean.AliPayBean;
-import com.zou.fastlibrary.utils.JsonUtils;
 
 import java.util.Map;
 

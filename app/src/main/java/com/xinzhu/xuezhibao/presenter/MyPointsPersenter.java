@@ -83,11 +83,13 @@ public class MyPointsPersenter extends BasePresenter {
         String data= JsonUtils.keyValueToString2("pageNo",page,"trackType",trackType);
         data=JsonUtils.addKeyValue(data,"token", Constants.TOKEN);
         Network.getnetwork().postJson(data,Constants.URL+"/app/single-integral-trajectory",handler,1);
-    };
+    }
+
     public void getalldata(int page){
         String data= JsonUtils.keyValueToString2("pageNo",page,"token",Constants.TOKEN);
         Network.getnetwork().postJson(data,Constants.URL+"/app/integral-trajectory",handler,1);
-    };
+    }
+
     public void cancelmessage(){
         handler.removeCallbacksAndMessages(null);
     }

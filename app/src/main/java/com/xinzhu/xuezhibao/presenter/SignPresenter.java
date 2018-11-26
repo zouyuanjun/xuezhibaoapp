@@ -80,7 +80,7 @@ public class SignPresenter {
                 if (code==100){
                     String data=JsonUtils.getStringValue(result,"Data");
                     Constants.TOKEN=JsonUtils.getStringValue(data,"token");
-                    Constants.userBasicInfo= (UserBasicInfo) JsonUtils.stringToObject(data,UserBasicInfo.class);
+                    Constants.userBasicInfo= JsonUtils.stringToObject(data,UserBasicInfo.class);
                     signInterface.signsuccessful();
                 }else {
                     signInterface.signinfail(code);

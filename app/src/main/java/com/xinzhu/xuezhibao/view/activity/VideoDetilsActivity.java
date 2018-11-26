@@ -147,7 +147,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             }
         });
         videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
-        alipayPresenter = new AlipayPresenter(VideoDetilsActivity.this);
+        alipayPresenter = new AlipayPresenter(VideoDetilsActivity.this,this);
         videoVoiceDetailPresenter.getVideoComment(videoid, 1);
 
     }

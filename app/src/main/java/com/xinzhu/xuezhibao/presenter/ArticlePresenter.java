@@ -83,7 +83,7 @@ public class ArticlePresenter {
                 }
             } else if (what == 3) {
                 String data = JsonUtils.getStringValue(result, "Data");
-                ArticleBean articleBean = (ArticleBean) JsonUtils.stringToObject(data, ArticleBean.class);
+                ArticleBean articleBean = JsonUtils.stringToObject(data, ArticleBean.class);
                 articleInterface.getarticledetils(articleBean);
             } else if (what == 5) {
                 if (code == 203) {

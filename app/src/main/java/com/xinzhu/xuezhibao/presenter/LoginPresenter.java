@@ -95,7 +95,7 @@ SplashInterface splashInterface;
                     String data=JsonUtils.getStringValue(result,"Data");
                     Constants.TOKEN=JsonUtils.getStringValue(data,"token");
                     SettingUtil.TOKEN=Constants.TOKEN;
-                    Constants.userBasicInfo= (UserBasicInfo) JsonUtils.stringToObject(data,UserBasicInfo.class);
+                    Constants.userBasicInfo= JsonUtils.stringToObject(data,UserBasicInfo.class);
                     Constants.userBasicInfo.setToken(Constants.TOKEN);
                     SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());
                     DataKeeper.save(sharedPreferences,"PHONE",myphone);

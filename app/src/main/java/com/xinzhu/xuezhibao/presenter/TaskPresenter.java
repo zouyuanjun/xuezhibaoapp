@@ -102,7 +102,7 @@ public class TaskPresenter extends BasePresenter {
                         MyTaskBean myTaskBean = JsonUtils.stringToObject(data, MyTaskBean.class);
                         getTaskInterface.gettaskdetails(myTaskBean);
                     } else if (what == 8) {
-                        Constants.userBasicInfo = (UserBasicInfo) JsonUtils.stringToObject(data, UserBasicInfo.class);
+                        Constants.userBasicInfo = JsonUtils.stringToObject(data, UserBasicInfo.class);
                     }
                 } else if (code == 203) {
                     if (null != taskInterface) {

@@ -53,32 +53,11 @@ public class CourseMyCollectAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
         ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getSpeakerTeacher());
-      ((ViewHolder) holder).tvAll.setText(mDatas.get(position).getConsumeHour()+"/"+mDatas.get(position).getSumHour());
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
+        ((ViewHolder) holder).tvAll.setText(mDatas.get(position).getConsumeHour() + "/" + mDatas.get(position).getSumHour());
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply() + "");
         if (StringUtil.isEmpty(mDatas.get(position).getCurriculumPicture())) {
-            RequestOptions requestOptions = RequestOptions.frameOf(0);
-            requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
-            requestOptions.transform(new BitmapTransformation() {
-                @Override
-                protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
-                    return toTransform;
-                }
-                @Override
-                public void updateDiskCacheKey(MessageDigest messageDigest) {
-                    try {
-                        messageDigest.update((mContext.get().getPackageName() + "RotateTransform").getBytes("utf-8"));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-            Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumUrl()).apply(requestOptions).into(((ViewHolder) holder).simpleDraweeView);
-        }else {
             Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
-
         }
-        // ((MyViewHolder) holder).simpleDraweeView.setImageBitmap(ImageUtils.createVideoThumbnail(mDatas.get(position).getArticlePicture(),MediaStore.Images.Thumbnails.MINI_KIND));
-
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -107,7 +86,7 @@ public class CourseMyCollectAdapter extends RecyclerView.Adapter {
         void onItemLongClick(View view, int position);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder{
+    static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.simpleDraweeView)
         ImageView simpleDraweeView;
         @BindView(R.id.tv_item_title)
@@ -118,6 +97,7 @@ public class CourseMyCollectAdapter extends RecyclerView.Adapter {
         TextView tvReadnum;
         @BindView(R.id.tv_all)
         TextView tvAll;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

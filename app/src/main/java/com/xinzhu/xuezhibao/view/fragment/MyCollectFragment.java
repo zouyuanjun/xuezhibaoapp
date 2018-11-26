@@ -42,6 +42,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * 我的收藏页面1，课程收藏，2 文章，3 音频 ，4视频
+ */
 public class MyCollectFragment extends LazyLoadFragment implements MyCollectInterface {
     @BindView(R.id.rv_item)
     RecyclerView rvItem;

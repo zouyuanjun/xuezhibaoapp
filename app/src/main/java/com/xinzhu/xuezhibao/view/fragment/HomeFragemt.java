@@ -133,9 +133,12 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                Intent intent = new Intent(getContext(), WebActivity.class);
-                intent.putExtra("URL", mybannerImgBean.get(position).getLinkAddress());
-                startActivity(intent);
+                if (position<mybannerImgBean.size()){
+                    Intent intent = new Intent(getContext(), WebActivity.class);
+                    intent.putExtra("URL", mybannerImgBean.get(position).getLinkAddress());
+                    startActivity(intent);
+                }
+
             }
         });
 

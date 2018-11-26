@@ -18,7 +18,6 @@ boolean exit=true;
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.d("计时server开始创建");
         starttime=System.currentTimeMillis();
         new Thread(new Runnable() {
             @Override
@@ -37,9 +36,6 @@ boolean exit=true;
 
             }
         }).start();
-
-
-
     }
 
     @Override
@@ -49,10 +45,8 @@ boolean exit=true;
 
     @Override
     public void onDestroy() {
-        Log.d("即时服务停止");
         exit=false;
-        Log.d(SettingUtil.USERTIME+">>>>>>>>>>>>>");
-        if (SettingUtil.USERTIME>=1){
+        if (SettingUtil.USERTIME>=10){
             if (!StringUtil.isEmpty(SettingUtil.TOKEN)){
                 String data = JsonUtils.keyValueToString2("dictionaryId", 25, "token", SettingUtil.TOKEN);
                 data = JsonUtils.addKeyValue(data, "time", SettingUtil.USERTIME);

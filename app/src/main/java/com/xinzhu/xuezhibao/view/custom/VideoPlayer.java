@@ -62,10 +62,6 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
     }
 
     public boolean isPlay() {
-        if (mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_PREPAREING || mCurrentState == CURRENT_STATE_PLAYING) {
-            return true;
-        } else {
-            return false;
-        }
+        return mCurrentState == CURRENT_STATE_NORMAL || mCurrentState == CURRENT_STATE_PREPAREING || mCurrentState == CURRENT_STATE_PLAYING;
     }
 }

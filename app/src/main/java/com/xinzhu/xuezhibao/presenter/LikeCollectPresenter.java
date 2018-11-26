@@ -60,8 +60,8 @@ public class LikeCollectPresenter {
                     likeCollectInterface.iscollect(JsonUtils.getbooleValue(result,"Data"));
                 }
             }
+    }
     };
-};
     public void like(String objectId,String type) {
         ClickLikeBean clickLikeBean = new ClickLikeBean(Constants.TOKEN, objectId, type);
         String data = JsonUtils.objectToString(clickLikeBean);

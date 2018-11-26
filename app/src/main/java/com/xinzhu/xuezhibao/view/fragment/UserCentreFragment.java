@@ -118,7 +118,7 @@ Handler handler;
                 int code=JsonUtils.getIntValue(result,"Code");
                 if (code==100){
                     String data=JsonUtils.getStringValue(result,"Data");
-                    Constants.userBasicInfo = (UserBasicInfo) JsonUtils.stringToObject(data, UserBasicInfo.class);
+                    Constants.userBasicInfo = JsonUtils.stringToObject(data, UserBasicInfo.class);
                     if (null!=tvUsername){
                         tvUsername.setText(Constants.userBasicInfo.getNickName());
                         tvViplv.setText(Constants.userBasicInfo.getDictionaryName());

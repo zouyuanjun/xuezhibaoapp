@@ -66,14 +66,17 @@ public class TeacherPresenter {
     public void getTeacherDetail(String  teacherid){
         String data=JsonUtils.keyValueToString("userId",teacherid);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/find-teacher-by-id",handler,1);
-    };
+    }
+
     public void getTeacherCourse(String  teacherid,int page){
         String data=JsonUtils.keyValueToString2("userId",teacherid,"pageNo",page);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/select-list-by-teacher",handler,3);
-    };
+    }
+
     public void getTeacherComment(String  teacherid){
 
-    };
+    }
+
     public void sendComment(String id, String comment) {
         SendCommentBean sendCommentBean = new SendCommentBean(Constants.TOKEN, comment, id, "5");
         String data = JsonUtils.objectToString(sendCommentBean);
