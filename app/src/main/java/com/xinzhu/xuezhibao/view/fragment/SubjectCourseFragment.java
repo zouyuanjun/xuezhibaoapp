@@ -67,7 +67,6 @@ public class SubjectCourseFragment extends LazyLoadFragment implements SubjectCo
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.im_blank)
     ImageView imBlank;
-
     @Override
     protected int setContentView() {
         return R.layout.fragment_xueke;

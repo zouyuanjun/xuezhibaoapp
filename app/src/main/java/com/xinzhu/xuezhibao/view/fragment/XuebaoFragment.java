@@ -58,8 +58,6 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
     RecyclerView rvNewCourse;
     @BindView(R.id.im_jiajiao)
     ImageView imJiajiao;
-    @BindView(R.id.im_xueke)
-    ImageView imXueke;
     XuebaoPresenter xuebaoPresenter;
     @BindView(R.id.progressBar1)
     ProgressBar progressBar1;
@@ -230,7 +228,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
 
     }
 
-    @OnClick({R.id.im_more_video, R.id.im_more_voice, R.id.im_jiajiao, R.id.im_xueke})
+    @OnClick({R.id.im_more_video, R.id.im_more_voice, R.id.im_jiajiao})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_more_video:
@@ -242,23 +240,6 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 Intent intent2 = new Intent(getActivity(), AllCourseActivity.class);
                 intent2.putExtra(Constants.INTENT_COURSE_CLASS, 2);
                 getActivity().startActivity(intent2);
-                break;
-            case R.id.im_jiajiao:
-                if (StringUtil.isEmpty(Constants.TOKEN)){
-                    CreatDiag.shoudia(getActivity());
-
-                }else {
-                    getActivity().startActivity(new Intent(getActivity(), MyFamilyCourseActivity.class));
-                }
-
-                break;
-            case R.id.im_xueke:
-                if (StringUtil.isEmpty(Constants.TOKEN)){
-                    CreatDiag.shoudia(getActivity());
-                }else {
-                    getActivity().startActivity(new Intent(getActivity(), MySubjectActivity.class));
-                }
-
                 break;
         }
     }

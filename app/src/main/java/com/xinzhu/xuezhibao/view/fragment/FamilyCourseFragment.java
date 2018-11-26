@@ -66,7 +66,7 @@ public class FamilyCourseFragment extends LazyLoadFragment implements FamilyCour
 
     @Override
     protected int setContentView() {
-        return R.layout.fragment_jiating;
+        return R.layout.fragment_courselist;
     }
 
     List<CourseBean> beanList = new ArrayList<>();

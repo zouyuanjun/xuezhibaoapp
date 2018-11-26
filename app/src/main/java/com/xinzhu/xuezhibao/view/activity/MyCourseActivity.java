@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 我的课程
+ * 我的课程,由于临时取消了一个栏目，为了方便以后扩展，保留界面结构不变，隐藏了tablayout
  */
 public class MyCourseActivity extends BaseActivity {
 
@@ -36,9 +36,9 @@ public class MyCourseActivity extends BaseActivity {
         setContentView(R.layout.activity_jiajiao);
         ButterKnife.bind(this);
         tbJiajiao.addTab(tbJiajiao.newTab());
-        tbJiajiao.addTab(tbJiajiao.newTab());
+     //   tbJiajiao.addTab(tbJiajiao.newTab());
         fragmentList.add(new MyCourseFragment());
-        fragmentList.add(new MyCourseFragment());
+     //   fragmentList.add(new MyCourseFragment());
         ListViewPageAdapter listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, title,1);
         vpJiajiao.setAdapter(listViewPageAdapter);
         tbJiajiao.setupWithViewPager(vpJiajiao);

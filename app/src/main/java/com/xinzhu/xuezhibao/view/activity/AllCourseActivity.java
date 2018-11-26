@@ -39,10 +39,10 @@ public class AllCourseActivity extends BaseActivity {
         setContentView(R.layout.activity_allcourse);
         courseclass=getIntent().getIntExtra(Constants.INTENT_COURSE_CLASS,0);
         ButterKnife.bind(this);
-        tbClass.addTab(tbClass.newTab().setText("热门"));
-        tbClass.addTab(tbClass.newTab().setText("最新"));
+        tbClass.addTab(tbClass.newTab());
+     //   tbClass.addTab(tbClass.newTab());
         fragmentList.add(new FamilyCourseFragment());
-        fragmentList.add(new SubjectCourseFragment());
+    //    fragmentList.add(new SubjectCourseFragment());
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

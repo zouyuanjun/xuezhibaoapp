@@ -118,9 +118,8 @@ MyJobDetailInterpace myJobDetailInterpace;
     };
 
     public void getcourse(int page, int type) {
-        String data = JsonUtils.keyValueToString2("pageNo", page, "curriculumKind", type);
-        data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/my-apply", handler, 1);
+        String data=JsonUtils.keyValueToString("pageNo",page);
+        Network.getnetwork().postJson(data,Constants.URL+"/guest/all-curriculum",handler,1);
     }
 
     public void getcoursefeedback(int page, int type){

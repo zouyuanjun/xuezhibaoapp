@@ -18,6 +18,5 @@ public class WXpay {
         request.timeStamp= "1398746574";
         request.sign= "7FFECB600D7157C5AA49810D2D8F28BC2811827B";
         msgApi.sendReq(request);
-
     }
 }

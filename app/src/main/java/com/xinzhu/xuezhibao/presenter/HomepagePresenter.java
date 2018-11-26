@@ -82,7 +82,7 @@ public class HomepagePresenter {
 
     public void initdata() {
         String data = JsonUtils.keyValueToString("type", 1);
-        String data2 = JsonUtils.keyValueToString("type", 2);
+        String data2 = JsonUtils.keyValueToString2("type", 2,"videoType",0);
         Network.getnetwork().postJson("", Constants.URL + "/guest/select-index-article", handler, 1);
         Network.getnetwork().postJson(data2, Constants.URL + "/guest/select-index-video", handler, 2);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-index-video", handler, 3);
