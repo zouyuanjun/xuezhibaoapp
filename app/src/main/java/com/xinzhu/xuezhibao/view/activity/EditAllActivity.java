@@ -76,7 +76,7 @@ public class EditAllActivity extends TakePhotoActivity {
             Log.d(result);
             int code = -999;
             try {
-                code = JsonUtils.getIntValue(result, "_code");
+                code = JsonUtils.getIntValue(result, "Code");
             } catch (Exception e) {
                 Log.d("异常了");
                 BToast.custom(context).text("内部错误，正在加紧修复，请稍后再试").show();

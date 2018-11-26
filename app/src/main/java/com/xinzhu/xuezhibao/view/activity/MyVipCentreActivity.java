@@ -60,43 +60,44 @@ public class MyVipCentreActivity extends BaseActivity implements PayInterface {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             switch (msg.what) {
-                case 2:{
+                case 2: {
                     try {
-                        String result= (String) msg.obj;
-                        String data=JsonUtils.getStringValue(result,"Data");
-                        String describeContent=JsonUtils.getStringValue(data,"describeContent");
-                        if (!StringUtil.isEmpty(describeContent)){
+                        String result = (String) msg.obj;
+                        String data = JsonUtils.getStringValue(result, "Data");
+                        String describeContent = JsonUtils.getStringValue(data, "describeContent");
+                        if (!StringUtil.isEmpty(describeContent)) {
                             tvIntroduce.setText(Html.fromHtml(describeContent));
-                        }else {
+                        } else {
                             tvIntroduce.setText("获取数据失败，请稍后再试");
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         tvIntroduce.setText("获取数据失败，请稍后再试");
                     }
-
                 }
                 default:
                     break;
             }
         }
     };
-AlipayPresenter alipayPresenter;
-PopupWindow loadingPop;
+    AlipayPresenter alipayPresenter;
+    PopupWindow loadingPop;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vipcenter);
         ButterKnife.bind(this);
-        String data= JsonUtils.keyValueToString("describeType",2);
-        Network.getnetwork().postJson(data, Constants.URL+"/guest/integral-rules",handler,2);
+        //获取会员规则描述
+        String data = JsonUtils.keyValueToString("describeType", 2);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/integral-rules", handler, 2);
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-        alipayPresenter=new AlipayPresenter(this);
+        alipayPresenter = new AlipayPresenter(this);
     }
 
     @Override
@@ -106,43 +107,39 @@ PopupWindow loadingPop;
         sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
         tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
     }
-//充值会员
+
+    //充值会员
     @OnClick(R.id.tv_recharge)
     public void onViewClicked() {
 
-        final PopupWindow popupWindow=CreatPopwindows.creatWWpopwindows(this,R.layout.pop_pay);
-        View view=popupWindow.getContentView();
-        RadioGroup radioGroup=view.findViewById(R.id.rg_pay);
+        final PopupWindow popupWindow = CreatPopwindows.creatWWpopwindows(this, R.layout.pop_pay);
+        View view = popupWindow.getContentView();
+        RadioGroup radioGroup = view.findViewById(R.id.rg_pay);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (i){
+                switch (i) {
                     case R.id.rd_alipay:
                         alipayPresenter.alimemberup();
                         popupWindow.dismiss();
-                        loadingPop =CreatPopwindows.creatMMpopwindows(MyVipCentreActivity.this,R.layout.pop_loading);
-
+                        loadingPop = CreatPopwindows.creatMMpopwindows(MyVipCentreActivity.this, R.layout.pop_loading);
                         loadingPop.showAtLocation(tvViplv, Gravity.CENTER, 0, 0);
                         break;
                     case R.id.rd_wxpay:
                         alipayPresenter.wxmemberup();
                         popupWindow.dismiss();
-                        loadingPop =CreatPopwindows.creatMMpopwindows(MyVipCentreActivity.this,R.layout.pop_loading);
+                        loadingPop = CreatPopwindows.creatMMpopwindows(MyVipCentreActivity.this, R.layout.pop_loading);
                         loadingPop.showAtLocation(tvViplv, Gravity.CENTER, 0, 0);
                         break;
                 }
             }
         });
-
         popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-
-
     }
 
     @Override
     public void alipaysuccessful() {
-        if (null!=loadingPop&&loadingPop.isShowing()){
+        if (null != loadingPop && loadingPop.isShowing()) {
             loadingPop.dismiss();
         }
         BToast.success(this).text("支付成功").show();
@@ -152,4 +149,5 @@ PopupWindow loadingPop;
     public void alipayfail() {
 
     }
+
 }

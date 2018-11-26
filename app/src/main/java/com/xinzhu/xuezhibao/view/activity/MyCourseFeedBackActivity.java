@@ -35,7 +35,7 @@ public class MyCourseFeedBackActivity extends BaseActivity {
             Log.d(result);
             int code = -999;
             try {
-                code = JsonUtils.getIntValue(result, "_code");
+                code = JsonUtils.getIntValue(result, "Code");
             } catch (Exception e) {
 
             }

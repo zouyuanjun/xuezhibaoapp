@@ -37,7 +37,7 @@ public class SignPresenter {
             com.zou.fastlibrary.utils.Log.d(result);
             int code=0;
             try {
-                code = JsonUtils.getIntValue(result, "_code");
+                code = JsonUtils.getIntValue(result, "Code");
             }catch (Exception e){
                 if (null!=signInterface){
                     signInterface.servererr();

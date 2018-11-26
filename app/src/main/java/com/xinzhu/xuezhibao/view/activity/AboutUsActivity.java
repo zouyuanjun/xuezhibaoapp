@@ -63,7 +63,7 @@ public class AboutUsActivity extends BaseActivity {
             String result = (String) msg.obj;
             Log.d(result);
             int code=0;
-            code=JsonUtils.getIntValue(result,"_code");
+            code=JsonUtils.getIntValue(result,"Code");
             if (code==100){
                 String data=JsonUtils.getStringValue(result,"Data");
                 logourl=JsonUtils.getStringValue(data,"logo");

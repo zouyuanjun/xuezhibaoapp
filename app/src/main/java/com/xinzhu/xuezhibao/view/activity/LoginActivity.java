@@ -38,7 +38,6 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class LoginActivity extends BaseActivity implements LoginInterface{
 
-
     @BindView(R.id.ed_phone)
     EditText edPhone;
     @BindView(R.id.ed_password)
@@ -113,7 +112,6 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
         }
 
     }
-
     @Override
     public void loginsuccessful() {
         finish();
@@ -131,8 +129,6 @@ public class LoginActivity extends BaseActivity implements LoginInterface{
     public void loginfail(int code, String tip) {
         BToast.error(context).text("错误码："+code+tip).show();
     }
-
-
     @Override
     public void networktimeout() {
         super.networktimeout();

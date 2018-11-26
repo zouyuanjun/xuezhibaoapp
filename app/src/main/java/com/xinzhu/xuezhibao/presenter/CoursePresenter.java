@@ -35,7 +35,7 @@ public class CoursePresenter {
             com.zou.fastlibrary.utils.Log.d(result);
             int code = -999;
             try {
-                code = JsonUtils.getIntValue(result, "_code");
+                code = JsonUtils.getIntValue(result, "Code");
             } catch (Exception e) {
                 com.zou.fastlibrary.utils.Log.d("异常了");
                 if (null!=familyCourseInterface){

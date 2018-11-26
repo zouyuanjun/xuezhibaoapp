@@ -132,6 +132,9 @@ public class AlipayPresenter extends BasePresenter {
         AliPay.payorder(payinfo, activity, handler);
     }
 
+    /**
+     * 检查支付宝支付状态
+     */
     public void checkAliPay() {
         String data = JsonUtils.keyValueToString2("dealOrderNum", ordernum, "dealType", tpye);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/check-alipay", handler, 5);

@@ -44,6 +44,7 @@ public class BaseActivity extends AppCompatActivity {
     public void netWorkMessage(NetWorkMessage messageEvent) {
         String s=messageEvent.getMessage();
         BToast.error(context).text(s).show();
+        stopLoading();
        }
 
     @Override
@@ -57,8 +58,11 @@ public class BaseActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         EventBus.getDefault().unregister(this);
-    }
 
+    }
+public void stopLoading(){
+
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

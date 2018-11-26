@@ -110,7 +110,7 @@ public class FeedbackActivity extends BaseActivity {
             if (what==1){
                 int code=500;
                 try {
-                    code=JsonUtils.getIntValue(result,"_code");
+                    code=JsonUtils.getIntValue(result,"Code");
                 }catch (JSONException exception){
                     BToast.error(FeedbackActivity.this).text("提交失败，服务器内部错误，错误码："+code).show();
                 return;

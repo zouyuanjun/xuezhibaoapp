@@ -51,7 +51,7 @@ public class HistoryFeedbackActivity extends BaseActivity {
             super.handleMessage(msg);
             String result = (String) msg.obj;
             Log.d(result);
-            int code = JsonUtils.getIntValue(result, "_code");
+            int code = JsonUtils.getIntValue(result, "Code");
             if (code == 100) {
                 String data = JsonUtils.getStringValue(result, "Data");
                 String opinionContent = JsonUtils.getStringValue(data, "opinionContent");

@@ -2,36 +2,34 @@ package com.xinzhu.xuezhibao.view.activity;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.immodule.utils.ImageUtil;
 import com.xinzhu.xuezhibao.presenter.LoginPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.SplashInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.utils.DataKeeper;
 import com.zou.fastlibrary.utils.ImageUtils;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
-import com.zou.fastlibrary.utils.StatusBar;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
-import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,23 +52,25 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
             if (code == 100) {
                 String data = JsonUtils.getStringValue(result, "Data");
                 data = JsonUtils.getStringValue(data, "adUrl");
-                Log.d(data+path);
+                Log.d(data + path);
                 Glide.with(SplashActivity.this)
                         .asBitmap()
                         .load(data)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            //  imLogo.setImageBitmap(resource);
-                              ImageUtils.saveBitmapFile(resource, path,"splogo.jpg");
+                                //  imLogo.setImageBitmap(resource);
+                                ImageUtils.saveBitmapFile(resource, path, "splogo.jpg");
                             }
                         });
-
 
 
             }
         }
     };
+    CountDownTimer timer;
+    @BindView(R.id.textView33)
+    TextView textView33;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -88,14 +88,14 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
 //        }
         FileInputStream fs = null;
         try {
-            fs = new FileInputStream(path+"splogo.jpg");
+            fs = new FileInputStream(path + "splogo.jpg");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         Bitmap bitmap = BitmapFactory.decodeStream(fs);
-        if (null==bitmap){
+        if (null == bitmap) {
             imLogo.setBackgroundResource(R.drawable.splogo);
-        }else {
+        } else {
             imLogo.setImageBitmap(bitmap);
         }
 
@@ -113,8 +113,38 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
         };
         myThread.start();//启动线程
         Network.getnetwork().postJson("", Constants.URL + "/guest/select-index-img", handler, 1);
+
+        timer = new CountDownTimer(20 * 1000, 500) {
+            int count = 1;
+            @Override
+            public void onTick(long millisUntilFinished) {
+                if (count == 1) {
+                    textView33.setText("正在登陆.");
+                    count++;
+                } else if (count == 2) {
+                    textView33.setText("正在登陆..");
+                    count++;
+                } else if (count == 3) {
+                    textView33.setText("正在登陆...");
+                    count = 1;
+                }
+            }
+
+            @Override
+            public void onFinish() {
+
+            }
+        };
+        timer.start();
     }
 
+    @Override
+    public void netWorkMessage(NetWorkMessage messageEvent) {
+        super.netWorkMessage(messageEvent);
+        timer.cancel();
+        textView33.setText(messageEvent.getMessage());
+        textView33.setTextColor(Color.RED);
+    }
 
     @Override
     public void login() {
@@ -129,6 +159,7 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        timer.cancel();
         loginPresenter.cancelmessage();
         loginPresenter = null;
     }
