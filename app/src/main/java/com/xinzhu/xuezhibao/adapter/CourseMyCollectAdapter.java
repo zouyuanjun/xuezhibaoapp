@@ -53,7 +53,7 @@ public class CourseMyCollectAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
         ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getSpeakerTeacher());
-     //   ((ViewHolder) holder).tvAll.setText(mDatas.get(position).g());
+      ((ViewHolder) holder).tvAll.setText(mDatas.get(position).getConsumeHour()+"/"+mDatas.get(position).getSumHour());
         ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
         if (StringUtil.isEmpty(mDatas.get(position).getCurriculumPicture())) {
             RequestOptions requestOptions = RequestOptions.frameOf(0);
@@ -63,7 +63,6 @@ public class CourseMyCollectAdapter extends RecyclerView.Adapter {
                 protected Bitmap transform(@NonNull BitmapPool pool, @NonNull Bitmap toTransform, int outWidth, int outHeight) {
                     return toTransform;
                 }
-
                 @Override
                 public void updateDiskCacheKey(MessageDigest messageDigest) {
                     try {

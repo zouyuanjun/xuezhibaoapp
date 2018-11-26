@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="共16节"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
         app:layout_constraintTop_toBottomOf="@+id/tv_teacher" />
 
