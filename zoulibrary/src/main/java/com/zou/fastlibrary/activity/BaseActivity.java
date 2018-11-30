@@ -35,7 +35,6 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("BaseActivity的onResume》》》》》》》》");
         serverintent=new Intent(BaseActivity.this,LivelyServer.class);
         startService(serverintent);
     }
@@ -44,12 +43,10 @@ public class BaseActivity extends AppCompatActivity {
     public void netWorkMessage(NetWorkMessage messageEvent) {
         String s=messageEvent.getMessage();
         BToast.error(context).text(s).show();
-        stopLoading();
        }
 
     @Override
     protected void onPause() {
-        Log.d("BaseActivity的onPause》》》》》》》》");
         stopService(serverintent);
         super.onPause();
     }
@@ -60,9 +57,7 @@ public class BaseActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
 
     }
-public void stopLoading(){
 
-    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

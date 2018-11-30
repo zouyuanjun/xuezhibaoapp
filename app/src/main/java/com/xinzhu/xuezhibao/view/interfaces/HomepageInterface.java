@@ -2,7 +2,6 @@ package com.xinzhu.xuezhibao.view.interfaces;
 
 import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.bean.BannerImgBean;
-import com.xinzhu.xuezhibao.bean.VideoBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 
 import java.util.List;

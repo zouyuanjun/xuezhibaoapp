@@ -35,6 +35,7 @@ public class MyCourseActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jiajiao);
         ButterKnife.bind(this);
+        tbJiajiao.setVisibility(View.GONE);
         tbJiajiao.addTab(tbJiajiao.newTab());
      //   tbJiajiao.addTab(tbJiajiao.newTab());
         fragmentList.add(new MyCourseFragment());

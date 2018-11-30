@@ -9,12 +9,16 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.presenter.LoginPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
@@ -26,6 +30,7 @@ import com.zou.fastlibrary.utils.ImageUtils;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.StatusBar;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -53,7 +58,8 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
                 String data = JsonUtils.getStringValue(result, "Data");
                 data = JsonUtils.getStringValue(data, "adUrl");
                 Log.d(data + path);
-                Glide.with(SplashActivity.this)
+
+                Glide.with(MyApplication.getContext())
                         .asBitmap()
                         .load(data)
                         .into(new SimpleTarget<Bitmap>() {
@@ -75,8 +81,8 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);//隐藏状态栏
-//        StatusBar.setTransparent(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);//隐藏状态栏
+        StatusBar.setTransparent(this);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
         DataKeeper.init(this);
@@ -113,7 +119,8 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
         };
         myThread.start();//启动线程
         Network.getnetwork().postJson("", Constants.URL + "/guest/select-index-img", handler, 1);
-
+//        IWXAPI api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, true);
+//        api.registerApp(Constants.APP_ID);
         timer = new CountDownTimer(20 * 1000, 500) {
             int count = 1;
             @Override
@@ -136,6 +143,7 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
             }
         };
         timer.start();
+
     }
 
     @Override
@@ -144,6 +152,7 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
         timer.cancel();
         textView33.setText(messageEvent.getMessage());
         textView33.setTextColor(Color.RED);
+        goToActivity(this, MainActivity.class);
     }
 
     @Override

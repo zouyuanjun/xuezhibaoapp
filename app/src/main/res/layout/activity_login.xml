@@ -36,7 +36,7 @@
             android:paddingLeft="16dp"
             android:textColor="#999999"
             android:textSize="15sp"
-            android:text="111111"
+            android:text=""
             android:hint="请输入密码"
              />
     </LinearLayout>
@@ -140,7 +140,7 @@
             android:paddingRight="16dp"
             android:textSize="15sp"
             android:hint="请输入手机号"
-            android:text="18702508050"
+            android:text=""
             android:textColor="#999999"
             android:background="@color/transparent"
             app:edBgColor="#00000000"
@@ -157,6 +157,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <com.zou.fastlibrary.ui.CustomNavigatorBar
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        app:leftTextVisible='false'
+        app:midText='登陆'
+        app:midTextFontColor="#ffffff"
+        app:midTextSizeSp="18"
+        app:rightImageVisible='false'
+        app:rightTextVisible='false'
+        app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
 
 
 </android.support.constraint.ConstraintLayout>

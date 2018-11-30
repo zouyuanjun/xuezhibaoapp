@@ -7,6 +7,7 @@ import com.xinzhu.xuezhibao.bean.AddressBean;
 import com.xinzhu.xuezhibao.bean.OrderBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.MyOrderInterface;
+import com.xinzhu.xuezhibao.view.interfaces.OrderDetailInterface;
 import com.xinzhu.xuezhibao.view.interfaces.PayOrderInterface;
 import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
@@ -18,6 +19,12 @@ import java.util.List;
 public class MyOrederPresenter extends BasePresenter {
     MyOrderInterface myOrderInterface;
     PayOrderInterface payOrderInterface;
+    OrderDetailInterface orderDetailInterface;
+
+    public MyOrederPresenter(OrderDetailInterface orderDetailInterface) {
+        this.orderDetailInterface = orderDetailInterface;
+        inithandle();
+    }
 
     public MyOrederPresenter(PayOrderInterface payOrderInterface) {
         this.payOrderInterface = payOrderInterface;
@@ -38,7 +45,7 @@ public class MyOrederPresenter extends BasePresenter {
                 Log.d(result);
                 int what = msg.what;
                 int code = JsonUtils.getIntValue(result, "Code");
-                String tip=JsonUtils.getStringValue(result, "Tip");
+                String tip = JsonUtils.getStringValue(result, "Tip");
                 if (what == 1) {
                     if (code == 100) {
                         String data = JsonUtils.getStringValue(result, "Data");
@@ -72,15 +79,33 @@ public class MyOrederPresenter extends BasePresenter {
                 } else if (what == 4) {
                     if (code == 100) {
                         myOrderInterface.applyrefund();
-                    }else {
+                    } else {
                         myOrderInterface.applyrefundfail(tip);
                     }
-                }else if (what == 6) {
+                } else if (what == 6) {
                     if (code == 100) {
-                        myOrderInterface.confirmReceipt();
-                    }else {
-                        myOrderInterface.confirmReceiptfail(tip);
+                        if (null!=myOrderInterface){
+                            myOrderInterface.confirmReceipt();
+                        }else if (null!=orderDetailInterface){
+                            orderDetailInterface.affirmorder();
+                        }
+
+                    } else {
+                        if (null!=myOrderInterface){
+                            myOrderInterface.confirmReceiptfail(tip);
+                        }else if (null!=orderDetailInterface){
+                            orderDetailInterface.affirmorderfail(tip);
+                        }
+
+
                     }
+                } else if (what == 5) {
+                    if (code == 100) {
+                        String data = JsonUtils.getStringValue(result, "Data");
+                        OrderBean orderBean = JsonUtils.stringToObject(data, OrderBean.class);
+                        orderDetailInterface.getorderdetail(orderBean);
+                    }
+
                 }
             }
 
@@ -100,6 +125,7 @@ public class MyOrederPresenter extends BasePresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/app/select-order-list", handler, 1);
     }
 
+    //获取默认收货地址
     public void getdefendaddress() {
         String data = JsonUtils.keyValueToString2("token", Constants.TOKEN, "isDefault", 1);
         Network.getnetwork().postJson(data, Constants.URL + "/app/select-default-take-address", handler, 2);
@@ -118,12 +144,19 @@ public class MyOrederPresenter extends BasePresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/app/apply-refund", handler, 4);
     }
 
-    //查询单个订单详情
+    //查询单个课程订单详情
     public void selectbyid(String id) {
         String data = JsonUtils.keyValueToString2("applyId", id, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/select-my-apply-by-id", handler, 5);
     }
-//确认收获
+
+    //查询单个积分商品订单详情
+    public void selectgoodsorderbyid(String id) {
+        String data = JsonUtils.keyValueToString2("orderId", id, "token", Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/select-order-details", handler, 5);
+    }
+
+    //确认收获
     public void confirmReceipt(String id) {
         String data = JsonUtils.keyValueToString2("orderId", id, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/confirm-receipt", handler, 6);

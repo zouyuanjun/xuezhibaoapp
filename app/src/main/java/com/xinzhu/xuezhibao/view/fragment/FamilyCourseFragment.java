@@ -164,7 +164,7 @@ public class FamilyCourseFragment extends LazyLoadFragment implements FamilyCour
     @Override
     public void getFamilyCourse(List<CourseBean> list) {
         beanList.addAll(list);
-        if (null != adapter) {
+        if (null != adapter&&null!=refreshLayout) {
             adapter.notifyDataSetChanged();
             page++;
             refreshLayout.finishLoadMore();
@@ -177,14 +177,15 @@ public class FamilyCourseFragment extends LazyLoadFragment implements FamilyCour
 
     @Override
     public void noMoreData() {
-        adapter.notifyDataSetChanged();
-        if (beanList.size() == 0) {
-            imNodata.setVisibility(View.VISIBLE);
+        if (null!=refreshLayout){
+            adapter.notifyDataSetChanged();
+            if (beanList.size() == 0) {
+                imNodata.setVisibility(View.VISIBLE);
+            }
+            refreshLayout.finishLoadMoreWithNoMoreData();
+            refreshLayout.finishRefresh();
         }
-        refreshLayout.finishLoadMoreWithNoMoreData();
-        refreshLayout.finishRefresh();
     }
-
     public void initdata() {
         if (TYPE == 1) {
             coursePresenter.getFamilyHotCourse(page);

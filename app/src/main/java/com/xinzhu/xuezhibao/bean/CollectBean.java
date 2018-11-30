@@ -30,11 +30,11 @@ public class CollectBean {
         this.objectId = objectId;
     }
 
-    public String getLikeType() {
+    public String getCollectType() {
         return collectType;
     }
 
-    public void setLikeType(String likeType) {
-        this.collectType = likeType;
+    public void setCollectType(String collectType) {
+        this.collectType = collectType;
     }
 }

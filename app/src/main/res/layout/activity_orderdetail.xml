@@ -138,10 +138,12 @@
             android:id="@+id/tv_ordertype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="44dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text="TextView"
+            android:text=""
+            android:drawablePadding="10dp"
+            android:drawableLeft="@drawable/order_icon_type"
             app:layout_constraintBottom_toTopOf="@+id/linearLayout24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -193,13 +195,26 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
             android:layout_marginEnd="28dp"
             android:text="TextView"
-            android:textColor="@color/appcolor"
+            android:textColor="@color/color_black_666666"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout24" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_price2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="28dp"
+            android:text="0"
+            android:textColor="@color/color_black_666666"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout24" />
 
@@ -240,6 +255,7 @@
             android:background="@color/fenge"></LinearLayout>
 
         <TextView
+            android:id="@+id/tv_ordernum"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
@@ -247,6 +263,7 @@
             android:textColor="@color/color_black_666666"
             android:text="订单编号"/>
         <TextView
+            android:id="@+id/tv_ordertime"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
@@ -254,6 +271,7 @@
             android:textColor="@color/color_black_666666"
             android:text="下单时间"/>
         <TextView
+            android:id="@+id/tv_deliver_goodstime"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
@@ -263,6 +281,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_action"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:background="@color/white"
@@ -277,6 +296,7 @@
             android:layout_weight="1" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/tv_actiontwo"
             android:layout_width="100dp"
             android:layout_height="30dp"
@@ -296,7 +316,7 @@
             android:background="@drawable/feedbacktextbg"
             android:gravity="center"
             android:text="确认收货"
-            android:textColor="@color/white" />
+            android:textColor="@color/appcolor" />
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

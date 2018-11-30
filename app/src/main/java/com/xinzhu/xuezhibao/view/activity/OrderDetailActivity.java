@@ -1,6 +1,5 @@
 package com.xinzhu.xuezhibao.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -11,20 +10,19 @@ import android.widget.TextView;
 import com.bravin.btoast.BToast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.AddressBean;
-import com.xinzhu.xuezhibao.bean.GoodsBean;
 import com.xinzhu.xuezhibao.bean.OrderBean;
 import com.xinzhu.xuezhibao.presenter.MyOrederPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
-import com.xinzhu.xuezhibao.view.interfaces.PayOrderInterface;
+import com.xinzhu.xuezhibao.view.interfaces.OrderDetailInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderDetailActivity extends BaseActivity implements PayOrderInterface {
+public class OrderDetailActivity extends BaseActivity implements OrderDetailInterface {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
     @BindView(R.id.imageView23)
@@ -55,6 +53,8 @@ public class OrderDetailActivity extends BaseActivity implements PayOrderInterfa
     TextView tvMintitel;
     @BindView(R.id.tv_price)
     TextView tvPrice;
+    @BindView(R.id.tv_price2)
+    TextView tvPrice2;
     @BindView(R.id.constraintLayout2)
     ConstraintLayout constraintLayout2;
     @BindView(R.id.linearLayout29)
@@ -64,6 +64,14 @@ public class OrderDetailActivity extends BaseActivity implements PayOrderInterfa
     MyOrederPresenter myOrederPresenter;
     OrderBean orderBean;
     String myaddressid;
+    @BindView(R.id.ll_action)
+    LinearLayout llAction;
+    @BindView(R.id.tv_ordernum)
+    TextView tvOrdernum;
+    @BindView(R.id.tv_ordertime)
+    TextView tvOrdertime;
+    @BindView(R.id.tv_deliver_goodstime)
+    TextView tvDeliverGoodstime;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,13 +79,47 @@ public class OrderDetailActivity extends BaseActivity implements PayOrderInterfa
         setContentView(R.layout.activity_orderdetail);
         ButterKnife.bind(this);
         orderBean = (OrderBean) getIntent().getSerializableExtra(Constants.INTENT_ID);
+        myOrederPresenter = new MyOrederPresenter(this);
         if (null != orderBean) {
-            tvPrice.setText(orderBean.getPrice() + "积分");
+            if (orderBean.getPrice() > 0) {
+                tvPrice2.setVisibility(View.VISIBLE);
+                tvPrice2.setText("￥ " + orderBean.getPrice());
+            }
+            if (orderBean.getOrderPrice() > 0) {
+                tvPrice.setVisibility(View.VISIBLE);
+                tvPrice.setText(orderBean.getOrderPrice() + "积分");
+            }
             imageView19.setImageURI(orderBean.getPicture());
             tvTitle.setText(orderBean.getName());
+            tvOrdernum.setText("订单编号：" + orderBean.getOrderNum());
+            tvOrdertime.setText("订单时间:" + TimeUtil.getWholeTime2(orderBean.getCreateTime()));
+            tvDeliverGoodstime.setText("发货时间:" + TimeUtil.getWholeTime2(orderBean.getCreateTime()));
+            //因为除了完成状态外，其他状态的订单的type为空
+            if (null != orderBean.getType()) {
+                if (!orderBean.getType().equals("3")) {
+                    cslAddress.setVisibility(View.GONE);
+                    llAction.setVisibility(View.GONE);
+                }
+                //是否为待收货订单
+                if (!orderBean.getState().equals("3")) {
+                    llAction.setVisibility(View.GONE);
+                }
+                if (orderBean.getType().equals("1")) {
+                    tvOrdertype.setText("家庭教育课程");
+                } else if (orderBean.getType().equals("2")) {
+                    tvOrdertype.setText("视频课程");
+                } else if (orderBean.getType().equals("3")) {
+                    tvOrdertype.setText("积分商城");
+                    myOrederPresenter.selectgoodsorderbyid(orderBean.getOrderId());
+                }
+            } else {
+                tvOrdertype.setText("积分商城");
+                myOrederPresenter.selectgoodsorderbyid(orderBean.getOrderId());
+            }
+
         }
-        myOrederPresenter = new MyOrederPresenter(this);
-        myOrederPresenter.selectbyid(orderBean.getObjectId());
+
+
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,39 +128,26 @@ public class OrderDetailActivity extends BaseActivity implements PayOrderInterfa
         });
     }
 
-
     @Override
-    public void getaddress(AddressBean addressBean) {
-        tvPhone.setText(addressBean.getLinkPhone());
-        tvAddress.setText(addressBean.getProvince()+addressBean.getCity()+addressBean.getCounty()+addressBean.getAddress());
-        myaddressid = addressBean.getAddressId();
+    public void getorderdetail(OrderBean orderBean) {
+        tvAddress.setText(orderBean.getAddress());
+        tvPhone.setText(orderBean.getNickname() + "  " + orderBean.getLinkPhone());
+
     }
 
     @Override
-    public void noMorepoint() {
-        BToast.error(this).text("您的积分不足，无法下单").show();
-    }
-
-    @Override
-    public void payfail() {
-        BToast.error(this).text("奖品兑换失败，请稍后再试").show();
-    }
-
-    @Override
-    public void paysuccessful() {
-        BToast.error(this).text("下单成功").show();
+    public void affirmorder() {
+        BToast.success(this).text("收货成功").show();
         finish();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode==1&&null!=data){
-            AddressBean addressBean= (AddressBean) data.getSerializableExtra(Constants.INTENT_ID);
-            tvPhone.setText(addressBean.getLinkPhone());
-            tvAddress.setText(addressBean.getProvince()+addressBean.getCity()+addressBean.getCounty()+addressBean.getAddress());
-            myaddressid = addressBean.getAddressId();
+    public void affirmorderfail(String tip) {
 
-        }
+    }
+
+    @OnClick(R.id.tv_actionone)
+    public void onViewClicked() {
+        myOrederPresenter.confirmReceipt(orderBean.getOrderId());
     }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.MyjobBean;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.util.List;
 
@@ -40,9 +41,10 @@ public class RvJiaojiaoTaskAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((ViewHolder) holder).textView14.setText(mDatas.get(position).getCreateTime());
-        if (mDatas.get(position).getState().equals("100")){
+        ((ViewHolder) holder).textView14.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
+        if (mDatas.get(position).getReplyState()==0){
             ((ViewHolder) holder).tvStatus.setText("未完成");
+            ((ViewHolder) holder).tvStatus.setTextColor(Color.parseColor("#f87d28"));
         }else {
             ((ViewHolder) holder).tvStatus.setText("已完成");
             ((ViewHolder) holder).tvStatus.setTextColor(Color.parseColor("#12cd8e"));

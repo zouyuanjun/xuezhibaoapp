@@ -269,6 +269,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout19"></LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/linearLayout119"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
@@ -383,6 +384,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout19"></LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:gravity="center_vertical"

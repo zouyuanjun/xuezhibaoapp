@@ -147,7 +147,7 @@ public class AddAddressActivity extends BaseActivity {
                 String details=edAddressdetail.getText().toString();
                 String address=tvSelectaddress.getText().toString();
                 if (StringUtil.isEmpty(name)||StringUtil.isEmpty(phone)||StringUtil.isEmpty(details)||StringUtil.isEmpty(address)){
-                    BToast.error(this).text("请填写完整在提交").show();
+                    BToast.error(this).text("请填写完整再提交").show();
                 }else {
                     if (EDITMODE==1){
                         AddressBean addressBean=new AddressBean(province,phone,name,details,city,county,0);

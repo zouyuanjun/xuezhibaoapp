@@ -4,9 +4,9 @@ import java.io.Serializable;
 
 public class OrderBean implements Serializable {
     String ordertype;
-    String orderTime;
+    long createTime;
     String orderNum;
-    int orderPrice;
+    double orderPrice;
     String payTime;
     String picture;
     String shipmentsTime;
@@ -16,9 +16,50 @@ public class OrderBean implements Serializable {
     String name;
     String orderId;
     String type;
-    int price;
+    String address;
+    String nickname;
+    String linkPhone;
+    double price;
+    int isRefund;
     public OrderBean() {
     }
+
+    public int getIsRefund() {
+        return isRefund;
+    }
+
+    public void setIsRefund(int isRefund) {
+        this.isRefund = isRefund;
+    }
+
+    public String getLinkPhone() {
+        return linkPhone;
+    }
+
+    public void setLinkPhone(String linkPhone) {
+        this.linkPhone = linkPhone;
+    }
+
+    public void setOrderPrice(double orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
     public String getOrderId() {
         return orderId;
     }
@@ -39,11 +80,11 @@ public class OrderBean implements Serializable {
         return ordertype;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -51,8 +92,8 @@ public class OrderBean implements Serializable {
         this.ordertype = ordertype;
     }
 
-    public String getOrderTime() {
-        return orderTime;
+    public long getCreateTime() {
+        return createTime;
     }
 
     public String getDictionaryName() {
@@ -63,8 +104,8 @@ public class OrderBean implements Serializable {
         this.dictionaryName = dictionaryName;
     }
 
-    public void setOrderTime(String orderTime) {
-        this.orderTime = orderTime;
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
     }
 
     public String getOrderNum() {
@@ -75,7 +116,7 @@ public class OrderBean implements Serializable {
         this.orderNum = orderNum;
     }
 
-    public int getOrderPrice() {
+    public double getOrderPrice() {
         return orderPrice;
     }
 

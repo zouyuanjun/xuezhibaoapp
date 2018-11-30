@@ -18,6 +18,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            app:placeholderImage="@drawable/my_icon_original"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -44,23 +45,29 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="16dp"
-            android:text="课程"
+            android:text="课程 "
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/simpleDraweeView2"
             app:layout_constraintTop_toBottomOf="@+id/tv_name"
             app:layout_constraintVertical_bias="0.777" />
 
         <TextView
-            android:textColor="@color/color_black_333333"
-            android:textSize="14sp"
             android:id="@+id/tv_coursenema"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="TextView"
+            android:layout_marginEnd="8dp"
+            android:maxLines="1"
+            android:paddingRight="16dp"
+            android:text=""
+            android:textColor="@color/color_black_333333"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/textView13"
-            app:layout_constraintTop_toTopOf="@+id/textView13" />
+            app:layout_constraintTop_toTopOf="@+id/textView13"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/im_talk"

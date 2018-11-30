@@ -98,20 +98,14 @@ public class ArticlePresenter {
                     }else {
                         articleInterface.getcommentfail();
                     }
-
                 }
-
             } else if (what == 7) {
-                if (code == 6) {
-                    articleInterface.islike(false);
-                }else if (code==100){
-                    articleInterface.islike(true);
+                if (code==100){
+                    articleInterface.islike(JsonUtils.getbooleValue(result,"Data"));
                 }
             }else if (what == 9) {
-                if (code == 6) {
-                    articleInterface.iscollect(false);
-                }else if (code==100){
-                    articleInterface.iscollect(true);
+                if (code==100){
+                    articleInterface.iscollect(JsonUtils.getbooleValue(result,"Data"));
                 }
             }
         }

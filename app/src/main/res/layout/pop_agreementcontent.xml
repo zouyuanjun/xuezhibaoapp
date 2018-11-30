@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="320dp"
+    android:layout_height="match_parent"
+    android:background="@drawable/ffffffrad8">
+<android.support.v4.widget.NestedScrollView
+    android:layout_width="320dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_agreementContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="16dp"
+            android:text="TextView"
+            android:textColor="@color/color_black_666666"
+            />
+        <com.zou.fastlibrary.ui.ShapeCornerBgView
+            android:id="@+id/scb_agreementContent"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="80dp"
+            android:layout_height="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="确定"
+            android:textColor="@color/white"
+            app:appBgColor="@color/appcolor"
+            app:appRadius="20dp"/>
+    </LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>
+
+</android.support.constraint.ConstraintLayout>

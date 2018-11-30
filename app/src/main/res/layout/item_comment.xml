@@ -12,6 +12,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="10dp"
+        app:placeholderImage="@drawable/my_icon_original"
         app:roundAsCircle="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,17 +43,21 @@
 
     <TextView
         android:id="@+id/tv_comment_detils"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="哈哈哈哈哈战壕里看"
+        android:text="哈哈哈哈哈战fgsdfgsdgsdfsdfsdfsdfsdfsfsdfsdf壕里看"
         android:textColor="@color/color_black_333333"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/sdv_photo"
-        app:layout_constraintTop_toBottomOf="@+id/tv_creattime" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_creattime"
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:layout_width="match_parent"

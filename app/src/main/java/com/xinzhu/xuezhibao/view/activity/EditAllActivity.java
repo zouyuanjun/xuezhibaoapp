@@ -30,6 +30,7 @@ import com.zou.fastlibrary.utils.EditTextUtil;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.ScreenUtil;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoActivity;
@@ -90,8 +91,11 @@ public class EditAllActivity extends TakePhotoActivity {
                 return;
             }
             if (code == 100) {
-                finish();
-                startActivity(new Intent(EditAllActivity.this, MainActivity.class));
+                if (msg.what==2){
+                    finish();
+                    startActivity(new Intent(EditAllActivity.this, MainActivity.class));
+                }
+
             }
         }
     };
@@ -170,7 +174,7 @@ public class EditAllActivity extends TakePhotoActivity {
         String s = result.getImage().getCompressPath();
         Log.d(imgurl + s);
         sdMyphoto.setImageURI(Uri.fromFile(new File(imgurl)));
-        Network.getnetwork().uploadimg(Constants.TOKEN, Constants.URL + "/app/image-upload", result.getImage().getCompressPath(), handler,1);
+        Network.getnetwork().uploadimg(Constants.TOKEN, Constants.URL + "/guest/image-upload", result.getImage().getCompressPath(), handler,1);
 
     }
 
@@ -276,6 +280,6 @@ public class EditAllActivity extends TakePhotoActivity {
                 popupWindow.dismiss();
             }
         });
-        popupWindow.showAtLocation(parentview, Gravity.BOTTOM,0,0);
+        popupWindow.showAtLocation(parentview, Gravity.BOTTOM,0, ScreenUtil.getNavigationBarHeight(EditAllActivity.this));
     }
 }

@@ -17,6 +17,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 学宝首页的课程adapter
+ */
 public class XuebaoCourseAdapter extends RecyclerView.Adapter {
     protected Context mContext;
     protected List<CourseBean> mDatas;
@@ -41,13 +44,9 @@ public class XuebaoCourseAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((RecyclerHolder) holder).tvTitle.setText(mDatas.get(position).getCurriculumTitle());
         ((RecyclerHolder) holder).tvNum.setText(mDatas.get(position).getCurriculumApply()+"");
-        ((RecyclerHolder) holder).tvPrice.setText(mDatas.get(position).getCurriculumPrice());
+        ((RecyclerHolder) holder).tvPrice.setText("￥"+mDatas.get(position).getCurriculumPrice());
         ((RecyclerHolder) holder).simpleDraweeView.setImageURI(mDatas.get(position).getCurriculumPicture());
-        if (mDatas.get(position).getCurriculumKind() == 1) {
-            ((RecyclerHolder) holder).tvtype.setText("家教");
-        } else {
-            ((RecyclerHolder) holder).tvtype.setText("学科");
-        }
+            ((RecyclerHolder) holder).tvtype.setText(mDatas.get(position).getDictionaryName());
 
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

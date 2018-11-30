@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -21,16 +22,15 @@ import com.xinzhu.xuezhibao.view.activity.AllCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.MyFamilyCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
-import com.xinzhu.xuezhibao.view.activity.MySubjectActivity;
-import com.xinzhu.xuezhibao.view.helputils.CreatDiag;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
 import com.xinzhu.xuezhibao.view.interfaces.XuebaoInterface;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
+import com.youth.banner.listener.OnBannerListener;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.ui.WebActivity;
 import com.zou.fastlibrary.utils.Log;
-import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +91,24 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
         //banner设置方法全部调用完毕时最后调用
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                if (position<bannerImgBeans.size()){
+                    if (bannerImgBeans.get(position).getNewPlace()==1){
+                        Uri uri = Uri.parse( bannerImgBeans.get(position).getLinkAddress());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(getContext(), WebActivity.class);
+                        intent.putExtra("URL", bannerImgBeans.get(position).getLinkAddress());
+                        startActivity(intent);
+                    }
+
+                }
+
+            }
+        });
 
     }
 
@@ -122,7 +140,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         mDatas.add("http://pic24.nipic.com/20121010/3798632_184253198370_2.jpg");
         return mDatas;
     }
-
+    //初始化最热课程列表
     @Override
     public void getHotCourse(final List<CourseBean> list) {
         //初始化最热课程列表
@@ -153,7 +171,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
 
     @Override
     public void getNewCourse(final List<CourseBean> list) {
-        //初始化最热课程列表
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         if (null!=rvNewCourse){
@@ -185,6 +203,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         }
         if (null!=banner){
             bannerlist.clear();
+            bannerImgBeans.clear();
             for (BannerImgBean bannerImgBean:list){
                 bannerlist.add(bannerImgBean.getAdUrl());
                 bannerImgBeans.add(bannerImgBean);
@@ -240,6 +259,10 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 Intent intent2 = new Intent(getActivity(), AllCourseActivity.class);
                 intent2.putExtra(Constants.INTENT_COURSE_CLASS, 2);
                 getActivity().startActivity(intent2);
+                break;
+            case R.id.im_jiajiao:
+                Intent intent3 = new Intent(getActivity(), MyFamilyCourseActivity.class);
+                getActivity().startActivity(intent3);
                 break;
         }
     }

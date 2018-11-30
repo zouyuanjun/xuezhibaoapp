@@ -5,5 +5,6 @@ public interface SignInterface extends publiceviewinterface{
     void codeiserr();
     void isexist();
     void codeistrue();
-    void signinfail(int code);
+    void signinfail(int code,String tip);
+    void getuseragment(String s);
 }

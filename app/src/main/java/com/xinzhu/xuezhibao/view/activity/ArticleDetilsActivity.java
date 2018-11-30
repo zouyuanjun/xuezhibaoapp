@@ -93,6 +93,13 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     int likenum;  //点赞数
     int commentnum; //评论数
     GoodView mGoodView;
+    @BindView(R.id.tv_comment_num)
+    TextView tvCommentNum;
+    @BindView(R.id.linearLayout14)
+    LinearLayout linearLayout14;
+    @BindView(R.id.linearLayout12)
+    LinearLayout linearLayout12;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +108,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         articleid = getIntent().getStringExtra(Constants.INTENT_ID);
         articlePresenter = new ArticlePresenter(this);
         ButterKnife.bind(this);
-        tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this,tvDetails));
+        tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this, tvDetails));
         mGoodView = new GoodView(this);
         init();
     }
@@ -156,15 +163,15 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                     if (islike) {
                         islike = false;
                         likenum--;
-                        tvLike.setText(likenum+"");
+                        tvLike.setText(likenum + "");
                         articlePresenter.cancellike(articleid);
                         imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
                     } else {
                         mGoodView.setImage(R.drawable.videodetails_btn_like_sel);
-                        mGoodView.setTextInfo("+1",Color.parseColor("#f87d28"),25);
+                        mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
                         mGoodView.show(view);
                         likenum++;
-                        tvLike.setText(likenum+"");
+                        tvLike.setText(likenum + "");
                         islike = true;
                         articlePresenter.like(articleid);
                         imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
@@ -195,21 +202,21 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
 
     @Override
     public void getarticledetils(ArticleBean articleBean) {
-        if (null!=articleBean){
+        if (null != articleBean) {
             tvTitle.setText(articleBean.getArticleTitle());
             tvReadnum.setText("阅读：" + articleBean.getArticleRead());
             tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(articleBean.getCreateTime()));
-            tvDetails.loadDataWithBaseURL( null, articleBean.getArticleContent() , "text/html", "UTF-8", null ) ;
-            tvLike.setText(articleBean.getArticleLike()+"");
-            likenum=articleBean.getArticleLike();
+            tvDetails.loadDataWithBaseURL(null, articleBean.getArticleContent(), "text/html", "UTF-8", null);
+            tvLike.setText(articleBean.getArticleLike() + "");
+            likenum = articleBean.getArticleLike();
         }
 
     }
 
     @Override
     public void getcomment(List<CommentBean> mDatas, int total) {
-        commentnum=total;
-        tvComment.setText("全部评论("+commentnum+")");
+        commentnum = total;
+        tvCommentNum.setText("全部评论(" + commentnum + ")");
         commentBeanArrayList.addAll(mDatas);
         page++;
         if (commentAdapter != null) {
@@ -239,6 +246,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         }
 
     }
+
     //弹出发送评论对话框
     private void showpop(View view) {
         if (Constants.TOKEN.isEmpty()) {
@@ -259,7 +267,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
                     commentnum++;
-                    tvComment.setText("全部评论("+commentnum+")");
+                    tvCommentNum.setText("全部评论(" + commentnum + ")");
                     CommentBean commentBean = new CommentBean(Constants.userBasicInfo.getImage(), Constants.userBasicInfo.getNickName(), System.currentTimeMillis(), commend, "", "111");
                     commentBeanArrayList.addFirst(commentBean);
                     commentAdapter.notifyItemInserted(0);

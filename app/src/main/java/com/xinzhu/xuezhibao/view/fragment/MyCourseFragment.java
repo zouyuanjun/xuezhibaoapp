@@ -69,9 +69,9 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
                 courseBeanList.clear();
                 page=1;
                 if (POSITION == 0) {
-                    myCoursePresenter.getcourse(page, 1);
+                    myCoursePresenter.mygetcourse(page);
                 } else {
-                    myCoursePresenter.getcourse(page, 2);
+                    myCoursePresenter.mygetcourse(page);
                 }
             }
         });
@@ -79,9 +79,9 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 if (POSITION == 0) {
-                    myCoursePresenter.getcourse(page, 1);
+                    myCoursePresenter.mygetcourse(page);
                 } else {
-                    myCoursePresenter.getcourse(page, 2);
+                    myCoursePresenter.mygetcourse(page);
                 }
 
             }
@@ -119,9 +119,9 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
         }
         myCoursePresenter = new MyCoursePresenter(this);
         if (POSITION == 0) {
-            myCoursePresenter.getcourse(page, 1);
+            myCoursePresenter.mygetcourse(page);
         } else {
-            myCoursePresenter.getcourse(page, 2);
+            myCoursePresenter.mygetcourse(page);
         }
         mContext = new WeakReference(MyApplication.getContext());
         rvJiaojiaoCourseAdapter = new RvJiaojiaoCourseAdapter(mContext, courseBeanList);

@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:leftTextVisible='false'
-        app:midText='课程任务'
+        app:midText='课程作业'
         app:midTextFontColor="#ffffff"
         app:midTextSizeSp="18"
         app:rightImageVisible='false'
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:text="如何让孩子主动学习"
+                android:text=""
                 android:textColor="@color/color_black_333333"
                 android:textSize="18sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:text="主动学习"
+                android:text=""
                 app:layout_constraintStart_toEndOf="@+id/tv_aa"
                 app:layout_constraintTop_toTopOf="@+id/tv_aa" />
 
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
-                android:text="发布时间：18-02-19：12.21"
+                android:text="发布时间："
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_course" />
 

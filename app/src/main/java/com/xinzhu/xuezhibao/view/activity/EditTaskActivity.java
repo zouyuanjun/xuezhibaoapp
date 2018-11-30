@@ -17,9 +17,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
@@ -32,6 +34,7 @@ import com.zhihu.matisse.MimeType;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
@@ -47,7 +50,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
-
+//编辑提交作业
 public class EditTaskActivity extends BaseActivity {
 
     Context mContext;
@@ -72,7 +75,7 @@ public class EditTaskActivity extends BaseActivity {
             String result = (String) msg.obj;
             int code = JsonUtils.getIntValue(result, "Code");
             if (code == 100) {
-                BToast.error(EditTaskActivity.this).text("提交成功").show();
+                BToast.success(EditTaskActivity.this).text("提交成功").show();
                 finish();
             }
             Log.d(result);
@@ -91,7 +94,7 @@ public class EditTaskActivity extends BaseActivity {
     @BindView(R.id.im_3)
     ImageView im3;
     String jobid = "";
-
+PopupWindow poploading;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         map.clear();
@@ -141,6 +144,8 @@ public class EditTaskActivity extends BaseActivity {
                     });
                     builder.create().show();
                 } else {
+                    poploading=CreatPopwindows.creatMMpopwindows(EditTaskActivity.this,R.layout.pop_loading);
+                    poploading.showAtLocation(view,Gravity.CENTER,0,0);
                     data.put("jobId", jobid);
                     data.put("replyContent", feedback);
                     data.put("token", Constants.TOKEN);
@@ -161,7 +166,7 @@ public class EditTaskActivity extends BaseActivity {
                     //    Toast.makeText(this, "请在应用管理中打开“读写存储”访问权限！", Toast.LENGTH_LONG).show();
                 } else if (canSelectCount > 0) {
                     Matisse.from(EditTaskActivity.this)
-                            .choose(MimeType.ofAll(), false) // 选择 mime 的类型
+                            .choose(MimeType.ofImage(), false) // 选择 mime 的类型
                             .countable(true)
                             .maxSelectable(canSelectCount) // 图片选择的最多数量
                             .theme(R.style.Matisse_Custom)
@@ -199,6 +204,13 @@ public class EditTaskActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null!=poploading&&poploading.isShowing()){
+            poploading.dismiss();
+        }
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (data == null) {

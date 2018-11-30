@@ -21,6 +21,7 @@ import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ArticleListAdapter;
 import com.xinzhu.xuezhibao.adapter.CourseMyCollectAdapter;
+import com.xinzhu.xuezhibao.adapter.RvJiatingCourseAdapter;
 import com.xinzhu.xuezhibao.adapter.VideoVoiceListAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
@@ -52,7 +53,7 @@ public class MyCollectFragment extends LazyLoadFragment implements MyCollectInte
     SmartRefreshLayout refreshLayout;
     Unbinder unbinder;
     int POSITION = 0;
-    CourseMyCollectAdapter courseMyCollectAdapter;
+    RvJiatingCourseAdapter courseMyCollectAdapter;
     ArticleListAdapter articleListAdapter;
     VideoVoiceListAdapter videoVoiceListAdapter;
     List<CourseBean> courseBeanList = new ArrayList<>();
@@ -97,7 +98,7 @@ boolean nodata=false;
             }
         }
 
-        courseMyCollectAdapter.setOnItemClickListener(new CourseMyCollectAdapter.OnItemClickListener() {
+        courseMyCollectAdapter.setOnItemClickListener(new RvJiatingCourseAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), CourseDetailActivity.class);
@@ -185,13 +186,10 @@ boolean nodata=false;
             POSITION = getArguments().getInt("POSITION");
         }
         Log.d("收餐"+POSITION);
-        courseMyCollectAdapter = new CourseMyCollectAdapter(new WeakReference<Context>(getActivity()), courseBeanList);
+        courseMyCollectAdapter = new RvJiatingCourseAdapter(new WeakReference<Context>(getActivity()), courseBeanList);
         myCollectPresenter = new MyCollectPresenter(this);
         articleListAdapter = new ArticleListAdapter(new WeakReference<Context>(getActivity()), articleBeanList);
         videoVoiceListAdapter = new VideoVoiceListAdapter(new WeakReference<Context>(getActivity()), videoVoiceBeanList);
-
-
-
         page = 1;
         isfirstload = true;
     }

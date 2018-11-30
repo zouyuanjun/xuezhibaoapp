@@ -17,7 +17,7 @@ public class CourseBean {
     String classDictionaryName;
     int sumHour;
     int consumeHour;
-    boolean isApply;
+    int isApply;
     String teacherPhone;
 
     public String getTeacherPhone() {
@@ -28,12 +28,12 @@ public class CourseBean {
         this.teacherPhone = teacherPhone;
     }
 
-    public boolean isApply() {
+    public int getIsApply() {
         return isApply;
     }
 
-    public void setApply(boolean apply) {
-        isApply = apply;
+    public void setIsApply(int isApply) {
+        this.isApply = isApply;
     }
 
     public int getSumHour() {

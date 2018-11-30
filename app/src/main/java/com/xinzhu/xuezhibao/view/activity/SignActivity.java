@@ -5,15 +5,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
-import android.text.Editable;
+import android.text.Html;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioButton;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.R;
@@ -24,6 +26,7 @@ import com.xinzhu.xuezhibao.view.interfaces.SignInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
+import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.StringUtil;
 
 import butterknife.BindView;
@@ -59,13 +62,14 @@ public class SignActivity extends BaseActivity implements SignInterface {
     CheckBox radioButton;
     boolean isconsent = false; //是否同意用户协议
     boolean cansend = true;  //能否发送验证码
-    boolean passwordisture=false; //验证码是否一致
+    boolean passwordisture = false; //验证码是否一致
     CountDownTimer timer;
     @BindView(R.id.im_codeistrue)
     ImageView imCodeistrue;
     @BindView(R.id.im_passwordtrue)
     ImageView imPasswordtrue;
-    boolean cansignin=true;
+    boolean cansignin = true;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,6 +98,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
             public void onTick(long millisUntilFinished) {
                 btGetcode.setText("重新发送(" + millisUntilFinished / 1000 + ")");
             }
+
             /**
              * 倒计时完成时被调用
              */
@@ -133,7 +138,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
                     imPasswordtrue.setVisibility(View.VISIBLE);
                     etConfirmPassword.setTextColor(Color.parseColor("#900000"));
 
-                        tvSignup.setBgColor(Color.parseColor("#f87d26"));
+                    tvSignup.setBgColor(Color.parseColor("#f87d26"));
                 } else {
                     passwordisture = false;
                     etConfirmPassword.setTextColor(Color.RED);
@@ -144,10 +149,9 @@ public class SignActivity extends BaseActivity implements SignInterface {
         });
 
 
-
     }
 
-    @OnClick({R.id.et_phone, R.id.et_password, R.id.et_code, R.id.bt_getcode, R.id.tv_signup})
+    @OnClick({R.id.et_phone, R.id.et_password, R.id.et_code, R.id.bt_getcode, R.id.tv_signup,R.id.tv_user_agreement})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_phone:
@@ -172,17 +176,21 @@ public class SignActivity extends BaseActivity implements SignInterface {
                     BToast.error(view.getContext()).text("请填写完整信息再注册").show();
                 } else if (!isconsent) {
                     BToast.error(view.getContext()).text("必须同意学之宝用户协议才可以注册哦").show();
-                } else if (!passwordisture){
+                } else if (!passwordisture) {
                     BToast.error(view.getContext()).text("请确认密码是否一样").show();
-                }else if (password.length()<6){
+                } else if (password.length() < 6) {
                     BToast.error(view.getContext()).text("密码必须大于6位").show();
-                }else if (cansignin){
-                    cansignin=false;
+                } else if (cansignin) {
+                    cansignin = false;
                     signPresenter.sign(new SignBean(phone, password, code));
                 }
                 break;
+            case R.id.tv_user_agreement:
+                signPresenter.getUserAgreement();
+                break;
         }
     }
+
     //请求验证码
     public void sendcode(String phone) {
         Log.d("5555", phone + phone.length());
@@ -201,7 +209,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
 
     @Override
     public void signsuccessful() {
-        goToActivity(SignActivity.this,EditAllActivity.class);
+        goToActivity(SignActivity.this, EditAllActivity.class);
         finish();
         BToast.success(context).text("注册成功").show();
     }
@@ -220,9 +228,26 @@ public class SignActivity extends BaseActivity implements SignInterface {
     }
 
     @Override
-    public void signinfail(int code) {
-        cansignin=true;
-        BToast.info(context).target(etCode).text("注册失败，错误码"+code).show();
+    public void signinfail(int code, String tip) {
+        cansignin = true;
+        BToast.info(context).target(etCode).text("注册失败，错误码" + code + tip).show();
+    }
+
+    @Override
+    public void getuseragment(String s) {
+        Log.d("sdsdd",s);
+        final PopupWindow popupWindow=CreatPopwindows.creatWWpopwindows(SignActivity.this,R.layout.pop_agreementcontent);
+        View view=popupWindow.getContentView();
+        TextView textView=view.findViewById(R.id.tv_agreementContent);
+        textView.setText(Html.fromHtml(s));
+        ShapeCornerBgView shapeCornerBgView=view.findViewById(R.id.scb_agreementContent);
+        shapeCornerBgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow.dismiss();
+            }
+        });
+        popupWindow.showAtLocation(etCode,Gravity.CENTER,0,0);
     }
 
     @Override
@@ -250,4 +275,5 @@ public class SignActivity extends BaseActivity implements SignInterface {
     public void onViewClicked() {
         finish();
     }
+
 }

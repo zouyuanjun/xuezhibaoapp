@@ -28,6 +28,7 @@ import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.ScreenUtil;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoActivity;
@@ -121,7 +122,7 @@ public class UserBaseActivity extends TakePhotoActivity {
             tvStudennage.setText(Constants.userBasicInfo.getStudentAge()+"岁");
             tvFathername.setText(Constants.userBasicInfo.getFatherName());
             tvMothername.setText(Constants.userBasicInfo.getMotherName());
-            tvAddress.setText(Constants.userBasicInfo.getProvince()+Constants.userBasicInfo.getCity()+Constants.userBasicInfo.getCounty());
+            tvAddress.setText(Constants.userBasicInfo.getCity()+"-"+Constants.userBasicInfo.getCounty());
             sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
         }
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
@@ -161,7 +162,6 @@ public class UserBaseActivity extends TakePhotoActivity {
                 Log.d("极光用户头像更新成功");
             }
         });
-
         Network.getnetwork().uploadimg(Constants.TOKEN,Constants.URL+"/guest/image-upload",result.getImage().getCompressPath(),handler,1);
 
     }
@@ -295,7 +295,7 @@ public class UserBaseActivity extends TakePhotoActivity {
                popupWindow.dismiss();
             }
         });
-        popupWindow.showAtLocation(parentview, Gravity.BOTTOM,0,0);
+        popupWindow.showAtLocation(parentview, Gravity.BOTTOM,0, ScreenUtil.getNavigationBarHeight(UserBaseActivity.this));
     }
 
 

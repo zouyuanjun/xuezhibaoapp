@@ -37,14 +37,15 @@
             android:layout_height="wrap_content"
          android:background="@drawable/chat_bg_dialogbox_right"
             android:lineSpacingExtra="3dp"
-            android:text="ssssdfddddddddddddddddddddddddddddddddddddddsfsss">
+            android:text="">
 
         </TextView>
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/simpleDraweeView3"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            app:roundAsCircle="true" />
+            app:roundAsCircle="true"
+            app:placeholderImage="@drawable/my_icon_original"/>
 
         />
 
@@ -70,7 +71,9 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sp_1"
                 android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                app:roundAsCircle="true"
+                app:placeholderImage="@drawable/my_icon_original"/>
 
             <TextView
                 android:maxWidth="270dp"

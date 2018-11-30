@@ -9,7 +9,6 @@ import android.view.View;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
 import com.xinzhu.xuezhibao.utils.Constants;
-import com.xinzhu.xuezhibao.view.fragment.SubjectCourseFragment;
 import com.xinzhu.xuezhibao.view.fragment.FamilyCourseFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;

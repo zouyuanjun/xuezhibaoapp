@@ -2,7 +2,7 @@ package com.xinzhu.xuezhibao.bean;
 
 public class CommentBean {
     String image;
-    String creater;
+    String nickName;
     long createTime;
     String commentContent;
     String commentId;
@@ -13,7 +13,7 @@ public class CommentBean {
 
     public CommentBean(String abcimurl, String creater, long createTime, String commentContent, String commentId, String productId) {
         this.image = abcimurl;
-        this.creater = creater;
+        this.nickName = creater;
         this.createTime = createTime;
         this.commentContent = commentContent;
         this.commentId = commentId;
@@ -28,12 +28,12 @@ public class CommentBean {
         this.image = image;
     }
 
-    public String getCreater() {
-        return creater;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setCreater(String creater) {
-        this.creater = creater;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public long getCreateTime() {

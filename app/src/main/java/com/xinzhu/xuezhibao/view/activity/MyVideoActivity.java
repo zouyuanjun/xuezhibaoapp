@@ -2,6 +2,7 @@ package com.xinzhu.xuezhibao.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -9,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -50,24 +52,35 @@ public class MyVideoActivity extends BaseActivity {
             super.handleMessage(msg);
             String result = (String) msg.obj;
             Log.d(result);
+            animationDrawable.stop();
+            imLoading.setVisibility(View.GONE);
             int code = JsonUtils.getIntValue(result, "Code");
             if (code == 100) {
                 String data = JsonUtils.getStringValue(result, "Data");
                 List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
-                if (null!=mDatas&&mDatas.size()>0){
+                if (null != mDatas && mDatas.size() > 0) {
                     videoVoiceBeanList.addAll(mDatas);
                     videoVoiceListAdapter.notifyDataSetChanged();
                     page++;
                     refreshLayout.finishLoadMore();
-                }else {
+                } else {
+                    if (videoVoiceBeanList.size()==0){
+                        imDataisnull.setVisibility(View.VISIBLE);
+                    }
                     refreshLayout.finishLoadMoreWithNoMoreData();
+                    refreshLayout.finishRefresh();
                 }
 
-            }else {
+            } else {
                 refreshLayout.finishLoadMoreWithNoMoreData();
             }
         }
     };
+    @BindView(R.id.im_loading)
+    ImageView imLoading;
+    @BindView(R.id.im_dataisnull)
+    ImageView imDataisnull;
+    AnimationDrawable animationDrawable;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,20 +91,22 @@ public class MyVideoActivity extends BaseActivity {
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvMyvideo.setLayoutManager(linearLayoutManager);
         rvMyvideo.setAdapter(videoVoiceListAdapter);
-        String data=JsonUtils.keyValueToString2("token",Constants.TOKEN,"pageNo",1);
-        Network.getnetwork().postJson(data,Constants.URL+"/app/my-video",handler,1);
+        String data = JsonUtils.keyValueToString2("token", Constants.TOKEN, "pageNo", 1);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/my-video", handler, 1);
+         animationDrawable= (AnimationDrawable) imLoading.getDrawable();
+        animationDrawable.start();
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                String data=JsonUtils.keyValueToString2("token",Constants.TOKEN,"pageNo",page);
-                Network.getnetwork().postJson(data,Constants.URL+"/app/my-video",handler,1);
+                String data = JsonUtils.keyValueToString2("token", Constants.TOKEN, "pageNo", page);
+                Network.getnetwork().postJson(data, Constants.URL + "/app/my-video", handler, 1);
             }
         });
         videoVoiceListAdapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(MyVideoActivity.this,VideoDetilsActivity.class);
-                intent.putExtra(Constants.INTENT_ID,videoVoiceBeanList.get(position).getVideoId());
+                Intent intent = new Intent(MyVideoActivity.this, VideoDetilsActivity.class);
+                intent.putExtra(Constants.INTENT_ID, videoVoiceBeanList.get(position).getVideoId());
                 startActivity(intent);
             }
 

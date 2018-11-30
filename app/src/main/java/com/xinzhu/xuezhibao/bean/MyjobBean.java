@@ -6,13 +6,21 @@ import java.util.List;
 public class MyjobBean implements Serializable{
     String jobId;
     String jobTitle;
-    String createTime;
+    long createTime;
     String state;
     String jobContent;
     int replyState;
     String curriculumTitle;
     String replyContent;
     List<FeedbackPictureBean> accessoryList;
+
+    public List<FeedbackPictureBean> getAccessoryList() {
+        return accessoryList;
+    }
+
+    public void setAccessoryList(List<FeedbackPictureBean> accessoryList) {
+        this.accessoryList = accessoryList;
+    }
 
     public String getReplyContent() {
         return replyContent;
@@ -65,12 +73,6 @@ public class MyjobBean implements Serializable{
         this.jobContent = jobContent;
     }
 
-    public MyjobBean(String id, String taskname, String time, String status) {
-        this.jobId = id;
-        this.jobTitle = taskname;
-        this.createTime = time;
-        this.state = status;
-    }
 
     public String getId() {
         return jobId;
@@ -88,11 +90,11 @@ public class MyjobBean implements Serializable{
         this.jobTitle = jobTitle;
     }
 
-    public String getCreateTime() {
+    public long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
+    public void setCreateTime(long createTime) {
         this.createTime = createTime;
     }
 

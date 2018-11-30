@@ -45,21 +45,21 @@ public class HomeListActivity extends BaseActivity {
         tbClass.addTab(tbClass.newTab());
         tbClass.setTabTextColors(Color.parseColor("#333333"),Color.parseColor("#f87d28"));
         if (TYPE==1){
-            appbar.setMidText("视频");
+            appbar.setMidText("视频公开课");
             fragmentList.clear();
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
             listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,1);
         }else if (TYPE==2){
-            appbar.setMidText("音频");
+            appbar.setMidText("音频公开课");
             fragmentList.clear();
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
             listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,2);
         }else if (TYPE==3){
-            appbar.setMidText("文章");
+            appbar.setMidText("亲子文章");
             fragmentList.clear();
             fragmentList.add(new ArticleListFragment());
             fragmentList.add(new ArticleListFragment());

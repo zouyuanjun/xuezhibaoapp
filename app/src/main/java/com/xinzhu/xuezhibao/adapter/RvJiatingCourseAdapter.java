@@ -53,14 +53,14 @@ public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
 
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
-        ((ViewHolder) holder).tvTeacher.setText("主讲："+mDatas.get(position).getSpeakerTeacher());
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
+        ((ViewHolder) holder).tvTeacher.setText("主讲：" + mDatas.get(position).getSpeakerTeacher());
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply() + "");
 
-        if (!StringUtil.isEmpty(mDatas.get(position).getDictionaryName())){
+        if (!StringUtil.isEmpty(mDatas.get(position).getDictionaryName())) {
             ((ViewHolder) holder).tvClass.setVisibility(View.VISIBLE);
             ((ViewHolder) holder).tvClass.setText(mDatas.get(position).getDictionaryName());
         }
-
+        ((ViewHolder) holder).imVisiable.setVisibility(View.GONE);
         if (StringUtil.isEmpty(mDatas.get(position).getCurriculumPicture())) {
             RequestOptions requestOptions = RequestOptions.frameOf(0);
             requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
@@ -80,7 +80,7 @@ public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
                 }
             });
             Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumUrl()).apply(requestOptions).into(((ViewHolder) holder).simpleDraweeView);
-        }else {
+        } else {
             Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
         }
 
@@ -112,6 +112,7 @@ public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
         void onItemLongClick(View view, int position);
     }
 
+
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.simpleDraweeView)
         ImageView simpleDraweeView;
@@ -125,13 +126,13 @@ public class RvJiatingCourseAdapter extends RecyclerView.Adapter {
         TextView tvReadnum;
         @BindView(R.id.tv_class)
         TextView tvClass;
+        @BindView(R.id.im_visiable)
+        ImageView imVisiable;
 
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
     }
-
-
 
 }

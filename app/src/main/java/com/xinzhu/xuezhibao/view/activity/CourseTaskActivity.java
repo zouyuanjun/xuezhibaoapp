@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bravin.btoast.BToast;
 import com.bumptech.glide.Glide;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.FeedbackPictureBean;
@@ -17,6 +18,7 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.MyJobDetailInterpace;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,38 +90,41 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
         }
         tvTask.setText(myjobBean.getJobContent());
         tvTitle.setText(myjobBean.getJobTitle());
-        tvTime.setText("发布时间：" + myjobBean.getCreateTime());
+        tvTime.setText("发布时间：" + TimeUtil.getWholeTime2(myjobBean.getCreateTime()));
         tvCourse.setText(myjobBean.getCurriculumTitle());
         if (myjobBean.getReplyState() > 0) {
             tvStatus.setText("已完成");
             tvStatus.setTextColor(Color.parseColor("#f87d28"));
             imCommittask.setVisibility(View.GONE);
             tvTasktext.setText(myjobBean.getReplyContent());
-            if (myjobBean.getList().size() > 0) {
-                int i = 1;
-                for (FeedbackPictureBean feedbackPictureBean : myjobBean.getList()) {
-                    if (i == 1) {
-                        Glide.with(this).load(feedbackPictureBean.getAccessoryUrl()).
+            if (myjobBean.getAccessoryList().size() > 0) {
+
+                for ( int i = 0;i<myjobBean.getAccessoryList().size();i++) {
+                    if (i == 0) {
+                        Glide.with(this).load(myjobBean.getAccessoryList().get(i).getAccessoryUrl()).
                                 into(im1);
-                        i++;
+                        im1.setVisibility(View.VISIBLE);
+                    }
+                    if (i == 1) {
+                        Glide.with(this).load(myjobBean.getAccessoryList().get(i).getAccessoryUrl()).
+                                into(im2);
+                        im2.setVisibility(View.VISIBLE);
                     }
                     if (i == 2) {
-                        Glide.with(this).load(feedbackPictureBean.getAccessoryUrl()).
-                                into(im2);
-                        i++;
-                    }
-                    if (i == 3) {
-                        Glide.with(this).load(feedbackPictureBean.getAccessoryUrl()).
+                        Glide.with(this).load(myjobBean.getAccessoryList().get(i).getAccessoryUrl()).
                                 into(im3);
-                    }
+                        im3.setVisibility(View.VISIBLE);
                 }
-                im1.setVisibility(View.VISIBLE);
-                im2.setVisibility(View.VISIBLE);
-                im3.setVisibility(View.VISIBLE);
+                }
                 tvTasktext.setVisibility(View.VISIBLE);
             }
         }
 
+    }
+
+    @Override
+    public void getdatafail(String tip) {
+        BToast.error(this).text("数据异常："+tip).show();
     }
 
     @Override

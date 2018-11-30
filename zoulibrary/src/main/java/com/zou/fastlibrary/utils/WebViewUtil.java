@@ -11,7 +11,6 @@ import android.webkit.WebViewClient;
 
 public class WebViewUtil {
 
-
     public static class MyWebViewClient extends WebViewClient {
         Activity context;
         WebView webView;
@@ -19,16 +18,22 @@ public class WebViewUtil {
         public MyWebViewClient(Activity context, WebView webView) {
             this.context = context;
             this.webView = webView;
+            init( false);
+        }
+        public MyWebViewClient(Activity context, WebView webView,boolean horizontalScrollBarEnabled) {
+            this.context = context;
+            this.webView = webView;
+            init( horizontalScrollBarEnabled);
+        }
+        private void init(boolean HorizontalScrollBarEnabled){
             this.webView.addJavascriptInterface(this, "App");
             WebSettings webSettings = this.webView.getSettings();//获取webview设置属性
             webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
             webSettings.setJavaScriptEnabled(true);//支持js
-
             this.webView.setHorizontalScrollBarEnabled(false);//水平不显示
-            this.webView.setVerticalScrollBarEnabled(false); //垂直不显示
+            this.webView.setVerticalScrollBarEnabled(HorizontalScrollBarEnabled); //垂直不显示
             this.webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         }
-
         @Override
         public void onPageFinished(WebView view, String url) {
             imgReset();

@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,6 +38,7 @@ import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
+import com.xinzhu.xuezhibao.messagebean.PayResultMessage;
 import com.xinzhu.xuezhibao.presenter.AlipayPresenter;
 import com.xinzhu.xuezhibao.presenter.CourseDetailPresenter;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
@@ -45,12 +47,16 @@ import com.xinzhu.xuezhibao.view.interfaces.CoursePlayInterface;
 import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
 import com.xinzhu.xuezhibao.view.interfaces.PayInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
 import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.ScreenUtil;
+import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.zou.fastlibrary.utils.WebViewUtil;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -58,6 +64,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.im.android.api.JMessageClient;
 
 public class CourseDetailActivity extends BaseActivity implements CoursePlayInterface, LikeCollectInterface, PayInterface {
     CommentAdapter commentAdapter;
@@ -123,7 +130,6 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     AlipayPresenter alipayPresenter ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
@@ -195,13 +201,13 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
             Glide.with(context).load(courseBean.getCurriculumPicture()).
                     into(standardGSYVideoPlayer);
             //  standardGSYVideoPlayer.setImageURI(courseBean.getCurriculumPicture());
-            if (courseBean.isApply()) {
+            if (courseBean.getIsApply()==1) {
                 tvBuycourse.setText("已购买");
             }
             likenum = courseBean.getCurriculumLike();
             tvLike.setText(likenum + "");
             tvAlreadybuynum.setText(courseBean.getCurriculumApply() + "人已购买");
-            tvAllclass.setText("共" + courseBean.getConsumeHour() + "/" + courseBean.getSumHour() + "节");
+            tvAllclass.setText("共"+ courseBean.getSumHour() + "节");
         }
     }
 
@@ -272,12 +278,19 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     public void onViewClicked(final View view) {
         switch (view.getId()) {
             case R.id.im_talkabout:
+                if (Constants.TOKEN.isEmpty()) {
+                    showdia();
+                    return;
+                }
+                if (null == JMessageClient.getMyInfo()){
+                    BToast.error(this).text("聊天服务异常，请退出重试或电话联系我们").show();
+                    return;
+                }
                 Intent notificationIntent = new Intent(CourseDetailActivity.this, ChatActivity.class);
                 notificationIntent.putExtra(JGApplication.TARGET_ID, mycourse.getTeacherPhone());
                 notificationIntent.putExtra(JGApplication.CONV_TITLE, mycourse.getSpeakerTeacher() + "老师");
                 notificationIntent.putExtra(JGApplication.TARGET_APP_KEY, Constants.JPUSH_APPKEY);
                 startActivity(notificationIntent);//自定义跳转到指定页面
-
                 break;
             case R.id.ll_comment:
                 showpop(view);
@@ -320,7 +333,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
                 }
                 break;
             case R.id.tv_buycourse:
-                if (mycourse.isApply()) {
+                if (mycourse.getIsApply()==1) {
                     BToast.success(CourseDetailActivity.this).text("您已购买该课程，无需重复购买").show();
                     return;
                 }
@@ -392,21 +405,34 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     }
 
     @Override
-    public void alipaysuccessful() {
+    public void paysuccessful() {
         if (null!=loadingPop&&loadingPop.isShowing()){
             loadingPop.dismiss();
         }
         BToast.success(this).text("购买成功").show();
         tvBuycourse.setText("已购买");
-        mycourse.setApply(true);
+        mycourse.setIsApply(1);
     }
 
     @Override
-    public void alipayfail() {
+    public void payfail() {
         if (null!=loadingPop&&loadingPop.isShowing()){
             loadingPop.dismiss();
         }
         BToast.error(this).text("支付失败").show();
+    }
+
+    @Override
+    public void orderisexit() {
+
+    }
+
+    @Override
+    public void creatOrderfail(String tips) {
+        if (null != loadingPop && loadingPop.isShowing()) {
+            loadingPop.dismiss();
+        }
+        BToast.error(this).text("抱歉"+tips).show();
     }
 
     @Override
@@ -467,6 +493,30 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
             });
         }
     }
-
+    @Subscribe
+    public void PayMessage(PayResultMessage messageEvent) {
+        int code = messageEvent.getCode();
+        if (code==0){
+            if (StringUtil.isEmpty(Constants.wxOrdernum)){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("支付结果");
+                builder.setMessage("您可能支付成功，但是由于网络异常，我们无法获取支付结果，请联系客服人员为您核实");
+                builder.show();
+            }else {
+                alipayPresenter.checkWxPay();
+            }
+        }else if (code==1){
+            BToast.error(this).text("取消支付").show();
+        }else {
+            BToast.error(this).text("微信支付异常").show();
+        }
+    }
+    @Override
+    public void netWorkMessage(NetWorkMessage messageEvent) {
+        super.netWorkMessage(messageEvent);
+        if (null!=loadingPop&&loadingPop.isShowing()){
+            loadingPop.dismiss();
+        }
+    }
 }
 

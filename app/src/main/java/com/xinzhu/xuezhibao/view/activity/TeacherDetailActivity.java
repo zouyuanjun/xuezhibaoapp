@@ -28,6 +28,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiatingCourseAdapter;
@@ -37,11 +38,14 @@ import com.xinzhu.xuezhibao.bean.JiatingCourseBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
+import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
 import com.xinzhu.xuezhibao.presenter.TeacherPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.helputils.CreatDiag;
+import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
 import com.xinzhu.xuezhibao.view.interfaces.TeacherInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.ui.NestedScrollWebView;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StatusBar;
 
@@ -54,7 +58,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TeacherDetailActivity extends BaseActivity implements TeacherInterface {
+public class TeacherDetailActivity extends BaseActivity implements TeacherInterface,LikeCollectInterface {
     CommentAdapter commentAdapter;
     RvJiatingCourseAdapter adapter;
     WeakReference<Context> mContext;
@@ -79,7 +83,7 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
     @BindView(R.id.rv_teacher_course)
     RecyclerView rvTeacherCourse;
     @BindView(R.id.tv_intro)
-    WebView wbFeedback;
+    NestedScrollWebView wbFeedback;
     @BindView(R.id.teacherhead)
     SimpleDraweeView teacherhead;
     int coursepage = 1;
@@ -88,19 +92,25 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
     LinkedList<CommentBean> commentBeanList = new LinkedList<>();
     Activity activity;
     TeacherBean teacherBean;
-
+    LikeCollectPresenter likeCollectPresenter;
+    GoodView mGoodView;
+    boolean islike=false;
+    int likenum=1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         StatusBar.setColor(this, Color.parseColor("#f87d28"));
         setContentView(R.layout.activity_teacher_detail);
-
+        mGoodView = new GoodView(this);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);//设置toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标
         getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
+        likeCollectPresenter=new LikeCollectPresenter(this);
+
         teacherPresenter = new TeacherPresenter(this);
         teacherId = getIntent().getStringExtra(Constants.INTENT_ID);
+        likeCollectPresenter.islike(teacherId,"5");
         coursepage = 1;
         commentpage = 1;
         activity = this;
@@ -167,6 +177,7 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
         WebSettings webSettings = wbFeedback.getSettings();//获取webview设置属性
         webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
         webSettings.setJavaScriptEnabled(true);//支持js
+        wbFeedback.setVerticalScrollBarEnabled(true); //垂直不显示
         wbFeedback.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         wbFeedback.setWebViewClient(new MyWebViewClient());
         wbFeedback.addJavascriptInterface(this, "App");
@@ -185,6 +196,21 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.im_like:
+                if (islike) {
+                    likenum--;
+                    tvLikenum.setText(likenum + "");
+                    islike = false;
+                    likeCollectPresenter.cancellike(teacherId, "5");
+                    imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
+                } else {
+                    mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
+                    mGoodView.show(view);
+                    likenum++;
+                    tvLikenum.setText(likenum + "");
+                    islike = true;
+                    likeCollectPresenter.like(teacherId, "5");
+                    imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+                }
                 break;
             case R.id.im_talk:
                 Intent notificationIntent = new Intent(activity, ChatActivity.class);
@@ -206,6 +232,8 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
             teacherhead.setImageURI(teacherBean.getHeadPortraitUrl());
             wbFeedback.loadDataWithBaseURL(null, teacherBean.getDescribeInfo(), "text/html", "UTF-8", null);
             this.teacherBean=teacherBean;
+            tvLikenum.setText(teacherBean.getLikeNum()+"");
+            likenum=teacherBean.getLikeNum();
         }
     }
 
@@ -264,6 +292,19 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
                 }
             });
         }
+    }
+
+    @Override
+    public void islike(boolean like) {
+        islike = like;
+        if (like) {
+            imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+        }
+    }
+
+    @Override
+    public void iscollect(boolean iscollect) {
+
     }
 
     private class MyWebViewClient extends WebViewClient {

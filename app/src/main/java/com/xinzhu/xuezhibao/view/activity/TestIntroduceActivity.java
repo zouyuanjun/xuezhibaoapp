@@ -20,7 +20,7 @@ public class TestIntroduceActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_test);
+        setContentView(R.layout.activity_testintroduce);
         ButterKnife.bind(this);
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
@@ -29,7 +29,6 @@ public class TestIntroduceActivity extends BaseActivity {
             }
         });
     }
-
     @OnClick(R.id.begintest)
     public void onViewClicked() {
         startActivity(new Intent(this, TestBeforeActivity.class));

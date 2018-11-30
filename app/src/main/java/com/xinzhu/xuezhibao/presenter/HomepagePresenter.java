@@ -1,13 +1,11 @@
 package com.xinzhu.xuezhibao.presenter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 
 import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.bean.BannerImgBean;
-import com.xinzhu.xuezhibao.bean.VideoBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.HomepageInterface;

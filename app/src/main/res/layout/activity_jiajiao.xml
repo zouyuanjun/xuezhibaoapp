@@ -19,7 +19,6 @@
         app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
 
     <android.support.design.widget.TabLayout
-        android:visibility="gone"
         android:id="@+id/tb_basetablayout"
         android:layout_width="match_parent"
         android:layout_height="44dp"

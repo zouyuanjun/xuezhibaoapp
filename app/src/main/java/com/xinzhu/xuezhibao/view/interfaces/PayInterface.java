@@ -1,6 +1,8 @@
 package com.xinzhu.xuezhibao.view.interfaces;
 
 public interface PayInterface {
-    void alipaysuccessful();
-    void alipayfail();
+    void paysuccessful();
+    void payfail();
+    void orderisexit();
+    void creatOrderfail(String tips);
 }

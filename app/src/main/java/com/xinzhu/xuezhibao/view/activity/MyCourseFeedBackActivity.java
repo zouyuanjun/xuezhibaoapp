@@ -37,7 +37,6 @@ public class MyCourseFeedBackActivity extends BaseActivity {
             try {
                 code = JsonUtils.getIntValue(result, "Code");
             } catch (Exception e) {
-
             }
             if (code != 100) {
                 BToast.error(context).text("发送评论失败").show();

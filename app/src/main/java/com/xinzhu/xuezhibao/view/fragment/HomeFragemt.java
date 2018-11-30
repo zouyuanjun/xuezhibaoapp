@@ -3,6 +3,7 @@ package com.xinzhu.xuezhibao.view.fragment;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +23,6 @@ import com.xinzhu.xuezhibao.adapter.HomeVideoAdapter;
 import com.xinzhu.xuezhibao.adapter.HomeVoiceAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.bean.BannerImgBean;
-import com.xinzhu.xuezhibao.bean.VideoBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
@@ -30,12 +30,10 @@ import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
 import com.xinzhu.xuezhibao.presenter.HomepagePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
-import com.xinzhu.xuezhibao.view.activity.FeedbackActivity;
 import com.xinzhu.xuezhibao.view.activity.HomeListActivity;
 import com.xinzhu.xuezhibao.view.activity.LoginActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SettingActivity;
-import com.xinzhu.xuezhibao.view.activity.TestBeforeActivity;
 import com.xinzhu.xuezhibao.view.activity.TestIntroduceActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.VoiceDetilsActivity;
@@ -45,7 +43,6 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
-import com.zou.fastlibrary.ui.ClearWriteEditText;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.WebActivity;
 import com.zou.fastlibrary.utils.EditTextUtil;
@@ -134,9 +131,16 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             @Override
             public void OnBannerClick(int position) {
                 if (position<mybannerImgBean.size()){
-                    Intent intent = new Intent(getContext(), WebActivity.class);
-                    intent.putExtra("URL", mybannerImgBean.get(position).getLinkAddress());
-                    startActivity(intent);
+                    if (mybannerImgBean.get(position).getNewPlace()==1){
+                        Uri uri = Uri.parse( mybannerImgBean.get(position).getLinkAddress());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                        startActivity(intent);
+                    }else {
+                        Intent intent = new Intent(getContext(), WebActivity.class);
+                        intent.putExtra("URL", mybannerImgBean.get(position).getLinkAddress());
+                        startActivity(intent);
+                    }
+
                 }
 
             }
@@ -369,6 +373,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     @Override
     public void getbanner(List<BannerImgBean> bannerImgBeans) {
         List<String> mDatas = new ArrayList<>();
+        mybannerImgBean.clear();
         for (BannerImgBean bannerImgBean : bannerImgBeans) {
             mDatas.add(bannerImgBean.getAdUrl());
             mybannerImgBean.add(bannerImgBean);

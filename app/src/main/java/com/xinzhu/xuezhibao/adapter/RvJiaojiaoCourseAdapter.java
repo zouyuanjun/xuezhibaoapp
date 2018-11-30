@@ -63,10 +63,10 @@ public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if (holder instanceof ViewHolder){
             ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
-            ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getSpeakerTeacher());
-            ((ViewHolder) holder).tvAll.setText(mDatas.get(position).getSumHour() + "节");
+            ((ViewHolder) holder).tvTeacher.setText("主讲："+mDatas.get(position).getSpeakerTeacher());
+            ((ViewHolder) holder).tvAll.setText("共"+mDatas.get(position).getSumHour() + "节");
             ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply() + "");
-            ((ViewHolder) holder).tvAlready.setText("/" + mDatas.get(position).getConsumeHour());
+            ((ViewHolder) holder).tvAlready.setText("/学习" + mDatas.get(position).getConsumeHour()+"节");
             Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
             if (onItemClickListener != null) {
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +110,7 @@ public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemViewType(int position) {
-        if (mDatas.get(position).isApply()){
+        if (mDatas.get(position).getIsApply()==1){
             return VIEWTYPE1;
         }else {
             return VIEWTYPE2;

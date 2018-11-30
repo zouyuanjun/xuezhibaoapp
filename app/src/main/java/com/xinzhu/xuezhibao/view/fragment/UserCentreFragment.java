@@ -100,6 +100,7 @@ Handler handler;
             clJifen.setVisibility(View.GONE);
             tvLoginbutton.setVisibility(View.VISIBLE);
             tvLognout.setVisibility(View.GONE);
+            sdMyphoto.setImageResource(R.drawable.my_icon_original);
         } else {
             tvLoginbutton.setVisibility(View.GONE);
             llUser.setVisibility(View.VISIBLE);
@@ -243,13 +244,14 @@ Handler handler;
                 editor.commit();
                 Intent intent5 = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent5);
-                getActivity().finish();
+                Constants.userBasicInfo=null;
                 break;
             case R.id.sd_myphoto:
                 if (null == Constants.userBasicInfo.getNickName()||Constants.userBasicInfo.getNickName().isEmpty()) {
                     intent = new Intent(getActivity(), EditAllActivity.class);
                 } else {
-                    intent = new Intent(getActivity(), UserBaseActivity.class);
+                   // intent = new Intent(getActivity(), EditAllActivity.class);
+                   intent = new Intent(getActivity(), UserBaseActivity.class);
                 }
                 getActivity().startActivity(intent);
                 break;

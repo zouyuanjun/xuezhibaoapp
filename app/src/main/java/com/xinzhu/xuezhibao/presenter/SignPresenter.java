@@ -35,9 +35,11 @@ public class SignPresenter {
             int what = msg.what;
             String result = (String) msg.obj;
             com.zou.fastlibrary.utils.Log.d(result);
-            int code=0;
+            int code=999;
+            String tip = null;
             try {
                 code = JsonUtils.getIntValue(result, "Code");
+                tip=JsonUtils.getStringValue(result,"Tips");
             }catch (Exception e){
                 if (null!=signInterface){
                     signInterface.servererr();
@@ -76,14 +78,13 @@ public class SignPresenter {
                 com.zou.fastlibrary.utils.Log.d(result);
             }
             if (what == 2) {
-
                 if (code==100){
                     String data=JsonUtils.getStringValue(result,"Data");
                     Constants.TOKEN=JsonUtils.getStringValue(data,"token");
                     Constants.userBasicInfo= JsonUtils.stringToObject(data,UserBasicInfo.class);
                     signInterface.signsuccessful();
                 }else {
-                    signInterface.signinfail(code);
+                    signInterface.signinfail(code, tip);
                 }
             }if (what==3){
                 if (code==100){
@@ -106,14 +107,24 @@ public class SignPresenter {
                 }else {
                     forgetPasswordInterface.fail(code);
                 }
+            }if (what==5){
+                if (code==100){
+                    String data=JsonUtils.getStringValue(result,"Data");
+                    data=JsonUtils.getStringValue(data,"agreementContent");
+                    signInterface.getuseragment(data);
+                }
             }
         }
     };
 
+    /**
+     * 发送短信验证码
+     * @param phone
+     * @param type
+     */
     public void sendcode(String phone,int type) {
         String data=JsonUtils.keyValueToString2("phone",phone,"templateTypeId",type);
         Network.getnetwork().postJson(data, Constants.URL+"/send/onSendCode", handler, 1);
-      //  Network.getnetwork().postform("phone",phone,"templateTypeId",type+"", Constants.URL+"/send/onSendCode",handler,3);
 
     }
 
@@ -133,5 +144,9 @@ public class SignPresenter {
     }
     public void cancelmessage(){
         handler.removeCallbacksAndMessages(null);
+    }
+    public void getUserAgreement(){
+        Network.getnetwork().postJson("" ,Constants.URL+"/guest/select-member-agreement",handler,5);
+
     }
 }

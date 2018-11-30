@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -8,6 +9,7 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -42,6 +44,7 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
+import com.xinzhu.xuezhibao.messagebean.PayResultMessage;
 import com.xinzhu.xuezhibao.presenter.AlipayPresenter;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
 import com.xinzhu.xuezhibao.presenter.VideoVoiceDetailPresenter;
@@ -56,6 +59,7 @@ import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.ScreenUtil;
+import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.zou.fastlibrary.utils.WebViewUtil;
 
@@ -128,11 +132,16 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     boolean haseplay = false; //是否观看过
     @BindView(R.id.im_back)
     ImageView imBack;
-     PopupWindow loadingPop = null;
-    AlipayPresenter alipayPresenter ;
+    PopupWindow loadingPop = null;
+    AlipayPresenter alipayPresenter;
+    @BindView(R.id.tv_teacher)
+    TextView tvTeacher;
+    CountDownTimer timer;  //播放计时器
+    @BindView(R.id.tv_playtime)
+    TextView tvPlaytime;
+    boolean isVipVideo=false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_details2);
         ButterKnife.bind(this);
@@ -147,16 +156,43 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             }
         });
         videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
-        alipayPresenter = new AlipayPresenter(VideoDetilsActivity.this,this);
+        alipayPresenter = new AlipayPresenter(VideoDetilsActivity.this, this);
         videoVoiceDetailPresenter.getVideoComment(videoid, 1);
+        timer = new CountDownTimer(60 * 1000, 1000) {
+            /**
+             * 固定间隔被调用,就是每隔countDownInterval会回调一次方法onTick
+             * @param millisUntilFinished
+             */
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.d("播放进度"+detailPlayer.getCurrentPositionWhenPlaying());
+                if (detailPlayer.getCurrentPositionWhenPlaying()>60000){
+                    timer.onFinish();
+                }
 
+            }
+
+            /**
+             * 倒计时完成时被调用
+             */
+            @Override
+            public void onFinish() {
+                cslBuy.setVisibility(View.VISIBLE);
+                detailPlayer.onVideoPause();
+                detailPlayer.setCanpaly(false);
+                detailPlayer.hidstartbt();
+                timer.cancel();
+            }
+        };
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         detailPlayer.onVideoPause();
+        timer.cancel();
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -167,9 +203,8 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         rvComment.setLayoutManager(linearLayoutManager3);
         rvComment.setNestedScrollingEnabled(false);
         rvComment.setAdapter(commentAdapter);
-
         detailPlayer = findViewById(R.id.standardGSYVideoPlayer);
-detailPlayer.hidstartbt();
+        detailPlayer.hidstartbt();
         videoVoiceDetailPresenter.getVideoDetail(videoid);
         likeCollectPresenter.islike(videoid, "2");
         likeCollectPresenter.iscollect(videoid, "2");
@@ -205,11 +240,16 @@ detailPlayer.hidstartbt();
                     Log.d("开始播放");
                     startplaytime = System.currentTimeMillis();
                     haseplay = true;
+                    if (isVipVideo){
+                        timer.start();
+                    }
+
                 } else {
                     Log.d("停止播放");
                     stopplaytime = System.currentTimeMillis();
                     Constants.PLAYTIME = Constants.PLAYTIME + stopplaytime - startplaytime;
                     startplaytime = stopplaytime;
+                    timer.cancel();
                 }
             }
         });
@@ -279,10 +319,10 @@ detailPlayer.hidstartbt();
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
                 } else {
-                    final PopupWindow popupWindow=CreatPopwindows.creatpopwindows(this,R.layout.pop_pay);
-                    final View myview=popupWindow.getContentView();
-                    RadioGroup radioGroup=myview.findViewById(R.id.rg_pay);
-                    TextView textView=myview.findViewById(R.id.tv_cancle);
+                    final PopupWindow popupWindow = CreatPopwindows.creatpopwindows(this, R.layout.pop_pay);
+                    final View myview = popupWindow.getContentView();
+                    RadioGroup radioGroup = myview.findViewById(R.id.rg_pay);
+                    TextView textView = myview.findViewById(R.id.tv_cancle);
                     textView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -292,18 +332,18 @@ detailPlayer.hidstartbt();
                     radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                            switch (i){
+                            switch (i) {
                                 case R.id.rd_alipay:
                                     alipayPresenter.aLiBuyVideo(videoid);
                                     popupWindow.dismiss();
-                                    loadingPop =CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this,R.layout.pop_loading);
+                                    loadingPop = CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this, R.layout.pop_loading);
 
                                     loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
                                     break;
                                 case R.id.rd_wxpay:
                                     alipayPresenter.WxBuyVideo(videoid);
                                     popupWindow.dismiss();
-                                    loadingPop =CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this,R.layout.pop_loading);
+                                    loadingPop = CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this, R.layout.pop_loading);
                                     loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
                                     break;
                             }
@@ -313,7 +353,6 @@ detailPlayer.hidstartbt();
                     popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, ScreenUtil.getNavigationBarHeight(VideoDetilsActivity.this));
 
 
-
                 }
 
                 break;
@@ -321,9 +360,19 @@ detailPlayer.hidstartbt();
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        if (null != loadingPop && loadingPop.isShowing()) {
+            loadingPop.dismiss();
+        }
+
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoManager.releaseAllVideos();
+        timer.cancel();
         if (orientationUtils != null) {
             orientationUtils.releaseListener();
         }
@@ -369,13 +418,15 @@ detailPlayer.hidstartbt();
 
         tvTitle.setText(videoVoiceBean.getVideoTitle());
         if (videoVoiceBean.getVideoType() == 1) {
-            cslBuy.setVisibility(View.VISIBLE);
-            detailPlayer.setCanpaly(false);
+            tvPlaytime.setVisibility(View.VISIBLE);
+            isVipVideo=true;
+            tvBuyvideo.setText("￥" + videoVoiceBean.getVideoPrice() + " 购买");
         }
-        if (videoVoiceBean.isBuy()) {
-            cslBuy.setVisibility(View.GONE);
-            detailPlayer.setCanpaly(true);
+        if (videoVoiceBean.getIsBuy()==1) {
+            tvPlaytime.setVisibility(View.GONE);
+            isVipVideo=false;
         }
+        tvTeacher.setText(videoVoiceBean.getVideoTeacher());
         tvLike.setText(videoVoiceBean.getVidelLike());
         tvReadnum.setText("播放量：" + videoVoiceBean.getVideoLook());
         likenum = Integer.parseInt(videoVoiceBean.getVidelLike());
@@ -541,9 +592,10 @@ detailPlayer.hidstartbt();
         });
         builder.create().show();
     }
+
     @Override
-    public void alipaysuccessful() {
-        if (null!=loadingPop&&loadingPop.isShowing()){
+    public void paysuccessful() {
+        if (null != loadingPop && loadingPop.isShowing()) {
             loadingPop.dismiss();
         }
         BToast.success(this).text("购买成功").show();
@@ -553,16 +605,49 @@ detailPlayer.hidstartbt();
     }
 
     @Override
-    public void alipayfail() {
+    public void payfail() {
         BToast.success(this).text("支付失败").show();
         cslBuy.setVisibility(View.VISIBLE);
         detailPlayer.setCanpaly(false);
         detailPlayer.hidstartbt();
     }
+
+    @Override
+    public void orderisexit() {
+
+    }
+
+    @Override
+    public void creatOrderfail(String tips) {
+        if (null != loadingPop && loadingPop.isShowing()) {
+            loadingPop.dismiss();
+        }
+        BToast.error(this).text("抱歉"+tips).show();
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void netWorkMessage(NetWorkMessage messageEvent) {
-        String s=messageEvent.getMessage();
+        String s = messageEvent.getMessage();
         BToast.error(context).text(s).show();
+    }
+
+    @Subscribe
+    public void PayMessage(PayResultMessage messageEvent) {
+        int code = messageEvent.getCode();
+        if (code == 0) {
+            if (StringUtil.isEmpty(Constants.wxOrdernum)) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("支付结果");
+                builder.setMessage("您可能支付成功，但是由于网络异常，我们无法获取支付结果，请联系客服人员为您核实");
+                builder.show();
+            } else {
+                alipayPresenter.checkWxPay();
+            }
+        } else if (code == 1) {
+            BToast.error(this).text("取消支付").show();
+        } else {
+            BToast.error(this).text("微信支付异常").show();
+        }
     }
 
 }

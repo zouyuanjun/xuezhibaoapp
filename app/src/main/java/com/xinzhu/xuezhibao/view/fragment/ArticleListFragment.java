@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -22,7 +23,9 @@ import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.presenter.ArticlePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
+import com.xinzhu.xuezhibao.view.activity.LoginActivity;
 import com.xinzhu.xuezhibao.view.interfaces.ArticleListInterface;
+import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StringUtil;
 
@@ -137,6 +140,8 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
             } else if (POSITION == 2) {
                 if (!StringUtil.isEmpty(Constants.TOKEN)){
                     articlePresenter.getCollectArticle(pageindex);
+                }else {
+                    showdia();
                 }
             }
             imLoading.setVisibility(View.VISIBLE);
@@ -191,5 +196,27 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
     @Override
     public void servererr() {
         super.servererr();
+    }
+    public void showdia() {
+        CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
+        builder.setTitle("提示");
+        builder.setMessage("登陆后才能继续，现在登陆?");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                intent.putExtra(Constants.FROMAPP, "fss");
+                startActivity(intent);
+
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 }

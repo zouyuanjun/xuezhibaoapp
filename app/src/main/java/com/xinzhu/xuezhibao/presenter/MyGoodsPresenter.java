@@ -63,7 +63,6 @@ public class MyGoodsPresenter extends BasePresenter {
                 }else if (what == 4) {
                     if (code == 100) {
                         String data = JsonUtils.getStringValue(result, "Data");
-                        data=JsonUtils.getStringValue(data, "rows");
                         List<GoodsComment> list=JSON.parseArray(data,GoodsComment.class);
                         if (null!=list&&list.size()>0){
                             myorderInterface.getcomment(list);
@@ -81,17 +80,14 @@ public class MyGoodsPresenter extends BasePresenter {
         data = JsonUtils.addKeyValue(data, "maxNum", max);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-list", handler, 1);
     }
-
     public void getGoodDetail(String productId) {
         String data = JsonUtils.keyValueToString("productId", productId);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-by-id", handler, 2);
     }
-
     public void getgrade(String id) {
         String data = JsonUtils.keyValueToString("productId", id);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-score", handler, 3);
     }
-
     public void getgoodscomment(int page, String id) {
         String data = JsonUtils.keyValueToString2("pageNo", page, "productId", id);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-evaluate", handler, 4);

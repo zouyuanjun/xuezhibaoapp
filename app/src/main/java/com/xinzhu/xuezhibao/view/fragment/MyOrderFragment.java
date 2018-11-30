@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 
+import com.bravin.btoast.BToast;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -27,7 +28,9 @@ import com.xinzhu.xuezhibao.view.activity.GoodsFeedbackActivity;
 import com.xinzhu.xuezhibao.view.activity.OrderDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.RefundActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyOrderInterface;
+import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.utils.CreatPopwindows;
+import com.zou.fastlibrary.utils.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,25 +54,30 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
     int page = 1;
     @BindView(R.id.im_loading)
     ImageView imLoading;
-PopupWindow popupWindow;
-int itemposition;
+    PopupWindow popupWindow;
+    int itemposition;
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_onlylist;
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(">>>>>>>>>>>222222222222222");
+
+        initdata();
+    }
+
+    @Override
     protected void lazyLoad() {
-        myorderAdapter = new MyorderAdapter(getContext(), orderBeanList);
-        myOrederPresenter = new MyOrederPresenter(this);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        Log.d(">>>>>>>>>>>1111111111111111");
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvItem.setLayoutManager(linearLayoutManager);
         rvItem.setAdapter(myorderAdapter);
-        imLoading.setVisibility(View.VISIBLE);
-        AnimationDrawable animationDrawable = (AnimationDrawable) imLoading.getDrawable();
-        animationDrawable.start();
-        initdata();
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -84,7 +92,7 @@ int itemposition;
                     myOrederPresenter.getOrderList(page, 100);
                 } else if (POSITION == 1) {
                     myOrederPresenter.getOrderList(page, 2);
-                }else if (POSITION == 2) {
+                } else if (POSITION == 2) {
                     myOrederPresenter.getOrderList(page, 3);
                 } else if (POSITION == 3) {
                     myOrederPresenter.getOrderList(page, 4);
@@ -95,27 +103,27 @@ int itemposition;
         myorderAdapter.setOnItemClickListener(new MyorderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Intent intent=new Intent(getContext(),OrderDetailActivity.class);
-                intent.putExtra(Constants.INTENT_ID,orderBeanList.get(position));
+                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+                intent.putExtra(Constants.INTENT_ID, orderBeanList.get(position));
                 startActivity(intent);
             }
 
             @Override
             public void onactionOneClick(View view, int position) {
                 if (POSITION == 0) {
-                    Intent intent=new Intent(getContext(),RefundActivity.class);
-                    intent.putExtra(Constants.INTENT_ID,orderBeanList.get(position));
+                    Intent intent = new Intent(getContext(), RefundActivity.class);
+                    intent.putExtra(Constants.INTENT_ID, orderBeanList.get(position));
                     startActivity(intent);
                 } else if (POSITION == 1) {
 
                 } else if (POSITION == 2) {
                     myOrederPresenter.confirmReceipt(orderBeanList.get(position).getOrderId());
-                    itemposition=position;
-                   popupWindow= CreatPopwindows.creatpopwindows(getActivity(),R.layout.pop_loading);
-                   popupWindow.showAtLocation(view,Gravity.CENTER,0,0);
-                }else   if (POSITION == 3) {
-                    Intent intent=new Intent(getContext(),GoodsFeedbackActivity.class);
-                    intent.putExtra(Constants.INTENT_ID,orderBeanList.get(position));
+                    itemposition = position;
+                    popupWindow = CreatPopwindows.creatpopwindows(getActivity(), R.layout.pop_loading);
+                    popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+                } else if (POSITION == 3) {
+                    Intent intent = new Intent(getContext(), GoodsFeedbackActivity.class);
+                    intent.putExtra(Constants.INTENT_ID, orderBeanList.get(position));
                     startActivity(intent);
                 }
             }
@@ -134,6 +142,8 @@ int itemposition;
         if (getArguments() != null) {
             POSITION = getArguments().getInt("POSITION");
         }
+        myOrederPresenter = new MyOrederPresenter(this);
+        myorderAdapter = new MyorderAdapter(getContext(), orderBeanList);
     }
 
     @Override
@@ -151,7 +161,7 @@ int itemposition;
 
     @Override
     public void getOrderList(List<OrderBean> orderBeans) {
-        if (null != orderBeans && null != myorderAdapter) {
+        if (null != orderBeans && null != refreshLayout&&null!=myorderAdapter) {
             orderBeanList.addAll(orderBeans);
             myorderAdapter.notifyDataSetChanged();
             refreshLayout.finishRefresh();
@@ -164,6 +174,7 @@ int itemposition;
 
     @Override
     public void noMoredata() {
+        myorderAdapter.notifyDataSetChanged();
         refreshLayout.finishRefresh();
         refreshLayout.finishLoadMoreWithNoMoreData();
         imLoading.setVisibility(View.GONE);
@@ -171,6 +182,12 @@ int itemposition;
             imDataisnull.setVisibility(View.VISIBLE);
         }
 
+    }
+
+    @Override
+    public void netWorkMessage(NetWorkMessage messageEvent) {
+        super.netWorkMessage(messageEvent);
+        noMoredata();
     }
 
     @Override
@@ -182,11 +199,13 @@ int itemposition;
     public void applyrefundfail(String tip) {
 
     }
-
+//确认收货结果
     @Override
     public void confirmReceipt() {
         orderBeanList.remove(itemposition);
-        myorderAdapter.notifyItemChanged(itemposition);
+        myorderAdapter.notifyDataSetChanged();
+     //   myorderAdapter.notifyItemRangeChanged(itemposition, orderBeanList.size());
+        BToast.success(getContext()).text("确认收货成功").show();
         popupWindow.dismiss();
     }
 
@@ -198,11 +217,14 @@ int itemposition;
     public void initdata() {
         page = 1;
         orderBeanList.clear();
+        imLoading.setVisibility(View.VISIBLE);
+        AnimationDrawable animationDrawable = (AnimationDrawable) imLoading.getDrawable();
+        animationDrawable.start();
         if (POSITION == 0) {
             myOrederPresenter.getOrderList(page, 100);
         } else if (POSITION == 1) {
             myOrederPresenter.getOrderList(page, 2);
-        }else if (POSITION == 2) {
+        } else if (POSITION == 2) {
             myOrederPresenter.getOrderList(page, 3);
         } else if (POSITION == 3) {
             myOrederPresenter.getOrderList(page, 4);

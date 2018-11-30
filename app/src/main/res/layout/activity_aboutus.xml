@@ -22,15 +22,15 @@
 
     </com.zou.fastlibrary.ui.CustomNavigatorBar>
 
-    <ImageView
+    <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageView8"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="38dp"
+        android:layout_marginTop="18dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar"
-        app:srcCompat="@drawable/aboutus_icon_logo" />
+        app:placeholderImage="@drawable/aboutus_icon_logo" />
 
     <TextView
         android:id="@+id/tv_appversion"
@@ -49,11 +49,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="16dp"
         android:textSize="13sp"
         android:textColor="@color/color_black_666666"
         android:lineSpacingExtra="2dp"
+        android:maxLines="5"
+        android:ellipsize="end"
         android:text="学之本教育是国内领先的线上家庭教育科技公司，其产品研发中心和教育研究中心设立于北京，产品运营中心，教练指导中心，客户服务中心，营销中心与售后服务由江西学树文化传播有限责任公司运营"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,9 +66,9 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="250dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_about"
         app:srcCompat="@drawable/aboutus_icon_tel" />
 
     <ImageView
@@ -74,7 +76,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="18dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView9"
         app:srcCompat="@drawable/aboutus_icon_address" />
@@ -133,7 +135,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_address"
-        android:visibility="gone">
+       >
 
     </com.baidu.mapapi.map.MapView>
 

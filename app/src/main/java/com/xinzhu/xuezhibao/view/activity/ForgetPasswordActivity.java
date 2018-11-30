@@ -100,6 +100,10 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
                 if (s.length() > 5) {
                     phone=etPhone.getText().toString();
                     signPresenter.iscodeture(phone, s.toString());
+                }else {
+                    tvUppassword.setBgColor(Color.parseColor("#999999"));
+                    imCodeistrue.setVisibility(View.GONE);
+                    codeisture=false;
                 }
             }
         });
@@ -222,6 +226,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
     @Override
     public void successful() {
         finish();
+        BToast.error(this).text("修改成功，请登陆").show();
     }
 
     @Override

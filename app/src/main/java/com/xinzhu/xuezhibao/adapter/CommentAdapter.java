@@ -44,7 +44,7 @@ public class CommentAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((MyViewHolder) holder).tvCreattime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
         ((MyViewHolder) holder).tvCommentDetils.setText(mDatas.get(position).getCommentContent());
-        ((MyViewHolder) holder).tv_userName.setText(mDatas.get(position).getCreater());
+        ((MyViewHolder) holder).tv_userName.setText(mDatas.get(position).getNickName());
         ((MyViewHolder) holder).sdvPhoto.setImageURI(mDatas.get(position).getImage());
         Log.d("加载一条数据");
         if (onItemClickListener != null) {

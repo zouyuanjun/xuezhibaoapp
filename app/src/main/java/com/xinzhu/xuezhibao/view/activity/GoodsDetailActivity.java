@@ -109,6 +109,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvGoodsevaluate.setLayoutManager(linearLayoutManager);
         goodsCommentAdapter = new GoodsCommentAdapter(this, goodsCommentList);
+        rvGoodsevaluate.setAdapter(goodsCommentAdapter);
         tbGoodstab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

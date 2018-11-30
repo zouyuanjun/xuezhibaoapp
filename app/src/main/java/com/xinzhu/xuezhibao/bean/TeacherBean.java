@@ -1,6 +1,6 @@
 package com.xinzhu.xuezhibao.bean;
 
-public class TeacherBean  {
+public class TeacherBean {
     String headPortraitUrl;
     String realName;
     String curriculumTitle;
@@ -8,8 +8,17 @@ public class TeacherBean  {
     String memberId;
     String userId;
     String describeInfo;
-String mainPhone;
+    String mainPhone;
+    int likeNum;
     public TeacherBean() {
+    }
+
+    public int getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(int likeNum) {
+        this.likeNum = likeNum;
     }
 
     public String getMainPhone() {

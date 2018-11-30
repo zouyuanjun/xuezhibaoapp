@@ -1,7 +1,6 @@
 package com.xinzhu.xuezhibao.view.activity;
 
 import android.Manifest;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +8,8 @@ import android.support.v4.content.ContextCompat;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.server.LivelyServer;
 import com.xinzhu.xuezhibao.view.fragment.HomeFragemt;
-import com.xinzhu.xuezhibao.view.fragment.TestFragment;
+import com.xinzhu.xuezhibao.view.fragment.FamilyClubFragment;
 import com.xinzhu.xuezhibao.view.fragment.UserCentreFragment;
 import com.xinzhu.xuezhibao.view.fragment.VideoFragment;
 import com.xinzhu.xuezhibao.view.fragment.XuebaoFragment;
@@ -44,26 +42,26 @@ public class MainActivity extends BaseBottomTabActivity {
         iocdef.add(R.drawable.tab_btn_home_nor);
         iocdef.add(R.drawable.tab_btn_video_nor);
         iocdef.add(R.drawable.tab_btn_study_nor);
-        iocdef.add(R.drawable.tab_btn_study_nor);
+        iocdef.add(R.drawable.tab_btn_parent_nor);
         iocdef.add(R.drawable.tab_btn_my_nor);
         iocsel.add(R.drawable.tab_btn_home_sel);
         iocsel.add(R.drawable.tab_btn_video_sel);
         iocsel.add(R.drawable.tab_btn_study_sel);
-        iocsel.add(R.drawable.tab_btn_study_sel);
+        iocsel.add(R.drawable.tab_btn_parent_sel);
         iocsel.add(R.drawable.tab_btn_my_sel);
 
         creatNormalTab(iocdef,iocsel,tabTextlist);
         fragmentList.add(new HomeFragemt());
         fragmentList.add(new VideoFragment());
         fragmentList.add(new XuebaoFragment());
-        fragmentList.add(new TestFragment());
+        fragmentList.add(new FamilyClubFragment());
         fragmentList.add(new UserCentreFragment());
         setViewPagerAdaptr(fragmentList);
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) || (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                != PackageManager.PERMISSION_GRANTED)) {
-            EasyPermissions.requestPermissions(this, "允许必要权限才可以正常使用哦", 1, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
+                || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                || (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
+                || (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED)) {
+            EasyPermissions.requestPermissions(this, "允许必要权限才可以正常使用哦", 1, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE);
         }
 
     }

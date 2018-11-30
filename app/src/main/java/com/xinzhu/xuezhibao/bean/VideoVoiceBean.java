@@ -11,7 +11,7 @@ public class VideoVoiceBean {
     String videoPrice;
     String videoUrl;
     String videoId;
-    boolean isBuy;
+    int  isBuy;
     int videoType;  //0免费，1收费
 
     public VideoVoiceBean() {
@@ -25,12 +25,12 @@ public class VideoVoiceBean {
         this.videoType = videoType;
     }
 
-    public boolean isBuy() {
+    public int getIsBuy() {
         return isBuy;
     }
 
-    public void setBuy(boolean buy) {
-        isBuy = buy;
+    public void setIsBuy(int isBuy) {
+        this.isBuy = isBuy;
     }
 
     public String getVideoPicture() {
