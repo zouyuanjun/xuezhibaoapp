@@ -8,11 +8,9 @@ import android.view.View;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
-import com.xinzhu.xuezhibao.view.fragment.HomeVideoVoiceListFragment;
 import com.xinzhu.xuezhibao.view.fragment.MyOrderFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
-import com.zou.fastlibrary.utils.StatusBar;
 
 import java.util.ArrayList;
 

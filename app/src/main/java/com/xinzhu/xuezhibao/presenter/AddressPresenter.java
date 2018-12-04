@@ -4,7 +4,6 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.xinzhu.xuezhibao.bean.AddressBean;
-import com.xinzhu.xuezhibao.bean.MyTaskBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.AddressInterface;
 import com.zou.fastlibrary.utils.JSON;

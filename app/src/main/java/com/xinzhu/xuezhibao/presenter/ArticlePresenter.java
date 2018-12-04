@@ -13,7 +13,6 @@ import com.xinzhu.xuezhibao.view.interfaces.ArticleInterface;
 import com.xinzhu.xuezhibao.view.interfaces.ArticleListInterface;
 import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 
 import java.util.List;

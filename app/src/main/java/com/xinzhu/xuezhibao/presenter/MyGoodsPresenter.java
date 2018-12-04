@@ -3,7 +3,6 @@ package com.xinzhu.xuezhibao.presenter;
 import android.os.Handler;
 import android.os.Message;
 
-import com.alibaba.fastjson.JSONException;
 import com.xinzhu.xuezhibao.bean.GoodsBean;
 import com.xinzhu.xuezhibao.bean.GoodsComment;
 import com.xinzhu.xuezhibao.utils.Constants;

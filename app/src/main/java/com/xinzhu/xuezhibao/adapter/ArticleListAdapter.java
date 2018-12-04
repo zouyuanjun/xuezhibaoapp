@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.lang.ref.WeakReference;

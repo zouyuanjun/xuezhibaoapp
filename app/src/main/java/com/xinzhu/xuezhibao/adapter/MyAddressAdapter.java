@@ -1,7 +1,6 @@
 package com.xinzhu.xuezhibao.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.AddressBean;
-import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.util.List;
 

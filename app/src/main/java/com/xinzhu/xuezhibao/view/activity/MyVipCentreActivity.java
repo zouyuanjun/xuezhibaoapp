@@ -5,26 +5,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alipay.sdk.app.EnvUtils;
-import com.alipay.sdk.app.PayTask;
 import com.bravin.btoast.BToast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.PayResult;
 import com.xinzhu.xuezhibao.bean.UserBasicInfo;
 import com.xinzhu.xuezhibao.messagebean.PayResultMessage;
 import com.xinzhu.xuezhibao.presenter.AlipayPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
-import com.xinzhu.xuezhibao.utils.OrderInfoUtil2_0;
 import com.xinzhu.xuezhibao.view.interfaces.PayInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
@@ -35,11 +28,7 @@ import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.ScreenUtil;
 import com.zou.fastlibrary.utils.StringUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -221,6 +210,9 @@ public class MyVipCentreActivity extends BaseActivity implements PayInterface {
         }else if (code==1){
             BToast.error(this).text("取消支付").show();
         }else {
+            if (null != loadingPop && loadingPop.isShowing()) {
+                loadingPop.dismiss();
+            }
             BToast.error(this).text("微信支付异常").show();
         }
     }

@@ -3,7 +3,7 @@ package com.xinzhu.xuezhibao.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebView;
+import com.tencent.smtt.sdk.WebView;
 import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
@@ -15,7 +15,7 @@ import com.xinzhu.xuezhibao.view.interfaces.GetTaskInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
-import com.zou.fastlibrary.utils.WebViewUtil;
+import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

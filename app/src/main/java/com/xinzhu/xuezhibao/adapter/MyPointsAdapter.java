@@ -7,13 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.MyPointsBean;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.util.List;

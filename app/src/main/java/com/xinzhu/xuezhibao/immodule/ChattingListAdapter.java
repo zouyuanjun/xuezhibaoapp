@@ -27,8 +27,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.utils.IdHelper;
-import com.zou.fastlibrary.utils.Log;
-import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

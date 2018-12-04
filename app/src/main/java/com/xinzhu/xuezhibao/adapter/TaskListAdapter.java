@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.MyTaskBean;
-import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;

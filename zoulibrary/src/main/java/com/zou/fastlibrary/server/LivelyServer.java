@@ -6,7 +6,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.zou.fastlibrary.utils.JsonUtils;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.SettingUtil;
 import com.zou.fastlibrary.utils.StringUtil;

@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.adapter.PotionsGoodsAdapter;
 import com.xinzhu.xuezhibao.adapter.PotionsGoodsAdapter2;
 import com.xinzhu.xuezhibao.bean.GoodsBean;
 import com.xinzhu.xuezhibao.bean.GoodsComment;

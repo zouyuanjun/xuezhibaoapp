@@ -32,7 +32,6 @@ import com.xinzhu.xuezhibao.immodule.keyboard.utils.imageloader.ImageLoader;
 import com.xinzhu.xuezhibao.immodule.keyboard.widget.EmoticonPageView;
 import com.xinzhu.xuezhibao.immodule.keyboard.widget.EmoticonsEditText;
 
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collections;

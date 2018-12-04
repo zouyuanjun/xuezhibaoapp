@@ -15,7 +15,6 @@ limitations under the License.*/
 package com.zou.fastlibrary.utils;
 
 import android.app.Activity;
-import android.app.Service;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.util.Log;

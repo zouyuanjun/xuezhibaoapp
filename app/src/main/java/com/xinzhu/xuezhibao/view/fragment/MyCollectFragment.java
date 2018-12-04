@@ -20,7 +20,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ArticleListAdapter;
-import com.xinzhu.xuezhibao.adapter.CourseMyCollectAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiatingCourseAdapter;
 import com.xinzhu.xuezhibao.adapter.VideoVoiceListAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;

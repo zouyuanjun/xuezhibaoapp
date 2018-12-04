@@ -3,19 +3,12 @@ package com.xinzhu.xuezhibao.presenter;
 import android.os.Handler;
 import android.os.Message;
 
-import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.bean.ClickLikeBean;
 import com.xinzhu.xuezhibao.bean.CollectBean;
-import com.xinzhu.xuezhibao.bean.CommentBean;
-import com.xinzhu.xuezhibao.bean.SendCommentBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
-import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
-
-import java.util.List;
 
 public class LikeCollectPresenter {
     LikeCollectInterface likeCollectInterface;

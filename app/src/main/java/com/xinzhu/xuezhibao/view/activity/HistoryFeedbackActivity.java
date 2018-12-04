@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import com.tencent.smtt.sdk.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +21,7 @@ import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
-import com.zou.fastlibrary.utils.WebViewUtil;
+import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
 import java.util.List;
 

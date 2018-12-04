@@ -15,7 +15,6 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.utils.IdHelper;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
-import com.zou.fastlibrary.utils.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -97,11 +96,11 @@ public class ConversationListController implements View.OnClickListener,
             case R.id.create_group_btn:
                 mContext.showPopWindow();
                 break;
-            case R.id.search_title:
-//                Intent intent = new Intent();
-//                intent.setClass(mContext, SearchContactsActivity.class);
-//                mContext.startActivity(intent);
-                break;
+//            case R.id.search_title:
+////                Intent intent = new Intent();
+////                intent.setClass(mContext, SearchContactsActivity.class);
+////                mContext.startActivity(intent);
+//                break;
         }
     }
 

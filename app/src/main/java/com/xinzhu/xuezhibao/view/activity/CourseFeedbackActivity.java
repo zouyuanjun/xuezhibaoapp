@@ -12,7 +12,6 @@ import com.xinzhu.xuezhibao.bean.CourseFeedbackRpBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
-import com.zou.fastlibrary.utils.Log;
 
 import java.util.List;
 

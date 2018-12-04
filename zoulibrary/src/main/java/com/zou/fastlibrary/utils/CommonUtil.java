@@ -40,13 +40,10 @@ import android.graphics.PorterDuff.Mode;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.zou.fastlibrary.R;
-
-import static android.content.Context.TELEPHONY_SERVICE;
 
 /**通用操作类
  * @author Lemon

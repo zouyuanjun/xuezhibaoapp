@@ -11,7 +11,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.bean.UserBasicInfo;
 import com.xinzhu.xuezhibao.utils.Constants;
-import com.xinzhu.xuezhibao.utils.JimUtils;
 import com.xinzhu.xuezhibao.view.interfaces.LoginInterface;
 import com.xinzhu.xuezhibao.view.interfaces.SplashInterface;
 import com.zou.fastlibrary.utils.DataKeeper;
@@ -19,10 +18,7 @@ import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.SettingUtil;
 
-import org.json.JSONException;
-
 import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.api.BasicCallback;
 
 

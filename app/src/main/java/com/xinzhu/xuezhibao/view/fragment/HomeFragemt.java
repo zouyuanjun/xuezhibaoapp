@@ -137,7 +137,8 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                         startActivity(intent);
                     }else {
                         Intent intent = new Intent(getContext(), WebActivity.class);
-                        intent.putExtra("URL", mybannerImgBean.get(position).getLinkAddress());
+                      //  intent.putExtra("URL", mybannerImgBean.get(position).getLinkAddress());
+                        intent.putExtra("URL", "http://soft.imtt.qq.com/browser/tes/feedback.html");
                         startActivity(intent);
                     }
 

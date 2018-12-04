@@ -3,12 +3,10 @@ package com.xinzhu.xuezhibao.presenter;
 import android.os.Handler;
 import android.os.Message;
 
-import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.CourseFeedbackBean;
 import com.xinzhu.xuezhibao.bean.MyjobBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
-import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.MyCourseInterface;
 import com.xinzhu.xuezhibao.view.interfaces.MyJobDetailInterpace;

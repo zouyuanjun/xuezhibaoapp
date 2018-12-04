@@ -3,8 +3,6 @@ package com.xinzhu.xuezhibao.presenter;
 import android.os.Handler;
 import android.os.Message;
 
-import com.xinzhu.xuezhibao.bean.ClickLikeBean;
-import com.xinzhu.xuezhibao.bean.CollectBean;
 import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.SendCommentBean;

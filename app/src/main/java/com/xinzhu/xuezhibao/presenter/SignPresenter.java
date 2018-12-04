@@ -6,8 +6,6 @@ import android.os.Message;
 import com.xinzhu.xuezhibao.bean.SignBean;
 import com.xinzhu.xuezhibao.bean.UserBasicInfo;
 import com.xinzhu.xuezhibao.utils.Constants;
-import com.xinzhu.xuezhibao.utils.JimUtils;
-import com.xinzhu.xuezhibao.view.activity.SignActivity;
 import com.xinzhu.xuezhibao.view.interfaces.ForgetPasswordInterface;
 import com.xinzhu.xuezhibao.view.interfaces.SignInterface;
 import com.zou.fastlibrary.utils.JsonUtils;

@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.GoodsComment;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;

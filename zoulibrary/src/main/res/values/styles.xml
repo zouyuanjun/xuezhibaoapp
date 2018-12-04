@@ -8,27 +8,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
     </style>
-    <style name="ImageTranslucentTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-    <style name="WW_HW_GCV">
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-    <style name="WM_HM_GCV">
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-    <style name="WM_HW_GCV">
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+
     <style name="WW_HM_GCV">
         <item name="android:gravity">center_vertical</item>
         <item name="android:layout_width">wrap_content</item>
@@ -40,47 +20,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-    <style name="WM_HM_GC">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-    <style name="WM_HW_GC">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-    <style name="WW_HM_GC">
-        <item name="android:gravity">center</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
     <!--水平居中布局-->
-    <style name="WW_HW_GCH">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-    <style name="WM_HM_GCH">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-    <style name="WM_HW_GCH">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-    <style name="WW_HM_GCH">
-        <item name="android:gravity">center_horizontal</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="Text15333">
-        <item name="android:textSize">15sp</item>
-        <item name="android:textColor">#333333</item>
-    </style>
 
     <style name="WW_HW_ML16">
         <item name="android:layout_width">wrap_content</item>

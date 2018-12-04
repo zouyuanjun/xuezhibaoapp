@@ -57,6 +57,7 @@ public class MyPointsPersenter extends BasePresenter {
                                 String content=myPointsBean.getTrackContent();
                                 int index=content.indexOf("+");
                                 if (index>0){
+
                                 }else {
                                     index=content.indexOf("-");
                                 }
@@ -65,8 +66,8 @@ public class MyPointsPersenter extends BasePresenter {
                                 myPointsBean.setTrackContent(title);
                                 myPointsBean.setPointnum(num);
                                 list2.add(myPointsBean);
-                                pointsInterface.getdata(list2);
                             }
+                            pointsInterface.getdata(list2);
                         }else {
                             pointsInterface.nomoredata();
                         }

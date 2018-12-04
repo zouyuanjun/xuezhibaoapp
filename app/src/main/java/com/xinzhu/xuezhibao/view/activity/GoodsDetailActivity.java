@@ -10,8 +10,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.webkit.WebView;
-import android.widget.LinearLayout;
+import com.tencent.smtt.sdk.WebView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -33,7 +32,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.utils.Log;
-import com.zou.fastlibrary.utils.WebViewUtil;
+import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
 import java.util.ArrayList;
 import java.util.List;

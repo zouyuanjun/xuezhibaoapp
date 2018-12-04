@@ -11,8 +11,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.CommentDetailBean;
 import com.xinzhu.xuezhibao.bean.ReplyDetailBean;

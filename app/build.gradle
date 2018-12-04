@@ -82,11 +82,12 @@ dependencies {
     //刷新框架
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
- //   implementation 'com.scwang.smartrefresh:SmartRefreshFooter:1.1.0-alpha-14'
+    //   implementation 'com.scwang.smartrefresh:SmartRefreshFooter:1.1.0-alpha-14'
     // implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/BaiduLBS_Android.jar')
     implementation files('libs/alipaySdk-20180601.jar')
     implementation 'cjt.library.wheel:camera:1.1.9'
     //微信支付
     implementation 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:1.1.6'
+    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1371_43624_sharewithdownload_withoutGame_obfs_20181106_121046.jar')
 }

@@ -3,7 +3,6 @@ package org.devio.takephoto.app;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -14,7 +13,6 @@ import android.widget.Toast;
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
 
-import org.devio.takephoto.R;
 import org.devio.takephoto.compress.CompressImage;
 import org.devio.takephoto.compress.CompressImageImpl;
 import org.devio.takephoto.model.MultipleCrop;

@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
 
 import com.bravin.btoast.BToast;
 import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.server.LivelyServer;
-import com.zou.fastlibrary.utils.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -147,7 +147,6 @@
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout2323"
         android:layout_width="395dp"
         android:layout_height="10dp"
         android:background="@color/fenge"

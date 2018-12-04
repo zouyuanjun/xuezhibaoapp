@@ -111,7 +111,6 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
             } else if (POSITION == 2) {
                 if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
                     showdia();
-                    BToast.error(getContext()).text("请登陆后再查看").show();
                 } else {
                     homeVideoVoiceListPresenter.getLikeVideo(page);
                 }
@@ -125,7 +124,6 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
             } else if (POSITION == 2) {
                 if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
                     showdia();
-                    BToast.error(getContext()).text("请登陆后再查看").show();
                 } else {
                     homeVideoVoiceListPresenter.getLikeVoice(page);
                 }

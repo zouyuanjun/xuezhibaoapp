@@ -20,7 +20,6 @@
         />
 
     <ImageView
-        android:id="@+id/aaa"
         android:layout_width="145dp"
         android:layout_height="35dp"
         android:layout_marginStart="8dp"
@@ -50,12 +49,10 @@
         android:id="@+id/imageView27"
         android:layout_width="12dp"
         android:layout_height="12dp"
-        android:layout_marginTop="3dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_playnum"
         app:layout_constraintEnd_toStartOf="@+id/tv_playnum"
-        app:layout_constraintTop_toTopOf="@+id/tv_playnum"
-        android:background="@drawable/home_icon_playback" />
+        app:layout_constraintTop_toTopOf="@+id/tv_playnum" />
 
     <TextView
         android:id="@+id/tv_playnum"

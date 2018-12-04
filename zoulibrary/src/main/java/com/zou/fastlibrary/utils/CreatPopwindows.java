@@ -1,15 +1,12 @@
 package com.zou.fastlibrary.utils;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
-
-import com.zou.fastlibrary.R;
 
 public class CreatPopwindows {
 

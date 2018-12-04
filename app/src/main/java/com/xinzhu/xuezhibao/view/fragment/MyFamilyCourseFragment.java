@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bravin.btoast.BToast;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -36,7 +37,6 @@ import com.xinzhu.xuezhibao.view.activity.CourseTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCourseFeedBackActivity;
 import com.xinzhu.xuezhibao.view.activity.TeacherDetailActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyCourseInterface;
-import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -45,6 +45,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.jpush.im.android.api.JMessageClient;
 
 public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourseInterface {
     public static String TITLE = "CLASS";
@@ -151,6 +152,10 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
 
             @Override
             public void onImTalkClick(View view, int position) {
+                if (null == JMessageClient.getMyInfo()){
+                    BToast.error(getContext()).text("聊天服务异常，请退出重试或电话联系我们").show();
+                    return;
+                }
                 Intent notificationIntent = new Intent(getActivity(), ChatActivity.class);
                 notificationIntent.putExtra(JGApplication.TARGET_ID, teacherBeanArrayList.get(position).getMainPhone());
                 notificationIntent.putExtra(JGApplication.CONV_TITLE, teacherBeanArrayList.get(position).getRealName() + "老师");

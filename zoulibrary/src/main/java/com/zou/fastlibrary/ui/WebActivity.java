@@ -1,7 +1,6 @@
 package com.zou.fastlibrary.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.LinearLayout;
 
 import com.zou.fastlibrary.R;
 import com.zou.fastlibrary.activity.BaseActivity;

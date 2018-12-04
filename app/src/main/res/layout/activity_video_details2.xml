@@ -125,7 +125,7 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_creattime"
                 app:layout_constraintTop_toTopOf="@+id/tv_creattime" />
 
-            <WebView
+            <com.tencent.smtt.sdk.WebView
                 android:id="@+id/tv_details"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

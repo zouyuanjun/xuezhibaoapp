@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
+import com.tencent.smtt.sdk.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,7 +37,7 @@ import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.TimeUtil;
-import com.zou.fastlibrary.utils.WebViewUtil;
+import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
 import java.util.LinkedList;
 import java.util.List;

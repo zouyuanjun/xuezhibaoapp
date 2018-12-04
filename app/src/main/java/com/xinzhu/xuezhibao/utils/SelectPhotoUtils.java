@@ -2,8 +2,6 @@ package com.xinzhu.xuezhibao.utils;
 
 import android.net.Uri;
 import android.os.Environment;
-import android.view.View;
-import com.xinzhu.xuezhibao.R;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.compress.CompressConfig;

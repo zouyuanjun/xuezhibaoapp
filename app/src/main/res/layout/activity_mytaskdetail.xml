@@ -54,7 +54,7 @@
             android:background="@color/itemfenge"
             android:orientation="horizontal"></LinearLayout>
 
-        <WebView
+        <com.tencent.smtt.sdk.WebView
             android:id="@+id/tv_taskdetail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -76,7 +76,6 @@
 
         <TextView
             android:layout_gravity="center_vertical"
-            android:id="@+id/textView21"
             android:textSize="15sp"
             android:textColor="@color/color_black_333333"
             android:layout_width="wrap_content"

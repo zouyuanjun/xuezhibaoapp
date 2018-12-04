@@ -149,7 +149,6 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/imageView14"
         android:layout_width="116dp"
         android:layout_height="116dp"
         android:layout_marginTop="50dp"

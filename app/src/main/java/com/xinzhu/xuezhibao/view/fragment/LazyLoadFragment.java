@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.bravin.btoast.BToast;
 import com.zou.fastlibrary.bean.NetWorkMessage;
-import com.zou.fastlibrary.utils.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

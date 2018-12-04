@@ -1,10 +1,8 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,7 +21,6 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.interfaces.VideoFragmentInterface;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
-import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;

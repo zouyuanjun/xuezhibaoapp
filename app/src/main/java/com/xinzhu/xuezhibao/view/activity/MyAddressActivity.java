@@ -18,7 +18,6 @@ import com.xinzhu.xuezhibao.view.interfaces.AddressInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.JsonUtils;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.ArrayList;

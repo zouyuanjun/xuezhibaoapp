@@ -18,7 +18,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/sdd"
         android:layout_width="135dp"
         android:layout_height="30dp"
         android:layout_marginStart="16dp"
@@ -47,7 +46,6 @@
         android:id="@+id/tv_item_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginBottom="16dp"
         android:text="18-02-19 12：21"
         android:textColor="@color/color_grey_999999"
@@ -77,11 +75,12 @@
         android:id="@+id/im_watch_ioc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="3dp"
         android:background="@drawable/home_icon_playback"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_readnum"
         app:layout_constraintEnd_toStartOf="@+id/tv_readnum"
-        app:layout_constraintTop_toTopOf="@+id/simpleDraweeView" />
+        app:layout_constraintTop_toTopOf="@+id/tv_readnum" />
 
     <TextView
         android:id="@+id/tv_readnum"
@@ -99,9 +98,11 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:background="@drawable/videolist_icon_time"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_time"
         app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
-        app:layout_constraintTop_toTopOf="@+id/tv_item_time"
-        android:background="@drawable/videolist_icon_time" />
+        app:layout_constraintTop_toTopOf="@+id/tv_item_time" />
 
     <TextView
         android:id="@+id/tv_teacher"

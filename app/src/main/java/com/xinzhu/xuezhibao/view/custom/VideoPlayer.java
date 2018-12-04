@@ -2,8 +2,6 @@ package com.xinzhu.xuezhibao.view.custom;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;

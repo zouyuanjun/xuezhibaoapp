@@ -3,7 +3,6 @@ package com.xinzhu.xuezhibao.utils;
 import android.util.Log;
 
 import cn.jpush.im.android.api.JMessageClient;
-import cn.jpush.im.android.api.model.UserInfo;
 import cn.jpush.im.android.api.options.RegisterOptionalUserInfo;
 import cn.jpush.im.api.BasicCallback;
 

@@ -15,7 +15,6 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.immodule.keyboard.data.PageSetEntity;
 import com.xinzhu.xuezhibao.immodule.keyboard.utils.imageloader.ImageLoader;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 

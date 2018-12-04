@@ -26,7 +26,6 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 
 import com.zou.fastlibrary.R;
-import com.zou.fastlibrary.utils.ScreenUtil;
 
 import java.util.List;
 

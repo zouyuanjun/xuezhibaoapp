@@ -4,7 +4,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.zou.fastlibrary.bean.NetWorkMessage;
@@ -25,7 +24,6 @@ import okhttp3.CacheControl;
 import okhttp3.Call;
 import okhttp3.Callback;
 
-import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

@@ -1,6 +1,5 @@
 package com.xinzhu.xuezhibao.view.interfaces;
 
-import com.xinzhu.xuezhibao.adapter.VideoVoiceListAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
 
 import java.util.List;

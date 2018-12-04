@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.bravin.btoast.BToast;
 import com.bumptech.glide.Glide;
 import com.xinzhu.xuezhibao.R;
-import com.xinzhu.xuezhibao.bean.FeedbackPictureBean;
 import com.xinzhu.xuezhibao.bean.MyjobBean;
 import com.xinzhu.xuezhibao.presenter.MyCoursePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;

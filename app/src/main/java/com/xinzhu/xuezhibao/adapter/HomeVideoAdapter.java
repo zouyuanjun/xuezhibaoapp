@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -43,7 +44,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter {
         ((RecyclerHolder) holder).title.setText(mDatas.get(position).getVideoTitle());
         ((RecyclerHolder) holder).readnum.setText(mDatas.get(position).getVideoLook());
         ((RecyclerHolder) holder).im_video.setImageURI(mDatas.get(position).getVideoPicture());
-
+        ((RecyclerHolder) holder).im_ioc.setImageResource(R.drawable.home_icon_playback);
 
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -55,6 +56,7 @@ public class HomeVideoAdapter extends RecyclerView.Adapter {
             holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+
                     onItemClickListener.onItemLongClick(v, position);
                     return false;
                 }
@@ -71,11 +73,13 @@ public class HomeVideoAdapter extends RecyclerView.Adapter {
         TextView title;
         SimpleDraweeView im_video;
         TextView readnum;
+        ImageView im_ioc;
         private RecyclerHolder(View itemView) {
             super(itemView);
             title = itemView.findViewById(R.id.tv_video_titletv);
             readnum=itemView.findViewById(R.id.tv_playnum);
             im_video = itemView.findViewById(R.id.im_video);
+            im_ioc=itemView.findViewById(R.id.imageView27);
         }
     }
 

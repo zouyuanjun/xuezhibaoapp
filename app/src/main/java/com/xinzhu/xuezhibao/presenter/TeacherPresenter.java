@@ -7,7 +7,6 @@ import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.SendCommentBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
-import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.TeacherInterface;
 import com.zou.fastlibrary.utils.JSON;

@@ -18,15 +18,16 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bravin.btoast.BToast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.R;
@@ -34,18 +35,17 @@ import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiatingCourseAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
-import com.xinzhu.xuezhibao.bean.JiatingCourseBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
 import com.xinzhu.xuezhibao.presenter.TeacherPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.view.custom.NestedScrollWebView;
 import com.xinzhu.xuezhibao.view.helputils.CreatDiag;
 import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
 import com.xinzhu.xuezhibao.view.interfaces.TeacherInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
-import com.zou.fastlibrary.ui.NestedScrollWebView;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StatusBar;
 
@@ -57,6 +57,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.jpush.im.android.api.JMessageClient;
 
 public class TeacherDetailActivity extends BaseActivity implements TeacherInterface,LikeCollectInterface {
     CommentAdapter commentAdapter;
@@ -213,6 +214,10 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
                 }
                 break;
             case R.id.im_talk:
+                if (null == JMessageClient.getMyInfo()){
+                    BToast.error(this).text("聊天服务异常，请退出重试或电话联系我们").show();
+                    return;
+                }
                 Intent notificationIntent = new Intent(activity, ChatActivity.class);
                 notificationIntent.putExtra(JGApplication.TARGET_ID, teacherBean.getMainPhone());
                 notificationIntent.putExtra(JGApplication.CONV_TITLE, teacherBean.getRealName()+"老师");

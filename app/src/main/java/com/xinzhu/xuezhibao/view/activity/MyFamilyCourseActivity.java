@@ -8,8 +8,6 @@ import com.xinzhu.xuezhibao.view.fragment.MyFamilyCourseFragment;
 import com.zou.fastlibrary.activity.BaseTopTabActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 
-import butterknife.BindView;
-
 public class MyFamilyCourseActivity extends BaseTopTabActivity {
     CustomNavigatorBar appbar;
 

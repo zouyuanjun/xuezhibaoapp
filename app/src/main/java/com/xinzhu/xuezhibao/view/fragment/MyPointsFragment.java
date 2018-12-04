@@ -27,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * 我的积分Fragment
+ */
 public class MyPointsFragment extends LazyLoadFragment implements PointsInterface {
     @BindView(R.id.rv_item)
     RecyclerView rvItem;
@@ -73,25 +76,15 @@ public class MyPointsFragment extends LazyLoadFragment implements PointsInterfac
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 myPointsBeanList.clear();
                 page = 1;
-                if (POSITION == 0) {
-                    myPointsPersenter.getalldata(page);
-                } else if (POSITION == 1) {
-                    myPointsPersenter.getdata(1, 3);
-                } else if (POSITION == 2) {
-                    myPointsPersenter.getdata(1, 5);
-                }
+                initdata();
+                refreshLayout.finishRefresh(2000);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (POSITION == 0) {
-                    myPointsPersenter.getalldata(page);
-                } else if (POSITION == 1) {
-                    myPointsPersenter.getdata(page, 3);
-                } else if (POSITION == 2) {
-                    myPointsPersenter.getdata(page, 5);
-                }
+                initdata();
+                refreshLayout.finishLoadMore(2000);
             }
         });
     }
@@ -152,5 +145,15 @@ public class MyPointsFragment extends LazyLoadFragment implements PointsInterfac
     @Override
     public void servererr() {
         super.servererr();
+    }
+
+    public void initdata(){
+        if (POSITION == 0) {
+            myPointsPersenter.getalldata(page);
+        } else if (POSITION == 1) {
+            myPointsPersenter.getdata(page, 3);
+        } else if (POSITION == 2) {
+            myPointsPersenter.getdata(page, 5);
+        }
     }
 }

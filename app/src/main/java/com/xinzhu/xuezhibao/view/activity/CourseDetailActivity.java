@@ -17,7 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.webkit.WebView;
+import com.tencent.smtt.sdk.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,7 +25,6 @@ import android.widget.PopupWindow;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.alipay.sdk.app.EnvUtils;
 import com.bravin.btoast.BToast;
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -54,7 +53,7 @@ import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.ScreenUtil;
 import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
-import com.zou.fastlibrary.utils.WebViewUtil;
+import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -508,6 +507,9 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
         }else if (code==1){
             BToast.error(this).text("取消支付").show();
         }else {
+            if (null != loadingPop && loadingPop.isShowing()) {
+                loadingPop.dismiss();
+            }
             BToast.error(this).text("微信支付异常").show();
         }
     }
