@@ -24,7 +24,7 @@ public class Constants {
     public static long PLAYTIME = 0;  //视频播放时长
     /**
      * 微信支付的订单号。由于微信没有在WXPayEntryActivity回调页面传入订单数据，所以用静态变量暂存。
-     * 傻逼微信！！！
+     * 傻逼微信！
      */
     public static String wxOrdernum = "";
 }
