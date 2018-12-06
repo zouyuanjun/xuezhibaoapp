@@ -84,7 +84,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/qiandao"
         android:gravity="center"
-        android:text="￥88开通会员充值"
+        android:text="￥0开通会员"
         android:textColor="@color/white"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/linearLayout21"

@@ -18,6 +18,7 @@ import com.xinzhu.xuezhibao.bean.BannerImgBean;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.presenter.XuebaoPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.xinzhu.xuezhibao.view.activity.AllCourseActivity;
 import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.MyFamilyCourseActivity;
@@ -28,9 +29,11 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
+import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.WebActivity;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,9 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 
+/**
+ * 学宝
+ */
 public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface {
     int messagecount = 0;
     Unbinder unbinder;
@@ -63,8 +69,13 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
     ProgressBar progressBar1;
     @BindView(R.id.progressBar2)
     ProgressBar progressBar2;
-    List<BannerImgBean> bannerImgBeans=new ArrayList<>();
-    List<String> bannerlist=new ArrayList<>();
+    List<BannerImgBean> bannerImgBeans = new ArrayList<>();
+    List<String> bannerlist = new ArrayList<>();
+    @BindView(R.id.nodataimg1)
+    ImageView nodataimg1;
+    @BindView(R.id.nodataimg2)
+    ImageView nodataimg2;
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_xuebao;
@@ -79,7 +90,6 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         //设置图片加载器
         banner.setImageLoader(new GlideImageLoader());
-        banner.setImages(initimg());
         //设置banner动画效果
         banner.setBannerAnimation(Transformer.DepthPage);
         //设置标题集合（当banner样式有显示title时）
@@ -94,12 +104,12 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                if (position<bannerImgBeans.size()){
-                    if (bannerImgBeans.get(position).getNewPlace()==1){
-                        Uri uri = Uri.parse( bannerImgBeans.get(position).getLinkAddress());
+                if (position < bannerImgBeans.size()) {
+                    if (bannerImgBeans.get(position).getNewPlace() == 1) {
+                        Uri uri = Uri.parse(bannerImgBeans.get(position).getLinkAddress());
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
-                    }else {
+                    } else {
                         Intent intent = new Intent(getContext(), WebActivity.class);
                         intent.putExtra("URL", bannerImgBeans.get(position).getLinkAddress());
                         startActivity(intent);
@@ -120,33 +130,19 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         Log.d("创建完毕");
         return rootView;
     }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
-    private List<String> initimg() {
-        List<String> mDatas = new ArrayList<>();
-        String url = "http://pic29.nipic.com/20130511/9252150_174018365301_2.jpg";
-        mDatas.add(url);
-        mDatas.add("http://pic14.nipic.com/20110605/1369025_165540642000_2.jpg");
-        mDatas.add("http://img.zcool.cn/community/01f39a59a7affba801211d25185cd3.jpg@1280w_1l_2o_100sh.jpg");
-        mDatas.add("http://pic33.photophoto.cn/20141022/0019032438899352_b.jpg");
-        mDatas.add(url);
-        mDatas.add("http://pic19.nipic.com/20120210/7827303_221233267358_2.jpg");
-        mDatas.add(url);
-        mDatas.add("http://pic24.nipic.com/20121010/3798632_184253198370_2.jpg");
-        return mDatas;
-    }
     //初始化最热课程列表
     @Override
     public void getHotCourse(final List<CourseBean> list) {
         //初始化最热课程列表
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        if (null!=rvHotCourse){
+        if (null != rvHotCourse) {
             rvHotCourse.setLayoutManager(linearLayoutManager);
             rvHotCourse.setNestedScrollingEnabled(false);
             XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
@@ -154,8 +150,8 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
             courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Intent intent=new Intent(getContext(), CourseDetailActivity.class);
-                    intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                    Intent intent = new Intent(getContext(), CourseDetailActivity.class);
+                    intent.putExtra(Constants.INTENT_ID, list.get(position).getCurriculumId());
                     startActivity(intent);
                 }
 
@@ -165,16 +161,14 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 }
             });
             progressBar1.setVisibility(View.GONE);
+            nodataimg1.setVisibility(View.GONE);
         }
-
     }
-
     @Override
     public void getNewCourse(final List<CourseBean> list) {
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        if (null!=rvNewCourse){
+        if (null != rvNewCourse) {
             rvNewCourse.setLayoutManager(linearLayoutManager);
             rvNewCourse.setNestedScrollingEnabled(false);
             XuebaoCourseAdapter courseAdapter = new XuebaoCourseAdapter(getContext(), list);
@@ -182,8 +176,8 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
             courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Intent intent=new Intent(getContext(), CourseDetailActivity.class);
-                    intent.putExtra(Constants.INTENT_ID,list.get(position).getCurriculumId());
+                    Intent intent = new Intent(getContext(), CourseDetailActivity.class);
+                    intent.putExtra(Constants.INTENT_ID, list.get(position).getCurriculumId());
                     startActivity(intent);
                 }
 
@@ -193,18 +187,20 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 }
             });
             progressBar2.setVisibility(View.GONE);
+            nodataimg2.setVisibility(View.GONE);
         }
 
     }
+
     @Override
     public void getBanner(List<BannerImgBean> list) {
-        if (null==list&&list.size()==0){
+        if (null == list && list.size() == 0) {
             return;
         }
-        if (null!=banner){
+        if (null != banner) {
             bannerlist.clear();
             bannerImgBeans.clear();
-            for (BannerImgBean bannerImgBean:list){
+            for (BannerImgBean bannerImgBean : list) {
                 bannerlist.add(bannerImgBean.getAdUrl());
                 bannerImgBeans.add(bannerImgBean);
             }
@@ -212,6 +208,19 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
             banner.start();
         }
 
+    }
+
+    @Override
+    public void noHotCourse() {
+        progressBar1.setVisibility(View.GONE);
+        nodataimg1.setVisibility(View.VISIBLE);
+
+    }
+
+    @Override
+    public void noNewCourse() {
+        progressBar2.setVisibility(View.GONE);
+        nodataimg2.setVisibility(View.VISIBLE);
     }
 
 
@@ -235,6 +244,7 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         startActivityForResult(new Intent(getActivity(), QRActivity.class), 1);
 
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -260,7 +270,11 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 intent2.putExtra(Constants.INTENT_COURSE_CLASS, 2);
                 getActivity().startActivity(intent2);
                 break;
-            case R.id.im_jiajiao:
+            case R.id.im_jiajiao:   //成长之路
+                if (StringUtil.isEmpty(Constants.TOKEN)){
+                    DialogUtils.loginDia(getActivity());
+                    return;
+                }
                 Intent intent3 = new Intent(getActivity(), MyFamilyCourseActivity.class);
                 getActivity().startActivity(intent3);
                 break;

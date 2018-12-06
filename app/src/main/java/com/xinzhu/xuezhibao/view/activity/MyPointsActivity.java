@@ -30,13 +30,15 @@ public class MyPointsActivity extends BaseTopTabActivity {
         inittab("全部", "收入", "支出");
         initfragment(new MyPointsFragment(), new MyPointsFragment(), new MyPointsFragment());
         bingview(1);
-        tvMypoints.setText(Constants.userBasicInfo.getIntegral() + "");
-        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        if (null!=Constants.userBasicInfo){
+            tvMypoints.setText(Constants.userBasicInfo.getIntegral() + "");
+            appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+        }
     }
     @OnClick(R.id.tv_pointsrule)
     public void onViewClicked() {

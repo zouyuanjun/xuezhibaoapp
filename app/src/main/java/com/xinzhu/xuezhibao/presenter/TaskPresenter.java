@@ -136,6 +136,10 @@ public class TaskPresenter extends BasePresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/app/clock-in", handler, 4);
     }
 
+    /**
+     * 接受任务
+     * @param id
+     */
     public void gettask(String id) {
         String data = JsonUtils.keyValueToString2("taskId", id, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/receive-task", handler, 5);
@@ -150,6 +154,12 @@ public class TaskPresenter extends BasePresenter {
         handler.removeCallbacksAndMessages(null);
     }
 
+    /**
+     * 获取任务详情
+     * @param id   任务id
+     * @param state     任务状态
+     * @param mytaskid  用户专属ID
+     */
     public void gettaskdetail(String id, int state, String mytaskid) {
         String data = JsonUtils.keyValueToString2("taskId", id, "stateType", state);
         data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);

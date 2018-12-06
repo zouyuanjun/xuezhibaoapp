@@ -19,15 +19,12 @@ import java.util.List;
 public class MyCoursePresenter {
     MyCourseInterface myCourseInterface;
     MyJobDetailInterpace myJobDetailInterpace;
-
     public MyCoursePresenter(MyJobDetailInterpace myJobDetailInterpace) {
         this.myJobDetailInterpace = myJobDetailInterpace;
     }
-
     public MyCoursePresenter(MyCourseInterface myCourseInterface) {
         this.myCourseInterface = myCourseInterface;
     }
-
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -107,7 +104,7 @@ public class MyCoursePresenter {
                     MyjobBean mDatas = JsonUtils.stringToObject(data, MyjobBean.class);
                     myJobDetailInterpace.getjobbyid(mDatas);
                 }
-            } else if (code==203){
+            } else {
                 if (null != myCourseInterface) {
                     myCourseInterface.nodata();
                 } else if (null != myJobDetailInterpace) {

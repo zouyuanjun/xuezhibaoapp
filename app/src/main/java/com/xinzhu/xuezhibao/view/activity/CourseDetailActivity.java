@@ -139,6 +139,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
         context = this;
         courseid = getIntent().getStringExtra(Constants.INTENT_ID);
         webView.setWebViewClient(new WebViewUtil.MyWebViewClient(this, webView));
+        webView.loadDataWithBaseURL(null, "正在加载", "text/html", "UTF-8", null);
         mGoodView = new GoodView(this);
         init();
         imBack.setOnClickListener(new View.OnClickListener() {

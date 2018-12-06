@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bravin.btoast.BToast;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -27,6 +28,7 @@ import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.VoiceDetilsActivity;
 import com.xinzhu.xuezhibao.view.interfaces.HomeVideoVoiceListInterface;
 import com.zou.fastlibrary.ui.CustomDialog;
+import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -75,7 +77,11 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvItem.setLayoutManager(linearLayoutManager3);
         rvItem.setAdapter(adapter);
-
+        if (POSITION == 2) {
+            if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
+                showdia();
+            }
+        }
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -95,7 +101,10 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
     @Override
     public void onResume() {
         super.onResume();
-        loaddata(true);
+        if (isfirstload){
+            loaddata(true);
+        }
+
     }
     public void loaddata(boolean isfirstload) {
         if (isfirstload) {
@@ -110,7 +119,7 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
                 homeVideoVoiceListPresenter.getNewVideo(page);
             } else if (POSITION == 2) {
                 if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
-                    showdia();
+
                 } else {
                     homeVideoVoiceListPresenter.getLikeVideo(page);
                 }
@@ -123,7 +132,7 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
                 homeVideoVoiceListPresenter.getNewVoice(page);
             } else if (POSITION == 2) {
                 if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
-                    showdia();
+
                 } else {
                     homeVideoVoiceListPresenter.getLikeVoice(page);
                 }
@@ -132,15 +141,13 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
         }
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeVideoVoiceListPresenter = new VideoVoiceListPresenter(this);
         adapter = new VideoVoiceListAdapter(new WeakReference(MyApplication.getContext()), list);
-        adapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
                 if (TYPE == 1) {
                     intent = new Intent(getContext(), VideoDetilsActivity.class);
@@ -151,11 +158,6 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
                 }
                 intent.putExtra(Constants.INTENT_ID, list.get(position).getVideoId());
                 getActivity().startActivity(intent);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
             }
         });
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
@@ -182,19 +184,28 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
 
     @Override
     public void getVideo(List<VideoVoiceBean> videoVoiceBeanList) {
-        list.addAll(videoVoiceBeanList);
-        adapter.notifyDataSetChanged();
-        refreshLayout.finishLoadMore();
-        refreshLayout.finishRefresh(true);
-        page++;
-        imDataisnull.setVisibility(View.GONE);
+        if(null!=refreshLayout&&null!=adapter){
+            list.addAll(videoVoiceBeanList);
+            adapter.notifyDataSetChanged();
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh(true);
+            page++;
+            imDataisnull.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
     public void nodata() {
-        refreshLayout.finishRefresh();
-        adapter.notifyDataSetChanged();
-        refreshLayout.finishLoadMoreWithNoMoreData();
+        if (null!=refreshLayout){
+            refreshLayout.finishRefresh();
+            adapter.notifyDataSetChanged();
+            refreshLayout.finishLoadMoreWithNoMoreData();
+        }
+        if (list.size()==0){
+            imDataisnull.setVisibility(View.VISIBLE);
+        }
+
     }
 
 

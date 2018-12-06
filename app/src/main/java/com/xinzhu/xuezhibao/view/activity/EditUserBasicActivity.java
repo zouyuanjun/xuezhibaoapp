@@ -37,7 +37,7 @@ public class EditUserBasicActivity extends BaseActivity {
         ButterKnife.bind(this);
         activity=this;
         String itemstring=getIntent().getStringExtra(Constants.INTENT_EDITITEM);
-        tvItem.setText(itemstring);
+        tvItem.setText(itemstring+":");
         appbar.setMidText("修改"+itemstring);
         if (itemstring.equals("学生年龄")){
             edBasic.setInputType(InputType.TYPE_CLASS_NUMBER);

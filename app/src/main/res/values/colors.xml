@@ -47,4 +47,5 @@
     <color name="white_btn_text_normal">#2C2C2C</color>
     <color name="multiple_image_select_primaryDark">#f87d28</color>
     <color name="multiple_image_select_primary">#f87d28</color>
+    <color name="touchbg">#4b4b58</color>
 </resources>

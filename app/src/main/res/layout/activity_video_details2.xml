@@ -14,9 +14,7 @@
             android:id="@+id/standardGSYVideoPlayer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
         </com.xinzhu.xuezhibao.view.custom.VideoPlayer>
-
         <TextView
             android:visibility="gone"
             android:id="@+id/tv_playtime"
@@ -81,7 +79,7 @@
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/NestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1">
 
         <android.support.constraint.ConstraintLayout
@@ -198,11 +196,8 @@
                 android:textColor="@color/appcolor"
                 app:layout_constraintStart_toEndOf="@+id/textView34"
                 app:layout_constraintTop_toTopOf="@+id/textView34" />
-
         </android.support.constraint.ConstraintLayout>
-
     </android.support.v4.widget.NestedScrollView>
-
     <LinearLayout
         android:id="@+id/linearLayout14"
         android:layout_width="match_parent"

@@ -147,7 +147,10 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     @Override
     protected void onResume() {
         super.onResume();
-        tvMypoints.setText(Constants.userBasicInfo.getIntegral() + "积分");
+        if (null!=Constants.userBasicInfo){
+            tvMypoints.setText(Constants.userBasicInfo.getIntegral() + "积分");
+        }
+
     }
 
     @Override
@@ -179,9 +182,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                 banner.start();
             }
         }
-
         webGoodsdetail.loadDataWithBaseURL(null, goodsBean.getProductDetails(), "text/html", "UTF-8", null);
-
     }
 
     @Override

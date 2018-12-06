@@ -146,6 +146,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         ButterKnife.bind(this);
         context = this;
         tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this, tvDetails));
+        tvDetails.loadDataWithBaseURL(null, "正在加载", "text/html", "UTF-8", null);
         videoid = getIntent().getStringExtra(Constants.INTENT_ID);
         mGoodView = new GoodView(this);
         imBack.setOnClickListener(new View.OnClickListener() {
@@ -157,7 +158,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
         alipayPresenter = new AlipayPresenter(VideoDetilsActivity.this, this);
         videoVoiceDetailPresenter.getVideoComment(videoid, 1);
-        timer = new CountDownTimer(60 * 1000, 1000) {
+        timer = new CountDownTimer(90 * 1000, 1000) {
             /**
              * 固定间隔被调用,就是每隔countDownInterval会回调一次方法onTick
              * @param millisUntilFinished
@@ -204,6 +205,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         rvComment.setAdapter(commentAdapter);
         detailPlayer = findViewById(R.id.standardGSYVideoPlayer);
         detailPlayer.hidstartbt();
+        cslBuy.setVisibility(View.GONE);
         videoVoiceDetailPresenter.getVideoDetail(videoid);
         likeCollectPresenter.islike(videoid, "2");
         likeCollectPresenter.iscollect(videoid, "2");
@@ -252,7 +254,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 }
             }
         });
-        detailPlayer.setCanpaly(true);
 
         smartrv.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -336,7 +337,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                                     alipayPresenter.aLiBuyVideo(videoid);
                                     popupWindow.dismiss();
                                     loadingPop = CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this, R.layout.pop_loading);
-
                                     loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
                                     break;
                                 case R.id.rd_wxpay:
@@ -414,7 +414,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     public void getVideodetail(VideoVoiceBean videoVoiceBean) {
         tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
         tvDetails.loadDataWithBaseURL(null, videoVoiceBean.getVideoDetails(), "text/html", "UTF-8", null);
-
         tvTitle.setText(videoVoiceBean.getVideoTitle());
         if (videoVoiceBean.getVideoType() == 1) {
             tvPlaytime.setVisibility(View.VISIBLE);
@@ -424,6 +423,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         if (videoVoiceBean.getIsBuy()==1) {
             tvPlaytime.setVisibility(View.GONE);
             isVipVideo=false;
+            detailPlayer.setCanpaly(true);
         }
         tvTeacher.setText(videoVoiceBean.getVideoTeacher());
         tvLike.setText(videoVoiceBean.getVidelLike());
@@ -605,7 +605,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     @Override
     public void payfail() {
-        BToast.success(this).text("支付失败").show();
+        BToast.error(this).text("支付失败").show();
         cslBuy.setVisibility(View.VISIBLE);
         detailPlayer.setCanpaly(false);
         detailPlayer.hidstartbt();

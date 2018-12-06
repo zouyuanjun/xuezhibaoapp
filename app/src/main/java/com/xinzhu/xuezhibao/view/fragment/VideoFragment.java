@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -30,14 +32,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+/**
+ * 精品视频
+ */
 public class VideoFragment extends LazyLoadFragment implements VideoFragmentInterface {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
     VideoVoiceListAdapter payadapter;
     Unbinder unbinder;
     List<VideoVoiceBean> payBeanList = new ArrayList<>();
-    int type = 0;
-    int freepage = 1;
     int paypage = 1;
     @BindView(R.id.rv_item)
     RecyclerView rvVideocourselist;
@@ -45,6 +48,8 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
     SmartRefreshLayout refreshLayout;
     VideoVoiceListPresenter videoVoiceListPresenter;
     boolean isfirstload = true;
+    @BindView(R.id.img_nodata)
+    ImageView imgNodata;
 
     @Override
     protected int setContentView() {
@@ -65,11 +70,12 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
         rvVideocourselist.setLayoutManager(linearLayoutManager3);
         payadapter = new VideoVoiceListAdapter(new WeakReference<>(getContext()).get(), payBeanList, 2);
         rvVideocourselist.setAdapter(payadapter);
+        payadapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                    payBeanList.clear();
-                    paypage=1;
+                payBeanList.clear();
+                paypage = 1;
                 loaddata();
             }
         });
@@ -80,28 +86,23 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
             }
         });
         loaddata();
-        payadapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
+        payadapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String id = payBeanList.get(position).getVideoId();
                 Intent intent = new Intent(getContext(), VideoDetilsActivity.class);
                 intent.putExtra(Constants.INTENT_ID, id);
                 startActivity(intent);
             }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
         });
     }
 
     private void loaddata() {
-        if (isfirstload){
+        if (isfirstload) {
             videoVoiceListPresenter.getpayVideo(1);
-            isfirstload =false;
-        }else {
-                    videoVoiceListPresenter.getpayVideo(paypage);
+            isfirstload = false;
+        } else {
+            videoVoiceListPresenter.getpayVideo(paypage);
         }
 
     }
@@ -123,7 +124,7 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
 
     @Override
     public void getpayVideo(List<VideoVoiceBean> List) {
-        if (null!=refreshLayout){
+        if (null != refreshLayout) {
             payBeanList.addAll(List);
             payadapter.notifyDataSetChanged();
             paypage++;
@@ -135,11 +136,14 @@ public class VideoFragment extends LazyLoadFragment implements VideoFragmentInte
 
     @Override
     public void noData() {
-        if (null!=refreshLayout){
+        if (null != refreshLayout) {
             refreshLayout.finishRefresh(true);
             refreshLayout.finishLoadMoreWithNoMoreData();
         }
+        if (payBeanList.size()==0){
+            imgNodata.setVisibility(View.VISIBLE);
         }
+    }
 
 
     @Override

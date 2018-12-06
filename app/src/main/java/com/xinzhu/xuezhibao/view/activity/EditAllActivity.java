@@ -69,12 +69,16 @@ public class EditAllActivity extends TakePhotoActivity {
     Context context;
     String citysrt="";
     CityPickerView mPicker=new CityPickerView();
+    String imgurl;//选择头像的地址
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             String result = (String) msg.obj;
             Log.d(result);
+            if (null!=loadingPop&&loadingPop.isShowing()){
+                loadingPop.dismiss();
+            }
             int code = -999;
             try {
                 code = JsonUtils.getIntValue(result, "Code");
@@ -94,11 +98,16 @@ public class EditAllActivity extends TakePhotoActivity {
                 if (msg.what==2){
                     finish();
                     startActivity(new Intent(EditAllActivity.this, MainActivity.class));
+                }else if (msg.what==1){
+                    sdMyphoto.setImageURI(Uri.fromFile(new File(imgurl)));
                 }
 
+            }else {
+                BToast.error(EditAllActivity.this).text("上传失败，请稍后再试").show();
             }
         }
     };
+    PopupWindow loadingPop;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -155,6 +164,8 @@ public class EditAllActivity extends TakePhotoActivity {
                     Constants.userBasicInfo.setStudentAge(studentage);
                     String data = JsonUtils.objectToString(Constants.userBasicInfo);
                     Network.getnetwork().postJson(data, Constants.URL + "/app/update-member", handler, 2);
+                    loadingPop = CreatPopwindows.creatWWpopwindows(EditAllActivity.this, R.layout.pop_loading);
+                    loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
                 }
 
             }
@@ -170,10 +181,8 @@ public class EditAllActivity extends TakePhotoActivity {
     @Override
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
-        String imgurl = result.getImage().getOriginalPath();
-        String s = result.getImage().getCompressPath();
-        Log.d(imgurl + s);
-        sdMyphoto.setImageURI(Uri.fromFile(new File(imgurl)));
+        imgurl = result.getImage().getOriginalPath();
+
         Network.getnetwork().uploadimg(Constants.TOKEN, Constants.URL + "/guest/image-upload", result.getImage().getCompressPath(), handler,1);
 
     }
@@ -281,5 +290,13 @@ public class EditAllActivity extends TakePhotoActivity {
             }
         });
         popupWindow.showAtLocation(parentview, Gravity.BOTTOM,0, ScreenUtil.getNavigationBarHeight(EditAllActivity.this));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (null!=loadingPop&&loadingPop.isShowing()){
+            loadingPop.dismiss();
+        }
     }
 }

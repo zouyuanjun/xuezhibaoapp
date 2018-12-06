@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -76,7 +77,6 @@ boolean nodata=false;
           if (nodata){
             imDataisnull.setVisibility(View.VISIBLE);
         }
-
         if (isfirstload) {
             isfirstload = false;
             imLoading.setVisibility(View.VISIBLE);
@@ -84,7 +84,7 @@ boolean nodata=false;
             drawable.start();
             if (POSITION == 0) {
                 rvItem.setAdapter(courseMyCollectAdapter);
-                myCollectPresenter.getCollectVCourse(page);
+                myCollectPresenter.getCollectCourse(page);
             } else if (POSITION == 1) {
                 rvItem.setAdapter(articleListAdapter);
                 myCollectPresenter.getCollectVAreticle(page);
@@ -123,9 +123,9 @@ boolean nodata=false;
 
             }
         });
-        videoVoiceListAdapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
+        videoVoiceListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent;
                 if (POSITION == 2) {
                     intent = new Intent(getContext(), VoiceDetilsActivity.class);
@@ -134,11 +134,6 @@ boolean nodata=false;
                 }
                 intent.putExtra(Constants.INTENT_ID, videoVoiceBeanList.get(position).getVideoId());
                 startActivity(intent);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
             }
         });
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -149,7 +144,7 @@ boolean nodata=false;
                 articleBeanList.clear();
                 page = 1;
                 if (POSITION == 0) {
-                    myCollectPresenter.getCollectVCourse(page);
+                    myCollectPresenter.getCollectCourse(page);
                 } else if (POSITION == 1) {
                     myCollectPresenter.getCollectVAreticle(page);
                 } else if (POSITION == 2) {
@@ -165,7 +160,7 @@ boolean nodata=false;
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 if (POSITION == 0) {
-                    myCollectPresenter.getCollectVCourse(page);
+                    myCollectPresenter.getCollectCourse(page);
                 } else if (POSITION == 1) {
                     myCollectPresenter.getCollectVAreticle(page);
                 } else if (POSITION == 2) {

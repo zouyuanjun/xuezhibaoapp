@@ -146,23 +146,29 @@ public class PotionsMallFragment extends LazyLoadFragment implements MyGoodsInte
 
     @Override
     public void getGoodsList(List<GoodsBean> list) {
-        goodsBeanList.addAll(list);
-        potionsGoodsAdapter.notifyDataSetChanged();
-        refreshLayout.finishLoadMore();
-        refreshLayout.finishRefresh();
-        page++;
-        imLoading.setVisibility(View.GONE);
-        imDataisnull.setVisibility(View.GONE);
+        if (null!=refreshLayout){
+            goodsBeanList.addAll(list);
+            potionsGoodsAdapter.notifyDataSetChanged();
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh();
+            page++;
+            imLoading.setVisibility(View.GONE);
+            imDataisnull.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
     public void noMoreData() {
-        if (goodsBeanList.size() == 0) {
-            imLoading.setVisibility(View.GONE);
-            imDataisnull.setVisibility(View.VISIBLE);
+        if (null!=refreshLayout){
+            if (goodsBeanList.size() == 0) {
+                imLoading.setVisibility(View.GONE);
+                imDataisnull.setVisibility(View.VISIBLE);
+            }
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishRefresh();
         }
-        refreshLayout.finishLoadMore();
-        refreshLayout.finishRefresh();
+
     }
 
     @Override

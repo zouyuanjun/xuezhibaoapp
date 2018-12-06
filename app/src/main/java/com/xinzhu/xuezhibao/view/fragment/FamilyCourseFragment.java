@@ -84,7 +84,7 @@ public class FamilyCourseFragment extends LazyLoadFragment implements FamilyCour
 
     @Override
     protected void lazyLoad() {
-
+        Log.d("lazyLoad>>>>>>>>>>>>>>>"+TYPE);
         mContext = new WeakReference(getActivity());
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(mContext.get());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);

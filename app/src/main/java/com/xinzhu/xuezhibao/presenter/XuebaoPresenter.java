@@ -70,7 +70,6 @@ public class XuebaoPresenter {
         String data3=JsonUtils.keyValueToString("pageNo",1);
         Network.getnetwork().postJson(data3,Constants.URL+"/guest/newest-curriculum",handler,3);
         Network.getnetwork().postJson(data3,Constants.URL+"/guest/hottest-curriculum",handler,4);
-
         Network.getnetwork().postJson(data3,Constants.URL+"/guest/select-study-index-round",handler,5);
     }
     public void cancelmessage(){

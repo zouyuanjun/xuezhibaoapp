@@ -36,10 +36,8 @@ public class WebViewUtil {
         @Override
         public void onPageFinished(WebView view, String url) {
             imgReset();
-            webView.loadUrl("javascript:App.resize(document.body.getBoundingClientRect().height)");
             super.onPageFinished(view, url);
-
-
+            webView.loadUrl("javascript:App.resize(document.body.getBoundingClientRect().height)");
         }
 
         @Override
@@ -63,7 +61,7 @@ public class WebViewUtil {
                 @Override
                 public void run() {
                     ViewGroup.LayoutParams layoutParams = webView.getLayoutParams();
-                    layoutParams.width = (int)((context.getResources().getDisplayMetrics().widthPixels)*0.95);
+                    layoutParams.width = (int)((context.getResources().getDisplayMetrics().widthPixels));
                     layoutParams.height = (int) (height * context.getResources().getDisplayMetrics().density)+50;
                     Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+context.getResources().getDisplayMetrics().density);
                     webView.setLayoutParams(layoutParams);

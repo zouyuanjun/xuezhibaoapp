@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Created by zou on 2018/11/13.
+ * 个人轨迹
  */
 
 public class TrackPresenter {
@@ -55,11 +56,14 @@ public class TrackPresenter {
                 if (what==1){
                     String data = JsonUtils.getStringValue(result, "Data");
                     List<TrickBean> mDatas = JSON.parseArray(data, TrickBean.class);
-                    trackInterface.getMyTrack(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        trackInterface.getMyTrack(mDatas);
+                    }else {
+                        trackInterface.nomoredata();
+                    }
                 }
-
             }else if (code==203){
-                trackInterface.nomoredata();
+
             }
         }
     };

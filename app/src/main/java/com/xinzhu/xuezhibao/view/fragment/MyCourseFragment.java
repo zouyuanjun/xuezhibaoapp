@@ -73,6 +73,7 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
                 } else {
                     myCoursePresenter.mygetcourse(page);
                 }
+                refreshlayout.finishRefresh(2000);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -83,7 +84,7 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
                 } else {
                     myCoursePresenter.mygetcourse(page);
                 }
-
+                refreshlayout.finishLoadMore(2000);
             }
         });
         rvJiaojiaoCourseAdapter.notifyDataSetChanged();

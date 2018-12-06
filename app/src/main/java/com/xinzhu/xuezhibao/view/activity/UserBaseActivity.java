@@ -70,6 +70,8 @@ public class UserBaseActivity extends TakePhotoActivity {
             }
             if (code==100){
                 BToast.success(activity).text("修改成功").show();
+            }else {
+                BToast.success(activity).text("修改失败").show();
             }
             Log.d(result);
         }
@@ -143,7 +145,6 @@ public class UserBaseActivity extends TakePhotoActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
     @Override
     public TakePhoto getTakePhoto() {
         return super.getTakePhoto();
@@ -246,12 +247,12 @@ public class UserBaseActivity extends TakePhotoActivity {
                         //城市
                         if (city != null) {
                             shi=city.getName();
-                            citysrt=citysrt+"·"+city.getName();
+                            citysrt=citysrt+"-"+city.getName();
                         }
                         //地区
                         if (district != null) {
                             qu=district.getName();
-                            citysrt=citysrt+"·"+district.getName();
+                            citysrt=citysrt+"-"+district.getName();
 
                         }
                         tvAddress.setText(citysrt);

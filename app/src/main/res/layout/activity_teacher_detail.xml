@@ -130,7 +130,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </android.support.v7.widget.RecyclerView>
-    <com.zou.fastlibrary.ui.NestedScrollWebView
+    <com.xinzhu.xuezhibao.view.custom.NestedScrollWebView
         android:id="@+id/tv_intro"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

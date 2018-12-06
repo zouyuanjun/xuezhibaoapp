@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import com.tencent.smtt.sdk.WebView;
@@ -36,6 +37,7 @@ import com.xinzhu.xuezhibao.view.interfaces.ArticleInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
@@ -109,6 +111,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         articlePresenter = new ArticlePresenter(this);
         ButterKnife.bind(this);
         tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this, tvDetails));
+        tvDetails.loadDataWithBaseURL(null, "正在加载", "text/html", "UTF-8", null);
         mGoodView = new GoodView(this);
         init();
     }
@@ -210,6 +213,9 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
             tvLike.setText(articleBean.getArticleLike() + "");
             likenum = articleBean.getArticleLike();
         }
+
+
+
 
     }
 

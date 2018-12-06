@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.adapter;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
@@ -15,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.request.RequestOptions;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.zou.fastlibrary.utils.TimeUtil;
@@ -28,41 +31,30 @@ import butterknife.ButterKnife;
 
 import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
 
-public class VideoVoiceListAdapter extends RecyclerView.Adapter {
+public class VideoVoiceListAdapter extends BaseQuickAdapter<VideoVoiceBean,VideoVoiceListAdapter.MyViewHolder> {
     protected Context mContext;
     protected List<VideoVoiceBean> mDatas;
-    private OnItemClickListener onItemClickListener;
     int TYPE = 0; //标记是否视频课程列表
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
-    }
-
-    public VideoVoiceListAdapter(WeakReference<Context> mContext, List<VideoVoiceBean> mDatas) {
+    public VideoVoiceListAdapter(WeakReference<Context> mContext,@NonNull List<VideoVoiceBean> mDatas) {
+        super(R.layout.item_list,mDatas);
         this.mContext = mContext.get();
         this.mDatas = mDatas;
     }
 
-    public VideoVoiceListAdapter(Context mContext, List<VideoVoiceBean> mDatas, int TYPE) {
+    public VideoVoiceListAdapter(Context mContext, @NonNull List<VideoVoiceBean> mDatas, int TYPE) {
+        super(R.layout.item_list,mDatas);
         this.mContext = mContext;
         this.mDatas = mDatas;
         this.TYPE = TYPE;
     }
 
-    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_list, parent, false);
-        return new MyViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getVideoTitle());
-        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getVidelLike());
-        ((MyViewHolder) holder).tvItemTime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
-        ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getVideoLook());
-        if (null == mDatas.get(position).getVideoPicture()) {
+    protected void convert(MyViewHolder helper, VideoVoiceBean item) {
+        ((MyViewHolder) helper).tvItemTitle.setText(item.getVideoTitle());
+        ((MyViewHolder) helper).tvDianzan.setText(item.getVidelLike());
+        ((MyViewHolder) helper).tvItemTime.setText(TimeUtil.getWholeTime2(item.getCreateTime()));
+        ((MyViewHolder) helper).tv_readnum.setText(item.getVideoLook());
+        if (null == item.getVideoPicture()) {
             RequestOptions requestOptions = RequestOptions.frameOf(0);
             requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);
             requestOptions.transform(new BitmapTransformation() {
@@ -80,46 +72,24 @@ public class VideoVoiceListAdapter extends RecyclerView.Adapter {
                     }
                 }
             });
-            Glide.with(mContext).load(mDatas.get(position).getVideoUrl()).apply(requestOptions).into(((MyViewHolder) holder).simpleDraweeView);
+            Glide.with(mContext).load(item.getVideoUrl()).apply(requestOptions).into(((MyViewHolder) helper).simpleDraweeView);
         } else {
-            Glide.with(mContext).load(mDatas.get(position).getVideoPicture()).into(((MyViewHolder) holder).simpleDraweeView);
+            Glide.with(mContext).load(item.getVideoPicture()).into(((MyViewHolder) helper).simpleDraweeView);
         }
         if (TYPE == 2) {
-            ((MyViewHolder) holder).tvTeacher.setVisibility(View.VISIBLE);
-            ((MyViewHolder) holder).tvTeacher.setText("主讲："+mDatas.get(position).getVideoTeacher());
-            ((MyViewHolder) holder).tvItemTitle.setMaxLines(1);
-        }
-
-        if (onItemClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemClickListener.onItemClick(v, position);
-                }
-            });
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    onItemClickListener.onItemLongClick(v, position);
-                    return false;
-                }
-            });
+            ((MyViewHolder) helper).tvTeacher.setVisibility(View.VISIBLE);
+            ((MyViewHolder) helper).tvTeacher.setText("主讲："+item.getVideoTeacher());
+            ((MyViewHolder) helper).tvItemTitle.setMaxLines(1);
         }
     }
-
     @Override
-    public int getItemCount() {
-        return mDatas.size();
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View view, int position);
-
-        void onItemLongClick(View view, int position);
+    protected void startAnim(Animator anim, int index) {
+        super.startAnim(anim, index);
+        anim.setStartDelay(index * 150);
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends BaseViewHolder {
         @BindView(R.id.simpleDraweeView)
         ImageView simpleDraweeView;
         @BindView(R.id.tv_item_title)

@@ -8,7 +8,7 @@ import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.zou.fastlibrary.utils.Log;
 
 public class VideoPlayer extends StandardGSYVideoPlayer {
-    boolean canpaly = false;
+    boolean canpaly = true;
     ImageView imageButton;
 
     public VideoPlayer(Context context, Boolean fullFlag) {

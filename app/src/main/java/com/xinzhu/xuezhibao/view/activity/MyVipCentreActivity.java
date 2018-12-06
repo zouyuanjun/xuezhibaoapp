@@ -24,6 +24,7 @@ import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
 import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.ScreenUtil;
 import com.zou.fastlibrary.utils.StringUtil;
@@ -54,14 +55,18 @@ public class MyVipCentreActivity extends BaseActivity implements PayInterface {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
+            String result= (String) msg.obj;
+            Log.d(result);
             switch (msg.what) {
                 case 2: {
                     try {
-                        String result = (String) msg.obj;
+
                         String data = JsonUtils.getStringValue(result, "Data");
                         String describeContent = JsonUtils.getStringValue(data, "describeContent");
+                        String price=JsonUtils.getStringValue(data,"memberPrice");
                         if (!StringUtil.isEmpty(describeContent)) {
                             tvIntroduce.setText(Html.fromHtml(describeContent));
+                            tvRecharge.setText("￥"+price+"开通会员");
                         } else {
                             tvIntroduce.setText("获取数据失败，请稍后再试");
                         }
@@ -71,7 +76,7 @@ public class MyVipCentreActivity extends BaseActivity implements PayInterface {
                     break;
                 }
                 case 1:{
-                    String result= (String) msg.obj;
+
                     int code=JsonUtils.getIntValue(result,"Code");
                     if (code==100){
                         String data=JsonUtils.getStringValue(result,"Data");
@@ -112,13 +117,15 @@ public class MyVipCentreActivity extends BaseActivity implements PayInterface {
     @Override
     protected void onResume() {
         super.onResume();
-        if (Constants.userBasicInfo.getDictionaryId()!=1){
-            tvRecharge.setVisibility(View.GONE);
+        if (null!=Constants.userBasicInfo){
+            if (Constants.userBasicInfo.getDictionaryId()!=1){
+                tvRecharge.setVisibility(View.GONE);
+            }
+            tvUsername.setText(Constants.userBasicInfo.getNickName());
+            sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
+            tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
         }
-        tvUsername.setText(Constants.userBasicInfo.getNickName());
-        sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
-        tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
-        com.zou.fastlibrary.utils.Log.d(tvViplv.getText().toString());
+
     }
 
     //充值会员

@@ -117,7 +117,7 @@ public class MyCollectPresenter {
             Network.getnetwork().postJson(data, Constants.URL + "/app/page-by-collect-article", handler, 3);
         }
     }
-    public void getCollectVCourse(int page) {
+    public void getCollectCourse(int page) {
         if (!StringUtil.isEmpty(Constants.TOKEN)){
             String data = JsonUtils.keyValueToString2("pageNo", page,"token",Constants.TOKEN);
             data=JsonUtils.addKeyValue(data,"type",1);

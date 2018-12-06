@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.FeedbackPictureBean;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.JSON;
@@ -22,6 +23,7 @@ import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.xinzhu.xuezhibao.utils.WebViewUtil;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.List;
 
@@ -80,6 +82,7 @@ public class HistoryFeedbackActivity extends BaseActivity {
                     llRp.setVisibility(View.VISIBLE);
                     wbFeedback.loadDataWithBaseURL(null, opinionReply, "text/html", "UTF-8", null);
                 }
+                tvData.setVisibility(View.VISIBLE);
                 tvData.setText(opinionContent);
             }
         }
@@ -98,8 +101,8 @@ public class HistoryFeedbackActivity extends BaseActivity {
         ButterKnife.bind(this);
         context = this;
         wbFeedback.setWebViewClient(new WebViewUtil.MyWebViewClient(this,wbFeedback));
-        if (Constants.TOKEN.isEmpty()) {
-            BToast.error(this).text("您尚未登陆，没有反馈哦").show();
+        if (StringUtil.isEmpty(Constants.TOKEN)){
+            DialogUtils.loginDia(this);
         } else {
             String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
             Network.getnetwork().postJson(data, Constants.URL + "/app/find-newest-opinion", handler, 1);

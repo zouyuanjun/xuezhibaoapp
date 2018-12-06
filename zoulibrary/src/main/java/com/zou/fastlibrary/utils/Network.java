@@ -232,6 +232,7 @@ public class Network {
                 try {
                     jsonObject = com.alibaba.fastjson.JSON.parseObject(s);
                 } catch (JSONException e) {
+                    Log.d(s);
                     EventBus.getDefault().post(new NetWorkMessage("服务器内部错误"));
                     return;
                 }

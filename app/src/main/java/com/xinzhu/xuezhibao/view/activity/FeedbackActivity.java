@@ -28,8 +28,10 @@ import com.alibaba.fastjson.JSONException;
 import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.FeedBackDictionaryBean;
+import com.xinzhu.xuezhibao.immodule.TextWatcherAdapter;
 import com.xinzhu.xuezhibao.immodule.utils.RequestCode;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.xinzhu.xuezhibao.utils.Glide4Engine;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -56,6 +58,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
+/**
+ * 意见反馈页面
+ */
 public class FeedbackActivity extends BaseActivity {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
@@ -96,28 +101,28 @@ public class FeedbackActivity extends BaseActivity {
     boolean im1canuse = true;
     boolean im2canuse = true;
     boolean im3canuse = true;
-    String selectDictionaryid ="";  //选中的反馈类型字典ID,初始化设置为第一个类型
+    String selectDictionaryid = "";  //选中的反馈类型字典ID,初始化设置为第一个类型
     List<FeedBackDictionaryBean> feedBackDictionaryBeanList;
-    boolean cancommint=true;
+    boolean cancommint = true;
     @BindView(R.id.tv_canselectcount)
     TextView tvCanselectcount;
-    Handler handler=new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            String result= (String) msg.obj;
-            int what=msg.what;
-            if (what==1){
-                int code=500;
+            String result = (String) msg.obj;
+            int what = msg.what;
+            if (what == 1) {
+                int code = 500;
                 try {
-                    code=JsonUtils.getIntValue(result,"Code");
-                }catch (JSONException exception){
-                    BToast.error(FeedbackActivity.this).text("提交失败，服务器内部错误，错误码："+code).show();
-                return;
+                    code = JsonUtils.getIntValue(result, "Code");
+                } catch (JSONException exception) {
+                    BToast.error(FeedbackActivity.this).text("提交失败，服务器内部错误，错误码：" + code).show();
+                    return;
                 }
-                if (code==100){
+                if (code == 100) {
                     BToast.success(FeedbackActivity.this).text("提交成功").show();
-                    cancommint=true;
+                    cancommint = true;
                     im1.setVisibility(View.INVISIBLE);
                     imClean1.setVisibility(View.INVISIBLE);
                     im1canuse = true;
@@ -128,28 +133,27 @@ public class FeedbackActivity extends BaseActivity {
                     im3.setVisibility(View.INVISIBLE);
                     imClean3.setVisibility(View.INVISIBLE);
                     im3canuse = true;
-                    canSelectCount=3;
-                    tvCanselectcount.setText(3-canSelectCount+"/3");
-                   edFeedback.setText("");
+                    canSelectCount = 3;
+                    tvCanselectcount.setText(3 - canSelectCount + "/3");
+                    edFeedback.setText("");
                     btLogin.setBgColor(Color.parseColor("#f87d28"));
-                }
-                else {
-                    BToast.error(FeedbackActivity.this).text("提交失败，请重试，错误码："+code).show();
-                    cancommint=true;
+                } else {
+                    BToast.error(FeedbackActivity.this).text("提交失败，请重试，错误码：" + code).show();
+                    cancommint = true;
                     btLogin.setBgColor(Color.parseColor("#f87d28"));
                 }
 
             }
-            if (what==2){
-                String data=JsonUtils.getStringValue(result,"Data");
-                feedBackDictionaryBeanList=JSON.parseArray(data,FeedBackDictionaryBean.class);
-                for (int i=0;i<feedBackDictionaryBeanList.size();i++){
-                    if (i==0){
+            if (what == 2) {
+                String data = JsonUtils.getStringValue(result, "Data");
+                feedBackDictionaryBeanList = JSON.parseArray(data, FeedBackDictionaryBean.class);
+                for (int i = 0; i < feedBackDictionaryBeanList.size(); i++) {
+                    if (i == 0) {
                         tvGongneng.setText(feedBackDictionaryBeanList.get(0).getDictionaryName());
-                        selectDictionaryid=feedBackDictionaryBeanList.get(0).getDictionaryId();
-                    }else if (i==1){
+                        selectDictionaryid = feedBackDictionaryBeanList.get(0).getDictionaryId();
+                    } else if (i == 1) {
                         tvGuzhang.setText(feedBackDictionaryBeanList.get(1).getDictionaryName());
-                    }else if (i==2){
+                    } else if (i == 2) {
                         tvXingneng.setText(feedBackDictionaryBeanList.get(2).getDictionaryName());
                     }
                 }
@@ -177,23 +181,34 @@ public class FeedbackActivity extends BaseActivity {
                 startActivity(new Intent(mContext, HistoryFeedbackActivity.class));
             }
         });
-        //获取反馈类型
-        String data="{\"dictionaryType\":\"opinion_type\"}";
-        Network.getnetwork().postJson(data,Constants.URL+"/guest/page-by-dictionary",handler,2);
+
+        if (StringUtil.isEmpty(Constants.TOKEN)){
+            DialogUtils.loginDia(this);
+        }
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //获取反馈类型
+        String data = "{\"dictionaryType\":\"opinion_type\"}";
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/page-by-dictionary", handler, 2);
+    }
+
     @OnClick({R.id.im_clean1, R.id.im_clean2, R.id.im_clean3, R.id.tv_gongneng, R.id.tv_xingneng, R.id.tv_guzhang, R.id.ed_feedback, R.id.im_addim, R.id.im_1, R.id.im_2, R.id.im_3, R.id.bt_login})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_gongneng:
-                selectDictionaryid=feedBackDictionaryBeanList.get(0).getDictionaryId();
+                selectDictionaryid = feedBackDictionaryBeanList.get(0).getDictionaryId();
                 changeselect(tvGongneng);
                 break;
             case R.id.tv_xingneng:
                 changeselect(tvXingneng);
-                selectDictionaryid=feedBackDictionaryBeanList.get(2).getDictionaryId();
+                selectDictionaryid = feedBackDictionaryBeanList.get(2).getDictionaryId();
                 break;
             case R.id.tv_guzhang:
-                selectDictionaryid=feedBackDictionaryBeanList.get(1).getDictionaryId();
+                selectDictionaryid = feedBackDictionaryBeanList.get(1).getDictionaryId();
                 changeselect(tvGuzhang);
 
                 break;
@@ -216,7 +231,7 @@ public class FeedbackActivity extends BaseActivity {
                             .captureStrategy(new CaptureStrategy(false, "com.xinzhu.xuezhibao.provider"))//参数1 true表示拍照存储在共有目录，false表示存储在私有目录；参数2与 AndroidManifest中authorities值相同，用于适配7.0系统 必须设置
                             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                             .thumbnailScale(0.85f) // 缩略图的比例
-                        .imageEngine(new Glide4Engine()) // 使用的图片加载引擎
+                            .imageEngine(new Glide4Engine()) // 使用的图片加载引擎
                             .forResult(requestCode); // 设置作为标记的请求码
 
                 } else {
@@ -231,19 +246,18 @@ public class FeedbackActivity extends BaseActivity {
                 break;
             case R.id.bt_login:
 
-                btLogin.setBgColor(Color.parseColor("#f2f2f2"));
                 HashMap<String, String> data = new HashMap<>();
-                for (String key:map.keySet()){
+                for (String key : map.keySet()) {
                     mSelected.add(map.get(key));
                 }
-                String feedback=edFeedback.getText().toString();
-                if (feedback.isEmpty()){
+                String feedback = edFeedback.getText().toString();
+                if (feedback.isEmpty()) {
                     return;
                 }
-                if (!cancommint){
+                if (!cancommint) {
                     return;
                 }
-                if (Constants.TOKEN.isEmpty()){
+                if (Constants.TOKEN.isEmpty()) {
                     CustomDialog.Builder builder = new CustomDialog.Builder(this);
                     builder.setTitle("提示");
                     builder.setMessage("登陆后才可以继续操作，现在就去登陆");
@@ -251,8 +265,8 @@ public class FeedbackActivity extends BaseActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
-                            Intent intent=new Intent(FeedbackActivity.this,LoginActivity.class);
-                            intent.putExtra(Constants.FROMAPP,"fss");
+                            Intent intent = new Intent(FeedbackActivity.this, LoginActivity.class);
+                            intent.putExtra(Constants.FROMAPP, "fss");
                             startActivity(intent);
 
                         }
@@ -264,22 +278,23 @@ public class FeedbackActivity extends BaseActivity {
                         }
                     });
                     builder.create().show();
-                }else {
-                    data.put("opinionContent",feedback);
-                    data.put("token",Constants.TOKEN);
+                } else {
+                    btLogin.setBgColor(Color.parseColor("#f2f2f2"));
+                    data.put("opinionContent", feedback);
+                    data.put("token", Constants.TOKEN);
                     data.put("dictionaryId", selectDictionaryid);
-                    cancommint=false;
-                    Network.getnetwork().uploadimg(data,Constants.URL+"/guest/opinion-insert",mSelected,handler,1);
-                   // Network.getnetwork().uploadimg(data,"http://192.168.1.200:8080/upload",mSelected,handler);
+                    cancommint = false;
+                    Network.getnetwork().uploadimg(data, Constants.URL + "/guest/opinion-insert", mSelected, handler, 1);
+                    // Network.getnetwork().uploadimg(data,"http://192.168.1.200:8080/upload",mSelected,handler);
                 }
-                 break;
+                break;
             case R.id.im_clean1:
                 im1.setVisibility(View.INVISIBLE);
                 imClean1.setVisibility(View.INVISIBLE);
                 im1canuse = true;
                 canSelectCount++;
                 map.remove("1");
-                tvCanselectcount.setText(3-canSelectCount+"/3");
+                tvCanselectcount.setText(3 - canSelectCount + "/3");
                 break;
             case R.id.im_clean2:
                 im2.setVisibility(View.INVISIBLE);
@@ -287,14 +302,14 @@ public class FeedbackActivity extends BaseActivity {
                 im2canuse = true;
                 canSelectCount++;
                 map.remove("2");
-                tvCanselectcount.setText(3-canSelectCount+"/3");
+                tvCanselectcount.setText(3 - canSelectCount + "/3");
                 break;
             case R.id.im_clean3:
                 im3.setVisibility(View.INVISIBLE);
                 imClean3.setVisibility(View.INVISIBLE);
                 im3canuse = true;
                 canSelectCount++;
-                tvCanselectcount.setText(3-canSelectCount+"/3");
+                tvCanselectcount.setText(3 - canSelectCount + "/3");
                 map.remove("3");
                 break;
         }
@@ -326,7 +341,7 @@ public class FeedbackActivity extends BaseActivity {
         }
         int selectcount = Selected.size();
         canSelectCount = canSelectCount - selectcount;
-        tvCanselectcount.setText(3-canSelectCount+"/3");
+        tvCanselectcount.setText(3 - canSelectCount + "/3");
         for (int i = 0; i < Selected.size(); i++) {
             Uri uri = Selected.get(i);
             File file = new File(getRealFilePath(mContext, uri));
@@ -344,18 +359,21 @@ public class FeedbackActivity extends BaseActivity {
                 imClean1.setVisibility(View.VISIBLE);
                 im1canuse = false;
                 map.put("1", getRealFilePath(mContext, uri));
+                continue;
             } else if (im2canuse) {
                 im2.setImageBitmap(bitmap);
                 im2.setVisibility(View.VISIBLE);
                 imClean2.setVisibility(View.VISIBLE);
                 map.put("2", getRealFilePath(mContext, uri));
                 im2canuse = false;
+                continue;
             } else if (im3canuse) {
                 im3.setImageBitmap(bitmap);
                 im3.setVisibility(View.VISIBLE);
                 imClean3.setVisibility(View.VISIBLE);
                 map.put("3", getRealFilePath(mContext, uri));
                 im3canuse = false;
+                continue;
             }
         }
 

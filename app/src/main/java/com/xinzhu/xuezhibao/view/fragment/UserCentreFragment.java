@@ -19,6 +19,7 @@ import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.UserBasicInfo;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.xinzhu.xuezhibao.view.activity.EditAllActivity;
 import com.xinzhu.xuezhibao.view.activity.LoginActivity;
 import com.xinzhu.xuezhibao.view.activity.MyAddressActivity;
@@ -156,26 +157,7 @@ Handler handler;
     @OnClick({R.id.sd_myphoto,R.id.tv_loginbutton, R.id.cl_jifen, R.id.im_mytask, R.id.im_mycourse,R.id.im_myvideo, R.id.im_mylike, R.id.tv_userbasic, R.id.tv_vipcentre, R.id.tv_mytrack, R.id.tv_myorder, R.id.tv_jifenshop, R.id.tv_myaddress, R.id.tv_lognout})
     public void onViewClicked(View view) {
         if (Constants.TOKEN.isEmpty() && view.getId() != R.id.tv_loginbutton) {
-            CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
-            builder.setTitle("提示");
-            builder.setMessage("您尚未登陆，现在就去登陆");
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
-                    intent.putExtra(Constants.FROMAPP, "fss");
-                    startActivity(intent);
-
-                }
-            });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.create().show();
+            DialogUtils.loginDia(getActivity());
             return;
         }
         Intent intent;
@@ -250,8 +232,8 @@ Handler handler;
                 if (null == Constants.userBasicInfo.getNickName()||Constants.userBasicInfo.getNickName().isEmpty()) {
                     intent = new Intent(getActivity(), EditAllActivity.class);
                 } else {
-                   // intent = new Intent(getActivity(), EditAllActivity.class);
-                   intent = new Intent(getActivity(), UserBaseActivity.class);
+                  //  intent = new Intent(getActivity(), EditAllActivity.class);
+                  intent = new Intent(getActivity(), UserBaseActivity.class);
                 }
                 getActivity().startActivity(intent);
                 break;

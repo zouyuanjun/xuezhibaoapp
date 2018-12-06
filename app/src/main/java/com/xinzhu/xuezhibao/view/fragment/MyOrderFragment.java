@@ -174,14 +174,15 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
 
     @Override
     public void noMoredata() {
-        myorderAdapter.notifyDataSetChanged();
-        refreshLayout.finishRefresh();
-        refreshLayout.finishLoadMoreWithNoMoreData();
-        imLoading.setVisibility(View.GONE);
-        if (orderBeanList.size() == 0) {
-            imDataisnull.setVisibility(View.VISIBLE);
+        if (null!=refreshLayout){
+            myorderAdapter.notifyDataSetChanged();
+            refreshLayout.finishRefresh();
+            refreshLayout.finishLoadMoreWithNoMoreData();
+            imLoading.setVisibility(View.GONE);
+            if (orderBeanList.size() == 0) {
+                imDataisnull.setVisibility(View.VISIBLE);
+            }
         }
-
     }
 
     @Override

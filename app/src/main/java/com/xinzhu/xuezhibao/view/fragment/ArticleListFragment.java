@@ -22,6 +22,7 @@ import com.xinzhu.xuezhibao.adapter.ArticleListAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.presenter.ArticlePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.LoginActivity;
 import com.xinzhu.xuezhibao.view.interfaces.ArticleListInterface;
@@ -65,7 +66,6 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
         if (getArguments() != null) {
             POSITION = getArguments().getInt("POSITION");
         }
-        Log.d("类型" + POSITION);
         articlePresenter = new ArticlePresenter(this);
         isfirstload=true;
     }
@@ -91,6 +91,7 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
                 } else if (POSITION == 2) {
                     articlePresenter.getCollectArticle(pageindex);
                 }
+                refreshlayout.finishRefresh(2000);
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -103,6 +104,7 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
                 } else if (POSITION == 2) {
                     articlePresenter.getCollectArticle(pageindex);
                 }
+                refreshlayout.finishLoadMore(2000);
             }
         });
         articleListAdapter.setOnItemClickListener(new ArticleListAdapter.OnItemClickListener() {
@@ -118,9 +120,10 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
             }
         });
         if (POSITION == 2) {
-            if (!StringUtil.isEmpty(Constants.TOKEN)){
+            if (StringUtil.isEmpty(Constants.TOKEN)){
+                DialogUtils.loginDia(getActivity());
+                imLoading.setVisibility(View.GONE);
             }else {
-                BToast.error(getContext()).text("请登陆后再查看").show();
                 imDataisnull.setVisibility(View.VISIBLE);
             }
         }
@@ -141,7 +144,7 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
                 if (!StringUtil.isEmpty(Constants.TOKEN)){
                     articlePresenter.getCollectArticle(pageindex);
                 }else {
-                    showdia();
+
                 }
             }
             imLoading.setVisibility(View.VISIBLE);
@@ -196,27 +199,5 @@ public class ArticleListFragment extends LazyLoadFragment implements ArticleList
     @Override
     public void servererr() {
         super.servererr();
-    }
-    public void showdia() {
-        CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
-        builder.setTitle("提示");
-        builder.setMessage("登陆后才能继续，现在登陆?");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                intent.putExtra(Constants.FROMAPP, "fss");
-                startActivity(intent);
-
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-        builder.create().show();
     }
 }

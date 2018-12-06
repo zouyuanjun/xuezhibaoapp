@@ -104,6 +104,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         videoid = getIntent().getStringExtra(Constants.INTENT_ID);
 
         tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this, tvDetails));
+        tvDetails.loadDataWithBaseURL(null, "正在加载", "text/html", "UTF-8", null);
         videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
         likeCollectPresenter = new LikeCollectPresenter(this);
         mGoodView = new GoodView(this);

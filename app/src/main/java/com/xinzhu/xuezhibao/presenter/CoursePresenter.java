@@ -109,6 +109,10 @@ public class CoursePresenter {
         Network.getnetwork().postJson(data,Constants.URL+"/guest/hottest-curriculum",handler,1);
     }
 
+    /**
+     * 获取的最新课程
+     * @param page
+     */
     public void getFamilyNewCourse(int page){
         String data=JsonUtils.keyValueToString("pageNo",page);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/newest-curriculum",handler,1);
@@ -121,40 +125,8 @@ public class CoursePresenter {
         String data=JsonUtils.keyValueToString2("pageNo",page,"curriculumTitle",curriculumTitle);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/all-curriculum",handler,1);
     }
-    public void getSubjectGradeCourse(int page){
 
-    }
 
-    public void getseleectcondition(){
-
-        Network.getnetwork().postJson("",Constants.URL+"/guest/choose-conditions",handler,2);
-    }
-    public void getSubjectCourse(int page,String subjectDictionaryId,String classDictionaryId){
-        String data=JsonUtils.keyValueToString2("pageNo",page,"curriculumKind",2);
-        data=JsonUtils.addKeyValue(data,"subjectDictionaryId",subjectDictionaryId);
-        data=JsonUtils.addKeyValue(data,"classDictionaryId",classDictionaryId);
-        Network.getnetwork().postJson(data,Constants.URL+"/guest/all-curriculum",handler,3);
-    }
-    public void getSubjectHotCourse(int page ,String subjectDictionaryId,String classDictionaryId){
-        String data=JsonUtils.keyValueToString2("pageNo",page,"curriculumKind",2);
-        data=JsonUtils.addKeyValue(data,"subjectDictionaryId",subjectDictionaryId);
-        data=JsonUtils.addKeyValue(data,"classDictionaryId",classDictionaryId);
-        Network.getnetwork().postJson(data,Constants.URL+"/guest/hottest-curriculum",handler,3);
-    }
-
-    public void getSubjectNewCourse(int page,String subjectDictionaryId,String classDictionaryId){
-        String data=JsonUtils.keyValueToString2("pageNo",page,"curriculumKind",2);
-        data=JsonUtils.addKeyValue(data,"subjectDictionaryId",subjectDictionaryId);
-        data=JsonUtils.addKeyValue(data,"classDictionaryId",classDictionaryId);
-        Network.getnetwork().postJson(data,Constants.URL+"/guest/newest-curriculum",handler,3);
-    }
-    public void getSubjectRecommendCourse(int page,String subjectDictionaryId,String classDictionaryId){
-        String data=JsonUtils.keyValueToString2("pageNo",page,"isRecommend",1);
-        data=JsonUtils.addKeyValue(data,"curriculumKind",2);
-        data=JsonUtils.addKeyValue(data,"subjectDictionaryId",subjectDictionaryId);
-        data=JsonUtils.addKeyValue(data,"classDictionaryId",classDictionaryId);
-        Network.getnetwork().postJson(data,Constants.URL+"/guest/newest-curriculum",handler,3);
-    }
     public void cancelmessage(){
         handler.removeCallbacksAndMessages(null);
     }

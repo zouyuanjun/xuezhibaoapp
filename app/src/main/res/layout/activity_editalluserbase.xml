@@ -228,7 +228,7 @@
             android:layout_marginRight="16dp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="所属地区"
+            android:hint="选择地址"
             android:layout_weight="1"
             android:textColor="@color/color_black_333333"
             android:textSize="15sp"

@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -102,17 +103,12 @@ public class MyVideoActivity extends BaseActivity {
                 Network.getnetwork().postJson(data, Constants.URL + "/app/my-video", handler, 1);
             }
         });
-        videoVoiceListAdapter.setOnItemClickListener(new VideoVoiceListAdapter.OnItemClickListener() {
+        videoVoiceListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(MyVideoActivity.this, VideoDetilsActivity.class);
                 intent.putExtra(Constants.INTENT_ID, videoVoiceBeanList.get(position).getVideoId());
                 startActivity(intent);
-            }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
             }
         });
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {

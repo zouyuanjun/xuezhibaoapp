@@ -18,9 +18,6 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.JavascriptInterface;
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,6 +26,9 @@ import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
@@ -59,7 +59,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.im.android.api.JMessageClient;
 
-public class TeacherDetailActivity extends BaseActivity implements TeacherInterface,LikeCollectInterface {
+public class TeacherDetailActivity extends BaseActivity implements TeacherInterface, LikeCollectInterface {
     CommentAdapter commentAdapter;
     RvJiatingCourseAdapter adapter;
     WeakReference<Context> mContext;
@@ -95,8 +95,9 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
     TeacherBean teacherBean;
     LikeCollectPresenter likeCollectPresenter;
     GoodView mGoodView;
-    boolean islike=false;
-    int likenum=1;
+    boolean islike = false;
+    int likenum = 1;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,11 +108,11 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
         setSupportActionBar(toolbar);//设置toolbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);//左侧添加一个默认的返回图标
         getSupportActionBar().setHomeButtonEnabled(true); //设置返回键可用
-        likeCollectPresenter=new LikeCollectPresenter(this);
+        likeCollectPresenter = new LikeCollectPresenter(this);
 
         teacherPresenter = new TeacherPresenter(this);
         teacherId = getIntent().getStringExtra(Constants.INTENT_ID);
-        likeCollectPresenter.islike(teacherId,"5");
+        likeCollectPresenter.islike(teacherId, "5");
         coursepage = 1;
         commentpage = 1;
         activity = this;
@@ -214,13 +215,13 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
                 }
                 break;
             case R.id.im_talk:
-                if (null == JMessageClient.getMyInfo()){
+                if (null == JMessageClient.getMyInfo()) {
                     BToast.error(this).text("聊天服务异常，请退出重试或电话联系我们").show();
                     return;
                 }
                 Intent notificationIntent = new Intent(activity, ChatActivity.class);
                 notificationIntent.putExtra(JGApplication.TARGET_ID, teacherBean.getMainPhone());
-                notificationIntent.putExtra(JGApplication.CONV_TITLE, teacherBean.getRealName()+"老师");
+                notificationIntent.putExtra(JGApplication.CONV_TITLE, teacherBean.getRealName() + "老师");
                 notificationIntent.putExtra(JGApplication.TARGET_APP_KEY, Constants.JPUSH_APPKEY);
                 startActivity(notificationIntent);//自定义跳转到指定页面
                 break;
@@ -236,9 +237,9 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
             collapsingToolbar.setTitle(teacherBean.getRealName() + "老师");//设置标题的名字
             teacherhead.setImageURI(teacherBean.getHeadPortraitUrl());
             wbFeedback.loadDataWithBaseURL(null, teacherBean.getDescribeInfo(), "text/html", "UTF-8", null);
-            this.teacherBean=teacherBean;
-            tvLikenum.setText(teacherBean.getLikeNum()+"");
-            likenum=teacherBean.getLikeNum();
+            this.teacherBean = teacherBean;
+            tvLikenum.setText(teacherBean.getLikeNum() + "");
+            likenum = teacherBean.getLikeNum();
         }
     }
 
@@ -319,11 +320,13 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
             wbFeedback.loadUrl("javascript:App.resize(document.body.getBoundingClientRect().height)");
             super.onPageFinished(view, url);
         }
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
             return true;
         }
+
         private void imgReset() {
             wbFeedback.loadUrl("javascript:(function(){" +
                     "var objs = document.getElementsByTagName('img'); " +

@@ -37,6 +37,7 @@ import com.xinzhu.xuezhibao.view.activity.CourseTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCourseFeedBackActivity;
 import com.xinzhu.xuezhibao.view.activity.TeacherDetailActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyCourseInterface;
+import com.zou.fastlibrary.utils.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -87,6 +88,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
 
     @Override
     protected void lazyLoad() {
+        Log.d("lazyLoad>>>>>>>>>>>>>>>"+MYCLASS);
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(mContext.get());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvItem.setLayoutManager(linearLayoutManager3);
@@ -206,6 +208,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("onResume>>>>>>>>>>>>>>>"+MYCLASS);
         if (MYCLASS == 1) {
             rvItem.setAdapter(rvJiaojiaoCourseAdapter);
         } else if (MYCLASS == 2) {

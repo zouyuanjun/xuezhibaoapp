@@ -155,7 +155,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
-                    android:text="6254"
+                    android:text="0"
                     android:textColor="@color/appcolor"
                     android:textSize="19sp"
                     app:layout_constraintStart_toStartOf="parent"

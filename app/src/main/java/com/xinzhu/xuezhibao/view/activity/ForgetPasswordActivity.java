@@ -226,7 +226,7 @@ public class ForgetPasswordActivity extends BaseActivity implements ForgetPasswo
     @Override
     public void successful() {
         finish();
-        BToast.error(this).text("修改成功，请登陆").show();
+        BToast.success(this).text("修改成功，请登陆").show();
     }
 
     @Override
