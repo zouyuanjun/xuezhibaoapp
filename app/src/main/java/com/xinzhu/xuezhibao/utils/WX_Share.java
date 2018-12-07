@@ -87,7 +87,7 @@ public class WX_Share {
         return false;
     }
 
-    public static void sharePicByFile(Context context, String picFile, String tag) {
+    public static void sharePicByFile(Context context, String picFile, int tag) {
         Bitmap pic = BitmapFactory.decodeFile(picFile);
         if (null == pic) {
             return;
@@ -118,9 +118,12 @@ public class WX_Share {
         //如果超过32kb则抛异常
         SendMessageToWX.Req req = new SendMessageToWX.Req();    //创建一个请求对象
         req.message = msg;  //把msg放入请求对象中
-        req.scene = SendMessageToWX.Req.WXSceneTimeline;    //设置发送到朋友圈
-        //req.scene = SendMessageToWX.Req.WXSceneSession;   //设置发送给朋友
-        req.transaction = tag;  //这个tag要唯一,用于在回调中分辨是哪个分享请求
+        if (tag==1){
+            req.scene = SendMessageToWX.Req.WXSceneTimeline;    //设置发送到朋友圈
+        }else {
+            req.scene = SendMessageToWX.Req.WXSceneSession;   //设置发送给朋友
+        }
+        req.transaction = "qiandao";  //这个tag要唯一,用于在回调中分辨是哪个分享请求
         boolean b = api.sendReq(req);   //如果调用成功微信,会返回true
     }
 

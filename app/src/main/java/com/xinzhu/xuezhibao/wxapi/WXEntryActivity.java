@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.bravin.btoast.BToast;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -46,6 +47,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 	@Override
 	public void onResp(BaseResp resp) {
 		Log.d("dfgf", "onPayFinish, errCode = " + resp.errStr+resp.errCode);
-
+		if (resp.errCode==0){
+			//BToast.success(this).text("分享成功").show();
+			finish();
+		}else {
+		//	BToast.error(this).text("分享失败").show();
+			finish();
+		}
 	}
 }
