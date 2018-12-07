@@ -171,7 +171,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 }
 
             }
-
             /**
              * 倒计时完成时被调用
              */
@@ -214,9 +213,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     }
 
     private void init() {
-
         orientationUtils = new OrientationUtils(this, detailPlayer);
-
         detailPlayer.getFullscreenButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -294,7 +291,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                         likeCollectPresenter.like(videoid, "2");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
                     }
-
                 }
                 break;
             case R.id.ll_shoucan:
@@ -357,14 +353,12 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 break;
         }
     }
-
     @Override
     protected void onStop() {
         super.onStop();
         if (null != loadingPop && loadingPop.isShowing()) {
             loadingPop.dismiss();
         }
-
     }
 
     @Override

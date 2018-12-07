@@ -222,6 +222,7 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
 
     @OnClick(R.id.tv_signin)
     public void onViewClicked() {
+        goToActivity(this,ShareActivity.class);
         if (canshock){
             canshock=false;
             taskPresenter.clockin();
@@ -278,6 +279,7 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
         goodView.setTextInfo("签到成功", Color.parseColor("#ffffff"), 20);
         goodView.show(tvSignin);
         tvSignin.setText("已签到");
+        goToActivity(this,ShareActivity.class);
     }
 
     @Override

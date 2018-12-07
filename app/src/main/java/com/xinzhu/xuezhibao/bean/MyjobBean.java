@@ -4,16 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 
 public class MyjobBean implements Serializable{
-    String jobId;
+    String jobReplyId;
     String jobTitle;
     long createTime;
-    String state;
+    int state;
     String jobContent;
     int replyState;
     String curriculumTitle;
     String replyContent;
     List<FeedbackPictureBean> accessoryList;
-
+    List<FeedbackPictureBean> jobList;
     public List<FeedbackPictureBean> getAccessoryList() {
         return accessoryList;
     }
@@ -22,6 +22,13 @@ public class MyjobBean implements Serializable{
         this.accessoryList = accessoryList;
     }
 
+    public List<FeedbackPictureBean> getJobList() {
+        return jobList;
+    }
+
+    public void setJobList(List<FeedbackPictureBean> jobList) {
+        this.jobList = jobList;
+    }
     public String getReplyContent() {
         return replyContent;
     }
@@ -57,12 +64,12 @@ public class MyjobBean implements Serializable{
     public MyjobBean() {
     }
 
-    public String getJobId() {
-        return jobId;
+    public String getJobReplyId() {
+        return jobReplyId;
     }
 
-    public void setJobId(String jobId) {
-        this.jobId = jobId;
+    public void setJobReplyId(String jobReplyId) {
+        this.jobReplyId = jobReplyId;
     }
 
     public String getJobContent() {
@@ -75,11 +82,11 @@ public class MyjobBean implements Serializable{
 
 
     public String getId() {
-        return jobId;
+        return jobReplyId;
     }
 
     public void setId(String id) {
-        this.jobId = id;
+        this.jobReplyId = id;
     }
 
     public String getJobTitle() {
@@ -98,11 +105,11 @@ public class MyjobBean implements Serializable{
         this.createTime = createTime;
     }
 
-    public String getState() {
+    public int getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(int state) {
         this.state = state;
     }
 }

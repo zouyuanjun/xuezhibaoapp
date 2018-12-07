@@ -76,9 +76,15 @@
 
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
-
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <com.scwang.smartrefresh.header.MaterialHeader
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></com.scwang.smartrefresh.header.MaterialHeader>
     <android.support.v4.widget.NestedScrollView
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true"
@@ -143,8 +149,8 @@
 
             </android.support.v7.widget.RecyclerView >
             <LinearLayout
-               android:background="@color/fenge"
-               android:layout_width="match_parent"
+                android:background="@color/fenge"
+                android:layout_width="match_parent"
                 android:layout_height="1dp"></LinearLayout>
             <LinearLayout
                 android:id="@+id/ll_more_voice"
@@ -229,5 +235,5 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </android.support.design.widget.CoordinatorLayout>

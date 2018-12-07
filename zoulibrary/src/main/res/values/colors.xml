@@ -13,5 +13,5 @@
     <color name="blue_btn">#2c6ed2</color>
     <color name="blue_sky">#62c8f9</color>
     <color name="transparent">#00000000</color>
-
+    <color name="touchbg">#364b4b58</color>
 </resources>

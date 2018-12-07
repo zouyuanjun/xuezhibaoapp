@@ -73,7 +73,18 @@ public class ImageUtils {
         }
         return bitmap;
     }
+    //缩放BITMAP
+    public static Bitmap resizeImage(Bitmap bitmap, float scale) {
+        Bitmap BitmapOrg = bitmap;
+        int width = BitmapOrg.getWidth();
+        int height = BitmapOrg.getHeight();
 
+        Matrix matrix = new Matrix();
+        matrix.postScale(scale, scale);
+        Bitmap resizedBitmap = Bitmap.createBitmap(BitmapOrg, 0, 0, width,
+                height, matrix, true);
+        return resizedBitmap;
+    }
     /**
      * 三星手机设置
      * 三星手机拍照要旋转

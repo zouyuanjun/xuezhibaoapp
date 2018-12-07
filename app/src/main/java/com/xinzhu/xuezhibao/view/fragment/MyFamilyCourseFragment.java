@@ -134,7 +134,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent(getContext(), CourseTaskActivity.class);
-                intent.putExtra(Constants.INTENT_ID, taskBeanArrayList.get(position).getJobId());
+                intent.putExtra(Constants.INTENT_ID, taskBeanArrayList.get(position).getJobReplyId());
                 intent.putExtra("TYPE", 2);
                 startActivity(intent);
             }

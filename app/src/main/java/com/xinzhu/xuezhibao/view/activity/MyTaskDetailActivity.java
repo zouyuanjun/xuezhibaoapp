@@ -63,7 +63,6 @@ public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterfa
            }
        });
     }
-
     @OnClick(R.id.tv_taskstatu)
     public void onViewClicked() {
         if (myTaskBean.getStateType()==1){

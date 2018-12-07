@@ -17,6 +17,7 @@ import com.xinzhu.xuezhibao.bean.GoodsBean;
 import com.xinzhu.xuezhibao.bean.GoodsComment;
 import com.xinzhu.xuezhibao.presenter.MyGoodsPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.xinzhu.xuezhibao.view.activity.GoodsDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.MyPointsActivity;
 import com.xinzhu.xuezhibao.view.activity.MyVipCentreActivity;
@@ -24,6 +25,7 @@ import com.xinzhu.xuezhibao.view.activity.PointsMallTabActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyGoodsInterface;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +124,10 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
 
     @OnClick({R.id.tv_togovipcenter, R.id.tv_points, R.id.tv_more_goods})
     public void onViewClicked(View view) {
+        if (StringUtil.isEmpty(Constants.TOKEN)){
+            DialogUtils.loginDia(getActivity());
+            return;
+        }
         Intent intent;
         switch (view.getId()) {
             case R.id.tv_togovipcenter:

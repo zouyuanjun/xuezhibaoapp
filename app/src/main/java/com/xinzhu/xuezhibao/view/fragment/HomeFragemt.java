@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -16,6 +17,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bravin.btoast.BToast;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.HomeArticleAdapter;
@@ -100,6 +104,8 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     @BindView(R.id.ll_message)
     LinearLayout llMessage;
     List<BannerImgBean> mybannerImgBean = new ArrayList<>();
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     @Override
     protected int setContentView() {
@@ -110,7 +116,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     protected void lazyLoad() {
         Log.d("懒加载开始");
         EditTextUtil.hideKeyboard(MyApplication.getContext(), edSearch);
-
 
         //设置banner样式
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
@@ -130,15 +135,15 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                if (position<mybannerImgBean.size()){
-                    if (mybannerImgBean.get(position).getNewPlace()==1){
-                        Uri uri = Uri.parse( mybannerImgBean.get(position).getLinkAddress());
+                if (position < mybannerImgBean.size()) {
+                    if (mybannerImgBean.get(position).getNewPlace() == 1) {
+                        Uri uri = Uri.parse(mybannerImgBean.get(position).getLinkAddress());
                         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                         startActivity(intent);
-                    }else {
+                    } else {
                         Intent intent = new Intent(getContext(), WebActivity.class);
                         intent.putExtra("URL", mybannerImgBean.get(position).getLinkAddress());
-                       // intent.putExtra("URL", "http://soft.imtt.qq.com/browser/tes/feedback.html");
+                        // intent.putExtra("URL", "http://soft.imtt.qq.com/browser/tes/feedback.html");
                         startActivity(intent);
                     }
 
@@ -146,16 +151,22 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
             }
         });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                homepagePresenter.initdata();
+            }
+        });
 
-        }
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        if (null!=JMessageClient.getMyInfo()){
+        if (null != JMessageClient.getMyInfo()) {
             qBadgeView = new QBadgeView(MyApplication.getContext());
             qBadgeView.bindTarget(llMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
-            messagecount=JMessageClient.getAllUnReadMsgCount();
+            messagecount = JMessageClient.getAllUnReadMsgCount();
             qBadgeView.setBadgeNumber(messagecount);
         }
         homepagePresenter.initdata();
@@ -181,16 +192,18 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     public void onEvent(MessageEvent event) {
         //  event.getMessage().toJson();
-        messagecount=JMessageClient.getAllUnReadMsgCount();
+        messagecount = JMessageClient.getAllUnReadMsgCount();
         qBadgeView.setBadgeNumber(messagecount);
         Log.d("收到l一条消息" + messagecount);
     }
-    public void onEvent(LoginStateChangeEvent event){
-        LoginStateChangeEvent.Reason message=event.getReason();
-        if (message.name().equals("user_logout")){
+
+    public void onEvent(LoginStateChangeEvent event) {
+        LoginStateChangeEvent.Reason message = event.getReason();
+        if (message.name().equals("user_logout")) {
             BToast.error(getContext()).text("您从其他客户端登陆，本客户端已下线").show();
         }
     }
+
     //通知栏点击事件
     public void onEvent(NotificationClickEvent event) {
         Intent notificationIntent = new Intent(getContext(), ChatActivity.class);
@@ -286,10 +299,9 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     //初始化视频列表
     @Override
     public void getVideodata(final List<VideoVoiceBean> mDatas) {
-
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        if (null!=rvVideo){
+        if (null != rvVideo) {
             rvVideo.setLayoutManager(linearLayoutManager);
             rvVideo.setNestedScrollingEnabled(false);
             homeVideoAdapter = new HomeVideoAdapter(MyApplication.getContext(), mDatas);
@@ -314,11 +326,11 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     @Override
     public void getVoicedata(final List<VideoVoiceBean> mDatas) {
-        if (null!=rvVoice) {
+        if (null != rvVoice) {
 //        初始化音频列表
             LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(MyApplication.getContext());
             linearLayoutManager2.setOrientation(LinearLayoutManager.HORIZONTAL);
-            if (null!=rvVoice){
+            if (null != rvVoice) {
                 rvVoice.setNestedScrollingEnabled(false);
                 rvVoice.setLayoutManager(linearLayoutManager2);
                 homeVoiceAdapter = new HomeVoiceAdapter(MyApplication.getContext(), mDatas);
@@ -348,7 +360,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
-        if (null!=rvArticle){
+        if (null != rvArticle) {
             rvArticle.setLayoutManager(linearLayoutManager3);
             rvArticle.setNestedScrollingEnabled(false);
             homeArticleAdapter = new HomeArticleAdapter(MyApplication.getContext(), mDatas);

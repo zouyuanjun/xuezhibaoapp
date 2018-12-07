@@ -137,12 +137,12 @@ public class MyCoursePresenter {
 //获取作业列表
     public void getjob(int page, int type) {
         String data = JsonUtils.keyValueToString2("pageNo", page, "token", Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/my-CurriculumJob", handler, 4);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/my-Job", handler, 4);
     }
 //获取单个作业详情
     public void getjobbyid(String jobId) {
-        String data = JsonUtils.keyValueToString2("jobId", jobId, "token", Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/select-curriculumJob-by-id", handler, 5);
+        String data = JsonUtils.keyValueToString2("jobReplyId", jobId, "token", Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/select-Job-by-id", handler, 5);
     }
 
     public void replyfeedback(String id){

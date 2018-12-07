@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/fenge">
+
     <com.zou.fastlibrary.ui.CustomNavigatorBar
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -18,10 +19,10 @@
         app:midTextFontColor="#ffffff"
         app:midTextSizeSp="18"
         app:rightImageVisible='false'
-        app:rightTextVisible='false'
         app:rightTextColor='#ffffff'
         app:rightTextSizeSp="15"
-        app:titleBarBackground='@color/appcolor'/>
+        app:rightTextVisible='false'
+        app:titleBarBackground='@color/appcolor' />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -32,8 +33,10 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar">
+        app:layout_constraintTop_toBottomOf="@+id/appbar"
+        app:layout_constraintVertical_bias="1.0">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -60,31 +63,31 @@
                 android:background="@color/appcolor"
                 android:paddingLeft="16dp"
                 android:text="课程"
-                android:textSize="14sp"
                 android:textColor="@color/white"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
             <TextView
-                android:textColor="@color/color_black_666666"
-                android:textSize="14sp"
                 android:id="@+id/tv_course"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:text=""
+                android:textColor="@color/color_black_666666"
+                android:textSize="14sp"
                 app:layout_constraintStart_toEndOf="@+id/tv_aa"
                 app:layout_constraintTop_toTopOf="@+id/tv_aa" />
 
             <TextView
-                android:textSize="14sp"
-                android:textColor="@color/color_grey_999999"
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:text="发布时间："
+                android:textColor="@color/color_grey_999999"
+                android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_course" />
 
@@ -98,13 +101,14 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_time" />
+
             <TextView
                 android:id="@+id/tv_task"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
+                android:layout_marginEnd="16dp"
                 android:lineSpacingExtra="3dp"
                 android:text=""
                 android:textColor="@color/color_black_333333"
@@ -114,15 +118,49 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_time" />
 
             <LinearLayout
-                android:id="@+id/linearLayout15"
-                android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="16dp"
-                android:background="@color/fenge"
+                android:visibility="gone"
+                android:background="@drawable/fujian"
+                android:id="@+id/llfujian"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_task"></LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/tv_task">
+
+                <TextView
+                    android:id="@+id/tv_download"
+                    android:layout_marginLeft="@dimen/sp_16"
+                    android:layout_marginRight="@dimen/sp_16"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableLeft="@drawable/task_icon_enclosure"
+                    android:drawablePadding="@dimen/dp_10"
+                    android:gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="学习附件" />
+                <ImageView
+                    android:id="@+id/img_download_ioc"
+                    android:layout_marginRight="@dimen/sp_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/task_btn_download_nor"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout15"
+                android:layout_width="0dp"
+                android:layout_height="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/fenge"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/llfujian"></LinearLayout>
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="0dp"
@@ -163,26 +201,26 @@
                 </ImageView>
 
                 <ImageView
-                    android:visibility="gone"
                     android:id="@+id/im_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:scaleType="fitXY"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_tasktext"
-                    android:scaleType="fitXY"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_tasktext" />
 
                 <ImageView
-                    android:visibility="gone"
                     android:id="@+id/im_2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
+                    android:scaleType="fitXY"
+                    android:visibility="gone"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/im_1"
-                    android:scaleType="fitXY"/>
+                    app:layout_constraintTop_toBottomOf="@+id/im_1" />
 
                 <ImageView
                     android:id="@+id/im_3"
@@ -190,10 +228,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/im_2"
                     android:scaleType="fitXY"
-                     />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/im_2" />
             </android.support.constraint.ConstraintLayout>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>

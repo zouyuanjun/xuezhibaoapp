@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:text="该视频是收费视频，您可以试看60秒"
+            android:text="试看60秒"
             android:textColor="@color/white"
             android:textSize="13sp" />
         <android.support.constraint.ConstraintLayout

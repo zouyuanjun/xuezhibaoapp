@@ -141,6 +141,10 @@
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:theme="@style/SplashStyle"></activity>
+        <activity android:name=".view.activity.ShareActivity" />
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:theme="@style/SplashStyle"></activity>
 
 
         <provider

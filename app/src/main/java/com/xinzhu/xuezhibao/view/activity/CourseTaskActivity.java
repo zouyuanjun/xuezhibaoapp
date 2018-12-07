@@ -17,14 +17,19 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.MyJobDetailInterpace;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.DataKeeper;
+import com.zou.fastlibrary.utils.DownloadUtil;
+import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.TimeUtil;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 课程任务
+ * 课程作业
  */
 public class CourseTaskActivity extends BaseActivity implements MyJobDetailInterpace {
     @BindView(R.id.appbar)
@@ -53,7 +58,15 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
     ImageView im3;
     String jobid;
     MyCoursePresenter myCoursePresenter;
-
+    @BindView(R.id.tv_download)
+    TextView tvDownload;
+    @BindView(R.id.img_download_ioc)
+    ImageView imgDownloadIoc;
+    @BindView(R.id.llfujian)
+    LinearLayout llfujian;
+    boolean isdownload = false;
+    String fileurl;
+    File myfile;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,9 +90,7 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
 
     @OnClick(R.id.im_committask)
     public void onViewClicked() {
-        Intent intent = new Intent(CourseTaskActivity.this, EditTaskActivity.class);
-        intent.putExtra(Constants.INTENT_ID, jobid);
-        startActivity(intent);
+
     }
 
     @Override
@@ -91,14 +102,14 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
         tvTitle.setText(myjobBean.getJobTitle());
         tvTime.setText("发布时间：" + TimeUtil.getWholeTime2(myjobBean.getCreateTime()));
         tvCourse.setText(myjobBean.getCurriculumTitle());
-        if (myjobBean.getReplyState() > 0) {
+        if (myjobBean.getState() > 2) {
             tvStatus.setText("已完成");
             tvStatus.setTextColor(Color.parseColor("#f87d28"));
             imCommittask.setVisibility(View.GONE);
             tvTasktext.setText(myjobBean.getReplyContent());
-            if (myjobBean.getAccessoryList().size() > 0) {
+            if (null != myjobBean.getAccessoryList() && myjobBean.getAccessoryList().size() > 0) {
 
-                for ( int i = 0;i<myjobBean.getAccessoryList().size();i++) {
+                for (int i = 0; i < myjobBean.getAccessoryList().size(); i++) {
                     if (i == 0) {
                         Glide.with(this).load(myjobBean.getAccessoryList().get(i).getAccessoryUrl()).
                                 into(im1);
@@ -113,22 +124,64 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
                         Glide.with(this).load(myjobBean.getAccessoryList().get(i).getAccessoryUrl()).
                                 into(im3);
                         im3.setVisibility(View.VISIBLE);
-                }
+                    }
                 }
                 tvTasktext.setVisibility(View.VISIBLE);
             }
-        }
 
+
+        }
+        if (null != myjobBean.getJobList() && myjobBean.getJobList().size() > 0) {
+            llfujian.setVisibility(View.VISIBLE);
+            fileurl = myjobBean.getJobList().get(0).getAccessoryUrl();
+        }
     }
 
     @Override
     public void getdatafail(String tip) {
-        BToast.error(this).text("数据异常："+tip).show();
+        BToast.error(this).text("数据异常：" + tip).show();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         myCoursePresenter.cancelmessage();
+    }
+
+    @OnClick({R.id.llfujian, R.id.im_committask})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.llfujian:
+                if (isdownload) {
+                    DownloadUtil.openFile(CourseTaskActivity.this, myfile);
+                } else {
+                    int suffixindex = fileurl.lastIndexOf(".");
+                    String suffix = fileurl.substring(suffixindex);
+                    String path = DataKeeper.getDiskCachePath(this) + "/download/";
+                    DownloadUtil.get().download(fileurl, path, jobid + suffix, new DownloadUtil.OnDownloadListener() {
+                        @Override
+                        public void onDownloadSuccess(File file) {
+                            myfile=file;
+                            isdownload = true;
+                            imgDownloadIoc.setBackgroundResource(R.drawable.task_btn_download_sel);
+                        }
+
+                        @Override
+                        public void onDownloading(int progress) {
+                            Log.d("下载进度" + progress);
+                        }
+
+                        @Override
+                        public void onDownloadFailed(Exception e) {
+                        }
+                    });
+                }
+                break;
+            case R.id.im_committask:
+                Intent intent = new Intent(CourseTaskActivity.this, EditTaskActivity.class);
+                intent.putExtra(Constants.INTENT_ID, jobid);
+                startActivity(intent);
+                break;
+        }
     }
 }

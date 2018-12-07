@@ -145,10 +145,10 @@ PopupWindow poploading;
                 } else {
                     poploading=CreatPopwindows.creatMMpopwindows(EditTaskActivity.this,R.layout.pop_loading);
                     poploading.showAtLocation(view,Gravity.CENTER,0,0);
-                    data.put("jobId", jobid);
+                    data.put("jobReplyId", jobid);
                     data.put("replyContent", feedback);
                     data.put("token", Constants.TOKEN);
-                    Network.getnetwork().uploadimg(data, Constants.URL + "/guest/reply-curriculumJob", mSelected, handler, 1);
+                    Network.getnetwork().uploadimg(data, Constants.URL + "/guest/reply-Job", mSelected, handler, 1);
                 }
             }
         });

@@ -24,15 +24,17 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:padding="5dp"
             android:id="@+id/left_image"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:minWidth="20dp"
             android:minHeight="20dp"
+            android:background="@drawable/touch_bg"
             android:src="@drawable/nav_btn_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
