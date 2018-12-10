@@ -146,6 +146,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         ButterKnife.bind(this);
         context = this;
         tvDetails.setWebViewClient(new WebViewUtil.MyWebViewClient(this, tvDetails));
+        //为了解决webview高度不稳定的问题，所以先加载一个小网页
         tvDetails.loadDataWithBaseURL(null, "正在加载", "text/html", "UTF-8", null);
         videoid = getIntent().getStringExtra(Constants.INTENT_ID);
         mGoodView = new GoodView(this);
@@ -239,6 +240,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                     startplaytime = System.currentTimeMillis();
                     haseplay = true;
                     if (isVipVideo){
+                        timer.cancel();
                         timer.start();
                     }
 
@@ -312,6 +314,8 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 showpop(view);
                 break;
             case R.id.tv_buyvideo:
+                detailPlayer.onVideoPause();
+                timer.cancel();
                 if (Constants.TOKEN.isEmpty()) {
                     showdia();
                 } else {

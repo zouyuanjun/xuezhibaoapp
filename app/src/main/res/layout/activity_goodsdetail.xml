@@ -1,92 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="48dp"
         android:layout_weight="1">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/applayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            app:layout_scrollFlags="scroll">
+            >
 
-            <android.support.constraint.ConstraintLayout
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/clltab"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_scrollFlags="scroll">
-                <com.youth.banner.Banner
-                    android:id="@+id/sdv_goodspicter"
+                android:layout_height="wrap_content"
+                app:title="详情"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="260dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-                <ImageView
-                    android:id="@+id/im_back"
-                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:layout_scrollFlags="scroll">
+
+                    <com.youth.banner.Banner
+                        android:id="@+id/sdv_goodspicter"
+                        android:layout_width="match_parent"
+                        android:layout_height="260dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tv_goodstitle"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="TextView"
+                        android:textColor="@color/color_black_333333"
+                        android:textSize="15sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/sdv_goodspicter" />
+
+                    <TextView
+                        android:id="@+id/tv_goodsprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:text="TextView"
+                        android:textColor="@color/appcolor"
+                        android:textSize="17sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_goodstitle" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="10dp"
+                        android:layout_marginTop="16dp"
+                        android:background="@color/fenge"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_goodsprice"></LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_paynum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="14dp"
+                        android:layout_marginEnd="16dp"
+                        android:text="TextView"
+                        android:textColor="@color/color_grey_999999"
+                        android:textSize="13sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tv_goodsprice"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tv_goodsprice" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:background="@drawable/orderdetail_btn_return"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-                <TextView
-                    android:id="@+id/tv_goodstitle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="TextView"
-                    android:textColor="@color/color_black_333333"
-                    android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/sdv_goodspicter" />
+                    android:paddingTop="20dp"
+                    app:layout_collapseMode="pin"
+                    app:titleTextColor="@color/white"
+                    android:background="@color/appcolor"
+                    android:fitsSystemWindows="true"
+                    app:title="详情"
+                    >
 
-                <TextView
-                    android:id="@+id/tv_goodsprice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="TextView"
-                    android:textColor="@color/appcolor"
-                    android:textSize="17sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_goodstitle" />
+                    <ImageView
+                        android:id="@+id/im_back"
+                        android:paddingTop="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:background="@drawable/orderdetail_btn_return"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </android.support.v7.widget.Toolbar>
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="10dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/fenge"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_goodsprice"></LinearLayout>
 
-                <TextView
-                    android:id="@+id/tv_paynum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="14dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="TextView"
-                    android:textColor="@color/color_grey_999999"
-                    android:textSize="13sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/tv_goodsprice"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/tv_goodsprice" />
-
-            </android.support.constraint.ConstraintLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tb_goodstab"
@@ -109,13 +135,12 @@
                     android:text="评价" />
             </android.support.design.widget.TabLayout>
 
-
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/ns_pingjia"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -186,42 +211,46 @@
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <com.tencent.smtt.sdk.WebView
                 android:id="@+id/web_goodsdetail"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="20dp"></com.tencent.smtt.sdk.WebView>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+
+                ></com.tencent.smtt.sdk.WebView>
 
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp">
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
 
         <ImageView
-            android:visibility="gone"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/textView29"
             app:layout_constraintEnd_toEndOf="@+id/textView29"
             app:layout_constraintStart_toStartOf="@+id/textView29"
             app:srcCompat="@drawable/videodetails_btn_collection_nor" />
 
         <ImageView
-            android:visibility="gone"
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/textView30"
             app:layout_constraintEnd_toEndOf="@+id/textView30"
             app:layout_constraintStart_toStartOf="@+id/textView30"
             app:srcCompat="@drawable/tutor_btn_contact" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/textView29"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -230,11 +259,11 @@
             android:text="收藏"
             android:textColor="@color/color_grey_999999"
             android:textSize="12sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/textView30"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -243,6 +272,7 @@
             android:text="客服"
             android:textColor="@color/color_grey_999999"
             android:textSize="12sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView29" />
 
@@ -281,8 +311,9 @@
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
     </android.support.constraint.ConstraintLayout>
-</LinearLayout>
+</RelativeLayout>
 
 

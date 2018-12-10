@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import com.tencent.smtt.sdk.WebView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.tencent.smtt.sdk.WebView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.GoodsCommentAdapter;
 import com.xinzhu.xuezhibao.bean.FeedbackPictureBean;
@@ -25,6 +28,8 @@ import com.xinzhu.xuezhibao.bean.GoodsBean;
 import com.xinzhu.xuezhibao.bean.GoodsComment;
 import com.xinzhu.xuezhibao.presenter.MyGoodsPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.DialogUtils;
+import com.xinzhu.xuezhibao.utils.WebViewUtil;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
 import com.xinzhu.xuezhibao.view.interfaces.MyGoodsInterface;
 import com.youth.banner.Banner;
@@ -32,7 +37,7 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.utils.Log;
-import com.xinzhu.xuezhibao.utils.WebViewUtil;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +79,12 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.tv_nocomment)
     TextView tvNocomment;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.applayout)
+    AppBarLayout applayout;
+    @BindView(R.id.clltab)
+    CollapsingToolbarLayout clltab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +93,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+        setSupportActionBar(toolbar);
         setContentView(R.layout.activity_goodsdetail);
         ButterKnife.bind(this);
         googdsid = getIntent().getStringExtra(Constants.INTENT_ID);
@@ -121,9 +133,11 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                     ns_pingjia.setVisibility(View.VISIBLE);
                 }
             }
+
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
             }
+
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
             }
@@ -142,12 +156,52 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                 myGoodsPresenter.getgoodscomment(page, googdsid);
             }
         });
+        applayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                //verticalOffset  当前偏移量 appBarLayout.getTotalScrollRange() 最大高度 便宜值
+                int Offset = Math.abs(verticalOffset); //目的是将负数转换为绝对正数；
+                //标题栏的渐变
+                toolbar.setBackgroundColor(changeAlpha(getResources().getColor(R.color.appcolor)
+                        , Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange()));
+
+                /**
+                 * 当前最大高度便宜值除以2 在减去已偏移值 获取浮动 先显示在隐藏
+                 */
+                if (Offset < appBarLayout.getTotalScrollRange() / 2) {
+                    clltab.setTitle("详情");
+                    toolbar.setAlpha((appBarLayout.getTotalScrollRange() / 2 - Offset * 1.0f) / (appBarLayout.getTotalScrollRange() / 2));
+                    toolbar.setAlpha((appBarLayout.getTotalScrollRange() / 2 - Offset * 1.0f) / (appBarLayout.getTotalScrollRange() / 2));
+                    //   toolbar.setImageDrawable(getResources().getDrawable(R.mipmap.share_shop));
+                    //   toolbar.setNavigationIcon(R.mipmap.shop_details_2);
+                    /**
+                     * 从最低浮动开始渐显 当前 Offset就是  appBarLayout.getTotalScrollRange() / 2
+                     * 所以 Offset - appBarLayout.getTotalScrollRange() / 2
+                     */
+                } else if (Offset > appBarLayout.getTotalScrollRange() / 2) {
+                    float floate = (Offset - appBarLayout.getTotalScrollRange() / 2) * 1.0f / (appBarLayout.getTotalScrollRange() / 2);
+                    toolbar.setAlpha(floate);
+                    // toolbar.setNavigationIcon(R.mipmap.b);
+                    // mBinding.shareImg.setImageDrawable(getResources().getDrawable(R.mipmap.img_share));
+                    clltab.setTitle("详情");
+                    toolbar.setAlpha(floate);
+                }
+            }
+        });
+    }
+
+    /**
+     * 根据百分比改变颜色透明度
+     */
+    public int changeAlpha(int color, float fraction) {
+        int alpha = (int) (Color.alpha(color) * fraction);
+        return Color.argb(alpha, 248, 125, 40);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (null!=Constants.userBasicInfo){
+        if (null != Constants.userBasicInfo) {
             tvMypoints.setText(Constants.userBasicInfo.getIntegral() + "积分");
         }
 
@@ -169,6 +223,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     @Override
     public void getGoodsDetail(GoodsBean goodsBean) {
         this.goodsBean = goodsBean;
+        clltab.setTitle(goodsBean.getProductName());
         tvGoodstitle.setText(goodsBean.getProductName());
         tvGoodsprice.setText(goodsBean.getProductPrice() + "积分");
         tvPaynum.setText(goodsBean.getBuyNum() + "人已购买");
@@ -192,13 +247,14 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
 
     @Override
     public void getcomment(List<GoodsComment> list) {
-        if (list.size()>0){
+        if (list.size() > 0) {
             tvNocomment.setVisibility(View.GONE);
             goodsCommentList.addAll(list);
             goodsCommentAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
-            page++;}
+            page++;
+        }
 
     }
 
@@ -209,6 +265,10 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                 finish();
                 break;
             case R.id.tv_pay:
+                if (StringUtil.isEmpty(Constants.TOKEN)) {
+                    DialogUtils.loginDia(this);
+                    return;
+                }
                 Intent intent = new Intent(GoodsDetailActivity.this, PayOrderActivity.class);
                 intent.putExtra(Constants.INTENT_ID, goodsBean);
                 startActivity(intent);

@@ -213,7 +213,7 @@ public class TimeUtil {
 		int[] details = TimeUtil.getWholeDetail(date);
 
 		return details[0] + "年" + details[1] + "月" 
-		+ details[2] + "日  " + details[3] + "时" + details[4] + "分";
+		+ details[2] + "日  " ;
 	}
 	/**获取完整时间 yy-mm-dd-hh时mm分
 	 * @param date

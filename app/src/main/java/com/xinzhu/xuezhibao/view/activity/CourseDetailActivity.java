@@ -288,7 +288,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
                 }
                 Intent notificationIntent = new Intent(CourseDetailActivity.this, ChatActivity.class);
                 notificationIntent.putExtra(JGApplication.TARGET_ID, mycourse.getTeacherPhone());
-                notificationIntent.putExtra(JGApplication.CONV_TITLE, mycourse.getSpeakerTeacher() + "老师");
+                notificationIntent.putExtra(JGApplication.CONV_TITLE, mycourse.getRealName() + "老师");
                 notificationIntent.putExtra(JGApplication.TARGET_APP_KEY, Constants.JPUSH_APPKEY);
                 startActivity(notificationIntent);//自定义跳转到指定页面
                 break;

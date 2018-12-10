@@ -19,9 +19,18 @@ public class CourseBean {
     int consumeHour;
     int isApply;
     String teacherPhone;
+    String realName;
 
     public String getTeacherPhone() {
         return teacherPhone;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public void setTeacherPhone(String teacherPhone) {

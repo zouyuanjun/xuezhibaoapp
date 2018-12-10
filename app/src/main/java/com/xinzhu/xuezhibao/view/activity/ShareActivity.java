@@ -1,6 +1,12 @@
 package com.xinzhu.xuezhibao.view.activity;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -33,6 +39,7 @@ import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.ScreenUtil;
 import com.zou.fastlibrary.utils.StringUtil;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,9 +58,10 @@ public class ShareActivity extends BaseActivity {
             Log.d(result);
             int code = JsonUtils.getIntValue(result, "Code");
             if (code == 100) {
-                path = DataKeeper.getDiskCachePath(ShareActivity.this) + "/Pictures/";
+
 
                 String url = JsonUtils.getStringValue(result, "Data");
+                url=JsonUtils.getStringValue(url,"qrAddress");
                 if (StringUtil.isEmpty(url)) {
                     return;
                 }
@@ -62,9 +70,23 @@ public class ShareActivity extends BaseActivity {
                         .load(url)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
-                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                                imgShare.setImageBitmap(resource);
-                                ImageUtils.saveBitmapFile(resource, path, "share.jpg");
+                            public void onResourceReady(@NonNull Bitmap photo, @Nullable Transition<? super Bitmap> transition) {
+                                int with=photo.getWidth();
+                                int higt=photo.getHeight();
+                                Log.d(with+"sd"+higt);
+                                Canvas canvas = new Canvas(photo);// 初始化画布绘制的图像到icon上
+                                Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);// 设置画笔
+                                textPaint.setTextSize(40);// 字体大小
+                                textPaint.setTypeface(Typeface.DEFAULT );// 采用默认的宽度
+                                textPaint.setColor(Color.parseColor("#ff5436"));// 采用的颜色
+                               // textPaint.setFakeBoldText(true);
+
+                                canvas.drawText(TimeUtil.getWholeTime(System.currentTimeMillis())+"", with/3-25, higt/2, textPaint);// 绘制上去字，开始未知x,y采用那只笔绘制
+                                canvas.save(Canvas.ALL_SAVE_FLAG);
+                                canvas.restore();
+                                imgShare.setImageBitmap(photo);
+                                ImageUtils.saveBitmapFile(photo, path, "share.jpg");
+                                photo=null;
                             }
                         });
             }
@@ -90,6 +112,7 @@ public class ShareActivity extends BaseActivity {
             }
         });
         Network.getnetwork().postJson("", Constants.URL + "/guest/select-qr-address", handler, 1);
+        path = DataKeeper.getDiskCachePath(ShareActivity.this) + "/Pictures/";
     }
 
     @Override

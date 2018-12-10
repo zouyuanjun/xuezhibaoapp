@@ -6,8 +6,9 @@ import com.xinzhu.xuezhibao.bean.UserBasicInfo;
 public class Constants {
     public static final String APP_ID = "wxc56b70bd3c1c491f";
     public static IWXAPI api;   //第三方和微信通信的接口
-    public static String URL="http://192.168.1.199:8080/";
- //   public static String URL = "http://app.xuezhiben.com";
+    //public static String URL="http://192.168.1.199:8080/";
+//    public static String URL = "http://app.xuezhiben.com";
+    public static String URL = "http://192.168.1.159:8080";
     public static String APP_VERSION = "1.0.0";
     public static String AlipayAccount = "";
     public static String JPUSH_APPKEY = "68a8c864423f3b707c8c8da3";

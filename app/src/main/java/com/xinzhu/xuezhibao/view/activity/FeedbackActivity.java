@@ -147,6 +147,9 @@ public class FeedbackActivity extends BaseActivity {
             if (what == 2) {
                 String data = JsonUtils.getStringValue(result, "Data");
                 feedBackDictionaryBeanList = JSON.parseArray(data, FeedBackDictionaryBean.class);
+                if (null==feedBackDictionaryBeanList){
+                    return;
+                }
                 for (int i = 0; i < feedBackDictionaryBeanList.size(); i++) {
                     if (i == 0) {
                         tvGongneng.setText(feedBackDictionaryBeanList.get(0).getDictionaryName());

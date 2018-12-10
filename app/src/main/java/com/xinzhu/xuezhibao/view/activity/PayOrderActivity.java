@@ -118,15 +118,9 @@ public class PayOrderActivity extends BaseActivity implements PayOrderInterface 
     }
 
     @Override
-    public void noMorepoint() {
-        BToast.error(this).text("您的积分不足，无法下单").show();
+    public void noMorepoint(String tips) {
+        BToast.error(this).text(tips).show();
     }
-
-    @Override
-    public void payfail() {
-        BToast.error(this).text("奖品兑换失败，请稍后再试").show();
-    }
-
     @Override
     public void paysuccessful() {
         BToast.error(this).text("下单成功").show();

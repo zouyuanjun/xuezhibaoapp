@@ -68,10 +68,10 @@ public class MyOrederPresenter extends BasePresenter {
                     }
 
                 } else if (what == 3) {
-                    String data = JsonUtils.getStringValue(result, "Data");
+                    String Tips = JsonUtils.getStringValue(result, "Tips");
                     if (null != payOrderInterface) {
                         if (code == 203) {
-                            payOrderInterface.noMorepoint();
+                            payOrderInterface.noMorepoint(Tips);
                         } else if (code == 100) {
                             payOrderInterface.paysuccessful();
                         }
@@ -89,15 +89,12 @@ public class MyOrederPresenter extends BasePresenter {
                         }else if (null!=orderDetailInterface){
                             orderDetailInterface.affirmorder();
                         }
-
                     } else {
                         if (null!=myOrderInterface){
                             myOrderInterface.confirmReceiptfail(tip);
                         }else if (null!=orderDetailInterface){
                             orderDetailInterface.affirmorderfail(tip);
                         }
-
-
                     }
                 } else if (what == 5) {
                     if (code == 100) {
@@ -105,7 +102,6 @@ public class MyOrederPresenter extends BasePresenter {
                         OrderBean orderBean = JsonUtils.stringToObject(data, OrderBean.class);
                         orderDetailInterface.getorderdetail(orderBean);
                     }
-
                 }
             }
 
@@ -130,7 +126,7 @@ public class MyOrederPresenter extends BasePresenter {
         String data = JsonUtils.keyValueToString2("token", Constants.TOKEN, "isDefault", 1);
         Network.getnetwork().postJson(data, Constants.URL + "/app/select-default-take-address", handler, 2);
     }
-
+//下单
     public void pay(String addressid, String productid) {
         String data = JsonUtils.keyValueToString2("addressId", addressid, "objectId", productid);
         data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);

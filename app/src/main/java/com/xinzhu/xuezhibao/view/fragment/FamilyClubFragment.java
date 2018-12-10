@@ -124,7 +124,7 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
 
     @OnClick({R.id.tv_togovipcenter, R.id.tv_points, R.id.tv_more_goods})
     public void onViewClicked(View view) {
-        if (StringUtil.isEmpty(Constants.TOKEN)){
+        if (StringUtil.isEmpty(Constants.TOKEN)) {
             DialogUtils.loginDia(getActivity());
             return;
         }
@@ -147,10 +147,13 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
 
     @Override
     public void getGoodsList(List<GoodsBean> list) {
-
+        int b = list.size();
+        if (b > 3) {
+            b = 3;   //最多只展示4个商品
+        }
         if (null != potionsGoodsAdapter) {
             goodsBeanList.clear();
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < b; i++) {
                 goodsBeanList.add(list.get(i));
             }
             potionsGoodsAdapter.notifyDataSetChanged();
