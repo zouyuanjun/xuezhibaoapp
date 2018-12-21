@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.VideoVoiceListAdapter;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
@@ -60,10 +61,15 @@ public class MyVideoActivity extends BaseActivity {
                 String data = JsonUtils.getStringValue(result, "Data");
                 List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
                 if (null != mDatas && mDatas.size() > 0) {
+                    if (page==1){
+                        videoVoiceBeanList.clear();
+                    }
                     videoVoiceBeanList.addAll(mDatas);
                     videoVoiceListAdapter.notifyDataSetChanged();
+
                     page++;
                     refreshLayout.finishLoadMore();
+                    refreshLayout.finishRefresh();
                 } else {
                     if (videoVoiceBeanList.size()==0){
                         imDataisnull.setVisibility(View.VISIBLE);
@@ -102,6 +108,15 @@ public class MyVideoActivity extends BaseActivity {
                 String data = JsonUtils.keyValueToString2("token", Constants.TOKEN, "pageNo", page);
                 Network.getnetwork().postJson(data, Constants.URL + "/app/my-video", handler, 1);
             }
+        });
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page=1;
+                String data = JsonUtils.keyValueToString2("token", Constants.TOKEN, "pageNo", 1);
+                Network.getnetwork().postJson(data, Constants.URL + "/app/my-video", handler, 1);
+            }
+
         });
         videoVoiceListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

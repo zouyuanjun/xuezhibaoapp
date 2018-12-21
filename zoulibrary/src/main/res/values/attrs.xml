@@ -85,4 +85,16 @@
         <attr name="backgroundSelector" format="integer"/>
         <attr name="textTint" format="color"/>
     </declare-styleable>
+    <declare-styleable name="BGLinearlayout">
+        <attr name="strokecolor" format="color"/>
+        <attr name="strokesize" format="dimension"/>
+        <attr name="bgradius" format="dimension"/>
+        <attr name="bgdividecolor" format="color"/>
+        <attr name="bgdividesize" format="dimension"/>
+        <attr name="bgdividepadding" format="dimension"/>
+        <attr name="bgcolor" format="color"/>
+        <attr name="bgdividePaddingLeft" format="dimension"/>
+        <attr name="bgdividePaddingRight" format="dimension"/>
+    </declare-styleable>
+
 </resources>

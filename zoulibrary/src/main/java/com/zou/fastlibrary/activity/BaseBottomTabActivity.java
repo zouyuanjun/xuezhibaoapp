@@ -120,6 +120,7 @@ public class BaseBottomTabActivity extends BaseActivity {
      */
     public void setViewPagerAdaptr(List<Fragment> fragmentList){
         viewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), fragmentList));
+        viewPager.setOffscreenPageLimit(4);
         mNavigationController.setupWithViewPager(viewPager);
     }
     //创建有图标的标签

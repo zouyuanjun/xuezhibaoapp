@@ -14,8 +14,8 @@ android {
         applicationId "com.xinzhu.xuezhibao"
         minSdkVersion 21
         targetSdkVersion 26
-        versionCode 5
-        versionName "1.1"
+        versionCode 7
+        versionName "1.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             abiFilters 'armeabi', 'x86'
@@ -27,6 +27,7 @@ android {
         ]
         multiDexEnabled true
     }
+
     buildTypes {
         release {
             minifyEnabled false

@@ -45,11 +45,11 @@ boolean exit=true;
     @Override
     public void onDestroy() {
         exit=false;
-        if (SettingUtil.USERTIME>=10){
+        if (SettingUtil.USERTIME>=1){
             if (!StringUtil.isEmpty(SettingUtil.TOKEN)){
                 String data = JsonUtils.keyValueToString2("dictionaryId", 25, "token", SettingUtil.TOKEN);
                 data = JsonUtils.addKeyValue(data, "time", SettingUtil.USERTIME);
-                Network.getnetwork().postJson(data, "http://192.168.1.199:8080" + "/app/complete-my-task", null, 6);
+                Network.getnetwork().postJson(data, "http://app.xuezhiben.com" + "/app/complete-my-task", null, 6);
             }
         }
 

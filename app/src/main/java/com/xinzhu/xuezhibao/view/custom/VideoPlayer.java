@@ -39,6 +39,7 @@ public class VideoPlayer extends StandardGSYVideoPlayer {
     }
 
     public void setCanpaly(boolean canpaly) {
+        Log.d("修改能否播放状态");
         this.canpaly = canpaly;
     }
 

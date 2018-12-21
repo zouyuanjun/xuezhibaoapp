@@ -18,6 +18,9 @@ import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.Map;
 
+/**
+ * 支付模块
+ */
 public class AlipayPresenter extends BasePresenter {
     PayInterface payInterface;
     Activity activity;
@@ -57,6 +60,7 @@ public class AlipayPresenter extends BasePresenter {
                 }
                 case 2: {   //支付宝支付请求回来的支付参数
                     String result = (String) msg.obj;
+                    Log.d("支付请求返回"+result);
                     int code = JsonUtils.getIntValue(result, "Code");
                     if (code == 100) {
                         String data = JsonUtils.getStringValue(result, "Data");

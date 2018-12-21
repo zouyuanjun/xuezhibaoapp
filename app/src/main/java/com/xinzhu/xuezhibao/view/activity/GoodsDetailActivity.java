@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -85,6 +86,8 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     AppBarLayout applayout;
     @BindView(R.id.clltab)
     CollapsingToolbarLayout clltab;
+    @BindView(R.id.im_back)
+    ImageView imBack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -146,6 +149,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 myGoodsPresenter.getgoodscomment(page, googdsid);
+                refreshLayout.finishRefresh(2000);
             }
         });
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -156,6 +160,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                 myGoodsPresenter.getgoodscomment(page, googdsid);
             }
         });
+        clltab.setTitleEnabled(false);
         applayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
@@ -163,29 +168,20 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                 int Offset = Math.abs(verticalOffset); //目的是将负数转换为绝对正数；
                 //标题栏的渐变
                 toolbar.setBackgroundColor(changeAlpha(getResources().getColor(R.color.appcolor)
-                        , Math.abs(verticalOffset * 1.0f) / appBarLayout.getTotalScrollRange()));
-
+                        , Offset*1f / appBarLayout.getTotalScrollRange()));
                 /**
                  * 当前最大高度便宜值除以2 在减去已偏移值 获取浮动 先显示在隐藏
                  */
-                if (Offset < appBarLayout.getTotalScrollRange() / 2) {
-                    clltab.setTitle("详情");
-                    toolbar.setAlpha((appBarLayout.getTotalScrollRange() / 2 - Offset * 1.0f) / (appBarLayout.getTotalScrollRange() / 2));
-                    toolbar.setAlpha((appBarLayout.getTotalScrollRange() / 2 - Offset * 1.0f) / (appBarLayout.getTotalScrollRange() / 2));
-                    //   toolbar.setImageDrawable(getResources().getDrawable(R.mipmap.share_shop));
-                    //   toolbar.setNavigationIcon(R.mipmap.shop_details_2);
-                    /**
-                     * 从最低浮动开始渐显 当前 Offset就是  appBarLayout.getTotalScrollRange() / 2
-                     * 所以 Offset - appBarLayout.getTotalScrollRange() / 2
-                     */
-                } else if (Offset > appBarLayout.getTotalScrollRange() / 2) {
-                    float floate = (Offset - appBarLayout.getTotalScrollRange() / 2) * 1.0f / (appBarLayout.getTotalScrollRange() / 2);
+                if (Offset < appBarLayout.getTotalScrollRange() ) {
+                    float floate =(Offset*1f/appBarLayout.getTotalScrollRange());
                     toolbar.setAlpha(floate);
-                    // toolbar.setNavigationIcon(R.mipmap.b);
-                    // mBinding.shareImg.setImageDrawable(getResources().getDrawable(R.mipmap.img_share));
-                    clltab.setTitle("详情");
-                    toolbar.setAlpha(floate);
+                    toolbar.setNavigationIcon(R.drawable.back);
+                    imBack.setAlpha(1-floate);
                 }
+
+
+
+
             }
         });
     }
@@ -223,12 +219,13 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     @Override
     public void getGoodsDetail(GoodsBean goodsBean) {
         this.goodsBean = goodsBean;
-        clltab.setTitle(goodsBean.getProductName());
+        toolbar.setTitle(goodsBean.getProductName());
         tvGoodstitle.setText(goodsBean.getProductName());
         tvGoodsprice.setText(goodsBean.getProductPrice() + "积分");
-        tvPaynum.setText(goodsBean.getBuyNum() + "人已购买");
+        tvPaynum.setText(goodsBean.getSellNumber() + "人已购买");
         List<String> img = new ArrayList<>();
         if (null != goodsBean.getAccessoryList() && goodsBean.getAccessoryList().size() > 0) {
+            goodsBean.setProductImg(goodsBean.getAccessoryList().get(0).getAccessoryUrl());
             for (FeedbackPictureBean s : goodsBean.getAccessoryList()) {
                 img.add(s.getAccessoryUrl());
             }

@@ -83,6 +83,15 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
 
     @Override
     protected void lazyLoad() {
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        Log.d("创建完毕");
         xuebaoPresenter = new XuebaoPresenter(this);
         xuebaoPresenter.initdata();
         Log.d("懒加载开始");
@@ -104,6 +113,10 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
+                if (StringUtil.isEmpty(Constants.TOKEN)){
+                    DialogUtils.loginDia(getActivity());
+                    return;
+                }
                 if (position < bannerImgBeans.size()) {
                     if (bannerImgBeans.get(position).getNewPlace() == 1) {
                         Uri uri = Uri.parse(bannerImgBeans.get(position).getLinkAddress());
@@ -120,14 +133,6 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
             }
         });
 
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        Log.d("创建完毕");
         return rootView;
     }
     @Override
@@ -150,6 +155,10 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
             courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
+                    if (StringUtil.isEmpty(Constants.TOKEN)){
+                        DialogUtils.loginDia(getActivity());
+                        return;
+                    }
                     Intent intent = new Intent(getContext(), CourseDetailActivity.class);
                     intent.putExtra(Constants.INTENT_ID, list.get(position).getCurriculumId());
                     startActivity(intent);
@@ -176,6 +185,10 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
             courseAdapter.setOnItemClickListener(new XuebaoCourseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
+                    if (StringUtil.isEmpty(Constants.TOKEN)){
+                        DialogUtils.loginDia(getActivity());
+                        return;
+                    }
                     Intent intent = new Intent(getContext(), CourseDetailActivity.class);
                     intent.putExtra(Constants.INTENT_ID, list.get(position).getCurriculumId());
                     startActivity(intent);
@@ -259,6 +272,10 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
 
     @OnClick({R.id.im_more_video, R.id.im_more_voice, R.id.im_jiajiao})
     public void onViewClicked(View view) {
+        if (StringUtil.isEmpty(Constants.TOKEN)){
+            DialogUtils.loginDia(getActivity());
+            return;
+        }
         switch (view.getId()) {
             case R.id.im_more_video:
                 Intent intent1 = new Intent(getActivity(), AllCourseActivity.class);
@@ -271,10 +288,6 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 getActivity().startActivity(intent2);
                 break;
             case R.id.im_jiajiao:   //成长之路
-                if (StringUtil.isEmpty(Constants.TOKEN)){
-                    DialogUtils.loginDia(getActivity());
-                    return;
-                }
                 Intent intent3 = new Intent(getActivity(), MyFamilyCourseActivity.class);
                 getActivity().startActivity(intent3);
                 break;

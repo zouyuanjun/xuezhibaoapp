@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.constraint.ConstraintLayout;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.OrderDetailInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
 
 import butterknife.BindView;
@@ -39,8 +41,6 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailInte
     ImageView imageView24;
     @BindView(R.id.csl_address)
     ConstraintLayout cslAddress;
-    @BindView(R.id.linearLayout28)
-    LinearLayout linearLayout28;
     @BindView(R.id.tv_ordertype)
     TextView tvOrdertype;
     @BindView(R.id.linearLayout24)
@@ -72,6 +72,13 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailInte
     TextView tvOrdertime;
     @BindView(R.id.tv_deliver_goodstime)
     TextView tvDeliverGoodstime;
+    @BindView(R.id.tv_orderstatue)
+    TextView tvOrderstatue;
+    boolean isrefund = false;
+    @BindView(R.id.tv_actionone)
+    TextView tvActionone;
+    @BindView(R.id.tv_mintitel2)
+    TextView tvMintitel2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,19 +98,37 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailInte
             }
             imageView19.setImageURI(orderBean.getPicture());
             tvTitle.setText(orderBean.getName());
+            if (orderBean.getState().equals("100")) {
+                if (orderBean.getIsRefund() == 1) {
+                    tvOrderstatue.setText("已申请退款");
+                } else {
+                    tvOrderstatue.setText("订单已完成");
+                }
+
+            } else if (orderBean.getState().equals("2")) {
+                tvOrderstatue.setText("待发货");
+            } else if (orderBean.getState().equals("3")) {
+                tvOrderstatue.setText("待收货");
+            } else if (orderBean.getState().equals("4")) {
+                tvOrderstatue.setText("待评价");
+            }
             tvOrdernum.setText("订单编号：" + orderBean.getOrderNum());
-            tvOrdertime.setText("订单时间:" + TimeUtil.getWholeTime2(orderBean.getCreateTime()));
-            tvDeliverGoodstime.setText("发货时间:" + TimeUtil.getWholeTime2(orderBean.getCreateTime()));
+            tvOrdertime.setText("下单时间: " + TimeUtil.getWholeTime2(orderBean.getCreateTime()));
+
+            if (!(orderBean.getType().equals("1") || orderBean.getType().equals("2"))) {
+                cslAddress.setVisibility(View.VISIBLE);
+            }
+            if (orderBean.getType().equals("1") && orderBean.getIsRefund() == 0) {
+                llAction.setVisibility(View.VISIBLE);
+                tvActionone.setText("申请退款");
+                isrefund = true;
+                myOrederPresenter.selectbyid(orderBean.getOrderId());
+            }
+            if (orderBean.getState().equals("3")) {
+                llAction.setVisibility(View.VISIBLE);
+            }
             //因为除了完成状态外，其他状态的订单的type为空
             if (null != orderBean.getType()) {
-                if (!orderBean.getType().equals("3")) {
-                    cslAddress.setVisibility(View.GONE);
-                    llAction.setVisibility(View.GONE);
-                }
-                //是否为待收货订单
-                if (!orderBean.getState().equals("3")) {
-                    llAction.setVisibility(View.GONE);
-                }
                 if (orderBean.getType().equals("1")) {
                     tvOrdertype.setText("家庭教育课程");
                 } else if (orderBean.getType().equals("2")) {
@@ -132,6 +157,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailInte
     public void getorderdetail(OrderBean orderBean) {
         tvAddress.setText(orderBean.getAddress());
         tvPhone.setText(orderBean.getNickname() + "  " + orderBean.getLinkPhone());
+        if (StringUtil.isEmpty(orderBean.getShipmentsTime() + "")) {
+            tvDeliverGoodstime.setText("发货时间:" + TimeUtil.getWholeTime2(orderBean.getShipmentsTime()));
+        }
 
     }
 
@@ -145,9 +173,29 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailInte
     public void affirmorderfail(String tip) {
 
     }
+    @Override
+    public void getcoursehour(String consumeHour, String sumHour) {
+        if (null!=tvMintitel2){
+            tvMintitel2.setVisibility(View.VISIBLE);
+            tvMintitel.setVisibility(View.VISIBLE);
+            tvMintitel.setText("共" + sumHour + "节");
+            if (consumeHour.isEmpty()){
+                consumeHour="0";
+            }
+            tvMintitel2.setText("/已学"+consumeHour+"节");
+        }
+
+    }
 
     @OnClick(R.id.tv_actionone)
     public void onViewClicked() {
-        myOrederPresenter.confirmReceipt(orderBean.getOrderId());
+        if (isrefund) {
+            Intent intent = new Intent(this, RefundActivity.class);
+            intent.putExtra(Constants.INTENT_ID, orderBean);
+            startActivity(intent);
+        } else {
+            myOrederPresenter.confirmReceipt(orderBean.getOrderId());
+        }
+
     }
 }

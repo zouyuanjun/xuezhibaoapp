@@ -33,6 +33,7 @@ import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
 import com.xinzhu.xuezhibao.immodule.view.ConversationListActivity;
 import com.xinzhu.xuezhibao.presenter.HomepagePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.HomeListActivity;
 import com.xinzhu.xuezhibao.view.activity.LoginActivity;
@@ -51,6 +52,7 @@ import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.WebActivity;
 import com.zou.fastlibrary.utils.EditTextUtil;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -135,6 +137,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
+                if (StringUtil.isEmpty(Constants.TOKEN)){
+                    DialogUtils.loginDia(getActivity());
+                    return;
+                }
                 if (position < mybannerImgBean.size()) {
                     if (mybannerImgBean.get(position).getNewPlace() == 1) {
                         Uri uri = Uri.parse(mybannerImgBean.get(position).getLinkAddress());
@@ -155,6 +161,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 homepagePresenter.initdata();
+                refreshLayout.finishRefresh(2000);
             }
         });
 
@@ -215,7 +222,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     @OnClick({R.id.im_scan, R.id.ed_search, R.id.im_setting, R.id.im_message, R.id.banner, R.id.im_test, R.id.ll_more_video, R.id.rv_video, R.id.ll_more_voice, R.id.rv_voice, R.id.ll_more_article, R.id.rv_article})
     public void onViewClicked(View view) {
-
+        if (Constants.TOKEN.isEmpty()) {
+            shoudia();
+            return;
+        }
         switch (view.getId()) {
             case R.id.im_scan:
                 startScanQR();
@@ -249,8 +259,12 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             case R.id.banner:
                 break;
             case R.id.im_test:
-                Intent intent11 = new Intent(getContext(), TestIntroduceActivity.class);
-                startActivity(intent11);
+                if (Constants.TOKEN.isEmpty()) {
+                    shoudia();
+                } else{
+                    Intent intent11 = new Intent(getContext(), TestIntroduceActivity.class);
+                    startActivity(intent11);
+                }
                 break;
             case R.id.ll_more_video:
                 Intent intent = new Intent(getContext(), HomeListActivity.class);
@@ -271,7 +285,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     }
 
     public void shoudia() {
-
         CustomDialog.Builder builder = new CustomDialog.Builder(getContext());
         builder.setTitle("提示");
         builder.setMessage("登陆后才可以继续操作，现在就去登陆");
@@ -295,13 +308,13 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     }
 
-
     //初始化视频列表
     @Override
     public void getVideodata(final List<VideoVoiceBean> mDatas) {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         if (null != rvVideo) {
+            refreshLayout.finishRefresh();
             rvVideo.setLayoutManager(linearLayoutManager);
             rvVideo.setNestedScrollingEnabled(false);
             homeVideoAdapter = new HomeVideoAdapter(MyApplication.getContext(), mDatas);
@@ -309,6 +322,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             homeVideoAdapter.setOnItemClickListener(new HomeVideoAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
+                    if (StringUtil.isEmpty(Constants.TOKEN)){
+                        DialogUtils.loginDia(getActivity());
+                        return;
+                    }
                     String id = mDatas.get(position).getVideoId();
                     Intent intent = new Intent(getContext(), VideoDetilsActivity.class);
                     intent.putExtra(Constants.INTENT_ID, id);
@@ -338,6 +355,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 homeVoiceAdapter.setOnItemClickListener(new HomeVoiceAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        if (StringUtil.isEmpty(Constants.TOKEN)){
+                            DialogUtils.loginDia(getActivity());
+                            return;
+                        }
                         String id = mDatas.get(position).getVideoId();
                         Intent intent = new Intent(getContext(), VoiceDetilsActivity.class);
                         intent.putExtra(Constants.INTENT_ID, id);
@@ -368,6 +389,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             homeArticleAdapter.setOnItemClickListener(new HomeArticleAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
+                    if (StringUtil.isEmpty(Constants.TOKEN)){
+                        DialogUtils.loginDia(getActivity());
+                        return;
+                    }
                     String id = mDatas.get(position).getArticleId();
                     Intent intent = new Intent(getActivity(), ArticleDetilsActivity.class);
                     intent.putExtra(Constants.INTENT_ID, id);

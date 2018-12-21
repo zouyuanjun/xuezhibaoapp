@@ -9,7 +9,7 @@
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        app:leftImageVisiable='false'
+        app:leftImageVisiable='true'
         app:leftTextVisible='false'
         app:midText="精品课"
         app:midTextFontColor="#ffffff"

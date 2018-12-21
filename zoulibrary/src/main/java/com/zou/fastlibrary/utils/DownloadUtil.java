@@ -9,11 +9,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
+
+import com.bravin.btoast.BToast;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -152,14 +155,18 @@ public class DownloadUtil {
             return;
         }
 
-        Log.e("OpenFile", file.getName());
         Intent intent = new Intent();
         intent.addCategory(Intent.CATEGORY_DEFAULT);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setAction(android.content.Intent.ACTION_VIEW);
         intent.setDataAndType(getUri(file,context),  "application/msword");
-        context.startActivity(intent);
+        try {
+            context.startActivity(intent);
+        }catch (ActivityNotFoundException e){
+            BToast.error(context).text("没有找个打开该文件的软件，请安装WPS").show();
+        }
+
     }
 
     /**

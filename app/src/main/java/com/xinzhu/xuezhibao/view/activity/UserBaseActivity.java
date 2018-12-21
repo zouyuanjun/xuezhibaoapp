@@ -160,7 +160,7 @@ public class UserBaseActivity extends TakePhotoActivity {
         JMessageClient.updateUserAvatar(new File(imgurl), new BasicCallback() {
             @Override
             public void gotResult(int i, String s) {
-                Log.d("极光用户头像更新成功");
+                Log.d("极光用户头像更新"+s);
             }
         });
         Network.getnetwork().uploadimg(Constants.TOKEN,Constants.URL+"/guest/image-upload",result.getImage().getCompressPath(),handler,1);

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+
     <com.zou.fastlibrary.ui.CustomNavigatorBar
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -13,8 +13,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:leftTextVisible='false'
         app:leftImageVisiable='true'
+        app:leftTextVisible='false'
         app:midText='测评'
         app:midTextFontColor="#ffffff"
         app:midTextSizeSp="18"
@@ -22,38 +22,368 @@
         app:rightTextVisible='false'
         app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:lineSpacingExtra="5dp"
-        android:text="  本测评，由美国范德比尔特注意力家长测评表，香港初小学生读写能力饰查星表等核心内容组成，针对儿童阅读能力、书写能力、注意力发展、自我控制发展、感知觉发展和情绪发展6个方面的能力对进行专业评估。\n
-      家长根据孩子在日常学习、生活中是否存在如下的表现给予如实选择相应选项：
-\n【非常符合】 经常出现描述中的情况或与描述情况很相似。
-\n【有时符合】 偶尔、有时出现描述中的情况或与描述情况相似。
-\n【不符合】 几乎没出现过描述中的情况或与描述情况不符。
-\n【温馨提示】 量表测评可做为初步了解孩童情况，对于儿童发展测评项发展水平做出大致评价，对可能出现的发展落后提出预警或建议，请家长根据实际情况自评填写即可。"
-        android:textColor="@color/color_black_333333"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbar" />
-
-    <com.zou.fastlibrary.ui.ShapeCornerBgView
-        android:id="@+id/begintest"
-        android:layout_width="180dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="32dp"
-        android:text="现在开始"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:appBgColor="@color/appcolor"
-        app:appRadius="8dp"
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/fenge"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/csl_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/clstoughbg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView51"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="阅读理解自测问卷"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView10"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_joinnum1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="120人已测评"
+                    android:textColor="@color/appcolor"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView10"
+                    app:layout_constraintTop_toBottomOf="@+id/textView51" />
+
+                <com.zou.fastlibrary.ui.ShapeCornerBgView
+                    android:layout_width="78dp"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="免费测评"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:appBgColor="@color/appcolor"
+                    app:appRadius="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_joinnum1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_joinnum1" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/csl_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/clstoughbg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="书面表达与写作自测问卷"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_joinnum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="TextView"
+                    android:textColor="@color/appcolor"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView"
+                    app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+                <com.zou.fastlibrary.ui.ShapeCornerBgView
+                    android:layout_width="78dp"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="免费测评"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:appBgColor="@color/appcolor"
+                    app:appRadius="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_joinnum"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_joinnum" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/csl_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/clstoughbg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+                <ImageView
+                    android:id="@+id/imageView33"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView533"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="注意力自测问卷"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView33"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_joinnum33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="TextView"
+                    android:textColor="@color/appcolor"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView33"
+                    app:layout_constraintTop_toBottomOf="@+id/textView533" />
+
+                <com.zou.fastlibrary.ui.ShapeCornerBgView
+                    android:layout_width="78dp"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="免费测评"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:appBgColor="@color/appcolor"
+                    app:appRadius="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_joinnum33"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_joinnum33" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/csl_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/clstoughbg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+                <ImageView
+                    android:id="@+id/imageView44"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView544"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="多动与抑制自测问卷"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView44"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_joinnum44"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="TextView"
+                    android:textColor="@color/appcolor"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView44"
+                    app:layout_constraintTop_toBottomOf="@+id/textView544" />
+
+                <com.zou.fastlibrary.ui.ShapeCornerBgView
+                    android:layout_width="78dp"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="免费测评"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:appBgColor="@color/appcolor"
+                    app:appRadius="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_joinnum44"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_joinnum44" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/csl_5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/clstoughbg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+                <ImageView
+                    android:id="@+id/imageView55"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView555"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="学习和感知自测问卷"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView55"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_joinnum55"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="TextView"
+                    android:textColor="@color/appcolor"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView55"
+                    app:layout_constraintTop_toBottomOf="@+id/textView555" />
+
+                <com.zou.fastlibrary.ui.ShapeCornerBgView
+                    android:layout_width="78dp"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="免费测评"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:appBgColor="@color/appcolor"
+                    app:appRadius="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_joinnum55"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_joinnum55" />
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/csl_6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/clstoughbg"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appbar">
+
+                <ImageView
+                    android:id="@+id/imageView66"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView566"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="情绪自测问卷"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="15sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView66"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_joinnum66"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="TextView"
+                    android:textColor="@color/appcolor"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/imageView66"
+                    app:layout_constraintTop_toBottomOf="@+id/textView566" />
+
+                <com.zou.fastlibrary.ui.ShapeCornerBgView
+                    android:layout_width="78dp"
+                    android:layout_height="28dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="免费测评"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    app:appBgColor="@color/appcolor"
+                    app:appRadius="@dimen/dp_4"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_joinnum66"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/tv_joinnum66" />
+            </android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
 
 </android.support.constraint.ConstraintLayout>

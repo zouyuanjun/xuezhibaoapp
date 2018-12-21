@@ -4,11 +4,17 @@ import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -26,6 +32,9 @@ import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
@@ -48,6 +57,7 @@ import com.xinzhu.xuezhibao.view.interfaces.TeacherInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StatusBar;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -58,6 +68,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.jpush.im.android.api.JMessageClient;
+
+import static com.xinzhu.xuezhibao.MyApplication.getContext;
 
 public class TeacherDetailActivity extends BaseActivity implements TeacherInterface, LikeCollectInterface {
     CommentAdapter commentAdapter;
@@ -97,7 +109,11 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
     GoodView mGoodView;
     boolean islike = false;
     int likenum = 1;
-
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
+    @BindView(R.id.nestedScrollView)
+    NestedScrollView nestedScrollView;
+    int position;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +154,7 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
         tabTecher.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
+                 position = tab.getPosition();
                 if (position == 0) {
                     wbFeedback.setVisibility(View.VISIBLE);
                     rvTeacherCourse.setVisibility(View.GONE);
@@ -183,6 +199,31 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
         wbFeedback.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         wbFeedback.setWebViewClient(new MyWebViewClient());
         wbFeedback.addJavascriptInterface(this, "App");
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    refreshLayout.autoLoadMore();
+                }
+
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+
+                if (position == 1) {
+               //     rvTeacherCourse.setAdapter(adapter);
+                    teacherPresenter.getTeacherCourse(teacherId, coursepage);
+                } else if (position == 2) {
+              //      rvTeacherCourse.setAdapter(commentAdapter);
+                    rvTeacherCourse.scrollToPosition(0);
+                    teacherPresenter.getComment(teacherId, commentpage);
+                }
+
+
+            }
+        });
     }
 
     @Override
@@ -245,25 +286,36 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
 
     @Override
     public void getTeacherCourse(List<CourseBean> list) {
+        if (null==refreshLayout){
+            return;
+        }
         if (null != list) {
             courseBeanList.addAll(list);
             adapter.notifyDataSetChanged();
             coursepage++;
+            refreshLayout.finishLoadMore();
         }
     }
 
     @Override
     public void getTeacherComment(List<CommentBean> list, String total) {
+        if (null==refreshLayout){
+            return;
+        }
         if (null != list) {
             commentBeanList.addAll(list);
             adapter.notifyDataSetChanged();
             commentpage++;
+            refreshLayout.finishLoadMore();
         }
     }
 
     @Override
     public void nomoredata() {
-
+        if (null==refreshLayout){
+            return;
+        }
+        refreshLayout.finishLoadMoreWithNoMoreData();
     }
 
     @Override
@@ -281,6 +333,9 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
             TextView textView = view1.findViewById(R.id.tv_send);
             final PopupWindow window = new PopupWindow(view1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            Bitmap bmp = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ffffffrad8);
+            Drawable drawable = new BitmapDrawable(getContext().getResources(), bmp);
+            window.setBackgroundDrawable(drawable);
             window.setOutsideTouchable(true);
             window.setTouchable(true);
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Service.INPUT_METHOD_SERVICE);
@@ -290,6 +345,10 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
                 @Override
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
+                    if (StringUtil.isEmpty(commend)) {
+                        BToast.error(TeacherDetailActivity.this).text("请填写内容").show();
+                        return;
+                    }
                     CommentBean commentBean = new CommentBean(Constants.userBasicInfo.getImage(), Constants.userBasicInfo.getNickName(), System.currentTimeMillis(), commend, "", "111");
                     commentBeanList.addFirst(commentBean);
                     commentAdapter.notifyItemInserted(0);

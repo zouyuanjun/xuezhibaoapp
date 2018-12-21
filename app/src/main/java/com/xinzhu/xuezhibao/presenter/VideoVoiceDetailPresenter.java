@@ -44,7 +44,6 @@ public class VideoVoiceDetailPresenter {
                 if (code == 100) {
                     String data = JsonUtils.getStringValue(result, "Data");
                     VideoVoiceBean videoVoiceBean = JsonUtils.stringToObject(data, VideoVoiceBean.class);
-                    Log.d("转化后的" +JsonUtils.objectToString(videoVoiceBean));
                     videoVoiceDetailInterface.getVideodetail(videoVoiceBean);
                 } else if (code == 205) {
                     videoVoiceDetailInterface.nologin();

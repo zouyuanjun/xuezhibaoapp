@@ -133,6 +133,12 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
         }
         if (null != myjobBean.getJobList() && myjobBean.getJobList().size() > 0) {
             llfujian.setVisibility(View.VISIBLE);
+            String path = DataKeeper.getDiskCachePath(this) + "/download/";
+            myfile=new File(path);
+            if (myfile.exists()){
+                imgDownloadIoc.setBackgroundResource(R.drawable.task_btn_download_sel);
+                isdownload=true;
+            }
             fileurl = myjobBean.getJobList().get(0).getAccessoryUrl();
         }
     }
@@ -143,7 +149,7 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onDestroy(){
         super.onDestroy();
         myCoursePresenter.cancelmessage();
     }
@@ -165,12 +171,10 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
                             isdownload = true;
                             imgDownloadIoc.setBackgroundResource(R.drawable.task_btn_download_sel);
                         }
-
                         @Override
                         public void onDownloading(int progress) {
                             Log.d("下载进度" + progress);
                         }
-
                         @Override
                         public void onDownloadFailed(Exception e) {
                         }

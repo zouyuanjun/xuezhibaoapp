@@ -102,6 +102,18 @@ public class MyOrederPresenter extends BasePresenter {
                         OrderBean orderBean = JsonUtils.stringToObject(data, OrderBean.class);
                         orderDetailInterface.getorderdetail(orderBean);
                     }
+                }else if (what == 7) {
+                    if (code == 100) {
+                        String data = JsonUtils.getStringValue(result, "Data");
+                        try {
+                            String sumHour=JsonUtils.getStringValue(data,"sumHour");
+                            String consumeHour=JsonUtils.getStringValue(data,"consumeHour");
+                            orderDetailInterface.getcoursehour(consumeHour,sumHour);
+                        }catch (Exception e){
+
+                        }
+
+                    }
                 }
             }
 
@@ -143,7 +155,7 @@ public class MyOrederPresenter extends BasePresenter {
     //查询单个课程订单详情
     public void selectbyid(String id) {
         String data = JsonUtils.keyValueToString2("applyId", id, "token", Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/select-my-apply-by-id", handler, 5);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/select-my-apply-by-id", handler, 7);
     }
 
     //查询单个积分商品订单详情

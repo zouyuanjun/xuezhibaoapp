@@ -9,7 +9,7 @@ public class OrderBean implements Serializable {
     double orderPrice;
     String payTime;
     String picture;
-    String shipmentsTime;
+    long shipmentsTime;
     String state;
     String objectId;
     String dictionaryName;
@@ -140,11 +140,11 @@ public class OrderBean implements Serializable {
         this.picture = picture;
     }
 
-    public String getShipmentsTime() {
+    public long getShipmentsTime() {
         return shipmentsTime;
     }
 
-    public void setShipmentsTime(String shipmentsTime) {
+    public void setShipmentsTime(long shipmentsTime) {
         this.shipmentsTime = shipmentsTime;
     }
 

@@ -42,15 +42,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:ellipsize="end"
         android:id="@+id/tv_conent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
+        android:ellipsize="end"
         android:maxLines="1"
-        android:text="TextView"
+        android:text="TextViewdfgdfgdfgfgfgfgfgfggfgfdsfgsdfggfgdfgdfgdfg"
         android:textColor="@color/color_black_666666"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/tv_num"
@@ -63,7 +63,7 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginEnd="32dp"
-        android:text="2"
+        android:text="0"
         android:textSize="10sp"
         app:appBgColor="@color/red"
         app:appRadius="90dp"

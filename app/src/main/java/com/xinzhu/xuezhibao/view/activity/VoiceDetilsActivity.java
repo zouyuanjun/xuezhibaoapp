@@ -4,7 +4,11 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
@@ -15,6 +19,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
+import com.bravin.btoast.BToast;
 import com.tencent.smtt.sdk.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -39,6 +45,7 @@ import com.xinzhu.xuezhibao.view.interfaces.VideoVoiceDetailInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
@@ -49,6 +56,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.xinzhu.xuezhibao.MyApplication.getContext;
 
 public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetailInterface, LikeCollectInterface {
     @BindView(R.id.tv_title)
@@ -283,6 +292,9 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
             TextView textView = view1.findViewById(R.id.tv_send);
             final PopupWindow window = new PopupWindow(view1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            Bitmap bmp = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ffffffrad8);
+            Drawable drawable = new BitmapDrawable(getContext().getResources(), bmp);
+            window.setBackgroundDrawable(drawable);
             window.setOutsideTouchable(true);
             window.setTouchable(true);
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Service.INPUT_METHOD_SERVICE);
@@ -292,6 +304,10 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 @Override
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
+                    if (StringUtil.isEmpty(commend)){
+                        BToast.error(VoiceDetilsActivity.this).text("请填写内容").show();
+                        return;
+                    }
                     CommentBean commentBean = new CommentBean(Constants.userBasicInfo.getImage(), Constants.userBasicInfo.getNickName(), System.currentTimeMillis(), commend, "", "111");
                     commentnum++;
                     tvCommentNum.setText("全部评论(" + commentnum + ")");

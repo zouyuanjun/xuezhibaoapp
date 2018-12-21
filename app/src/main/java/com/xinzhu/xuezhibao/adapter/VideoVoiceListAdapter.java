@@ -40,14 +40,12 @@ public class VideoVoiceListAdapter extends BaseQuickAdapter<VideoVoiceBean,Video
         this.mContext = mContext.get();
         this.mDatas = mDatas;
     }
-
     public VideoVoiceListAdapter(Context mContext, @NonNull List<VideoVoiceBean> mDatas, int TYPE) {
         super(R.layout.item_list,mDatas);
         this.mContext = mContext;
         this.mDatas = mDatas;
         this.TYPE = TYPE;
     }
-
     @Override
     protected void convert(MyViewHolder helper, VideoVoiceBean item) {
         ((MyViewHolder) helper).tvItemTitle.setText(item.getVideoTitle());

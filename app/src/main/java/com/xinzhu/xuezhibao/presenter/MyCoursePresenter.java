@@ -16,6 +16,9 @@ import com.zou.fastlibrary.utils.Network;
 
 import java.util.List;
 
+/**
+ * 成长之路
+ */
 public class MyCoursePresenter {
     MyCourseInterface myCourseInterface;
     MyJobDetailInterpace myJobDetailInterpace;
@@ -115,6 +118,11 @@ public class MyCoursePresenter {
         }
     };
 
+    /**
+     * 获取成长之路的课程
+     * @param page
+     * @param type
+     */
     public void getcourse(int page, int type) {
         String data = JsonUtils.keyValueToString2("pageNo", page, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/all-curriculum", handler, 1);

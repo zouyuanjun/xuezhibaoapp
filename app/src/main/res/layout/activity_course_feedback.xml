@@ -94,7 +94,9 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/sp_2"
                 android:layout_width="50dp"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                app:roundAsCircle="true"
+                app:placeholderImage="@drawable/my_icon_original"/>
 
             <TextView
                 android:maxWidth="270dp"

@@ -25,13 +25,16 @@ public class MyorderAdapter extends RecyclerView.Adapter {
     protected Context mContext;
     protected List<OrderBean> mDatas;
     private OnItemClickListener onItemClickListener;
+
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
     public MyorderAdapter(Context mContext, List<OrderBean> mDatas) {
         this.mContext = mContext;
         this.mDatas = mDatas;
     }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -43,55 +46,57 @@ public class MyorderAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((MyViewHolder) holder).tvTitle.setText(mDatas.get(position).getName());
         //判断是否显示积分价格
-        if (mDatas.get(position).getOrderPrice()>0){
-            ((MyViewHolder) holder).tvOther.setText("-"+mDatas.get(position).getOrderPrice()+"积分");
-        }else {
+        if (mDatas.get(position).getOrderPrice() > 0) {
+            ((MyViewHolder) holder).tvOther.setText("-" + mDatas.get(position).getOrderPrice() + "积分");
+        } else {
             ((MyViewHolder) holder).tvOther.setVisibility(View.GONE);
         }
-        ((MyViewHolder) holder).tvPrice.setText("￥"+mDatas.get(position).getPrice());
+        ((MyViewHolder) holder).tvPrice.setText("￥" + mDatas.get(position).getPrice());
         //已完成订单
-        if ( mDatas.get(position).getState().equals("100")){
+        if (mDatas.get(position).getState().equals("100")) {
             //判断订单类型
-            if (mDatas.get(position).getType().equals("1")){
+            if (mDatas.get(position).getType().equals("1")) {
                 ((MyViewHolder) holder).tvOrdertype.setText("家庭教育课程");
-            }else if (mDatas.get(position).getType().equals("2")){
+            } else if (mDatas.get(position).getType().equals("2")) {
                 ((MyViewHolder) holder).tvOrdertype.setText("视频课程");
-            }else if (mDatas.get(position).getType().equals("3")){
+            } else if (mDatas.get(position).getType().equals("3")) {
                 ((MyViewHolder) holder).tvOrdertype.setText("积分商城");
             }
-            if (mDatas.get(position).getIsRefund()==1){
+            if (mDatas.get(position).getIsRefund() == 1) {
                 ((MyViewHolder) holder).tvOrderstuts.setText("已申请退款");
+            }else {
+                ((MyViewHolder) holder).tvOrderstuts.setText("订单已完成");
             }
-            if (mDatas.get(position).getType().equals("1")&&mDatas.get(position).getIsRefund()==0) {
+            if (mDatas.get(position).getType().equals("1") && mDatas.get(position).getIsRefund() == 0) {
                 ((MyViewHolder) holder).cslAction.setVisibility(View.VISIBLE);
                 ((MyViewHolder) holder).tvActionone.setText("申请退款");
                 ((MyViewHolder) holder).tvOther.setVisibility(View.GONE);
-                ((MyViewHolder) holder).tvActionone.setBackground(ContextCompat.getDrawable(MyApplication.getContext(),R.drawable.dialogbg_nor));
-            }else {
+                ((MyViewHolder) holder).tvActionone.setBackground(ContextCompat.getDrawable(MyApplication.getContext(), R.drawable.dialogbg_nor));
+            } else {
                 ((MyViewHolder) holder).cslAction.setVisibility(View.GONE);
             }
         }
-//代发货订单
-        if (mDatas.get(position).getState().equals("2")){
-            ((MyViewHolder) holder).tvOrderstuts.setText("等待商城发货");
+        //代发货订单
+        if (mDatas.get(position).getState().equals("2")) {
+            ((MyViewHolder) holder).tvOrderstuts.setText("待发货");
             ((MyViewHolder) holder).tvOrdertype.setText("积分商城");
-            ((MyViewHolder) holder).tvOther.setText("-"+mDatas.get(position).getOrderPrice()+"积分");
+            ((MyViewHolder) holder).tvOther.setText("-" + mDatas.get(position).getOrderPrice() + "积分");
         }
         //待收获订单
-        if (mDatas.get(position).getState().equals("3")){
+        if (mDatas.get(position).getState().equals("3")) {
             ((MyViewHolder) holder).tvOrderstuts.setText("等待收货");
             ((MyViewHolder) holder).cslAction.setVisibility(View.VISIBLE);
             ((MyViewHolder) holder).tvActionone.setText("确认收货");
             ((MyViewHolder) holder).tvOrdertype.setText("积分商城");
-            ((MyViewHolder) holder).tvActionone.setBackground(ContextCompat.getDrawable(MyApplication.getContext(),R.drawable.feedbacktextbg));
+            ((MyViewHolder) holder).tvActionone.setBackground(ContextCompat.getDrawable(MyApplication.getContext(), R.drawable.feedbacktextbg));
         }
         //待评价订单
-        if (mDatas.get(position).getState().equals("4")){
+        if (mDatas.get(position).getState().equals("4")) {
             ((MyViewHolder) holder).cslAction.setVisibility(View.VISIBLE);
             ((MyViewHolder) holder).tvOrderstuts.setText("待评价");
             ((MyViewHolder) holder).tvActionone.setText("发表评价");
             ((MyViewHolder) holder).tvOrdertype.setText("积分商城");
-            ((MyViewHolder) holder).tvOther.setText("-"+mDatas.get(position).getOrderPrice()+"积分");
+            ((MyViewHolder) holder).tvOther.setText("-" + mDatas.get(position).getOrderPrice() + "积分");
         }
         ((MyViewHolder) holder).imageView19.setImageURI(mDatas.get(position).getPicture());
         Log.d("加载一条数据");
@@ -127,6 +132,7 @@ public class MyorderAdapter extends RecyclerView.Adapter {
         void onItemClick(View view, int position);
 
         void onactionOneClick(View view, int position);
+
         void onactionTwoClick(View view, int position);
     }
 

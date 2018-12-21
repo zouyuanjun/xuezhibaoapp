@@ -73,7 +73,7 @@
             android:layout_marginStart="16dp"
             android:clickable="false"
             android:numStars="5"
-            android:rating="1.5"
+            android:rating="5"
             app:layout_constraintBottom_toBottomOf="@+id/textView26"
             app:layout_constraintStart_toEndOf="@+id/textView26"
             app:layout_constraintTop_toTopOf="@+id/textView26"></RatingBar>
@@ -87,7 +87,7 @@
             android:layout_marginStart="16dp"
             android:clickable="false"
             android:numStars="5"
-            android:rating="1.5"
+            android:rating="5"
             app:layout_constraintBottom_toBottomOf="@+id/textView27"
             app:layout_constraintStart_toEndOf="@+id/textView27"
             app:layout_constraintTop_toTopOf="@+id/textView27"></RatingBar>

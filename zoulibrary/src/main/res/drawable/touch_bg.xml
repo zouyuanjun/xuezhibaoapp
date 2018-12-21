@@ -3,10 +3,11 @@
     android:color="@color/touchbg">
     <item android:id="@android:id/mask">
         <shape android:shape= "oval">
-            <solid android:color="@color/red"/>
+            <solid android:color="@color/white"/>
             <size
                 android:width="30dp"
                 android:height="30dp" />
         </shape> />
     </item>
+
 </ripple>

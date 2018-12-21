@@ -95,7 +95,7 @@ public class VideoListAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        Log.d("一共有"+mDatas.size());
+        Log.d("一5"+mDatas.size());
         return mDatas.size();
     }
 

@@ -87,6 +87,12 @@ public class MyGoodsPresenter extends BasePresenter {
         String data = JsonUtils.keyValueToString("productId", id);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-score", handler, 3);
     }
+
+    /**
+     * 获取商品评论
+     * @param page
+     * @param id
+     */
     public void getgoodscomment(int page, String id) {
         String data = JsonUtils.keyValueToString2("pageNo", page, "productId", id);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-product-evaluate", handler, 4);

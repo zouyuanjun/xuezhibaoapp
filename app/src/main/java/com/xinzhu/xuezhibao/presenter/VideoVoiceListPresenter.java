@@ -3,9 +3,11 @@ package com.xinzhu.xuezhibao.presenter;
 import android.os.Handler;
 import android.os.Message;
 
+import com.xinzhu.xuezhibao.bean.VideoFolder;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.interfaces.HomeVideoVoiceListInterface;
+import com.xinzhu.xuezhibao.view.interfaces.VideoFolderInterface;
 import com.xinzhu.xuezhibao.view.interfaces.VideoFragmentInterface;
 import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
@@ -18,6 +20,11 @@ import java.util.List;
 public class VideoVoiceListPresenter {
     HomeVideoVoiceListInterface homeVideoVoiceListInterface;
     VideoFragmentInterface videoFragmentInterface;
+    VideoFolderInterface videoFolderInterface;
+
+    public VideoVoiceListPresenter(VideoFolderInterface videoFolderInterface) {
+        this.videoFolderInterface = videoFolderInterface;
+    }
 
     public VideoVoiceListPresenter(VideoFragmentInterface videoFragmentInterface) {
         this.videoFragmentInterface = videoFragmentInterface;
@@ -71,22 +78,31 @@ public class VideoVoiceListPresenter {
                 return;
             }
             if (code == 100) {
-                String data = JsonUtils.getStringValue(result, "Data");
-                List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
-                if (null!=mDatas&&mDatas.size()>0){
-                  if (what == 8) {
-                        videoFragmentInterface.getpayVideo(mDatas);
-                    } else {
-                        homeVideoVoiceListInterface.getVideo(mDatas);
+                if (what==9){
+                    String data = JsonUtils.getStringValue(result, "Data");
+                    List<VideoFolder> mDatas = JSON.parseArray(data, VideoFolder.class);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        videoFolderInterface.getvideofolder(mDatas);
+                    }else {
+                        videoFolderInterface.nomoredata();
                     }
                 }else {
-                    if (null!=videoFragmentInterface){
-                        videoFragmentInterface.noData();
-                    }else if (null!=homeVideoVoiceListInterface){
-                        homeVideoVoiceListInterface.nodata();
+                    String data = JsonUtils.getStringValue(result, "Data");
+                    List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        if (what == 8) {
+                            videoFragmentInterface.getpayVideo(mDatas);
+                        } else {
+                            homeVideoVoiceListInterface.getVideo(mDatas);
+                        }
+                    }else {
+                        if (null!=videoFragmentInterface){
+                            videoFragmentInterface.noData();
+                        }else if (null!=homeVideoVoiceListInterface){
+                            homeVideoVoiceListInterface.nodata();
+                        }
                     }
                 }
-
             }
 
         }
@@ -128,10 +144,13 @@ public class VideoVoiceListPresenter {
         }
     }
 
-    public void getpayVideo(int page) {
+    public void getpayVideo(String videoid) {
+        String data = JsonUtils.keyValueToString2("videoTypeId", videoid,"pageNo",1);
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/select-video-type", handler, 8);
+    }
+    public void getVideoFolder(int page) {
         String data = JsonUtils.keyValueToString2("pageNo", page,"videoType",1);
-        Network.getnetwork().postJson(data, Constants.URL + "/guest/video-newest-gratis", handler, 8);
-
+        Network.getnetwork().postJson(data, Constants.URL + "/guest/select-video-types", handler, 9);
     }
     public void cancelmessage(){
         handler.removeCallbacksAndMessages(null);

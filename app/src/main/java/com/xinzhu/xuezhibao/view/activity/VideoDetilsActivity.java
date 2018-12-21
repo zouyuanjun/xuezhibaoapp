@@ -7,9 +7,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -20,7 +23,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import com.tencent.smtt.sdk.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -38,6 +40,7 @@ import com.shuyu.gsyvideoplayer.listener.GSYSampleCallBack;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
+import com.tencent.smtt.sdk.WebView;
 import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
@@ -48,6 +51,7 @@ import com.xinzhu.xuezhibao.presenter.AlipayPresenter;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
 import com.xinzhu.xuezhibao.presenter.VideoVoiceDetailPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.WebViewUtil;
 import com.xinzhu.xuezhibao.view.custom.VideoPlayer;
 import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
 import com.xinzhu.xuezhibao.view.interfaces.PayInterface;
@@ -55,12 +59,12 @@ import com.xinzhu.xuezhibao.view.interfaces.VideoVoiceDetailInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.ui.CustomDialog;
+import com.zou.fastlibrary.ui.ShapeCornerBgView;
 import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.ScreenUtil;
 import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
-import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -72,6 +76,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.xinzhu.xuezhibao.MyApplication.getContext;
 
 public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetailInterface, LikeCollectInterface, PayInterface {
     @BindView(R.id.standardGSYVideoPlayer)
@@ -128,17 +134,14 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     GoodView mGoodView;
     long startplaytime;
     long stopplaytime;
-    boolean haseplay = false; //是否观看过
+    boolean haseplay = false; //是否观看过,用于统计视频播放时间
     @BindView(R.id.im_back)
     ImageView imBack;
     PopupWindow loadingPop = null;
     AlipayPresenter alipayPresenter;
     @BindView(R.id.tv_teacher)
     TextView tvTeacher;
-    CountDownTimer timer;  //播放计时器
-    @BindView(R.id.tv_playtime)
-    TextView tvPlaytime;
-    boolean isVipVideo=false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -158,44 +161,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         });
         videoVoiceDetailPresenter = new VideoVoiceDetailPresenter(this);
         alipayPresenter = new AlipayPresenter(VideoDetilsActivity.this, this);
-        videoVoiceDetailPresenter.getVideoComment(videoid, 1);
-        timer = new CountDownTimer(90 * 1000, 1000) {
-            /**
-             * 固定间隔被调用,就是每隔countDownInterval会回调一次方法onTick
-             * @param millisUntilFinished
-             */
-            @Override
-            public void onTick(long millisUntilFinished) {
-                Log.d("播放进度"+detailPlayer.getCurrentPositionWhenPlaying());
-                if (detailPlayer.getCurrentPositionWhenPlaying()>60000){
-                    timer.onFinish();
-                }
-
-            }
-            /**
-             * 倒计时完成时被调用
-             */
-            @Override
-            public void onFinish() {
-                cslBuy.setVisibility(View.VISIBLE);
-                detailPlayer.onVideoPause();
-                detailPlayer.setCanpaly(false);
-                detailPlayer.hidstartbt();
-                timer.cancel();
-            }
-        };
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        detailPlayer.onVideoPause();
-        timer.cancel();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         likeCollectPresenter = new LikeCollectPresenter(this);
         commentAdapter = new CommentAdapter(this, commentBeanArrayList);
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(this);
@@ -203,14 +168,23 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         rvComment.setLayoutManager(linearLayoutManager3);
         rvComment.setNestedScrollingEnabled(false);
         rvComment.setAdapter(commentAdapter);
-        detailPlayer = findViewById(R.id.standardGSYVideoPlayer);
-        detailPlayer.hidstartbt();
-        cslBuy.setVisibility(View.GONE);
+        videoVoiceDetailPresenter.getVideoComment(videoid, 1);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        detailPlayer.onVideoPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         videoVoiceDetailPresenter.getVideoDetail(videoid);
         likeCollectPresenter.islike(videoid, "2");
         likeCollectPresenter.iscollect(videoid, "2");
+        detailPlayer.setCanpaly(false);
         init();
-        detailPlayer.onVideoResume();
     }
 
     private void init() {
@@ -239,17 +213,13 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                     Log.d("开始播放");
                     startplaytime = System.currentTimeMillis();
                     haseplay = true;
-                    if (isVipVideo){
-                        timer.cancel();
-                        timer.start();
-                    }
+
 
                 } else {
                     Log.d("停止播放");
                     stopplaytime = System.currentTimeMillis();
                     Constants.PLAYTIME = Constants.PLAYTIME + stopplaytime - startplaytime;
                     startplaytime = stopplaytime;
-                    timer.cancel();
                 }
             }
         });
@@ -271,13 +241,15 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         });
     }
 
-    @OnClick({R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_detail_comment, R.id.tv_buyvideo})
+    @OnClick({R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_detail_comment, R.id.tv_buyvideo, R.id.tv_buyvideo2})
     public void onViewClicked(final View view) {
+        if (Constants.TOKEN.isEmpty()) {
+            showdia();
+            return;
+        }
         switch (view.getId()) {
             case R.id.ll_dianzan:
-                if (Constants.TOKEN.isEmpty()) {
-                    showdia();
-                } else {
+
                     if (islike) {
                         likenum--;
                         tvLike.setText(likenum + "");
@@ -293,12 +265,10 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                         likeCollectPresenter.like(videoid, "2");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
                     }
-                }
+
                 break;
             case R.id.ll_shoucan:
-                if (Constants.TOKEN.isEmpty()) {
-                    showdia();
-                } else {
+
                     if (iscollect) {
                         iscollect = false;
                         likeCollectPresenter.cancelcollect(videoid, "2");
@@ -308,17 +278,14 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                         likeCollectPresenter.collect(videoid, "2");
                         imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
                     }
-                }
+
                 break;
             case R.id.tv_detail_comment:
                 showpop(view);
                 break;
             case R.id.tv_buyvideo:
                 detailPlayer.onVideoPause();
-                timer.cancel();
-                if (Constants.TOKEN.isEmpty()) {
-                    showdia();
-                } else {
+
                     final PopupWindow popupWindow = CreatPopwindows.creatpopwindows(this, R.layout.pop_pay);
                     final View myview = popupWindow.getContentView();
                     RadioGroup radioGroup = myview.findViewById(R.id.rg_pay);
@@ -351,12 +318,28 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
                     popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, ScreenUtil.getNavigationBarHeight(VideoDetilsActivity.this));
 
-
-                }
-
+                break;
+            case R.id.tv_buyvideo2:
+                final PopupWindow popupWindow2 = CreatPopwindows.creatWWpopwindows(this, R.layout.pop_pointsbuyvideo);
+                popupWindow2.showAtLocation(view, Gravity.CENTER, 0, 0);
+                Bitmap bmp = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ffffffrad8);
+                Drawable drawable = new BitmapDrawable(getContext().getResources(), bmp);
+                popupWindow2.setBackgroundDrawable(drawable);
+                TextView tvVideoprice=popupWindow2.getContentView().findViewById(R.id.tv_videoprice);
+                TextView tvmypoints=popupWindow2.getContentView().findViewById(R.id.tv_mypoints);
+                ShapeCornerBgView shapeCornerBgView=popupWindow2.getContentView().findViewById(R.id.scb_apply);
+                tvVideoprice.setText("使用800积分兑换此课程");
+                tvmypoints.setText("当前积分:"+Constants.userBasicInfo.getIntegral());
+                shapeCornerBgView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow2.dismiss();
+                    }
+                });
                 break;
         }
     }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -369,7 +352,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoManager.releaseAllVideos();
-        timer.cancel();
         if (orientationUtils != null) {
             orientationUtils.releaseListener();
         }
@@ -414,14 +396,16 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         tvDetails.loadDataWithBaseURL(null, videoVoiceBean.getVideoDetails(), "text/html", "UTF-8", null);
         tvTitle.setText(videoVoiceBean.getVideoTitle());
         if (videoVoiceBean.getVideoType() == 1) {
-            tvPlaytime.setVisibility(View.VISIBLE);
-            isVipVideo=true;
+            cslBuy.setVisibility(View.VISIBLE);
+            detailPlayer.setCanpaly(false);
             tvBuyvideo.setText("￥" + videoVoiceBean.getVideoPrice() + " 购买");
-        }
-        if (videoVoiceBean.getIsBuy()==1) {
-            tvPlaytime.setVisibility(View.GONE);
-            isVipVideo=false;
+        } else {
+            cslBuy.setVisibility(View.GONE);
             detailPlayer.setCanpaly(true);
+        }
+        if (videoVoiceBean.getIsBuy() == 1) {
+            detailPlayer.setCanpaly(true);
+            cslBuy.setVisibility(View.GONE);
         }
         tvTeacher.setText(videoVoiceBean.getVideoTeacher());
         tvLike.setText(videoVoiceBean.getVidelLike());
@@ -544,8 +528,12 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             TextView textView = view1.findViewById(R.id.tv_send);
             final PopupWindow window = new PopupWindow(view1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
             window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-            window.setOutsideTouchable(true);
+            Bitmap bmp = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ffffffrad8);
+            Drawable drawable = new BitmapDrawable(getContext().getResources(), bmp);
+            window.setBackgroundDrawable(drawable);
             window.setTouchable(true);
+            window.setOutsideTouchable(true);
+            window.update();
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Service.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
             window.showAtLocation(view, Gravity.BOTTOM, 0, 0);
@@ -553,6 +541,10 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 @Override
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
+                    if (StringUtil.isEmpty(commend)) {
+                        BToast.error(VideoDetilsActivity.this).text("请填写内容").show();
+                        return;
+                    }
                     CommentBean commentBean = new CommentBean(Constants.userBasicInfo.getImage(), Constants.userBasicInfo.getNickName(), System.currentTimeMillis(), commend, "", "111");
                     commentnum++;
                     tvCommentNum.setText("全部评论(" + commentnum + ")");
@@ -563,8 +555,6 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 }
             });
         }
-
-
     }
 
     public void showdia() {
@@ -592,6 +582,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     @Override
     public void paysuccessful() {
+        videoVoiceDetailPresenter.getVideoDetail(videoid);
         if (null != loadingPop && loadingPop.isShowing()) {
             loadingPop.dismiss();
         }
@@ -603,10 +594,11 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     @Override
     public void payfail() {
+        if (null != loadingPop && loadingPop.isShowing()) {
+            loadingPop.dismiss();
+        }
         BToast.error(this).text("支付失败").show();
         cslBuy.setVisibility(View.VISIBLE);
-        detailPlayer.setCanpaly(false);
-        detailPlayer.hidstartbt();
     }
 
     @Override
@@ -619,7 +611,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         if (null != loadingPop && loadingPop.isShowing()) {
             loadingPop.dismiss();
         }
-        BToast.error(this).text("抱歉"+tips).show();
+        BToast.error(this).text("抱歉" + tips).show();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

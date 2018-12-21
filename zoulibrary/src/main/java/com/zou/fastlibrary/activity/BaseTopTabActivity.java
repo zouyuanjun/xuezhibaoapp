@@ -57,12 +57,17 @@ public class BaseTopTabActivity extends BaseActivity {
     public void bingview() {
         ViewPagnorAdapter listViewPageAdapter = new ViewPagnorAdapter(getSupportFragmentManager(), fragmentList, tablist);
         viewPager.setAdapter(listViewPageAdapter);
+        viewPager.setOffscreenPageLimit(4);
         tabLayout.setupWithViewPager(viewPager);
     }
     public void bingview(int TYPE) {
         ListViewPageAdapter listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, tablist,TYPE);
         viewPager.setAdapter(listViewPageAdapter);
+        viewPager.setOffscreenPageLimit(4);
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    public TabLayout gettablayout(){
+        return  tabLayout;
+    }
 }

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.utils.Constants;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
@@ -53,6 +54,8 @@ public class TestActivity extends BaseActivity {
     double duodong = 0;
     double xuexi = 0;
     double qingxu = 0;
+    int classindex;
+    int testcount;
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -61,6 +64,7 @@ public class TestActivity extends BaseActivity {
             if (what == 1) {
                 Log.d("收到消息" + crrentindex);
                 tvTitle.setText(datalist.get(crrentindex));
+                tvCrrentindex.setText(crrentindex % 9 + 1 + "");
                 radiogroup.setClickable(true);
                 ans3.setClickable(true);
                 ans2.setClickable(true);
@@ -74,20 +78,56 @@ public class TestActivity extends BaseActivity {
     @BindView(R.id.last)
     ShapeCornerBgView last;
     Context context;
-    String result = "分数说明\n" +
-            "1-3分为轻度，不会产生太大影响，关注；4-6分为中度，需要家长做出积极的干预；7-9分为重度，需要重视，帮助和训练孩子度过困难。\n您的测评结果";
-    @BindView(R.id.tv_result)
+    String result = "";
+    @BindView(R.id.tv_testresult)
     TextView tvResult;
-    @BindView(R.id.nestedScrollView)
-    NestedScrollView nestedScrollView;
     @BindView(R.id.textView8)
     TextView textView8;
+    @BindView(R.id.tv_testtitle)
+    TextView tvTesttitle;
+    @BindView(R.id.tv_totle)
+    TextView tvTotle;
+    @BindView(R.id.tv_crrentindex)
+    TextView tvCrrentindex;
+    String testtitle;
+    @BindView(R.id.nestedScrollView)
+    NestedScrollView nestedScrollView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
         ButterKnife.bind(this);
+        classindex = getIntent().getIntExtra(Constants.INTENT_ID, 0);
+        switch (classindex) {
+            case 0:
+                testtitle = "阅读理解";
+                break;
+            case 1:
+                testtitle = "书面表达与写作";
+                break;
+            case 2:
+                testtitle = "注意力";
+                break;
+            case 3:
+                testtitle = "多动与抑制";
+                break;
+            case 4:
+                testtitle = "学习和感知";
+                break;
+            case 5:
+                testtitle = "情绪";
+                break;
+        }
+        tvTesttitle.setText("【" + testtitle + "】" + "自测题目");
+        crrentindex = classindex * 9;
+        if (classindex != 5) {
+            testcount = classindex * 9 + 8;
+            tvTotle.setText("/9");
+        } else {
+            testcount = classindex * 9 + 4;
+            tvTotle.setText("/5");
+        }
         context = this;
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -104,7 +144,7 @@ public class TestActivity extends BaseActivity {
                         ansmap.put(crrentindex, 2);
                         ans3.setClickable(false);
                         ans2.setClickable(false);
-                        if (crrentindex < 49) {
+                        if (crrentindex < testcount) {
                             crrentindex++;
                             handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
                         } else {
@@ -126,9 +166,9 @@ public class TestActivity extends BaseActivity {
                         ans3.setClickable(false);
                         ans1.setClickable(false);
                         ansmap.put(crrentindex, 1);
-                        if (crrentindex < 49) {
+                        if (crrentindex < testcount) {
                             crrentindex++;
-                            handler.sendMessageDelayed(handler.obtainMessage(1), 100);
+                            handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
                         } else {
                             ans3.setClickable(true);
                             ans2.setClickable(true);
@@ -147,7 +187,7 @@ public class TestActivity extends BaseActivity {
                         ans2.setClickable(false);
                         ans1.setClickable(false);
                         ansmap.put(crrentindex, 0);
-                        if (crrentindex < 49) {
+                        if (crrentindex < testcount) {
                             crrentindex++;
                             handler.sendMessageDelayed(handler.obtainMessage(1), 1000);
                         } else {
@@ -162,11 +202,11 @@ public class TestActivity extends BaseActivity {
             }
         });
         initdata();
-        tvTitle.setText(datalist.get(0));
+        tvTitle.setText(datalist.get(9 * classindex));
         appbar.setRightTextOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (crrentindex != 49) {
+                if (crrentindex != testcount) {
                     BToast.error(context).text("必须全部答完才可以提交分数哦").show();
                     return;
                 }
@@ -192,73 +232,86 @@ public class TestActivity extends BaseActivity {
                     }
                     Log.d("题目是" + key + ",答案是：" + ansmap.get(key));
                 }
-                yuedu = calculate(yuedu);
-                shumian = calculate(shumian);
-                zhuyili = calculate(zhuyili);
-                duodong = calculate(duodong);
-                xuexi = calculate(xuexi);
-
-                qingxu = calculate(qingxu);
-
-                qingxu = 5 + 2 * (qingxu - 3.727) /1.753;
-                if (qingxu > 9) {
-                    qingxu= 9;
-                } else if (qingxu < 1) {
-                    qingxu= 1;
+                switch (classindex) {
+                    case 0:
+                        yuedu = calculate(yuedu);
+                        break;
+                    case 1:
+                        shumian = calculate(shumian);
+                        break;
+                    case 2:
+                        zhuyili = calculate(zhuyili);
+                        break;
+                    case 3:
+                        duodong = calculate(duodong);
+                        break;
+                    case 4:
+                        xuexi = calculate(xuexi);
+                        break;
+                    case 5:
+                        qingxu = 5 + 2 * (qingxu - 3.727) / 1.753;
+                        if (qingxu > 9) {
+                            qingxu = 9;
+                        } else if (qingxu < 1 && qingxu > 0) {
+                            qingxu = 1;
+                        }
+                        break;
                 }
-                if (yuedu <= 3) {
-                    result = result + "\n\n阅读理解：" + (int) yuedu + "分\n" + anslist.get(0);
+
+
+                if (yuedu <= 3 && yuedu > 0) {
+                    result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(0);
                 }
                 if (yuedu > 3 && yuedu < 7) {
-                    result = result + "\n\n阅读理解：" + (int) yuedu + "分\n" + anslist.get(1);
+                    result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(1);
                 }
                 if (yuedu > 7 && yuedu < 14) {
-                    result = result + "\n\n阅读理解：" + (int) yuedu + "分\n" + anslist.get(2);
+                    result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(2);
                 }
-                if (shumian <= 3) {
-                    result = result + "\n\n书面表达与写作：" + (int) shumian + "分\n" + anslist.get(3);
+                if (shumian <= 3 && shumian > 0) {
+                    result = result + "书面表达与写作：" + (int) shumian + "分\n" + anslist.get(3);
                 }
                 if (shumian > 3 && shumian < 7) {
-                    result = result + "\n\n书面表达与写作：" + (int) shumian + "分\n" + anslist.get(4);
+                    result = result + "书面表达与写作：" + (int) shumian + "分\n" + anslist.get(4);
                 }
                 if (shumian > 7 && shumian < 14) {
-                    result = result + "\n\n书面表达与写作：" + (int) shumian + "分\n" + anslist.get(5);
+                    result = result + "书面表达与写作：" + (int) shumian + "分\n" + anslist.get(5);
                 }
-                if (zhuyili <= 3) {
-                    result = result + "\n\n注意力：" + (int) zhuyili + "分\n" + anslist.get(6);
+                if (zhuyili <= 3 && zhuyili > 0) {
+                    result = result + "注意力：" + (int) zhuyili + "分\n" + anslist.get(6);
                 }
                 if (zhuyili > 3 && zhuyili < 7) {
-                    result = result + "\n\n注意力：" + (int) zhuyili + "分\n" + anslist.get(7);
+                    result = result + "注意力：" + (int) zhuyili + "分\n" + anslist.get(7);
                 }
                 if (zhuyili > 7 && zhuyili < 14) {
-                    result = result + "\n\n注意力：" + (int) zhuyili + "分\n" + anslist.get(8);
+                    result = result + "注意力：" + (int) zhuyili + "分\n" + anslist.get(8);
                 }
-                if (duodong <= 3) {
-                    result = result + "\n\n多动与抑制：" + (int) duodong + "分\n" + anslist.get(9);
+                if (duodong <= 3 && duodong > 0) {
+                    result = result + "多动与抑制：" + (int) duodong + "分\n" + anslist.get(9);
                 }
                 if (duodong > 3 && duodong < 7) {
-                    result = result + "\n\n多动与抑制：" + (int) duodong + "分\n" + anslist.get(10);
+                    result = result + "多动与抑制：" + (int) duodong + "分\n" + anslist.get(10);
                 }
                 if (duodong > 7 && duodong < 14) {
-                    result = result + "\n\n多动与抑制：" + (int) duodong + "分\n" + anslist.get(11);
+                    result = result + "多动与抑制：" + (int) duodong + "分\n" + anslist.get(11);
                 }
-                if (xuexi <= 3) {
-                    result = result + "\n\n学习和感知：" + (int) xuexi + "分\n" + anslist.get(12);
+                if (xuexi <= 3 && xuexi > 0) {
+                    result = result + "学习和感知：" + (int) xuexi + "分\n" + anslist.get(12);
                 }
                 if (xuexi > 3 && xuexi < 7) {
-                    result = result + "\n\n学习和感知：" + (int) xuexi + "分\n" + anslist.get(13);
+                    result = result + "学习和感知：" + (int) xuexi + "分\n" + anslist.get(13);
                 }
                 if (xuexi > 7 && xuexi < 14) {
-                    result = result + "\n\n学习和感知：" + (int) xuexi + "分\n" + anslist.get(14);
+                    result = result + "学习和感知：" + (int) xuexi + "分\n" + anslist.get(14);
                 }
-                if (qingxu <= 3) {
-                    result = result + "\n\n情绪：" + (int) qingxu + "分\n" + anslist.get(15);
+                if (qingxu <= 3 && qingxu > 0) {
+                    result = result + "情绪：" + (int) qingxu + "分\n" + anslist.get(15);
                 }
                 if (qingxu > 3 && qingxu < 7) {
-                    result = result + "\n\n情绪：" + (int) qingxu + "分\n" + anslist.get(16);
+                    result = result + "情绪：" + (int) qingxu + "分\n" + anslist.get(16);
                 }
                 if (qingxu > 7 && qingxu < 14) {
-                    result = result + "\n\n情绪：" + (int) qingxu + "分\n" + anslist.get(17);
+                    result = result + "n情绪：" + (int) qingxu + "分\n" + anslist.get(17);
                 }
                 tvResult.setText(result);
                 nestedScrollView.setVisibility(View.VISIBLE);
@@ -269,7 +322,7 @@ public class TestActivity extends BaseActivity {
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (crrentindex != 49) {
+                if (crrentindex != testcount) {
                     CustomDialog.Builder builder = new CustomDialog.Builder(context);
                     builder.setTitle("提示");
                     builder.setMessage("您还没有答完题目，退出会清空答案，确定要退出吗？");
@@ -335,47 +388,47 @@ public class TestActivity extends BaseActivity {
         String s7 = "7.朗读时混淆读音相近的字词，例如[波子]及[多士]。";
         String s8 = "8.朗读时音欢摇头晃脑，或者需要手指或其它工具跟随铺助。";
         String s9 = "9.朗读时有漏字或跳行的情况，或者会把词语前后颠倒。";
-        String s10 = "10.书写、抄写速度慢，需要比别人更长时间来完成抄写作业。";
-        String s11 = "11.书写时常犯错，例如漏写笔画，字体的结构不匀称，潦草，感觉吃力。";
-        String s12 = "12.默写常常不及格，写错字或是字序顺倒或写反字。";
-        String s13 = "13.抄写黑板时会漏字，或需要看一笔写一笔，或者只能看一个偏旁。";
-        String s14 = "14.同一个字在同一篇文章有多种不同的写法，有的错误，有的正确。";
-        String s15 = "15.作文、作句子只能勉强达意，文法上有错误。";
-        String s16 = "16.会漏字，例如[这很玩]漏了“好”字；或写多余的字，例如[这很非常好]多了“很”字。";
-        String s17 = "17.次序混乱，例如[今天上学不用]，把“上学”和“不用”顺序颠倒。";
-        String s18 = "18.常写出界，对不齐作业本的行或格等。";
-        String s19 = "19.经常不注意细节，在学校课业、日常生活及其它活动总经常犯粗心大意的错";
-        String s20 = "20.注意力无法长时间集中于课业或游戏上（非电子游戏）。";
-        String s21 = "21.别人和他（她)说话，他（她）经常没有注意听。";
-        String s22 = "22.常常无法完成他人的指令，且无法完成学校课业，其它事情或任务";
-        String s23 = "23.对于组织活动或任务经常感到困难";
-        String s24 = "24.经常逃避、厌恶或不甘心地从事较花心思的任务";
-        String s25 = "25.经常遗失所需之物（如玩具、书本、作业本、铅笔或工具）";
-        String s26 = "26.较容易被外界刺激转移注意力";
-        String s27 = "27.经常在日常生活中丢三落四";
-        String s28 = "28.手、脚常常不安地动来动去或坐不住";
-        String s29 = "29.常常在课堂上或其他应该坐好的地方站起来";
-        String s30 = "30.经常在不适当的场合跑来跑去或爬来爬去（这在青少年或成人身上可能是个体受限制的不安感受）";
-        String s31 = "31.常常很难静下来玩，或安静地从事活动";
-        String s32 = "32.经常处于活动状态，不安静";
-        String s33 = "33.常常话太多";
-        String s34 = "34.常常在问题尚未说完前便抢先回答";
-        String s35 = "35.从事的活动需轮流时，常不耐烦等待";
-        String s36 = "36.常常中断及干扰别人，例如介入他人的谈话或游戏";
-        String s37 = "37.分辨上下左右有困难或穿反拖鞋";
-        String s38 = "38.方向感较差，需要较长时间才懂得前往校内或小区的特别教室，如音乐室，电脑室，管理处等";
-        String s39 = "39.倒转字母或词，如b写成d，3写成E";
-        String s40 = "40.体育表现差，跳绳、接球、抛球有困难";
-        String s41 = "41.音律感差，上音乐课时不能依一些简单的拍子打节拍";
-        String s42 = "42.与同龄学生比较，系鞋带，扣纽扣有困难或笨拙";
-        String s43 = "43.记人名、地名感到困难，或者常遗失东西或忘记事情";
-        String s44 = "44.记一些朗朗上口的儿歌或短诗也感到困难";
-        String s45 = "45.记不得有关自己的资料，如电话号码，家庭地址等";
-        String s46 = "46.生气时不能控制自己的情绪，用合适方式表达（如语言），容易发生过激行为（如哭闹不停、摔东西、打人、歇斯底里）";
-        String s47 = "47.每到新地方容易紧张，要过一会才能安静下来（10分钟或更长）";
-        String s48 = "48.遇到挫折时会产生攻击行为";
-        String s49 = "49.看上去紧张、不安或害怕、退缩";
-        String s50 = "50.感到压力时容易发脾气、攻击人或说他头痛、胃痛等";
+        String s10 = "1.书写、抄写速度慢，需要比别人更长时间来完成抄写作业。";
+        String s11 = "2.书写时常犯错，例如漏写笔画，字体的结构不匀称，潦草，感觉吃力。";
+        String s12 = "3.默写常常不及格，写错字或是字序顺倒或写反字。";
+        String s13 = "4.抄写黑板时会漏字，或需要看一笔写一笔，或者只能看一个偏旁。";
+        String s14 = "5.同一个字在同一篇文章有多种不同的写法，有的错误，有的正确。";
+        String s15 = "6.作文、作句子只能勉强达意，文法上有错误。";
+        String s16 = "7.会漏字，例如[这很玩]漏了“好”字；或写多余的字，例如[这很非常好]多了“很”字。";
+        String s17 = "8.次序混乱，例如[今天上学不用]，把“上学”和“不用”顺序颠倒。";
+        String s18 = "9.常写出界，对不齐作业本的行或格等。";
+        String s19 = "1.经常不注意细节，在学校课业、日常生活及其它活动总经常犯粗心大意的错";
+        String s20 = "2.注意力无法长时间集中于课业或游戏上（非电子游戏）。";
+        String s21 = "3.别人和他（她)说话，他（她）经常没有注意听。";
+        String s22 = "4.常常无法完成他人的指令，且无法完成学校课业，其它事情或任务";
+        String s23 = "5.对于组织活动或任务经常感到困难";
+        String s24 = "6.经常逃避、厌恶或不甘心地从事较花心思的任务";
+        String s25 = "7.经常遗失所需之物（如玩具、书本、作业本、铅笔或工具）";
+        String s26 = "8.较容易被外界刺激转移注意力";
+        String s27 = "9.经常在日常生活中丢三落四";
+        String s28 = "1.手、脚常常不安地动来动去或坐不住";
+        String s29 = "2.常常在课堂上或其他应该坐好的地方站起来";
+        String s30 = "3.经常在不适当的场合跑来跑去或爬来爬去（这在青少年或成人身上可能是个体受限制的不安感受）";
+        String s31 = "4.常常很难静下来玩，或安静地从事活动";
+        String s32 = "5.经常处于活动状态，不安静";
+        String s33 = "6.常常话太多";
+        String s34 = "7.常常在问题尚未说完前便抢先回答";
+        String s35 = "8.从事的活动需轮流时，常不耐烦等待";
+        String s36 = "9.常常中断及干扰别人，例如介入他人的谈话或游戏";
+        String s37 = "1.分辨上下左右有困难或穿反拖鞋";
+        String s38 = "2.方向感较差，需要较长时间才懂得前往校内或小区的特别教室，如音乐室，电脑室，管理处等";
+        String s39 = "3.倒转字母或词，如b写成d，3写成E";
+        String s40 = "4.体育表现差，跳绳、接球、抛球有困难";
+        String s41 = "5.音律感差，上音乐课时不能依一些简单的拍子打节拍";
+        String s42 = "6.与同龄学生比较，系鞋带，扣纽扣有困难或笨拙";
+        String s43 = "7.记人名、地名感到困难，或者常遗失东西或忘记事情";
+        String s44 = "8.记一些朗朗上口的儿歌或短诗也感到困难";
+        String s45 = "9.记不得有关自己的资料，如电话号码，家庭地址等";
+        String s46 = "1.生气时不能控制自己的情绪，用合适方式表达（如语言），容易发生过激行为（如哭闹不停、摔东西、打人、歇斯底里）";
+        String s47 = "2.每到新地方容易紧张，要过一会才能安静下来（10分钟或更长）";
+        String s48 = "3.遇到挫折时会产生攻击行为";
+        String s49 = "4.看上去紧张、不安或害怕、退缩";
+        String s50 = "5.感到压力时容易发脾气、攻击人或说他头痛、胃痛等";
 
         datalist.add(s1);
         datalist.add(s2);
@@ -450,17 +503,25 @@ public class TestActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.last)
-    public void onViewClicked() {
-        if (crrentindex>0){
-            crrentindex--;
-            tvTitle.setText(datalist.get(crrentindex));
-            radiogroup.setClickable(true);
-            ans3.setClickable(true);
-            ans2.setClickable(true);
-            ans1.setClickable(true);
-            radiogroup.clearCheck();
+    @OnClick({R.id.last, R.id.scb_back})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.last:
+                if (crrentindex > classindex * 9) {
+                    crrentindex--;
+                    tvCrrentindex.setText(crrentindex % 9 + 1 + "");
+                    tvTitle.setText(datalist.get(crrentindex));
+                    radiogroup.setClickable(true);
+                    ans3.setClickable(true);
+                    ans2.setClickable(true);
+                    ans1.setClickable(true);
+                    radiogroup.clearCheck();
+                    textView8.setText("提示：选择后自动转下一题");
+                }
+                break;
+            case R.id.scb_back:
+                finish();
+                break;
         }
-
     }
 }

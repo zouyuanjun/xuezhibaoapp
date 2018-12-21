@@ -25,6 +25,7 @@
     </com.zou.fastlibrary.ui.CustomNavigatorBar>
 
     <android.support.constraint.ConstraintLayout
+android:visibility="gone"
         android:id="@+id/csl_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,7 +80,7 @@
             android:layout_marginEnd="64dp"
             android:gravity="right"
             android:maxLines="1"
-            android:text="TextView"
+            android:text=""
             android:textColor="@color/color_black_333333"
             android:textSize="13sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +94,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="16dp"
             android:gravity="right"
-            android:text="TextView"
+            android:text=""
             android:textColor="@color/color_black_333333"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -109,19 +110,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/setup_btn_more" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/fenge"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
-
-    <LinearLayout
-        android:id="@+id/linearLayout28"
-        android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/fenge"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/csl_address"></LinearLayout>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout2"
@@ -131,7 +129,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout28">
+        app:layout_constraintTop_toBottomOf="@+id/csl_address">
 
 
         <TextView
@@ -141,9 +139,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
-            android:text=""
-            android:drawablePadding="10dp"
             android:drawableLeft="@drawable/order_icon_type"
+            android:drawablePadding="10dp"
+            android:text=""
             app:layout_constraintBottom_toTopOf="@+id/linearLayout24"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -178,8 +176,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:text="TextView"
+            android:layout_marginTop="6dp"
+            android:text=""
             android:textColor="@color/color_black_333333"
             app:layout_constraintStart_toEndOf="@+id/imageView19"
             app:layout_constraintTop_toTopOf="@+id/imageView19" />
@@ -190,12 +188,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="TextView"
-            android:visibility="gone"
+          android:visibility="gone"
             app:layout_constraintStart_toStartOf="@+id/tv_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_title" />
 
         <TextView
             android:visibility="gone"
+            android:id="@+id/tv_mintitel2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+android:textColor="@color/appcolor"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            app:layout_constraintStart_toEndOf="@+id/tv_mintitel"
+            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+
+        <TextView
             android:id="@+id/tv_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -203,11 +211,11 @@
             android:layout_marginEnd="28dp"
             android:text="TextView"
             android:textColor="@color/color_black_666666"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout24" />
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/tv_price2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -215,8 +223,21 @@
             android:layout_marginEnd="28dp"
             android:text="0"
             android:textColor="@color/color_black_666666"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout24" />
+
+        <TextView
+            android:id="@+id/tv_orderstatue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text=""
+            android:textColor="@color/appcolor"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout24"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.47" />
 
     </android.support.constraint.ConstraintLayout>
 
@@ -277,10 +298,11 @@
             android:layout_marginStart="16dp"
             android:gravity="center"
             android:textColor="@color/color_black_666666"
-            android:text="发货时间"/>
+            android:text="发货时间:"/>
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/ll_action"
         android:layout_width="0dp"
         android:layout_height="44dp"

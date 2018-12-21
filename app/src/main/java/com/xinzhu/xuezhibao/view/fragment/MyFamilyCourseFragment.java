@@ -25,6 +25,7 @@ import com.xinzhu.xuezhibao.adapter.RvJiaojiaoTaskAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoTeacherAdapter;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.CourseFeedbackBean;
+import com.xinzhu.xuezhibao.bean.MessageNum;
 import com.xinzhu.xuezhibao.bean.MyjobBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
@@ -37,7 +38,10 @@ import com.xinzhu.xuezhibao.view.activity.CourseTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCourseFeedBackActivity;
 import com.xinzhu.xuezhibao.view.activity.TeacherDetailActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyCourseInterface;
+import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.utils.Log;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -89,9 +93,15 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
     @Override
     protected void lazyLoad() {
         Log.d("lazyLoad>>>>>>>>>>>>>>>"+MYCLASS);
-        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(mContext.get());
-        linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
-        rvItem.setLayoutManager(linearLayoutManager3);
+        if (MYCLASS == 1) {
+            rvItem.setAdapter(rvJiaojiaoCourseAdapter);
+        } else if (MYCLASS == 2) {
+            rvItem.setAdapter(rvJiaojiaoTeacherAdapter);
+        } else if (MYCLASS == 3) {
+            rvItem.setAdapter(rvJiaojiaoTaskAdapter);
+        } else if (MYCLASS == 4) {
+            rvItem.setAdapter(rvJiaojiaoFeedbackAdapter);
+        }
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -209,15 +219,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
     public void onResume() {
         super.onResume();
         Log.d("onResume>>>>>>>>>>>>>>>"+MYCLASS);
-        if (MYCLASS == 1) {
-            rvItem.setAdapter(rvJiaojiaoCourseAdapter);
-        } else if (MYCLASS == 2) {
-            rvItem.setAdapter(rvJiaojiaoTeacherAdapter);
-        } else if (MYCLASS == 3) {
-            rvItem.setAdapter(rvJiaojiaoTaskAdapter);
-        } else if (MYCLASS == 4) {
-            rvItem.setAdapter(rvJiaojiaoFeedbackAdapter);
-        }
+
         loaddata(true);
     }
 
@@ -228,6 +230,10 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
         if (teacherBeanArrayList.size() > 0 || taskBeanArrayList.size() > 0 || courseBeanArrayList.size() > 0 || feedbackBeanArrayList.size() > 0) {
             imDataisnull.setVisibility(View.GONE);
         }
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(mContext.get());
+        linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
+        rvItem.setLayoutManager(linearLayoutManager3);
+
         return rootView;
     }
 
@@ -282,6 +288,9 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
 
     @Override
     public void nodata() {
+        if (null==refreshLayout){
+            return;
+        }
         refreshLayout.finishLoadMoreWithNoMoreData();
         if (MYCLASS == 1 && courseBeanArrayList.size() == 0) {
             imDataisnull.setVisibility(View.VISIBLE);
@@ -320,6 +329,8 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
         page++;
         imLoading.setVisibility(View.GONE);
         imDataisnull.setVisibility(View.GONE);
+        EventBus.getDefault().post(new MessageNum(unread));
+
     }
 
     @Override

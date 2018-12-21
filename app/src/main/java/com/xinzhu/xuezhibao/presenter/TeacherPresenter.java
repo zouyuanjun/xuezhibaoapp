@@ -54,10 +54,20 @@ public class TeacherPresenter {
                     String total = JsonUtils.getStringValue(data, "total");
                     data = JsonUtils.getStringValue(data, "rows");
                     List<CommentBean> mDatas = JSON.parseArray(data, CommentBean.class);
-                    teacherInterface.getTeacherComment(mDatas, total);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        teacherInterface.getTeacherComment(mDatas, total);
+                    }else {
+                        teacherInterface.nomoredata();
+                    }
+
                 }else if (what==3){
                     List<CourseBean> mDatas = JSON.parseArray(data, CourseBean.class);
-                    teacherInterface.getTeacherCourse(mDatas);
+                    if (null!=mDatas&&mDatas.size()>0){
+                        teacherInterface.getTeacherCourse(mDatas);
+                    }else {
+                        teacherInterface.nomoredata();
+                    }
+
                 }
             }
         }
@@ -67,6 +77,11 @@ public class TeacherPresenter {
         Network.getnetwork().postJson(data,Constants.URL+"/guest/find-teacher-by-id",handler,1);
     }
 
+    /**
+     * 根据老师获取课程
+     * @param teacherid
+     * @param page
+     */
     public void getTeacherCourse(String  teacherid,int page){
         String data=JsonUtils.keyValueToString2("userId",teacherid,"pageNo",page);
         Network.getnetwork().postJson(data,Constants.URL+"/guest/select-list-by-teacher",handler,3);

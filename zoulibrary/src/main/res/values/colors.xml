@@ -4,7 +4,7 @@
     <color name="green">#33cc66</color>
     <color name="red">#ee3b3b</color>
 
-    <color name="alpha_9">#9000</color>
+    <color name="alpha_9">#99000000</color>
     <color name="white">#ffffff</color>
     <color name="white_alpha_6">#bbdddddd</color>
     <color name="black">#000000</color>

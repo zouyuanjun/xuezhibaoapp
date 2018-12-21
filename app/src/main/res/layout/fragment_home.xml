@@ -211,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="亲子文章"/>
+                    android:text="案例分析"/>
 
                 <ImageView
                     android:id="@+id/im_more_article"

@@ -162,6 +162,9 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
     @Override
     public void getOrderList(List<OrderBean> orderBeans) {
         if (null != orderBeans && null != refreshLayout&&null!=myorderAdapter) {
+            if (page==1){
+                orderBeanList.clear();
+            }
             orderBeanList.addAll(orderBeans);
             myorderAdapter.notifyDataSetChanged();
             refreshLayout.finishRefresh();
@@ -217,10 +220,11 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
 
     public void initdata() {
         page = 1;
-        orderBeanList.clear();
         imLoading.setVisibility(View.VISIBLE);
-        AnimationDrawable animationDrawable = (AnimationDrawable) imLoading.getDrawable();
-        animationDrawable.start();
+        if (orderBeanList.size()==0){
+            AnimationDrawable animationDrawable = (AnimationDrawable) imLoading.getDrawable();
+            animationDrawable.start();
+        }
         if (POSITION == 0) {
             myOrederPresenter.getOrderList(page, 100);
         } else if (POSITION == 1) {

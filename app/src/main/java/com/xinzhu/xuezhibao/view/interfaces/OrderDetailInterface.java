@@ -6,4 +6,5 @@ public interface OrderDetailInterface {
     void getorderdetail(OrderBean orderBean);
     void affirmorder();
     void affirmorderfail(String tip);
+    void getcoursehour(String consumeHour,String sumHour );
 }

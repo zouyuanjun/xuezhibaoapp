@@ -76,18 +76,54 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
 
     @Override
     protected void lazyLoad() {
+//        GridLayoutManager layoutManage = new GridLayoutManager(getContext(), 2);
+//        rvShop.setLayoutManager(layoutManage);
+//        potionsGoodsAdapter = new PotionsGoodsAdapter2(getContext(), goodsBeanList);
+//        potionsGoodsAdapter.setOnItemClickListener(new PotionsGoodsAdapter2.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
+//                intent.putExtra(Constants.INTENT_ID, goodsBeanList.get(position).getProductId());
+//                startActivity(intent);
+//            }
+//
+//            @Override
+//            public void onItemLongClick(View view, int position) {
+//
+//            }
+//        });
+//        rvShop.setAdapter(potionsGoodsAdapter);
+//        goodsBeanList.clear();
+//        myoGoodsPresenter.getGoodsList(1, 1, 100000);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (null != Constants.userBasicInfo) {
             sdvPhoto.setImageURI(Constants.userBasicInfo.getImage());
             tvName.setText(Constants.userBasicInfo.getNickName());
             scbViplv.setText(Constants.userBasicInfo.getDictionaryName());
             tvPointsnum.setText(Constants.userBasicInfo.getIntegral() + "");
         }
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
         GridLayoutManager layoutManage = new GridLayoutManager(getContext(), 2);
         rvShop.setLayoutManager(layoutManage);
         potionsGoodsAdapter = new PotionsGoodsAdapter2(getContext(), goodsBeanList);
         potionsGoodsAdapter.setOnItemClickListener(new PotionsGoodsAdapter2.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
+                if (StringUtil.isEmpty(Constants.TOKEN)){
+                    DialogUtils.loginDia(getActivity());
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
                 intent.putExtra(Constants.INTENT_ID, goodsBeanList.get(position).getProductId());
                 startActivity(intent);
@@ -101,18 +137,6 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
         rvShop.setAdapter(potionsGoodsAdapter);
         goodsBeanList.clear();
         myoGoodsPresenter.getGoodsList(1, 1, 100000);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
         return rootView;
     }
 
@@ -120,6 +144,7 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+
     }
 
     @OnClick({R.id.tv_togovipcenter, R.id.tv_points, R.id.tv_more_goods})

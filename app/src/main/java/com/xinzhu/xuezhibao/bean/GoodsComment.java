@@ -7,6 +7,8 @@ public class GoodsComment {
     long createTime;
     String image;
 
+
+
     public String getImage() {
         return image;
     }

@@ -23,18 +23,19 @@
                 android:id="@+id/clltab"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:title="详情"
+                android:fitsSystemWindows="true"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     app:layout_scrollFlags="scroll">
 
                     <com.youth.banner.Banner
                         android:id="@+id/sdv_goodspicter"
                         android:layout_width="match_parent"
                         android:layout_height="260dp"
+                        android:fitsSystemWindows="true"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -89,31 +90,19 @@
                 </android.support.constraint.ConstraintLayout>
 
                 <android.support.v7.widget.Toolbar
+                    android:paddingTop="20dp"
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="20dp"
+                    android:gravity="center_vertical"
                     app:layout_collapseMode="pin"
                     app:titleTextColor="@color/white"
                     android:background="@color/appcolor"
-                    android:fitsSystemWindows="true"
-                    app:title="详情"
+                    android:fitsSystemWindows="false"
                     >
-
-                    <ImageView
-                        android:id="@+id/im_back"
-                        android:paddingTop="20dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:background="@drawable/orderdetail_btn_return"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
                 </android.support.v7.widget.Toolbar>
 
-
             </android.support.design.widget.CollapsingToolbarLayout>
-
             <android.support.design.widget.TabLayout
                 android:id="@+id/tb_goodstab"
                 android:layout_width="match_parent"
@@ -170,6 +159,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="16dp"
                         android:clickable="false"
+                        android:isIndicator="true"
                         android:numStars="5"
                         android:rating="1.5"></RatingBar>
 
@@ -314,6 +304,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
     </android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/im_back"
+        android:layout_marginTop="31dp"
+        android:fitsSystemWindows="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/orderdetail_btn_return"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </ImageView>
 </RelativeLayout>
 
 
