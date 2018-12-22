@@ -250,6 +250,9 @@ boolean nodata=false;
 
     @Override
     public void getarticle(List<ArticleBean> BeanList) {
+        if (null==refreshLayout){
+            return;
+        }
         articleBeanList.addAll(BeanList);
         articleListAdapter.notifyDataSetChanged();
         refreshLayout.finishLoadMore();
@@ -261,6 +264,9 @@ boolean nodata=false;
 
     @Override
     public void nodata() {
+        if (null==refreshLayout){
+            return;
+        }
         articleListAdapter.notifyDataSetChanged();
         courseMyCollectAdapter.notifyDataSetChanged();
         videoVoiceListAdapter.notifyDataSetChanged();

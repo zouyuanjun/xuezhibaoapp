@@ -66,7 +66,9 @@ public class HomeListActivity extends BaseActivity {
             fragmentList.add(new ArticleListFragment());
             listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,3);
         }
+
        vpItemlist.setAdapter(listViewPageAdapter);
+        vpItemlist.setOffscreenPageLimit(3);
         tbClass.setupWithViewPager(vpItemlist);
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
