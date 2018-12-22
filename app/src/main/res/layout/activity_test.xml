@@ -19,7 +19,7 @@
         app:midTextFontColor="#ffffff"
         app:midTextSizeSp="18"
         app:rightImageVisible='false'
-        app:rightTextVisible='true'
+        app:rightTextVisible='false'
         app:rightText="提交答案"
         app:rightTextColor="@color/white"
         app:titleBarBackground='@color/appcolor'>
@@ -119,6 +119,21 @@
         app:appBgColor="@color/appcolor"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radiogroup" />
+
+    <com.zou.fastlibrary.ui.ShapeCornerBgView
+        android:id="@+id/scb_commit"
+        android:layout_width="78dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="24dp"
+        android:text="提交"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:visibility="gone"
+        app:appBgColor="@color/appcolor"
+        app:appRadius="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/radiogroup" />
 
     <android.support.v4.widget.NestedScrollView

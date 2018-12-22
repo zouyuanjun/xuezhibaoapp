@@ -178,6 +178,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                         tvLike.setText(likenum + "");
                         articlePresenter.cancellike(articleid);
                         imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
+                        tvLike.setTextColor(Color.parseColor("#666666"));
                     } else {
                         mGoodView.setImage(R.drawable.videodetails_btn_like_sel);
                         mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
@@ -186,6 +187,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                         tvLike.setText(likenum + "");
                         islike = true;
                         articlePresenter.like(articleid);
+                        tvLike.setTextColor(Color.parseColor("#f87d28"));
                         imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
                     }
 
@@ -250,6 +252,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         islike = like;
         if (like) {
             imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+            tvLike.setTextColor(Color.parseColor("#f87d28"));
         }
     }
 

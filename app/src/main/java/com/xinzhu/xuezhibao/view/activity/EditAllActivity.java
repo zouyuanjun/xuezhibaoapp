@@ -148,7 +148,7 @@ public class EditAllActivity extends TakePhotoActivity {
                 }
                 String vipname = EditTextUtil.getString(edVipname);
                 String studentname = EditTextUtil.getString(edStudenname);
-                int studentage = Integer.parseInt(EditTextUtil.getString(edStudennage));
+                String studentage = EditTextUtil.getString(edStudennage);
                 String fathername = EditTextUtil.getString(edFathername);
                 String mathername = EditTextUtil.getString(edMothername);
                 if (Constants.TOKEN.isEmpty()) {

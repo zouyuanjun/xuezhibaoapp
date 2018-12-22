@@ -104,7 +104,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="164dp" />
+                android:layout_height="wrap_content" />
             <ImageView
                 android:id="@+id/im_test"
                 android:layout_width="match_parent"

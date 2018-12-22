@@ -255,6 +255,7 @@ public class FeedbackActivity extends BaseActivity {
                 }
                 String feedback = edFeedback.getText().toString();
                 if (feedback.isEmpty()) {
+                    BToast.error(this).text("请填写内容后再提交").show();
                     return;
                 }
                 if (!cancommint) {

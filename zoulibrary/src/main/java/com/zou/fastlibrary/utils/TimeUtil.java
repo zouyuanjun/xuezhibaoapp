@@ -212,8 +212,8 @@ public class TimeUtil {
 	public static String getWholeTime(long date) {
 		int[] details = TimeUtil.getWholeDetail(date);
 
-		return details[0] + "年" + details[1] + "月" 
-		+ details[2] + "日  " ;
+		return details[0] + "-" + details[1] + "-"
+		+ details[2]  ;
 	}
 	/**获取完整时间 yy-mm-dd-hh时mm分
 	 * @param date
@@ -222,7 +222,7 @@ public class TimeUtil {
 	public static String getWholeTime2(long date) {
 		int[] details = TimeUtil.getWholeDetail(date);
 
-		return String.valueOf(details[0]).substring(2) + "-" + details[1] + "-"
+		return String.valueOf(details[0]) + "-" + details[1] + "-"
 				+ details[2] + " " + details[3] + ":" + details[4];
 	}
 

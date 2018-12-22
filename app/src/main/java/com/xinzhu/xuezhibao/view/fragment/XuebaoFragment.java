@@ -1,8 +1,11 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +15,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.XuebaoCourseAdapter;
 import com.xinzhu.xuezhibao.bean.BannerImgBean;
@@ -217,8 +224,29 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 bannerlist.add(bannerImgBean.getAdUrl());
                 bannerImgBeans.add(bannerImgBean);
             }
-            banner.setImages(bannerlist);
-            banner.start();
+            Glide.with(MyApplication.getContext())
+                    .asBitmap()
+                    .load(list.get(0).getAdUrl())
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            //  imLogo.setImageBitmap(resource);
+                            int whith=resource.getWidth();
+                          int   height=resource.getHeight();
+                            ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
+                            int width=(int)((getContext().getResources().getDisplayMetrics().widthPixels));
+                            layoutParams.width = width;
+                            layoutParams.height = (width/whith)*height;
+                            //      Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+context.getResources().getDisplayMetrics().density);
+                            banner.setLayoutParams(layoutParams);
+
+                            banner.setImages(bannerlist);
+                            banner.start();
+                        }
+                    });
+
+//            banner.setImages(bannerlist);
+//            banner.start();
         }
 
     }

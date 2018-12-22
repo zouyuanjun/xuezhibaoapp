@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
@@ -66,6 +67,7 @@ public class MyVipCentreActivity extends BaseActivity implements PayInterface {
                         String price=JsonUtils.getStringValue(data,"memberPrice");
                         if (!StringUtil.isEmpty(describeContent)) {
                             tvIntroduce.setText(Html.fromHtml(describeContent));
+                            tvIntroduce.setMovementMethod(ScrollingMovementMethod.getInstance());
                             tvRecharge.setText("￥"+price+"开通会员");
                         } else {
                             tvIntroduce.setText("获取数据失败，请稍后再试");

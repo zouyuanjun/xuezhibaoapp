@@ -212,6 +212,8 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
             //  standardGSYVideoPlayer.setImageURI(courseBean.getCurriculumPicture());
             if (courseBean.getIsApply()==1) {
                 tvBuycourse.setText("已购买");
+                tvBuycourse.setBgColor(Color.parseColor("#f2f2f2"));
+                tvBuycourse.setTextColor(Color.parseColor("#666666"));
             }
             likenum = courseBean.getCurriculumLike();
             tvLike.setText(likenum + "");
@@ -256,6 +258,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
         islike = like;
         if (like) {
             imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+            tvLike.setTextColor(Color.parseColor("#f87d28"));
         }
     }
 
@@ -314,10 +317,12 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
                         tvLike.setText(likenum + "");
                         likeCollectPresenter.cancellike(courseid, "4");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
+                        tvLike.setTextColor(Color.parseColor("#666666"));
                     } else {
                         islike = true;
                         likenum++;
                         mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
+                        tvLike.setTextColor(Color.parseColor("#f87d28"));
                         mGoodView.show(view);
                         tvLike.setText(likenum + "");
                         likeCollectPresenter.like(courseid, "4");
@@ -420,6 +425,8 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
         }
         BToast.success(this).text("购买成功").show();
         tvBuycourse.setText("已购买");
+        tvBuycourse.setBgColor(Color.parseColor("#f2f2f2"));
+        tvBuycourse.setTextColor(Color.parseColor("#666666"));
         mycourse.setIsApply(1);
     }
 

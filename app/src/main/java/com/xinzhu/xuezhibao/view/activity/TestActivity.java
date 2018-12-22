@@ -92,6 +92,8 @@ public class TestActivity extends BaseActivity {
     String testtitle;
     @BindView(R.id.nestedScrollView)
     NestedScrollView nestedScrollView;
+    @BindView(R.id.scb_commit)
+    ShapeCornerBgView scbCommit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -194,7 +196,8 @@ public class TestActivity extends BaseActivity {
                             ans3.setClickable(true);
                             ans2.setClickable(true);
                             ans1.setClickable(true);
-                            textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
+                            textView8.setText("提示：您已答完所有题目，确认答案后请点击提交按钮");
+                            scbCommit.setVisibility(View.VISIBLE);
                         }
                         break;
                 }
@@ -206,116 +209,7 @@ public class TestActivity extends BaseActivity {
         appbar.setRightTextOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (crrentindex != testcount) {
-                    BToast.error(context).text("必须全部答完才可以提交分数哦").show();
-                    return;
-                }
-                if (iscommit) {
-                    BToast.error(context).text("不用重复提交哦").show();
-                    return;
-                }
-                iscommit = true;
-                appbar.setRightTextVisible(false);
-                for (Integer key : ansmap.keySet()) {
-                    if (key <= 8 && key >= 0) {
-                        yuedu = yuedu + ansmap.get(key);
-                    } else if (key > 8 && key <= 17) {
-                        shumian = shumian + ansmap.get(key);
-                    } else if (key > 17 && key <= 26) {
-                        zhuyili = zhuyili + ansmap.get(key);
-                    } else if (key > 26 && key <= 35) {
-                        duodong = duodong + ansmap.get(key);
-                    } else if (key > 35 && key <= 44) {
-                        xuexi = xuexi + ansmap.get(key);
-                    } else if (key > 45 && key <= 49) {
-                        qingxu = qingxu + ansmap.get(key);
-                    }
-                    Log.d("题目是" + key + ",答案是：" + ansmap.get(key));
-                }
-                switch (classindex) {
-                    case 0:
-                        yuedu = calculate(yuedu);
-                        break;
-                    case 1:
-                        shumian = calculate(shumian);
-                        break;
-                    case 2:
-                        zhuyili = calculate(zhuyili);
-                        break;
-                    case 3:
-                        duodong = calculate(duodong);
-                        break;
-                    case 4:
-                        xuexi = calculate(xuexi);
-                        break;
-                    case 5:
-                        qingxu = 5 + 2 * (qingxu - 3.727) / 1.753;
-                        if (qingxu > 9) {
-                            qingxu = 9;
-                        } else if (qingxu < 1 && qingxu > 0) {
-                            qingxu = 1;
-                        }
-                        break;
-                }
 
-
-                if (yuedu <= 3 && yuedu > 0) {
-                    result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(0);
-                }
-                if (yuedu > 3 && yuedu < 7) {
-                    result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(1);
-                }
-                if (yuedu > 7 && yuedu < 14) {
-                    result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(2);
-                }
-                if (shumian <= 3 && shumian > 0) {
-                    result = result + "书面表达与写作：" + (int) shumian + "分\n" + anslist.get(3);
-                }
-                if (shumian > 3 && shumian < 7) {
-                    result = result + "书面表达与写作：" + (int) shumian + "分\n" + anslist.get(4);
-                }
-                if (shumian > 7 && shumian < 14) {
-                    result = result + "书面表达与写作：" + (int) shumian + "分\n" + anslist.get(5);
-                }
-                if (zhuyili <= 3 && zhuyili > 0) {
-                    result = result + "注意力：" + (int) zhuyili + "分\n" + anslist.get(6);
-                }
-                if (zhuyili > 3 && zhuyili < 7) {
-                    result = result + "注意力：" + (int) zhuyili + "分\n" + anslist.get(7);
-                }
-                if (zhuyili > 7 && zhuyili < 14) {
-                    result = result + "注意力：" + (int) zhuyili + "分\n" + anslist.get(8);
-                }
-                if (duodong <= 3 && duodong > 0) {
-                    result = result + "多动与抑制：" + (int) duodong + "分\n" + anslist.get(9);
-                }
-                if (duodong > 3 && duodong < 7) {
-                    result = result + "多动与抑制：" + (int) duodong + "分\n" + anslist.get(10);
-                }
-                if (duodong > 7 && duodong < 14) {
-                    result = result + "多动与抑制：" + (int) duodong + "分\n" + anslist.get(11);
-                }
-                if (xuexi <= 3 && xuexi > 0) {
-                    result = result + "学习和感知：" + (int) xuexi + "分\n" + anslist.get(12);
-                }
-                if (xuexi > 3 && xuexi < 7) {
-                    result = result + "学习和感知：" + (int) xuexi + "分\n" + anslist.get(13);
-                }
-                if (xuexi > 7 && xuexi < 14) {
-                    result = result + "学习和感知：" + (int) xuexi + "分\n" + anslist.get(14);
-                }
-                if (qingxu <= 3 && qingxu > 0) {
-                    result = result + "情绪：" + (int) qingxu + "分\n" + anslist.get(15);
-                }
-                if (qingxu > 3 && qingxu < 7) {
-                    result = result + "情绪：" + (int) qingxu + "分\n" + anslist.get(16);
-                }
-                if (qingxu > 7 && qingxu < 14) {
-                    result = result + "n情绪：" + (int) qingxu + "分\n" + anslist.get(17);
-                }
-                tvResult.setText(result);
-                nestedScrollView.setVisibility(View.VISIBLE);
-                textView8.setVisibility(View.GONE);
 
             }
         });
@@ -523,5 +417,119 @@ public class TestActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    @OnClick(R.id.scb_commit)
+    public void onViewClicked() {
+        if (crrentindex != testcount) {
+            BToast.error(context).text("必须全部答完才可以提交分数哦").show();
+            return;
+        }
+        if (iscommit) {
+            BToast.error(context).text("不用重复提交哦").show();
+            return;
+        }
+        iscommit = true;
+        appbar.setRightTextVisible(false);
+        for (Integer key : ansmap.keySet()) {
+            if (key <= 8 && key >= 0) {
+                yuedu = yuedu + ansmap.get(key);
+            } else if (key > 8 && key <= 17) {
+                shumian = shumian + ansmap.get(key);
+            } else if (key > 17 && key <= 26) {
+                zhuyili = zhuyili + ansmap.get(key);
+            } else if (key > 26 && key <= 35) {
+                duodong = duodong + ansmap.get(key);
+            } else if (key > 35 && key <= 44) {
+                xuexi = xuexi + ansmap.get(key);
+            } else if (key > 45 && key <= 49) {
+                qingxu = qingxu + ansmap.get(key);
+            }
+            Log.d("题目是" + key + ",答案是：" + ansmap.get(key));
+        }
+        switch (classindex) {
+            case 0:
+                yuedu = calculate(yuedu);
+                break;
+            case 1:
+                shumian = calculate(shumian);
+                break;
+            case 2:
+                zhuyili = calculate(zhuyili);
+                break;
+            case 3:
+                duodong = calculate(duodong);
+                break;
+            case 4:
+                xuexi = calculate(xuexi);
+                break;
+            case 5:
+                qingxu = 5 + 2 * (qingxu - 3.727) / 1.753;
+                if (qingxu > 9) {
+                    qingxu = 9;
+                } else if (qingxu < 1 && qingxu > 0) {
+                    qingxu = 1;
+                }
+                break;
+        }
+
+
+        if (yuedu <= 3 && yuedu > 0) {
+            result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(0);
+        }
+        if (yuedu > 3 && yuedu < 7) {
+            result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(1);
+        }
+        if (yuedu > 7 && yuedu < 14) {
+            result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(2);
+        }
+        if (shumian <= 3 && shumian > 0) {
+            result = result + "书面表达与写作：" + (int) shumian + "分\n" + anslist.get(3);
+        }
+        if (shumian > 3 && shumian < 7) {
+            result = result + "书面表达与写作：" + (int) shumian + "分\n" + anslist.get(4);
+        }
+        if (shumian > 7 && shumian < 14) {
+            result = result + "书面表达与写作：" + (int) shumian + "分\n" + anslist.get(5);
+        }
+        if (zhuyili <= 3 && zhuyili > 0) {
+            result = result + "注意力：" + (int) zhuyili + "分\n" + anslist.get(6);
+        }
+        if (zhuyili > 3 && zhuyili < 7) {
+            result = result + "注意力：" + (int) zhuyili + "分\n" + anslist.get(7);
+        }
+        if (zhuyili > 7 && zhuyili < 14) {
+            result = result + "注意力：" + (int) zhuyili + "分\n" + anslist.get(8);
+        }
+        if (duodong <= 3 && duodong > 0) {
+            result = result + "多动与抑制：" + (int) duodong + "分\n" + anslist.get(9);
+        }
+        if (duodong > 3 && duodong < 7) {
+            result = result + "多动与抑制：" + (int) duodong + "分\n" + anslist.get(10);
+        }
+        if (duodong > 7 && duodong < 14) {
+            result = result + "多动与抑制：" + (int) duodong + "分\n" + anslist.get(11);
+        }
+        if (xuexi <= 3 && xuexi > 0) {
+            result = result + "学习和感知：" + (int) xuexi + "分\n" + anslist.get(12);
+        }
+        if (xuexi > 3 && xuexi < 7) {
+            result = result + "学习和感知：" + (int) xuexi + "分\n" + anslist.get(13);
+        }
+        if (xuexi > 7 && xuexi < 14) {
+            result = result + "学习和感知：" + (int) xuexi + "分\n" + anslist.get(14);
+        }
+        if (qingxu <= 3 && qingxu > 0) {
+            result = result + "情绪：" + (int) qingxu + "分\n" + anslist.get(15);
+        }
+        if (qingxu > 3 && qingxu < 7) {
+            result = result + "情绪：" + (int) qingxu + "分\n" + anslist.get(16);
+        }
+        if (qingxu > 7 && qingxu < 14) {
+            result = result + "n情绪：" + (int) qingxu + "分\n" + anslist.get(17);
+        }
+        tvResult.setText(result);
+        nestedScrollView.setVisibility(View.VISIBLE);
+        textView8.setVisibility(View.GONE);
     }
 }

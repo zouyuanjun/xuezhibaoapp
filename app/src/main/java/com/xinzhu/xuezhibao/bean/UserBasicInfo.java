@@ -12,7 +12,7 @@ public class UserBasicInfo {
     String county;
     String image;
     String Account;
-    int studentAge;
+    String studentAge;
     String dictionaryName;
     int dictionaryId;
     int integral;
@@ -131,11 +131,11 @@ public class UserBasicInfo {
         this.image = image;
     }
 
-    public int getStudentAge() {
+    public String getStudentAge() {
         return studentAge;
     }
 
-    public void setStudentAge(int studentAge) {
+    public void setStudentAge(String studentAge) {
         this.studentAge = studentAge;
     }
     ////

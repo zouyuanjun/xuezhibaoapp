@@ -19,7 +19,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:leftTextVisible='false'
             app:leftImageVisiable='false'
-            app:midText='学宝'
+            app:midText='学  宝'
             app:midTextFontColor="#ffffff"
             app:midTextSizeSp="18"
             app:rightImageVisible='false'

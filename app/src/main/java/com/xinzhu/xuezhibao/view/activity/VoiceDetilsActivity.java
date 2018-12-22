@@ -175,9 +175,11 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
                         islike = false;
                         likeCollectPresenter.cancellike(videoid, "3");
                         imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
+                        tvLike.setTextColor(Color.parseColor("#666666"));
                     } else {
                         likenum++;
                         tvLike.setText(likenum+"");
+                        tvLike.setTextColor(Color.parseColor("#f87d28"));
                         mGoodView.setTextInfo("+1",Color.parseColor("#f87d28"),25);
                         mGoodView.show(view);
                         islike = true;
@@ -270,6 +272,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         islike = like;
         if (like) {
             imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+            tvLike.setTextColor(Color.parseColor("#f87d28"));
         }
     }
 

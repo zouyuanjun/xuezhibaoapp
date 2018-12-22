@@ -3,9 +3,11 @@ package com.xinzhu.xuezhibao.view.fragment;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -17,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bravin.btoast.BToast;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -51,6 +56,7 @@ import com.youth.banner.listener.OnBannerListener;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.WebActivity;
 import com.zou.fastlibrary.utils.EditTextUtil;
+import com.zou.fastlibrary.utils.ImageUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StringUtil;
 
@@ -108,7 +114,9 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     List<BannerImgBean> mybannerImgBean = new ArrayList<>();
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-
+    int whith;
+    int height;
+    List<String> mDatas = new ArrayList<>();
     @Override
     protected int setContentView() {
         return R.layout.fragment_home;
@@ -410,15 +418,35 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     @Override
     public void getbanner(List<BannerImgBean> bannerImgBeans) {
-        List<String> mDatas = new ArrayList<>();
+
+
         mybannerImgBean.clear();
         for (BannerImgBean bannerImgBean : bannerImgBeans) {
             mDatas.add(bannerImgBean.getAdUrl());
             mybannerImgBean.add(bannerImgBean);
         }
         if (null != banner) {
-            banner.setImages(mDatas);
-            banner.start();
+            Glide.with(MyApplication.getContext())
+                    .asBitmap()
+                    .load(mDatas.get(0))
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            //  imLogo.setImageBitmap(resource);
+                           whith=resource.getWidth();
+                           height=resource.getHeight();
+                            ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
+                            int width=(int)((getContext().getResources().getDisplayMetrics().widthPixels));
+                            layoutParams.width = width;
+                            layoutParams.height = (width/whith)*height;
+                            //      Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+context.getResources().getDisplayMetrics().density);
+                            banner.setLayoutParams(layoutParams);
+
+                            banner.setImages(mDatas);
+                            banner.start();
+                        }
+                    });
+
         }
     }
 

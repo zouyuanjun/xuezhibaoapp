@@ -245,11 +245,13 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
                     islike = false;
                     likeCollectPresenter.cancellike(teacherId, "5");
                     imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
+                    tvLikenum.setTextColor(Color.parseColor("#666666"));
                 } else {
                     mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
                     mGoodView.show(view);
                     likenum++;
                     tvLikenum.setText(likenum + "");
+                    tvLikenum.setTextColor(Color.parseColor("#f87d28"));
                     islike = true;
                     likeCollectPresenter.like(teacherId, "5");
                     imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
@@ -364,6 +366,7 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
         islike = like;
         if (like) {
             imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+            tvLikenum.setTextColor(Color.parseColor("#f87d28"));
         }
     }
 
