@@ -11,6 +11,7 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
 import com.xinzhu.xuezhibao.view.fragment.ArticleListFragment;
 import com.xinzhu.xuezhibao.view.fragment.HomeVideoVoiceListFragment;
+import com.xinzhu.xuezhibao.view.fragment.VideoFolderFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 
@@ -32,6 +33,7 @@ public class HomeListActivity extends BaseActivity {
     ViewPager vpItemlist;
     ArrayList<Fragment> fragmentList=new ArrayList<>();
     String [] title={"热门","最新","我的收藏"};
+    String [] videotitle={"热门","最新","全部","我的收藏"};
     int TYPE=0;
     ListViewPageAdapter listViewPageAdapter;
     @Override
@@ -49,8 +51,10 @@ public class HomeListActivity extends BaseActivity {
             fragmentList.clear();
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
+            fragmentList.add(new VideoFolderFragment());
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
-            listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,1);
+
+            listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,videotitle,1);
         }else if (TYPE==2){
             appbar.setMidText("音频公开课");
             fragmentList.clear();

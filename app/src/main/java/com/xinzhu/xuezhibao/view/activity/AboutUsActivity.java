@@ -29,6 +29,7 @@ import com.zou.fastlibrary.utils.CommonUtil;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -78,7 +79,9 @@ public class AboutUsActivity extends BaseActivity {
                 ipc = JsonUtils.getStringValue(data, "copyright");
                 l1 = JsonUtils.getStringValue(data, "longitude");
                 l2 = JsonUtils.getStringValue(data, "latitude");
-                initmap(l1, l2);
+                if (!StringUtil.isEmpty(l1)){
+                    initmap(l1, l2);
+                }
                 tvAbout.setText(Html.fromHtml(about));
                 tvPhone.setText(phone);
                 tvIpc.setText(ipc);

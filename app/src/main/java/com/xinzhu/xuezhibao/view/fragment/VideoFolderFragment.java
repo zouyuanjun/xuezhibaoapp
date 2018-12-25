@@ -3,6 +3,7 @@ package com.xinzhu.xuezhibao.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -51,6 +52,16 @@ public class VideoFolderFragment extends LazyLoadFragment implements VideoFolder
     boolean isfirstload = true;
     @BindView(R.id.img_nodata)
     ImageView imgNodata;
+    int POSITION;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            POSITION = getArguments().getInt("POSITION");
+        }
+    }
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_homevideocourse;
@@ -70,10 +81,20 @@ public class VideoFolderFragment extends LazyLoadFragment implements VideoFolder
     private void loaddata() {
         appbar.setLeftImageVisible(false);
         if (isfirstload) {
-            videoVoiceListPresenter.getVideoFolder(1);
+            if (POSITION==2){
+                videoVoiceListPresenter.getVideoFolder(1,1);
+
+            }else {
+                videoVoiceListPresenter.getVideoFolder(1,2);
+            }
             isfirstload = false;
         } else {
-            videoVoiceListPresenter.getVideoFolder(paypage);
+            if (POSITION==2){
+                videoVoiceListPresenter.getVideoFolder(1,1);
+            }else {
+                videoVoiceListPresenter.getVideoFolder(1,2);
+            }
+
         }
 
     }
@@ -120,6 +141,9 @@ public class VideoFolderFragment extends LazyLoadFragment implements VideoFolder
                 startActivity(intent);
             }
         });
+        if (POSITION==2){
+            appbar.setVisibility(View.GONE);
+        }
         return rootView;
     }
 

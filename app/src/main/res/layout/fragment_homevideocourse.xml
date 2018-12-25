@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fenge"
-    android:orientation="vertical">
+   >
 
     <com.zou.fastlibrary.ui.CustomNavigatorBar
         android:id="@+id/appbar"
@@ -17,16 +17,15 @@
         app:midTextSizeSp="18"
         app:rightImageVisible='false'
         app:rightTextVisible='false'
-        app:titleBarBackground='@color/appcolor'></com.zou.fastlibrary.ui.CustomNavigatorBar>
+        app:titleBarBackground='@color/appcolor'>
+    </com.zou.fastlibrary.ui.CustomNavigatorBar>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="44dp"
+        android:layout_below="@id/appbar"
      >
 
         <com.scwang.smartrefresh.header.PhoenixHeader

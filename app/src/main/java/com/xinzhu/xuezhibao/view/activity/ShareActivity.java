@@ -81,7 +81,7 @@ public class ShareActivity extends BaseActivity {
                                 textPaint.setColor(Color.parseColor("#ff5436"));// 采用的颜色
                                // textPaint.setFakeBoldText(true);
 
-                                canvas.drawText(TimeUtil.getWholeTime(System.currentTimeMillis())+"", with/3-25, higt/2, textPaint);// 绘制上去字，开始未知x,y采用那只笔绘制
+                                canvas.drawText(TimeUtil.getWholeTime(System.currentTimeMillis())+"", with/2-85, higt/2, textPaint);// 绘制上去字，开始未知x,y采用那只笔绘制
                                 canvas.save(Canvas.ALL_SAVE_FLAG);
                                 canvas.restore();
                                 imgShare.setImageBitmap(photo);

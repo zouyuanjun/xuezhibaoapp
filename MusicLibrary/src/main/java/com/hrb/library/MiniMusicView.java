@@ -50,7 +50,7 @@ public class MiniMusicView extends FrameLayout implements MediaService.IMediaSta
     private String mCurPlayUrl;
     TextView crrenttime;
     TextView alltime;
-
+boolean hasebingserver=false;
     private MediaService mediaService;
 
     public MiniMusicView(Context context) {
@@ -73,6 +73,7 @@ public class MiniMusicView extends FrameLayout implements MediaService.IMediaSta
 
     public void setmContext(WeakReference<Context> Context) {
         this.Context = Context;
+        Log.d("sss","设置了Context");
     }
 
     private void initAttributeSet(AttributeSet attrs) {
@@ -237,6 +238,7 @@ public class MiniMusicView extends FrameLayout implements MediaService.IMediaSta
             // bind service
             Intent intent = new Intent(Context.get(), MediaService.class);
             Context.get().bindService(intent, MiniMusicView.this, Context.get().BIND_AUTO_CREATE);
+            hasebingserver=true;
         } else {
             mediaService.playMusic(mCurPlayUrl);
         }
@@ -269,10 +271,19 @@ public class MiniMusicView extends FrameLayout implements MediaService.IMediaSta
 
         if (mHeadsetPlugReceiver != null) {
             mContext.unregisterReceiver(mHeadsetPlugReceiver);
+            hasebingserver=false;
         }
         Context = null;
         mContext = null;
         Log.d(TAG, "stopPlayMusic: [ " + hashCode() + " ]");
+    }
+
+    public boolean isHasebingserver() {
+        return hasebingserver;
+    }
+
+    public void setHasebingserver(boolean hasebingserver) {
+        this.hasebingserver = hasebingserver;
     }
 
     public void setTitleColor(int color) {

@@ -117,7 +117,7 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
                 homeVideoVoiceListPresenter.getHotVideo(page);
             } else if (POSITION == 1) {
                 homeVideoVoiceListPresenter.getNewVideo(page);
-            } else if (POSITION == 2) {
+            } else if (POSITION == 3) {
                 if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
 
                 } else {

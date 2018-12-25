@@ -146,7 +146,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 finish();
             }
         });
-
+        mMusicView.setmContext(new WeakReference<Context>(this));
     }
 
     @Override
@@ -159,7 +159,10 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mMusicView.stopPlayMusic();
+        if (mMusicView.isHasebingserver()){
+            mMusicView.stopPlayMusic();
+        }
+
     }
 
     @OnClick({R.id.ll_dianzan, R.id.ll_shoucan, R.id.tv_detail_comment})
@@ -225,7 +228,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         mMusicView.setTitleText(videoVoiceBean.getVideoTitle());
         tvLike.setText(videoVoiceBean.getVidelLike());
         likenum=Integer.parseInt(videoVoiceBean.getVidelLike());
-        mMusicView.setmContext(new WeakReference<Context>(this));
+
         mMusicView.startPlayMusic(videoVoiceBean.getVideoUrl());
     }
     @Override

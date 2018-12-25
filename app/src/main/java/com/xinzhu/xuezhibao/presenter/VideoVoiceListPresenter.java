@@ -148,8 +148,9 @@ public class VideoVoiceListPresenter {
         String data = JsonUtils.keyValueToString2("videoTypeId", videoid,"pageNo",1);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-video-type", handler, 8);
     }
-    public void getVideoFolder(int page) {
+    public void getVideoFolder(int page,int videoTypeType ) {
         String data = JsonUtils.keyValueToString2("pageNo", page,"videoType",1);
+        data=JsonUtils.addKeyValue(data,"videoTypeType",videoTypeType);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-video-types", handler, 9);
     }
     public void cancelmessage(){
