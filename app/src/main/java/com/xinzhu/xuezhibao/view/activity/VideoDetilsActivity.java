@@ -68,7 +68,6 @@ import com.zou.fastlibrary.utils.TimeUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -141,6 +140,9 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     AlipayPresenter alipayPresenter;
     @BindView(R.id.tv_teacher)
     TextView tvTeacher;
+    @BindView(R.id.tv_buyvideo2)
+    ShapeCornerBgView tvBuyvideo2;
+    VideoVoiceBean videoVoiceBean;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -250,37 +252,37 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         switch (view.getId()) {
             case R.id.ll_dianzan:
 
-                    if (islike) {
-                        likenum--;
-                        tvLike.setText(likenum + "");
-                        islike = false;
-                        likeCollectPresenter.cancellike(videoid, "2");
-                        imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
-                        tvLike.setTextColor(Color.parseColor("#666666"));
+                if (islike) {
+                    likenum--;
+                    tvLike.setText(likenum + "");
+                    islike = false;
+                    likeCollectPresenter.cancellike(videoid, "2");
+                    imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
+                    tvLike.setTextColor(Color.parseColor("#666666"));
 
-                    } else {
-                        mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
-                        mGoodView.show(view);
-                        likenum++;
-                        tvLike.setText(likenum + "");
-                        tvLike.setTextColor(Color.parseColor("#f87d28"));
-                        islike = true;
-                        likeCollectPresenter.like(videoid, "2");
-                        imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
-                    }
+                } else {
+                    mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
+                    mGoodView.show(view);
+                    likenum++;
+                    tvLike.setText(likenum + "");
+                    tvLike.setTextColor(Color.parseColor("#f87d28"));
+                    islike = true;
+                    likeCollectPresenter.like(videoid, "2");
+                    imLike.setImageResource(R.drawable.videodetails_btn_like_sel);
+                }
 
                 break;
             case R.id.ll_shoucan:
 
-                    if (iscollect) {
-                        iscollect = false;
-                        likeCollectPresenter.cancelcollect(videoid, "2");
-                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_nor);
-                    } else {
-                        iscollect = true;
-                        likeCollectPresenter.collect(videoid, "2");
-                        imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
-                    }
+                if (iscollect) {
+                    iscollect = false;
+                    likeCollectPresenter.cancelcollect(videoid, "2");
+                    imCollection.setImageResource(R.drawable.videodetails_btn_collection_nor);
+                } else {
+                    iscollect = true;
+                    likeCollectPresenter.collect(videoid, "2");
+                    imCollection.setImageResource(R.drawable.videodetails_btn_collection_sel);
+                }
 
                 break;
             case R.id.tv_detail_comment:
@@ -289,37 +291,37 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             case R.id.tv_buyvideo:
                 detailPlayer.onVideoPause();
 
-                    final PopupWindow popupWindow = CreatPopwindows.creatpopwindows(this, R.layout.pop_pay);
-                    final View myview = popupWindow.getContentView();
-                    RadioGroup radioGroup = myview.findViewById(R.id.rg_pay);
-                    TextView textView = myview.findViewById(R.id.tv_cancle);
-                    textView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            popupWindow.dismiss();
+                final PopupWindow popupWindow = CreatPopwindows.creatpopwindows(this, R.layout.pop_pay);
+                final View myview = popupWindow.getContentView();
+                RadioGroup radioGroup = myview.findViewById(R.id.rg_pay);
+                TextView textView = myview.findViewById(R.id.tv_cancle);
+                textView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popupWindow.dismiss();
+                    }
+                });
+                radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                        switch (i) {
+                            case R.id.rd_alipay:
+                                alipayPresenter.aLiBuyVideo(videoid, 0);
+                                popupWindow.dismiss();
+                                loadingPop = CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this, R.layout.pop_loading);
+                                loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
+                                break;
+                            case R.id.rd_wxpay:
+                                alipayPresenter.WxBuyVideo(videoid, 0);
+                                popupWindow.dismiss();
+                                loadingPop = CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this, R.layout.pop_loading);
+                                loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
+                                break;
                         }
-                    });
-                    radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                            switch (i) {
-                                case R.id.rd_alipay:
-                                    alipayPresenter.aLiBuyVideo(videoid);
-                                    popupWindow.dismiss();
-                                    loadingPop = CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this, R.layout.pop_loading);
-                                    loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
-                                    break;
-                                case R.id.rd_wxpay:
-                                    alipayPresenter.WxBuyVideo(videoid);
-                                    popupWindow.dismiss();
-                                    loadingPop = CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this, R.layout.pop_loading);
-                                    loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
-                                    break;
-                            }
-                        }
-                    });
+                    }
+                });
 
-                    popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, ScreenUtil.getNavigationBarHeight(VideoDetilsActivity.this));
+                popupWindow.showAtLocation(view, Gravity.BOTTOM, 0, ScreenUtil.getNavigationBarHeight(VideoDetilsActivity.this));
 
                 break;
             case R.id.tv_buyvideo2:
@@ -328,15 +330,18 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 Bitmap bmp = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.ffffffrad8);
                 Drawable drawable = new BitmapDrawable(getContext().getResources(), bmp);
                 popupWindow2.setBackgroundDrawable(drawable);
-                TextView tvVideoprice=popupWindow2.getContentView().findViewById(R.id.tv_videoprice);
-                TextView tvmypoints=popupWindow2.getContentView().findViewById(R.id.tv_mypoints);
-                ShapeCornerBgView shapeCornerBgView=popupWindow2.getContentView().findViewById(R.id.scb_apply);
-                tvVideoprice.setText("使用800积分兑换此课程");
-                tvmypoints.setText("当前积分:"+Constants.userBasicInfo.getIntegral());
+                TextView tvVideoprice = popupWindow2.getContentView().findViewById(R.id.tv_videoprice);
+                TextView tvmypoints = popupWindow2.getContentView().findViewById(R.id.tv_mypoints);
+                ShapeCornerBgView shapeCornerBgView = popupWindow2.getContentView().findViewById(R.id.scb_apply);
+                tvVideoprice.setText("使用" + videoVoiceBean.getIntegralPrice() + "积分兑换此课程");
+                tvmypoints.setText("当前积分:" + Constants.userBasicInfo.getIntegral());
                 shapeCornerBgView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        alipayPresenter.pointsBuyVideo(videoid, 0);
                         popupWindow2.dismiss();
+                        loadingPop = CreatPopwindows.creatWWpopwindows(VideoDetilsActivity.this, R.layout.pop_loading);
+                        loadingPop.showAtLocation(view, Gravity.CENTER, 0, 0);
                     }
                 });
                 break;
@@ -395,6 +400,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     @Override
     public void getVideodetail(VideoVoiceBean videoVoiceBean) {
+        this.videoVoiceBean = videoVoiceBean;
         tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
         tvDetails.loadDataWithBaseURL(null, videoVoiceBean.getVideoDetails(), "text/html", "UTF-8", null);
         tvTitle.setText(videoVoiceBean.getVideoTitle());
@@ -402,6 +408,11 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             cslBuy.setVisibility(View.VISIBLE);
             detailPlayer.setCanpaly(false);
             tvBuyvideo.setText("￥" + videoVoiceBean.getVideoPrice() + " 购买");
+            if (videoVoiceBean.getIntegralAllow() == 0) {
+                tvBuyvideo2.setVisibility(View.GONE);
+            } else {
+                tvBuyvideo2.setText(videoVoiceBean.getIntegralPrice() + "积分购买");
+            }
         } else {
             cslBuy.setVisibility(View.GONE);
             detailPlayer.setCanpaly(true);
@@ -411,9 +422,14 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             cslBuy.setVisibility(View.GONE);
         }
         tvTeacher.setText(videoVoiceBean.getVideoTeacher());
-        tvLike.setText(videoVoiceBean.getVidelLike());
+        tvLike.setText(videoVoiceBean.getVideoLike());
         tvReadnum.setText("播放量：" + videoVoiceBean.getVideoLook());
-        likenum = Integer.parseInt(videoVoiceBean.getVidelLike());
+        try {
+            likenum = Integer.parseInt(videoVoiceBean.getVideoLike());
+        }catch (Exception e){
+
+        }
+
         String source1 = videoVoiceBean.getVideoUrl();
         //外部辅助的旋转，帮助全屏
         orientationUtils = new OrientationUtils(this, detailPlayer);
@@ -618,10 +634,9 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
         BToast.error(this).text("抱歉" + tips).show();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Override
     public void netWorkMessage(NetWorkMessage messageEvent) {
-        String s = messageEvent.getMessage();
-        BToast.error(context).text(s).show();
+        BToast.error(this).text("抱歉请求失败" ).show();
     }
 
     @Subscribe

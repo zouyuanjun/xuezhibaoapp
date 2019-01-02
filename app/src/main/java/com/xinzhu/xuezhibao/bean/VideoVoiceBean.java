@@ -4,7 +4,7 @@ public class VideoVoiceBean {
     String videoPicture;
     String videoTitle;
     String videoLook;
-    String videlLike;
+    String videoLike;
     long createTime;
     String videoDetails;
     String videoTeacher;
@@ -13,8 +13,34 @@ public class VideoVoiceBean {
     String videoId;
     int  isBuy;
     int videoType;  //0免费，1收费
-
+    int integralAllow; //是否允许积分购买
+    String integralPrice; //积分购买价格
+    int trySee; //是否试看
     public VideoVoiceBean() {
+    }
+
+    public int getIntegralAllow() {
+        return integralAllow;
+    }
+
+    public void setIntegralAllow(int integralAllow) {
+        this.integralAllow = integralAllow;
+    }
+
+    public int getTrySee() {
+        return trySee;
+    }
+
+    public void setTrySee(int trySee) {
+        this.trySee = trySee;
+    }
+
+    public String getIntegralPrice() {
+        return integralPrice;
+    }
+
+    public void setIntegralPrice(String integralPrice) {
+        this.integralPrice = integralPrice;
     }
 
     public int getVideoType() {
@@ -57,12 +83,12 @@ public class VideoVoiceBean {
         this.videoLook = videoLook;
     }
 
-    public String getVidelLike() {
-        return videlLike;
+    public String getVideoLike() {
+        return videoLike;
     }
 
-    public void setVidelLike(String videlLike) {
-        this.videlLike = videlLike;
+    public void setVideoLike(String videoLike) {
+        this.videoLike = videoLike;
     }
 
     public long getCreateTime() {

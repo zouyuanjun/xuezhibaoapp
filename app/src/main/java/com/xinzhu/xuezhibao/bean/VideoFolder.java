@@ -6,8 +6,26 @@ public class VideoFolder {
     String videoTypeImage;
     String videoTypeMoney;
     String videoTypeNum;
+    int count;
+    int isBuy;
 
     public VideoFolder() {
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public int getIsBuy() {
+        return isBuy;
+    }
+
+    public void setIsBuy(int isBuy) {
+        this.isBuy = isBuy;
     }
 
     public String getVideoTypeId() {

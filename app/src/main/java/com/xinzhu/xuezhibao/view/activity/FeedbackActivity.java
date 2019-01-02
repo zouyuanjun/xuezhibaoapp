@@ -226,6 +226,7 @@ public class FeedbackActivity extends BaseActivity {
                 } else if (canSelectCount > 0) {
                     Matisse.from(FeedbackActivity.this)
                             .choose(MimeType.ofImage(), false) // 选择 mime 的类型
+                            .showSingleMediaType(true)
                             .countable(true)
                             .maxSelectable(canSelectCount) // 图片选择的最多数量
                             .theme(R.style.Matisse_Custom)

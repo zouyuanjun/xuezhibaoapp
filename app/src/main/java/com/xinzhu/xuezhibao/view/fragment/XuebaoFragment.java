@@ -236,17 +236,17 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                             ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
                             int width=(int)((getContext().getResources().getDisplayMetrics().widthPixels));
                             layoutParams.width = width;
-                            layoutParams.height = (width/whith)*height;
-                            //      Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+context.getResources().getDisplayMetrics().density);
+                            float h=((float) width/whith)*height;
+                            int hh=(int) h;
+                            layoutParams.height =hh;
+                            //      Log
+                            // .d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+context.getResources().getDisplayMetrics().density);
                             banner.setLayoutParams(layoutParams);
 
                             banner.setImages(bannerlist);
                             banner.start();
                         }
                     });
-
-//            banner.setImages(bannerlist);
-//            banner.start();
         }
 
     }

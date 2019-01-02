@@ -28,20 +28,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.zou.fastlibrary.ui.ShapeCornerBgView
+        android:visibility="gone"
+        android:id="@+id/shapeCornerBgView2"
+        android:layout_width="34dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:text="试看"
+        android:textColor="#12cd8e"
+        android:textSize="@dimen/sp_12"
+        app:appBgColor="@color/white"
+        app:appBorder="true"
+        app:appRadius="@dimen/dp_4"
+        app:appBorderWidth="1dp"
+        app:appBorderColor="#12cd8e"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_item_title"
+        app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
+        app:layout_constraintTop_toTopOf="@+id/tv_item_title" />
+
     <TextView
         android:id="@+id/tv_item_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:ellipsize="end"
         android:lineSpacingExtra="3dp"
+        android:minLines="1"
+        android:singleLine="true"
         android:text="孩子回然只是老师今天没有表扬他"
         android:textColor="@color/color_black_333333"
         android:textSize="15sp"
-        android:maxLines="2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
+        app:layout_constraintStart_toEndOf="@+id/shapeCornerBgView2"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -110,12 +130,13 @@
         android:id="@+id/tv_teacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="主讲：XX老师"
         android:visibility="gone"
-        android:textSize="13sp"
+        android:text="主讲：XX老师"
         android:textColor="@color/color_black_666666"
-        app:layout_constraintStart_toStartOf="@+id/tv_item_title"
+        android:textSize="13sp"
+        app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_title" />
 
 </android.support.constraint.ConstraintLayout>

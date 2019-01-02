@@ -212,6 +212,7 @@ public class Network {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                Log.d("异常" + e.toString());
                 if (e instanceof SocketTimeoutException) {
                     //判断超时异常
                     EventBus.getDefault().post(new NetWorkMessage("服务器连接失败，请检查网络"));
@@ -246,7 +247,7 @@ public class Network {
 
                 if (!b) {
                     Log.d(s);
-                    EventBus.getDefault().post(new NetWorkMessage("服务器内部错误"));
+                    EventBus.getDefault().post(new NetWorkMessage("服务器出错了"));
                     return;
                 }
                 if (null != handler) {

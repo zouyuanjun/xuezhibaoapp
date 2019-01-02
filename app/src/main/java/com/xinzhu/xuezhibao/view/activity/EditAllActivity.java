@@ -2,6 +2,7 @@ package com.xinzhu.xuezhibao.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.bravin.btoast.BToast;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.lljjcoder.Interface.OnCityItemClickListener;
@@ -31,12 +35,15 @@ import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.ScreenUtil;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoActivity;
 import org.devio.takephoto.model.TResult;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,8 +60,6 @@ public class EditAllActivity extends TakePhotoActivity {
     EditText edVipname;
     @BindView(R.id.ed_studenname)
     EditText edStudenname;
-    @BindView(R.id.ed_studennage)
-    EditText edStudennage;
     @BindView(R.id.ed_fathername)
     EditText edFathername;
     @BindView(R.id.ed_mothername)
@@ -67,8 +72,8 @@ public class EditAllActivity extends TakePhotoActivity {
     String city;
     String county;
     Context context;
-    String citysrt="";
-    CityPickerView mPicker=new CityPickerView();
+    String citysrt = "";
+    CityPickerView mPicker = new CityPickerView();
     String imgurl;//选择头像的地址
     Handler handler = new Handler() {
         @Override
@@ -76,7 +81,7 @@ public class EditAllActivity extends TakePhotoActivity {
             super.handleMessage(msg);
             String result = (String) msg.obj;
             Log.d(result);
-            if (null!=loadingPop&&loadingPop.isShowing()){
+            if (null != loadingPop && loadingPop.isShowing()) {
                 loadingPop.dismiss();
             }
             int code = -999;
@@ -95,19 +100,21 @@ public class EditAllActivity extends TakePhotoActivity {
                 return;
             }
             if (code == 100) {
-                if (msg.what==2){
+                if (msg.what == 2) {
                     finish();
                     startActivity(new Intent(EditAllActivity.this, MainActivity.class));
-                }else if (msg.what==1){
+                } else if (msg.what == 1) {
                     sdMyphoto.setImageURI(Uri.fromFile(new File(imgurl)));
                 }
 
-            }else {
+            } else {
                 BToast.error(EditAllActivity.this).text("上传失败，请稍后再试").show();
             }
         }
     };
     PopupWindow loadingPop;
+    @BindView(R.id.ed_studennage)
+    TextView edStudennage;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,7 +140,7 @@ public class EditAllActivity extends TakePhotoActivity {
                     BToast.info(context).text("学生姓名还没有填写哦").show();
                     return;
                 }
-                if (EditTextUtil.getString(edStudennage).isEmpty()) {
+                if (edStudennage.getText().toString().isEmpty()) {
                     BToast.info(context).text("学生年龄还没有填写哦").show();
                     return;
                 }
@@ -148,7 +155,7 @@ public class EditAllActivity extends TakePhotoActivity {
                 }
                 String vipname = EditTextUtil.getString(edVipname);
                 String studentname = EditTextUtil.getString(edStudenname);
-                String studentage = EditTextUtil.getString(edStudennage);
+                String studentage = edStudennage.getText().toString();
                 String fathername = EditTextUtil.getString(edFathername);
                 String mathername = EditTextUtil.getString(edMothername);
                 if (Constants.TOKEN.isEmpty()) {
@@ -183,7 +190,7 @@ public class EditAllActivity extends TakePhotoActivity {
         super.takeSuccess(result);
         imgurl = result.getImage().getOriginalPath();
 
-        Network.getnetwork().uploadimg(Constants.TOKEN, Constants.URL + "/guest/image-upload", result.getImage().getCompressPath(), handler,1);
+        Network.getnetwork().uploadimg(Constants.TOKEN, Constants.URL + "/guest/image-upload", result.getImage().getCompressPath(), handler, 1);
 
     }
 
@@ -199,7 +206,7 @@ public class EditAllActivity extends TakePhotoActivity {
     }
 
 
-    @OnClick({R.id.ll_header, R.id.ll_address})
+    @OnClick({R.id.ll_header, R.id.ll_address,R.id.ed_studennage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_header:
@@ -242,33 +249,75 @@ public class EditAllActivity extends TakePhotoActivity {
                         super.onSelected(provinc, citys, district);
                         //省份
                         if (provinc != null) {
-                            citysrt=provinc.getName().replace("省","");
-                            province=provinc.getName();
+                            citysrt = provinc.getName().replace("省", "");
+                            province = provinc.getName();
                         }
                         //城市
                         if (citys != null) {
-                             city=citys.getName();
-                            citysrt=citysrt+"·"+citys.getName().replace("市","");
+                            city = citys.getName();
+                            citysrt = citysrt + "·" + citys.getName().replace("市", "");
                         }
                         //地区
                         if (district != null) {
-                            county=district.getName();
-                            citysrt=citysrt+"·"+district.getName();
+                            county = district.getName();
+                            citysrt = citysrt + "·" + district.getName();
 
                         }
                         tvAddress.setText(citysrt);
                     }
                 });
-                mPicker.showCityPicker( );
+                mPicker.showCityPicker();
                 break;
+            case R.id.ed_studennage:{
+
+                Calendar selectedDate = Calendar.getInstance();
+                Calendar startDate = Calendar.getInstance();
+                //startDate.set(2013,1,1);
+                Calendar endDate = Calendar.getInstance();
+                //endDate.set(2020,1,1);
+
+                //正确设置方式 原因：注意事项有说明
+                startDate.set(1990,0,1);
+                endDate.set(2020,11,31);
+                TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
+                    @Override
+                    public void onTimeSelect(Date date, View v) {//选中事件回调
+                        edStudennage.setText(TimeUtil.getWholeTime(date));
+                        Constants.userBasicInfo.setStudentAge(TimeUtil.getWholeTime(date));
+//                        Constants.userBasicInfo.setToken(Constants.TOKEN);
+//                        String string=JsonUtils.objectToString(Constants.userBasicInfo);
+//                        Network.getnetwork().postJson(string,Constants.URL+"/app/update-member",handler,3);
+                    }
+                })
+                        .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
+                        .setCancelText("取消")//取消按钮文字
+                        .setSubmitText("确定")//确认按钮文字
+                        .setTitleSize(20)//标题文字大小
+                        .setTitleText("出生日期")//标题文字
+                        .setOutSideCancelable(true)//点击屏幕，点在控件外部范围时，是否取消显示
+                        .isCyclic(false)//是否循环滚动
+                        .setTitleColor(Color.BLACK)//标题文字颜色
+                        .setSubmitColor(Color.parseColor("#666666"))//确定按钮文字颜色
+                        .setCancelColor(Color.parseColor("#666666"))//取消按钮文字颜色
+                        .setTitleBgColor(0xFFFFFFFF)//标题背景颜色 Night mode
+                        .setBgColor(0xFFffffff)//滚轮背景颜色 Night mode
+                        .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
+                        .setRangDate(startDate,endDate)//起始终止年月日设定
+                        .setLabel("年","月","日","时","分","秒")//默认设置为年月日时分秒
+                        .isCenterLabel(true) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                        .isDialog(true)//是否显示为对话框样式
+                        .build();
+                pvTime.show(view,true);
+            }
         }
     }
-    public void showpopwindow(View parentview){
-        final PopupWindow popupWindow= CreatPopwindows.creatpopwindows(this,R.layout.pop_selectphoto);
-        View view=popupWindow.getContentView();
-        TextView takephoto=view.findViewById(R.id.tv_take_photo);
-        TextView selectphoto=view.findViewById(R.id.tv_select_photo);
-        TextView cancle=view.findViewById(R.id.tv_cancel);
+
+    public void showpopwindow(View parentview) {
+        final PopupWindow popupWindow = CreatPopwindows.creatpopwindows(this, R.layout.pop_selectphoto);
+        View view = popupWindow.getContentView();
+        TextView takephoto = view.findViewById(R.id.tv_take_photo);
+        TextView selectphoto = view.findViewById(R.id.tv_select_photo);
+        TextView cancle = view.findViewById(R.id.tv_cancel);
         takephoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -289,14 +338,15 @@ public class EditAllActivity extends TakePhotoActivity {
                 popupWindow.dismiss();
             }
         });
-        popupWindow.showAtLocation(parentview, Gravity.BOTTOM,0, ScreenUtil.getNavigationBarHeight(EditAllActivity.this));
+        popupWindow.showAtLocation(parentview, Gravity.BOTTOM, 0, ScreenUtil.getNavigationBarHeight(EditAllActivity.this));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        if (null!=loadingPop&&loadingPop.isShowing()){
+        if (null != loadingPop && loadingPop.isShowing()) {
             loadingPop.dismiss();
         }
     }
+
 }

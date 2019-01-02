@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.bravin.btoast.BToast;
 import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.server.LivelyServer;
+import com.zou.fastlibrary.utils.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

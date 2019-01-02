@@ -39,7 +39,10 @@ public abstract class LazyLoadFragment extends Fragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void netWorkMessage(NetWorkMessage messageEvent) {
         String s=messageEvent.getMessage();
-        BToast.error(getContext()).text(s).show();
+        if (isLoad){
+            BToast.error(getContext()).text(s).show();
+        }
+
     }
     /**
      * 视图是否已经对用户可见，系统的方法
@@ -74,6 +77,7 @@ public abstract class LazyLoadFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -82,7 +86,7 @@ public abstract class LazyLoadFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        EventBus.getDefault().unregister(this);
+
         isInit = false;
         isLoad = false;
 

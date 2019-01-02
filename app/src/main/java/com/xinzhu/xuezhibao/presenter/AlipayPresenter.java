@@ -25,6 +25,9 @@ public class AlipayPresenter extends BasePresenter {
     PayInterface payInterface;
     Activity activity;
     String ordernum;
+    /**
+     * 检查支付状态用
+     */
     int tpye;
     int trycount = 1;
 
@@ -138,6 +141,16 @@ public class AlipayPresenter extends BasePresenter {
                     checkWxPay();
                     break;
                 }
+                case 9:{
+                    String result = (String) msg.obj;
+                    Log.d(result);
+                    int code = JsonUtils.getIntValue(result, "Code");
+                    if (code==100){
+                        payInterface.paysuccessful();
+                    }else {
+                        payInterface.payfail();
+                    }
+                }
             }
         }
     };
@@ -159,17 +172,25 @@ public class AlipayPresenter extends BasePresenter {
         Network.getnetwork().postJson(data, Constants.URL + "/app/curriculum-apply", handler, 3);
     }
 
-    public void aLiBuyVideo(String id) {
+    public void aLiBuyVideo(String id,int buytype) {
         tpye = 2;
         String data = JsonUtils.keyValueToString2("videoId", id, "token", Constants.TOKEN);
         data = JsonUtils.addKeyValue(data, "dealWay", 2);
+        data = JsonUtils.addKeyValue(data, "buyType", buytype);
         Network.getnetwork().postJson(data, Constants.URL + "/app/buy-video", handler, 2);
     }
-
-    public void WxBuyVideo(String id) {
+    public void pointsBuyVideo(String id,int buytype) {
+        tpye = 2;
+        String data = JsonUtils.keyValueToString2("videoId", id, "token", Constants.TOKEN);
+        data = JsonUtils.addKeyValue(data, "dealWay", 3);
+        data = JsonUtils.addKeyValue(data, "buyType", buytype);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/buy-video", handler, 9);
+    }
+    public void WxBuyVideo(String id,int buytype) {
         tpye = 2;
         String data = JsonUtils.keyValueToString2("videoId", id, "token", Constants.TOKEN);
         data = JsonUtils.addKeyValue(data, "dealWay", 1);
+        data = JsonUtils.addKeyValue(data, "buyType", buytype);
         Network.getnetwork().postJson(data, Constants.URL + "/app/buy-video", handler, 3);
     }
 

@@ -3,12 +3,10 @@ package com.xinzhu.xuezhibao.adapter;
 import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.media.MediaMetadataRetriever;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +18,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
+import com.zou.fastlibrary.ui.ShapeCornerBgView;
 import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.lang.ref.WeakReference;
@@ -35,6 +34,7 @@ public class VideoVoiceListAdapter extends BaseQuickAdapter<VideoVoiceBean,Video
     protected Context mContext;
     protected List<VideoVoiceBean> mDatas;
     int TYPE = 0; //标记是否视频课程列表
+    int PayVideo=0; //是否是收费视频，决定是否要显示试看标签
     public VideoVoiceListAdapter(WeakReference<Context> mContext,@NonNull List<VideoVoiceBean> mDatas) {
         super(R.layout.item_list,mDatas);
         this.mContext = mContext.get();
@@ -46,10 +46,17 @@ public class VideoVoiceListAdapter extends BaseQuickAdapter<VideoVoiceBean,Video
         this.mDatas = mDatas;
         this.TYPE = TYPE;
     }
+    public VideoVoiceListAdapter(Context mContext, @NonNull List<VideoVoiceBean> mDatas, int TYPE,int PayVideo) {
+        super(R.layout.item_list,mDatas);
+        this.mContext = mContext;
+        this.mDatas = mDatas;
+        this.TYPE = TYPE;
+        this.PayVideo=PayVideo;
+    }
     @Override
     protected void convert(MyViewHolder helper, VideoVoiceBean item) {
         ((MyViewHolder) helper).tvItemTitle.setText(item.getVideoTitle());
-        ((MyViewHolder) helper).tvDianzan.setText(item.getVidelLike());
+        ((MyViewHolder) helper).tvDianzan.setText(item.getVideoLike());
         ((MyViewHolder) helper).tvItemTime.setText(TimeUtil.getWholeTime2(item.getCreateTime()));
         ((MyViewHolder) helper).tv_readnum.setText(item.getVideoLook());
         if (null == item.getVideoPicture()) {
@@ -79,6 +86,18 @@ public class VideoVoiceListAdapter extends BaseQuickAdapter<VideoVoiceBean,Video
             ((MyViewHolder) helper).tvTeacher.setText("主讲："+item.getVideoTeacher());
             ((MyViewHolder) helper).tvItemTitle.setMaxLines(1);
         }
+        if (PayVideo>0){
+            helper.shapeCornerBgView2.setVisibility(View.VISIBLE);
+            if (item.getTrySee()==0){
+                helper.shapeCornerBgView2.setBorderColor(Color.parseColor("#f87d28"));
+                helper.shapeCornerBgView2.setTextColor(Color.parseColor("#f87d28"));
+                helper.shapeCornerBgView2.setText("收费");
+            }else {
+                helper.shapeCornerBgView2.setBorderColor(Color.parseColor("#12cd8e"));
+                helper.shapeCornerBgView2.setTextColor(Color.parseColor("#12cd8e"));
+                helper.shapeCornerBgView2.setText("试看");
+            }
+        }
     }
     @Override
     protected void startAnim(Animator anim, int index) {
@@ -106,6 +125,8 @@ public class VideoVoiceListAdapter extends BaseQuickAdapter<VideoVoiceBean,Video
         ImageView imageView10;
         @BindView(R.id.tv_teacher)
         TextView tvTeacher;
+        @BindView(R.id.shapeCornerBgView2)
+        ShapeCornerBgView shapeCornerBgView2;
 
         MyViewHolder(View view) {
             super(view);

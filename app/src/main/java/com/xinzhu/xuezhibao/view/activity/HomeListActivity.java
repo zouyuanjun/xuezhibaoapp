@@ -12,6 +12,7 @@ import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
 import com.xinzhu.xuezhibao.view.fragment.ArticleListFragment;
 import com.xinzhu.xuezhibao.view.fragment.HomeVideoVoiceListFragment;
 import com.xinzhu.xuezhibao.view.fragment.VideoFolderFragment;
+import com.xinzhu.xuezhibao.view.fragment.VideoFreeFolderFragment;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 
@@ -31,55 +32,56 @@ public class HomeListActivity extends BaseActivity {
     TabLayout tbClass;
     @BindView(R.id.vp_itemlist)
     ViewPager vpItemlist;
-    ArrayList<Fragment> fragmentList=new ArrayList<>();
-    String [] title={"热门","最新","我的收藏"};
-    String [] videotitle={"热门","最新","全部","我的收藏"};
-    int TYPE=0;
+    ArrayList<Fragment> fragmentList = new ArrayList<>();
+    String[] title = {"热门", "最新", "我的收藏"};
+    String[] videotitle = {"热门", "最新", "全部", "我的收藏"};
+    int TYPE = 0;
     ListViewPageAdapter listViewPageAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_itemlist);
-        TYPE=getIntent().getIntExtra("TYPE",0);
+        TYPE = getIntent().getIntExtra("TYPE", 0);
         ButterKnife.bind(this);
         tbClass.addTab(tbClass.newTab());
         tbClass.addTab(tbClass.newTab());
         tbClass.addTab(tbClass.newTab());
-        tbClass.setTabTextColors(Color.parseColor("#333333"),Color.parseColor("#f87d28"));
-        if (TYPE==1){
+        tbClass.setTabTextColors(Color.parseColor("#333333"), Color.parseColor("#f87d28"));
+        if (TYPE == 1) {
             appbar.setMidText("视频公开课");
             fragmentList.clear();
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
-            fragmentList.add(new VideoFolderFragment());
+            fragmentList.add(new VideoFreeFolderFragment());
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
 
-            listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,videotitle,1);
-        }else if (TYPE==2){
+            listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, videotitle, 1);
+        } else if (TYPE == 2) {
             appbar.setMidText("音频公开课");
             fragmentList.clear();
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
-            listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,2);
-        }else if (TYPE==3){
+            listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, title, 2);
+        } else if (TYPE == 3) {
             appbar.setMidText("亲子文章");
             fragmentList.clear();
             fragmentList.add(new ArticleListFragment());
             fragmentList.add(new ArticleListFragment());
             fragmentList.add(new ArticleListFragment());
-            listViewPageAdapter=new ListViewPageAdapter(getSupportFragmentManager(),fragmentList,title,3);
+            listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, title, 3);
         }
 
-       vpItemlist.setAdapter(listViewPageAdapter);
+        vpItemlist.setAdapter(listViewPageAdapter);
         vpItemlist.setOffscreenPageLimit(3);
         tbClass.setupWithViewPager(vpItemlist);
-        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View v) {
+        finish();
+    }
+});
     }
 
 }

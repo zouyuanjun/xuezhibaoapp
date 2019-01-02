@@ -49,6 +49,7 @@ public class VideoListActivity extends BaseActivity implements VideoFragmentInte
     ImageView imgNodata;
     String videoid;
     String title;
+    int type;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,13 +57,20 @@ public class VideoListActivity extends BaseActivity implements VideoFragmentInte
         ButterKnife.bind(this);
         videoid=getIntent().getStringExtra(Constants.INTENT_ID);
         title=getIntent().getStringExtra(Constants.INTENT_ID2);
+        type=getIntent().getIntExtra(Constants.INTENT_ID3,0);
         appbar.setMidText(title);
         videoVoiceListPresenter = new VideoVoiceListPresenter(this);
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(VideoListActivity.this);
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvVideocourselist.setLayoutManager(linearLayoutManager3);
-        payadapter = new VideoVoiceListAdapter(new WeakReference<>(VideoListActivity.this).get(), payBeanList, 2);
-        rvVideocourselist.setAdapter(payadapter);
+        if (type==1){
+            payadapter = new VideoVoiceListAdapter(new WeakReference<>(VideoListActivity.this).get(), payBeanList, 2,0);
+
+        }else {
+            payadapter = new VideoVoiceListAdapter(new WeakReference<>(VideoListActivity.this).get(), payBeanList, 2,2);
+
+        }
+         rvVideocourselist.setAdapter(payadapter);
         payadapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override

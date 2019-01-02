@@ -147,10 +147,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
                 }
             }
         });
-
-
     }
-
     @OnClick({R.id.et_phone, R.id.et_password, R.id.et_code, R.id.bt_getcode, R.id.tv_signup,R.id.tv_user_agreement})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -183,6 +180,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
                 } else if (cansignin) {
                     cansignin = false;
                     signPresenter.sign(new SignBean(phone, password, code));
+                    tvSignup.setBgColor(Color.parseColor("#999999"));
                 }
                 break;
             case R.id.tv_user_agreement:

@@ -30,6 +30,8 @@ import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.StatusBar;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.ref.WeakReference;
@@ -150,7 +152,9 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
         timer.cancel();
         textView33.setText(messageEvent.getMessage());
         textView33.setTextColor(Color.RED);
+        EventBus.getDefault().unregister(this);
         goToActivity(this, MainActivity.class);
+
     }
 
     @Override

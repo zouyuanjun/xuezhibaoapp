@@ -279,10 +279,11 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
             rvJiaojiaoCourseAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
+            page++;
+            imLoading.setVisibility(View.GONE);
+            imDataisnull.setVisibility(View.GONE);
         }
-        page++;
-        imLoading.setVisibility(View.GONE);
-        imDataisnull.setVisibility(View.GONE);
+
 
     }
 
@@ -292,6 +293,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
             return;
         }
         refreshLayout.finishLoadMoreWithNoMoreData();
+        refreshLayout.finishRefresh();
         if (MYCLASS == 1 && courseBeanArrayList.size() == 0) {
             imDataisnull.setVisibility(View.VISIBLE);
         } else if (MYCLASS == 2 && teacherBeanArrayList.size() == 0) {
@@ -312,10 +314,11 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
             rvJiaojiaoTeacherAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
+            page++;
+            imLoading.setVisibility(View.GONE);
+            imDataisnull.setVisibility(View.GONE);
         }
-        page++;
-        imLoading.setVisibility(View.GONE);
-        imDataisnull.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -325,10 +328,11 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
             rvJiaojiaoFeedbackAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
+            page++;
+            imLoading.setVisibility(View.GONE);
+            imDataisnull.setVisibility(View.GONE);
         }
-        page++;
-        imLoading.setVisibility(View.GONE);
-        imDataisnull.setVisibility(View.GONE);
+
         EventBus.getDefault().post(new MessageNum(unread));
 
     }
@@ -340,9 +344,10 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
             rvJiaojiaoTaskAdapter.notifyDataSetChanged();
             refreshLayout.finishLoadMore();
             refreshLayout.finishRefresh();
+            page++;
+            imLoading.setVisibility(View.GONE);
+            imDataisnull.setVisibility(View.GONE);
         }
-        page++;
-        imLoading.setVisibility(View.GONE);
-        imDataisnull.setVisibility(View.GONE);
+
     }
 }

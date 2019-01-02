@@ -226,8 +226,8 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
         tvReadnum.setText("播放：" + videoVoiceBean.getVideoLook());
         tvTitle.setText(videoVoiceBean.getVideoTitle());
         mMusicView.setTitleText(videoVoiceBean.getVideoTitle());
-        tvLike.setText(videoVoiceBean.getVidelLike());
-        likenum=Integer.parseInt(videoVoiceBean.getVidelLike());
+        tvLike.setText(videoVoiceBean.getVideoLike());
+        likenum=Integer.parseInt(videoVoiceBean.getVideoLike());
 
         mMusicView.startPlayMusic(videoVoiceBean.getVideoUrl());
     }

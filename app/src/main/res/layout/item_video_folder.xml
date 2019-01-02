@@ -19,32 +19,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="135dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/mengban"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/im_watch_ioc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="3dp"
-            android:background="@drawable/home_icon_playback"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_readnum"
-            app:layout_constraintEnd_toStartOf="@+id/tv_readnum"
-            app:layout_constraintTop_toTopOf="@+id/tv_readnum" />
 
         <TextView
             android:id="@+id/tv_readnum"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
-            android:text="2232"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="@+id/simpleDraweeView"
@@ -83,14 +64,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="13dp"
-            android:layout_marginBottom="16dp"
-            android:text="￥120"
+            android:text="￥000"
             android:textColor="@color/color_black_333333"
             android:textSize="17sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/shapeCornerBgView"
             app:layout_constraintStart_toEndOf="@+id/simpleDraweeView"
-            app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+            app:layout_constraintTop_toTopOf="@+id/shapeCornerBgView" />
 
         <com.zou.fastlibrary.ui.ShapeCornerBgView
             android:id="@+id/shapeCornerBgView"
@@ -133,7 +112,7 @@
             android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(共6节)"
+            android:text="(共0节)"
             android:textColor="@color/appcolor"
             android:textSize="15sp"
             app:layout_constraintStart_toEndOf="@+id/textView18"

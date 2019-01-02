@@ -18,7 +18,9 @@ import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
+import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.Network;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,6 +74,9 @@ public class TestActivity extends BaseActivity {
                 issyschangecheck = true;
                 radiogroup.clearCheck();
 
+            } else if (what == 2) {
+                String d = (String) msg.obj;
+                Log.d(d);
             }
         }
     };
@@ -94,6 +99,7 @@ public class TestActivity extends BaseActivity {
     NestedScrollView nestedScrollView;
     @BindView(R.id.scb_commit)
     ShapeCornerBgView scbCommit;
+    String dictionaryId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +107,7 @@ public class TestActivity extends BaseActivity {
         setContentView(R.layout.activity_test);
         ButterKnife.bind(this);
         classindex = getIntent().getIntExtra(Constants.INTENT_ID, 0);
+        dictionaryId = getIntent().getStringExtra(Constants.INTENT_ID2);
         switch (classindex) {
             case 0:
                 testtitle = "阅读理解";
@@ -153,7 +160,8 @@ public class TestActivity extends BaseActivity {
                             ans3.setClickable(true);
                             ans2.setClickable(true);
                             ans1.setClickable(true);
-                            textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
+                            textView8.setText("提示：您已答完所有题目，确认答案后请点击提交按钮");
+                            scbCommit.setVisibility(View.VISIBLE);
                         }
 
                         break;
@@ -175,7 +183,8 @@ public class TestActivity extends BaseActivity {
                             ans3.setClickable(true);
                             ans2.setClickable(true);
                             ans1.setClickable(true);
-                            textView8.setText("提示：您已答完所有题目，确认答案后请点击右上角提交");
+                            textView8.setText("提示：您已答完所有题目，确认答案后请点击提交按钮");
+                            scbCommit.setVisibility(View.VISIBLE);
                         }
                         break;
                     case R.id.ans3:
@@ -409,8 +418,8 @@ public class TestActivity extends BaseActivity {
                     ans3.setClickable(true);
                     ans2.setClickable(true);
                     ans1.setClickable(true);
-                    radiogroup.clearCheck();
                     textView8.setText("提示：选择后自动转下一题");
+                    scbCommit.setVisibility(View.GONE);
                 }
                 break;
             case R.id.scb_back:
@@ -431,6 +440,7 @@ public class TestActivity extends BaseActivity {
         }
         iscommit = true;
         appbar.setRightTextVisible(false);
+
         for (Integer key : ansmap.keySet()) {
             if (key <= 8 && key >= 0) {
                 yuedu = yuedu + ansmap.get(key);
@@ -447,21 +457,27 @@ public class TestActivity extends BaseActivity {
             }
             Log.d("题目是" + key + ",答案是：" + ansmap.get(key));
         }
+        double score = 0;
         switch (classindex) {
             case 0:
                 yuedu = calculate(yuedu);
+                score = yuedu;
                 break;
             case 1:
                 shumian = calculate(shumian);
+                score = shumian;
                 break;
             case 2:
                 zhuyili = calculate(zhuyili);
+                score = zhuyili;
                 break;
             case 3:
                 duodong = calculate(duodong);
+                score = duodong;
                 break;
             case 4:
                 xuexi = calculate(xuexi);
+                score = xuexi;
                 break;
             case 5:
                 qingxu = 5 + 2 * (qingxu - 3.727) / 1.753;
@@ -470,10 +486,12 @@ public class TestActivity extends BaseActivity {
                 } else if (qingxu < 1 && qingxu > 0) {
                     qingxu = 1;
                 }
+                score = qingxu;
                 break;
         }
-
-
+        String data = JsonUtils.keyValueToString2("score", (int) score, "registerId", dictionaryId);
+        data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/add-appraisal-result", handler, 2);
         if (yuedu <= 3 && yuedu > 0) {
             result = result + "阅读理解：" + (int) yuedu + "分\n" + anslist.get(0);
         }

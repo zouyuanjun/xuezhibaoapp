@@ -170,9 +170,10 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
             refreshLayout.finishRefresh();
             refreshLayout.finishLoadMoreWithNoMoreData();
             page++;
+            imLoading.setVisibility(View.GONE);
+            imDataisnull.setVisibility(View.GONE);
         }
-        imLoading.setVisibility(View.GONE);
-        imDataisnull.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -191,6 +192,7 @@ public class MyOrderFragment extends LazyLoadFragment implements MyOrderInterfac
     @Override
     public void netWorkMessage(NetWorkMessage messageEvent) {
         super.netWorkMessage(messageEvent);
+        Log.d(POSITION+"sss");
         noMoredata();
     }
 

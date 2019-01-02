@@ -27,6 +27,11 @@ public class ShapeCornerBgView extends AppCompatTextView {
     int bgColor;// 背景的颜色，默认是透明的
     int mRadius = 3;// 默认3
 
+    public void setBorderColor(int borderColor) {
+        this.borderColor = borderColor;
+        invalidate();
+    }
+
     int mColorText;
 
     private Rect rect = new Rect();// 方角

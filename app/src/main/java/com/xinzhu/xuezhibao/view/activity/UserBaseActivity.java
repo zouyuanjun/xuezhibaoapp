@@ -130,7 +130,14 @@ public class UserBaseActivity extends TakePhotoActivity {
         if (null!=Constants.userBasicInfo){
             tvVipname.setText(Constants.userBasicInfo.getNickName());
             tvStudenname.setText(Constants.userBasicInfo.getStudentName());
-            tvStudennage.setText(Constants.userBasicInfo.getStudentAge()+"岁");
+            String data;
+            try {
+                data=TimeUtil.getWholeTime(Long.parseLong(Constants.userBasicInfo.getStudentAge()));
+            }catch (NumberFormatException e){
+                data="请设置出生日期";
+            }
+
+            tvStudennage.setText(data);
             tvFathername.setText(Constants.userBasicInfo.getFatherName());
             tvMothername.setText(Constants.userBasicInfo.getMotherName());
             tvAddress.setText(Constants.userBasicInfo.getCity()+"-"+Constants.userBasicInfo.getCounty());

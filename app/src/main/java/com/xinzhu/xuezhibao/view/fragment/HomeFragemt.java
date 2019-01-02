@@ -421,6 +421,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
 
         mybannerImgBean.clear();
+        mDatas.clear();
         for (BannerImgBean bannerImgBean : bannerImgBeans) {
             mDatas.add(bannerImgBean.getAdUrl());
             mybannerImgBean.add(bannerImgBean);

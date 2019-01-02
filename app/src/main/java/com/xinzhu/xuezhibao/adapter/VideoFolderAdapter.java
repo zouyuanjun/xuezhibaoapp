@@ -13,6 +13,7 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.VideoFolder;
 import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.List;
 
@@ -22,10 +23,11 @@ import butterknife.ButterKnife;
 public class VideoFolderAdapter extends BaseQuickAdapter<VideoFolder, VideoFolderAdapter.ViewHolder> {
     protected Context mContext;
     protected List<VideoFolder> mDatas;
-
-    public VideoFolderAdapter(int layoutResId, @Nullable List<VideoFolder> data) {
+    int type;//是否免费视频
+    public VideoFolderAdapter(int layoutResId, @Nullable List<VideoFolder> data,int type) {
         super(R.layout.item_video_folder, data);
         this.mDatas = data;
+        this.type=type;
     }
 
     public VideoFolderAdapter(@Nullable List<VideoFolder> data) {
@@ -41,8 +43,23 @@ public class VideoFolderAdapter extends BaseQuickAdapter<VideoFolder, VideoFolde
         helper.simpleDraweeView.setImageURI(item.getVideoTypeImage());
         helper.tvTitle.setText(item.getVideoTypeName());
         helper.tvPaynum.setText(item.getVideoTypeNum() + "人已购买");
-        helper.textView17.setText("￥"+item.getVideoTypeMoney());
-        helper.textView19.setText("(共"+item.getVideoTypeNum()+"节)");
+        if (StringUtil.isEmpty(item.getVideoTypeMoney())){
+            helper.textView17.setText("免费");
+
+        }else {
+            helper.textView17.setText("￥"+item.getVideoTypeMoney());
+        }
+        helper.textView19.setText("(共"+item.getCount()+"节)");
+        if (item.getIsBuy()==1){
+            helper.shapeCornerBgView.setText("已购买");
+        }
+        if (type==0){
+            helper.shapeCornerBgView.setText("已赠送");
+
+        }else {
+            helper.addOnClickListener(R.id.shapeCornerBgView);
+        }
+
     }
 
     public static class ViewHolder extends BaseViewHolder {

@@ -34,7 +34,7 @@
         android:layout_marginTop="16dp"
         android:textSize="15sp"
         android:textColor="@color/color_black_333333"
-        android:text=""
+        android:text="反馈类型"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbar" />
 
@@ -53,15 +53,15 @@
         app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
-        android:layout_width="96dp"
-        android:gravity="center"
-        android:layout_height="32dp"
         android:id="@+id/tv_xingneng"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/dialogbg_nor"
+        android:gravity="center"
         android:text=""
         android:textSize="15sp"
-        android:background="@drawable/dialogbg_nor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_gongneng" />
@@ -83,7 +83,7 @@
         android:layout_width="0dp"
         android:layout_height="16dp"
         android:layout_marginTop="16dp"
-        android:background="@color/itemfenge"
+        android:background="@color/fenge"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

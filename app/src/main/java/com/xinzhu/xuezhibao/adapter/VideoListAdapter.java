@@ -53,7 +53,7 @@ public class VideoListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((MyViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getVideoTitle());
-        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getVidelLike());
+        ((MyViewHolder) holder).tvDianzan.setText(mDatas.get(position).getVideoLike());
         ((MyViewHolder) holder).tvItemTime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
         ((MyViewHolder) holder).tv_readnum.setText(mDatas.get(position).getVideoLook());
         RequestOptions requestOptions = RequestOptions.frameOf(0);

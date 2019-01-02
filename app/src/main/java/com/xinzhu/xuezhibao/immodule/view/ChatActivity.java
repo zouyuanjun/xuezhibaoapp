@@ -604,9 +604,11 @@ public class ChatActivity extends AppCompatActivity implements FuncLayout.OnFunc
 
                     Matisse.from(ChatActivity.this)
                             .choose(MimeType.ofImage(), false) // 选择 mime 的类型
+                            .showSingleMediaType(true)
                             .countable(true)
                             .maxSelectable(9) // 图片选择的最多数量
                             .gridExpectedSize(400)
+                            .theme(R.style.Matisse_Custom)
                             .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                             .thumbnailScale(0.85f) // 缩略图的比例
                             .imageEngine(new Glide4Engine()) // 使用的图片加载引擎

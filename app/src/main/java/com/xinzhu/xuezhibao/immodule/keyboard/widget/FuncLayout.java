@@ -86,7 +86,6 @@ public class FuncLayout extends LinearLayout {
         }
         mCurrentFuncKey = key;
         setVisibility(true);
-
         if (onFuncChangeListener != null) {
             onFuncChangeListener.onFuncChange(mCurrentFuncKey);
         }

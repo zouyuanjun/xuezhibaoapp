@@ -16,6 +16,7 @@ import com.xinzhu.xuezhibao.view.fragment.VideoFolderFragment;
 import com.xinzhu.xuezhibao.view.fragment.XuebaoFragment;
 import com.zou.fastlibrary.activity.BaseBottomTabActivity;
 import com.zou.fastlibrary.utils.EditTextUtil;
+import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StatusBar;
 
 import java.util.ArrayList;
@@ -26,17 +27,18 @@ import java.util.TimerTask;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends BaseBottomTabActivity {
-    List<String> tabTextlist=new ArrayList<>();
-    private List<Fragment> fragmentList=new ArrayList<>();
-    List<Integer> iocdef=new ArrayList<>();
-    List<Integer> iocsel=new ArrayList<>();
+    List<String> tabTextlist = new ArrayList<>();
+    private List<Fragment> fragmentList = new ArrayList<>();
+    List<Integer> iocdef = new ArrayList<>();
+    List<Integer> iocsel = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EditTextUtil.hideKeyboard(this,getCurrentFocus());
+        Log.d("MainActivity>>>>>>>>>>>"+this.toString());
+        EditTextUtil.hideKeyboard(this, getCurrentFocus());
         Fresco.initialize(this.getApplicationContext());
-        StatusBar.setColor(this,0xFFf87d28);
+        StatusBar.setColor(this, 0xFFf87d28);
         tabTextlist.add("首页");
         tabTextlist.add("精品课");
         tabTextlist.add("学宝");
@@ -53,23 +55,31 @@ public class MainActivity extends BaseBottomTabActivity {
         iocsel.add(R.drawable.tab_btn_parent_sel);
         iocsel.add(R.drawable.tab_btn_my_sel);
 
-        creatNormalTab(iocdef,iocsel,tabTextlist);
+        creatNormalTab(iocdef, iocsel, tabTextlist);
         fragmentList.add(new HomeFragemt());
         fragmentList.add(new VideoFolderFragment());
         fragmentList.add(new XuebaoFragment());
         fragmentList.add(new FamilyClubFragment());
         fragmentList.add(new UserCentreFragment());
         setViewPagerAdaptr(fragmentList);
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED)
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
                 || (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 || (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
-                || (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)!= PackageManager.PERMISSION_GRANTED)) {
-            EasyPermissions.requestPermissions(this, "允许必要权限才可以正常使用哦", 1, Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO,Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_PHONE_STATE);
+                || (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED)) {
+            EasyPermissions.requestPermissions(this, "允许必要权限才可以正常使用哦", 1, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE);
         }
 
     }
+
     boolean isexit = false;
-Timer timer=new Timer();
+    Timer timer = new Timer();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     @Override
     public void onBackPressed() {
         if (isexit) {
@@ -82,7 +92,7 @@ Timer timer=new Timer();
                 public void run() {
                     isexit = false;
                 }
-            },3000);
+            }, 3000);
         }
 
     }
