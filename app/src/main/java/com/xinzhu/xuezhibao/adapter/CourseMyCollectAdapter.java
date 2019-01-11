@@ -46,7 +46,7 @@ public class CourseMyCollectAdapter extends RecyclerView.Adapter {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
         ((ViewHolder) holder).tvTeacher.setText(mDatas.get(position).getSpeakerTeacher());
         ((ViewHolder) holder).tvAll.setText(mDatas.get(position).getConsumeHour() + "/" + mDatas.get(position).getSumHour());
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply() + "");
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApplyFalse() + "");
         if (StringUtil.isEmpty(mDatas.get(position).getCurriculumPicture())) {
             Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
         }

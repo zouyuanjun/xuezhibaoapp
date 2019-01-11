@@ -5,11 +5,11 @@ public class CourseBean {
     String curriculumPicture;
     String curriculumPrice;
     String curriculumTitle;
-    int curriculumApply;
+    int curriculumApplyFalse;
     String curriculumId;
     String curriculumUrl;
     String curriculumExplain;
-    int curriculumLike;
+    int curriculumLikeFalse;
     String speakerTeacher;
     int curriculumKind;
     String dictionaryName;
@@ -20,6 +20,15 @@ public class CourseBean {
     int isApply;
     String teacherPhone;
     String realName;
+    String count;
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
 
     public String getTeacherPhone() {
         return teacherPhone;
@@ -128,12 +137,12 @@ public class CourseBean {
         this.curriculumExplain = curriculumExplain;
     }
 
-    public int getCurriculumLike() {
-        return curriculumLike;
+    public int getCurriculumLikeFalse() {
+        return curriculumLikeFalse;
     }
 
-    public void setCurriculumLike(int curriculumLike) {
-        this.curriculumLike = curriculumLike;
+    public void setCurriculumLikeFalse(int curriculumLikeFalse) {
+        this.curriculumLikeFalse = curriculumLikeFalse;
     }
 
     public String getSpeakerTeacher() {
@@ -168,11 +177,11 @@ public class CourseBean {
         this.curriculumTitle = curriculumTitle;
     }
 
-    public int getCurriculumApply() {
-        return curriculumApply;
+    public int getCurriculumApplyFalse() {
+        return curriculumApplyFalse;
     }
 
-    public void setCurriculumApply(int curriculumApply) {
-        this.curriculumApply = curriculumApply;
+    public void setCurriculumApplyFalse(int curriculumApplyFalse) {
+        this.curriculumApplyFalse = curriculumApplyFalse;
     }
 }

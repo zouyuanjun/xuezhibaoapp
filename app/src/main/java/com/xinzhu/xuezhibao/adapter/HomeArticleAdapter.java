@@ -38,7 +38,7 @@ public class HomeArticleAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((RecyclerHolder) holder).title.setText(mDatas.get(position).getArticleTitle());
-        ((RecyclerHolder) holder).tv_readnum.setText("阅读："+mDatas.get(position).getArticleRead());
+        ((RecyclerHolder) holder).tv_readnum.setText("阅读："+mDatas.get(position).getArticleReadFalse());
         ((RecyclerHolder) holder).im_article.setImageURI(mDatas.get(position).getArticlePicture());
 
 

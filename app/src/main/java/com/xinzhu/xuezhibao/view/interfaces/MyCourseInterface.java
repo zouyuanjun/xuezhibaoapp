@@ -12,5 +12,5 @@ public interface MyCourseInterface extends publiceviewinterface {
     void nodata();
     void getTeacher(List<TeacherBean> mDatas);
     void getCourseFeesback(List<CourseFeedbackBean> mDatas, String unread);
-    void  getMyjob(List<MyjobBean> mDatas);
+    void getMyjob(List<CourseBean> mDatas);
 }

@@ -1,7 +1,9 @@
 package com.xinzhu.xuezhibao.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +13,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.bean.FeedbackPictureBean;
 import com.xinzhu.xuezhibao.bean.GoodsComment;
+import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.view.activity.CourseTaskActivity;
+import com.xinzhu.xuezhibao.view.activity.PhotoViewActivity;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.xinzhu.xuezhibao.MyApplication.getContext;
 
 public class GoodsCommentAdapter extends RecyclerView.Adapter {
     protected Context mContext;
@@ -53,17 +64,35 @@ public class GoodsCommentAdapter extends RecyclerView.Adapter {
         if (!StringUtil.isEmpty(mDatas.get(position).getPicture())) {
             String[] s = mDatas.get(position).getPicture().split(",");
             if (s.length > 0) {
-                ((MyViewHolder) holder).llImg.setVisibility(View.VISIBLE);
+           //     ((MyViewHolder) holder).llImg.setVisibility(View.VISIBLE);
+                final List<FeedbackPictureBean> list=new ArrayList<>();
                 for (int i = 0; i < s.length; i++) {
-                    if (i == 0) {
-                        Glide.with(mContext).load(s[i]).into(((MyViewHolder) holder).im1);
-                    } else if (i == 1) {
-                        Glide.with(mContext).load(s[i]).into(((MyViewHolder) holder).im2);
-                    } else if (i == 2) {
-                        Glide.with(mContext).load(s[i]).into(((MyViewHolder) holder).im3);
-                    }
+                    FeedbackPictureBean feedbackPictureBean=new FeedbackPictureBean();
+                    feedbackPictureBean.setAccessoryUrl(s[i]);
+                    list.add(feedbackPictureBean);
+//                    if (i == 0) {
+//                        Glide.with(mContext).load(s[i]).into(((MyViewHolder) holder).im1);
+//                    } else if (i == 1) {
+//                        Glide.with(mContext).load(s[i]).into(((MyViewHolder) holder).im2);
+//                    } else if (i == 2) {
+//                        Glide.with(mContext).load(s[i]).into(((MyViewHolder) holder).im3);
+//                    }
 
                 }
+                GridLayoutManager layoutManage2 = new GridLayoutManager(getContext(), 3);
+                ((MyViewHolder) holder).rvImg.setLayoutManager(layoutManage2);
+                GrideViewAdapter grideViewAdapter = new GrideViewAdapter(list);
+                ((MyViewHolder) holder).rvImg.setAdapter(grideViewAdapter);
+                grideViewAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        Intent intent = new Intent(mContext, PhotoViewActivity.class);
+                        intent.putExtra(Constants.INTENT_ID, (Serializable) list);
+                        intent.putExtra(Constants.INTENT_ID2, position);
+                        mContext.startActivity(intent);
+                    }
+                });
+
             }
         }
         Log.d("加载一条数据");
@@ -88,6 +117,7 @@ public class GoodsCommentAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return mDatas.size();
     }
+
     public interface OnItemClickListener {
         void onItemClick(View view, int position);
 
@@ -112,10 +142,11 @@ public class GoodsCommentAdapter extends RecyclerView.Adapter {
         ImageView im3;
         @BindView(R.id.ll_img)
         LinearLayout llImg;
+        @BindView(R.id.rv_img)
+        RecyclerView rvImg;
         MyViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
     }
-
 }

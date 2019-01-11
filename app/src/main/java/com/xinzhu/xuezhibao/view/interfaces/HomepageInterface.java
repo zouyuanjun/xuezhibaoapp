@@ -11,5 +11,6 @@ public interface HomepageInterface extends publiceviewinterface {
     void  getVoicedata(List<VideoVoiceBean> mDatas);
     void getArticle(List<ArticleBean> mDatas);
     void getbanner(List<BannerImgBean> bannerImgBeans);
-
+    void ischock(String data);
+    void chocksuccessful();
 }

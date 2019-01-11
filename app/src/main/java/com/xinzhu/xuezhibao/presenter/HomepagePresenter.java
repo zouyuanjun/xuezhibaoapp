@@ -48,31 +48,34 @@ public class HomepagePresenter {
                 return;
             }
             if (code == 100) {
-
+                String data = JsonUtils.getStringValue(result, "Data");
                 if (what == 1) {
-                    String data = JsonUtils.getStringValue(result, "Data");
+
                     List<ArticleBean> mDatas = JSON.parseArray(data, ArticleBean.class);
                     if (null != mDatas && mDatas.size() > 0) {
                         homepageInterface.getArticle(mDatas);
                     }
                 } else if (what == 2) {
-                    String data = JsonUtils.getStringValue(result, "Data");
+
                     List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
                     if (null != mDatas && mDatas.size() > 0) {
                         homepageInterface.getVideodata(mDatas);
                     }
                 } else if (what == 3) {
-                    String data = JsonUtils.getStringValue(result, "Data");
+
                     List<VideoVoiceBean> mDatas = JSON.parseArray(data, VideoVoiceBean.class);
                     if (null != mDatas && mDatas.size() > 0) {
                         homepageInterface.getVoicedata(mDatas);
                     }
                 } else if (what == 4) {
-                    String data = JsonUtils.getStringValue(result, "Data");
                     List<BannerImgBean> mDatas = JSON.parseArray(data, BannerImgBean.class);
                     if (null != mDatas && mDatas.size() > 0) {
                         homepageInterface.getbanner(mDatas);
                     }
+                }else if (what == 6) {
+                    homepageInterface.ischock(data);
+                }else if (what == 5) {
+                    homepageInterface.chocksuccessful();
                 }
             }
         }
@@ -85,8 +88,17 @@ public class HomepagePresenter {
         Network.getnetwork().postJson(data2, Constants.URL + "/guest/select-index-video", handler, 2);
         Network.getnetwork().postJson(data, Constants.URL + "/guest/select-index-video", handler, 3);
         Network.getnetwork().postJson("", Constants.URL + "/guest/select-index-round", handler, 4);
+        //是否签到
+        String data3 = JsonUtils.keyValueToString("token", Constants.TOKEN);
+        Network.getnetwork().postJson(data3, Constants.URL + "/app/check-clock-in", handler, 6);
     }
-
+    /**
+     * 签到
+     */
+    public void clockin() {
+        String data = JsonUtils.keyValueToString2("token", Constants.TOKEN, "trackType", 2);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/clock-in", handler, 5);
+    }
     public void cancelmessage() {
         handler.removeCallbacksAndMessages(null);
     }

@@ -73,9 +73,18 @@ public class EditTaskActivity extends BaseActivity {
             super.handleMessage(msg);
             String result = (String) msg.obj;
             int code = JsonUtils.getIntValue(result, "Code");
+            String tips=JsonUtils.getStringValue(result,"Tips");
             if (code == 100) {
                 BToast.success(EditTaskActivity.this).text("提交成功").show();
+                if (null!=poploading&&poploading.isShowing()){
+                    poploading.dismiss();
+                }
                 finish();
+            }else {
+                BToast.error(EditTaskActivity.this).text(tips).show();
+                if (null!=poploading&&poploading.isShowing()){
+                    poploading.dismiss();
+                }
             }
             Log.d(result);
         }

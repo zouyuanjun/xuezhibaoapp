@@ -4,15 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-
 import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.widget.TextView;
 
 import com.bravin.btoast.BToast;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.bean.MyTaskBean;
@@ -22,14 +20,13 @@ import com.xinzhu.xuezhibao.view.interfaces.GetTaskInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
-import com.xinzhu.xuezhibao.utils.WebViewUtil;
 import com.zou.fastlibrary.utils.Log;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterface{
+public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterface {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
     @BindView(R.id.tv_tasktitle)
@@ -38,62 +35,50 @@ public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterfa
     WebView webTaskdetail;
     @BindView(R.id.tv_jifen)
     TextView tvJifen;
-    @BindView(R.id.tv_taskstatu)
-    ShapeCornerBgView tvTaskstatu;
     MyTaskBean myTaskBean;
     TaskPresenter taskPresenter;
-    String taskid;
+    @BindView(R.id.tv_completenum)
+    TextView tvCompletenum;
+    @BindView(R.id.tv_allnum)
+    TextView tvAllnum;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mytaskdetail);
         ButterKnife.bind(this);
-        myTaskBean= (MyTaskBean) getIntent().getSerializableExtra(Constants.INTENT_ID);
-        tvJifen.setText(myTaskBean.getAwardIntegral()+"");
+        myTaskBean = (MyTaskBean) getIntent().getSerializableExtra(Constants.INTENT_ID);
+        tvJifen.setText(myTaskBean.getAwardIntegral() + "");
         tvTasktitle.setText(myTaskBean.getTaskTitle());
-        taskPresenter=new TaskPresenter(this);
-        if (myTaskBean.getStateType()==0){
+        taskPresenter = new TaskPresenter(this);
+        tvAllnum.setText("/"+myTaskBean.getTaskNumber());
+        tvCompletenum.setText(myTaskBean.getCount());
+
+        if (myTaskBean.getStateType() == 0) {
             myTaskBean.setStateType(100);
         }
-        taskPresenter.gettaskdetail(myTaskBean.getTaskId(),myTaskBean.getStateType(),myTaskBean.getMyTaskId());
-       if (myTaskBean.getStateType()==1){
-            tvTaskstatu.setText("未完成");
-        }else if (myTaskBean.getStateType()==2){
-            tvTaskstatu.setText("已完成");
-        } else{
-            tvTaskstatu.setText("领取任务");
-        }
-        webTaskdetail.setWebViewClient(new MyWebViewClient(this,webTaskdetail));
-       appbar.setLeftImageOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               finish();
-           }
-       });
+        taskPresenter.gettaskdetail(myTaskBean.getTaskId(), myTaskBean.getStateType(), myTaskBean.getMyTaskId());
+        webTaskdetail.setWebViewClient(new MyWebViewClient(this, webTaskdetail));
+        appbar.setLeftImageOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
-    @OnClick(R.id.tv_taskstatu)
-    public void onViewClicked() {
-        if (myTaskBean.getStateType()==1){
-          return;
-        }else if (myTaskBean.getStateType()==2){
-           return;
-        } else{
-            taskPresenter.gettask(myTaskBean.getTaskId());
-        }
 
-    }
 
     @Override
     public void gettaskdetails(MyTaskBean myTaskBean) {
-        webTaskdetail.loadDataWithBaseURL( null, myTaskBean.getTaskContent() , "text/html", "UTF-8", null ) ;
+        webTaskdetail.loadDataWithBaseURL(null, myTaskBean.getTaskContent(), "text/html", "UTF-8", null);
     }
 
     @Override
     public void accepttask() {
         BToast.success(this).text("领取成功").show();
-        Intent intent=new Intent();
-        intent.putExtra(Constants.INTENT_ID,1);
-        setResult(1,intent);
+        Intent intent = new Intent();
+        intent.putExtra(Constants.INTENT_ID, 1);
+        setResult(1, intent);
         finish();
     }
 
@@ -101,6 +86,7 @@ public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterfa
     public void gettaskfall() {
 
     }
+
     public static class MyWebViewClient extends WebViewClient {
         Activity context;
         WebView webView;
@@ -108,22 +94,25 @@ public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterfa
         public MyWebViewClient(Activity context, WebView webView) {
             this.context = context;
             this.webView = webView;
-            init( false);
+            init(false);
         }
-        public MyWebViewClient(Activity context, WebView webView,boolean horizontalScrollBarEnabled) {
+
+        public MyWebViewClient(Activity context, WebView webView, boolean horizontalScrollBarEnabled) {
             this.context = context;
             this.webView = webView;
-            init( horizontalScrollBarEnabled);
+            init(horizontalScrollBarEnabled);
         }
-        private void init(boolean HorizontalScrollBarEnabled){
+
+        private void init(boolean HorizontalScrollBarEnabled) {
             this.webView.addJavascriptInterface(this, "App");
             WebSettings webSettings = this.webView.getSettings();//获取webview设置属性
             webSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);//把html中的内容放大webview等宽的一列中
             webSettings.setJavaScriptEnabled(true);//支持js
             this.webView.setHorizontalScrollBarEnabled(false);//水平不显示
-            this.webView.setVerticalScrollBarEnabled(HorizontalScrollBarEnabled); //垂直不显示
+            this.webView.setVerticalScrollBarEnabled(false); //垂直不显示
             this.webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         }
+
         @Override
         public void onPageFinished(WebView view, String url) {
             imgReset();
@@ -136,6 +125,7 @@ public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterfa
             view.loadUrl(url);
             return true;
         }
+
         private void imgReset() {
             webView.loadUrl("javascript:(function(){" +
                     "var objs = document.getElementsByTagName('img'); " +
@@ -146,15 +136,16 @@ public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterfa
                     "}" +
                     "})()");
         }
+
         @JavascriptInterface
         public void resize(final float height) {
             context.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     ViewGroup.LayoutParams layoutParams = webView.getLayoutParams();
-                    layoutParams.width = (int)((context.getResources().getDisplayMetrics().widthPixels*0.9));
-                    layoutParams.height = (int) (height * context.getResources().getDisplayMetrics().density)+50;
-                    Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+context.getResources().getDisplayMetrics().density);
+                    layoutParams.width = (int) ((context.getResources().getDisplayMetrics().widthPixels * 0.9));
+                    layoutParams.height = (int) (height * context.getResources().getDisplayMetrics().density) + 50;
+                    Log.d(layoutParams.width + "高度是" + layoutParams.height + "原始" + height + "级" + context.getResources().getDisplayMetrics().density);
                     webView.setLayoutParams(layoutParams);
                     //Toast.makeText(getActivity(), height + "", Toast.LENGTH_LONG).show();
                     //    wbFeedback.setLayoutParams(new LinearLayout.LayoutParams(getResources().getDisplayMetrics().widthPixels, (int) (height * getResources().getDisplayMetrics().density)));

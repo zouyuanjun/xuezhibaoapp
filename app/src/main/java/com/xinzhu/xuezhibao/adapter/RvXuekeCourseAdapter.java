@@ -44,7 +44,7 @@ public class RvXuekeCourseAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
         ((ViewHolder) holder).tvTeacher.setText("主讲:"+mDatas.get(position).getSpeakerTeacher());
-        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
+        ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApplyFalse()+"");
         ((ViewHolder) holder).tvClass.setText(mDatas.get(position).getClassDictionaryName());
         ((ViewHolder) holder).tvClass2.setText(mDatas.get(position).getSubjectDictionaryName());
         Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);

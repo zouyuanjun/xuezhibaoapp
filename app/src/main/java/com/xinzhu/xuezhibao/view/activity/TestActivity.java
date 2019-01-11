@@ -544,7 +544,7 @@ public class TestActivity extends BaseActivity {
             result = result + "情绪：" + (int) qingxu + "分\n" + anslist.get(16);
         }
         if (qingxu > 7 && qingxu < 14) {
-            result = result + "n情绪：" + (int) qingxu + "分\n" + anslist.get(17);
+            result = result + "情绪：" + (int) qingxu + "分\n" + anslist.get(17);
         }
         tvResult.setText(result);
         nestedScrollView.setVisibility(View.VISIBLE);

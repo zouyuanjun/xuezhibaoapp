@@ -43,7 +43,7 @@ public class XuebaoCourseAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((RecyclerHolder) holder).tvTitle.setText(mDatas.get(position).getCurriculumTitle());
-        ((RecyclerHolder) holder).tvNum.setText(mDatas.get(position).getCurriculumApply()+"");
+        ((RecyclerHolder) holder).tvNum.setText(mDatas.get(position).getCurriculumApplyFalse()+"");
         ((RecyclerHolder) holder).tvPrice.setText("￥"+mDatas.get(position).getCurriculumPrice());
         ((RecyclerHolder) holder).simpleDraweeView.setImageURI(mDatas.get(position).getCurriculumPicture());
             ((RecyclerHolder) holder).tvtype.setText(mDatas.get(position).getDictionaryName());

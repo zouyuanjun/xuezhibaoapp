@@ -178,7 +178,7 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
     }
 
     @Override
-    public void getMyjob(List<MyjobBean> mDatas) {
+    public void getMyjob(List<CourseBean> mDatas) {
 
     }
 }

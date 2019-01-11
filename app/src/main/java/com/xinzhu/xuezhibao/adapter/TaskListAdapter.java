@@ -41,7 +41,12 @@ public class TaskListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((MyViewHolder) holder).tvTasktitle.setText(mDatas.get(position).getTaskTitle());
-        ((MyViewHolder) holder).textView16.setText(mDatas.get(position).getAwardIntegral()+"");
+        ((MyViewHolder) holder).textView16.setText(mDatas.get(position).getAwardIntegral() + "");
+        if (mDatas.get(position).getTaskNumber().equals("999")){
+            mDatas.get(position).setTaskNumber("1");
+        }
+        ((MyViewHolder) holder).tvAllnum.setText("/"+mDatas.get(position).getTaskNumber());
+        ((MyViewHolder) holder).tvCompletenum.setText(mDatas.get(position).getCount());
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -72,11 +77,15 @@ public class TaskListAdapter extends RecyclerView.Adapter {
     }
 
 
-    static  class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.tv_tasktitle)
         TextView tvTasktitle;
         @BindView(R.id.textView16)
         TextView textView16;
+        @BindView(R.id.tv_allnum)
+        TextView tvAllnum;
+        @BindView(R.id.tv_completenum)
+        TextView tvCompletenum;
 
 
         MyViewHolder(View view) {
@@ -84,5 +93,4 @@ public class TaskListAdapter extends RecyclerView.Adapter {
             ButterKnife.bind(this, view);
         }
     }
-
 }

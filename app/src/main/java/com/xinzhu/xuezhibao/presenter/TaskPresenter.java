@@ -63,17 +63,7 @@ public class TaskPresenter extends BasePresenter {
                 }
                 if (code == 100) {
                     String data = JsonUtils.getStringValue(result, "Data");
-                    if (what == 1) {
-
-                        List<MyTaskBean> mDatas = JSON.parseArray(data, MyTaskBean.class);
-                        if (null != mDatas && mDatas.size() > 0) {
-                            taskInterface.get100task(mDatas);
-                        } else {
-                            if (null != taskInterface) {
-                                taskInterface.nomoredata();
-                            }
-                        }
-                    } else if (what == 2) {
+                    if (what == 2) {
                         List<MyTaskBean> mDatas = JSON.parseArray(data, MyTaskBean.class);
                         if (null != mDatas && mDatas.size() > 0) {
                             taskInterface.get1task(mDatas);
@@ -113,24 +103,29 @@ public class TaskPresenter extends BasePresenter {
         };
     }
 
-    public void get100task(int page) {
-        String data = JsonUtils.keyValueToString2("pageNo", page, "stateType", 100);
-        data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/my-task", handler, 1);
-    }
 
+/*
+待完成任务
+ */
     public void get1task(int page) {
         String data = JsonUtils.keyValueToString2("pageNo", page, "stateType", 1);
         data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/my-task", handler, 2);
     }
 
+    /**
+     * 获取已完成任务
+     * @param page
+     */
     public void get2task(int page) {
         String data = JsonUtils.keyValueToString2("pageNo", page, "stateType", 2);
         data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/my-task", handler, 3);
     }
 
+    /**
+     * 签到
+     */
     public void clockin() {
         String data = JsonUtils.keyValueToString2("token", Constants.TOKEN, "trackType", 2);
         Network.getnetwork().postJson(data, Constants.URL + "/app/clock-in", handler, 4);
@@ -163,7 +158,6 @@ public class TaskPresenter extends BasePresenter {
     public void gettaskdetail(String id, int state, String mytaskid) {
         String data = JsonUtils.keyValueToString2("taskId", id, "stateType", state);
         data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
-        data = JsonUtils.addKeyValue(data, "myTaskId", mytaskid);
         Network.getnetwork().postJson(data, Constants.URL + "/app/select-task-by-id", handler, 7);
     }
 

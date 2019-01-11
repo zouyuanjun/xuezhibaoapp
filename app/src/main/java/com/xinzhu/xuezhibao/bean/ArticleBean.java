@@ -3,9 +3,9 @@ package com.xinzhu.xuezhibao.bean;
 public class ArticleBean {
     String articlePicture;
     String articleTitle;
-    String articleRead;
+    String articleReadFalse;
     String articleContent;
-    int articleLike;
+    int articleLikeFalse;
     String articleId;
     long createTime;
     String creater;
@@ -16,7 +16,7 @@ public class ArticleBean {
     public ArticleBean(String imurl, String title, String readnum) {
         this.articlePicture = imurl;
         this.articleTitle = title;
-        this.articleRead = readnum;
+        this.articleReadFalse = readnum;
     }
 
 
@@ -52,12 +52,12 @@ public class ArticleBean {
         this.articleTitle = articleTitle;
     }
 
-    public String getArticleRead() {
-        return articleRead;
+    public String getArticleReadFalse() {
+        return articleReadFalse;
     }
 
-    public void setArticleRead(String articleRead) {
-        this.articleRead = articleRead;
+    public void setArticleReadFalse(String articleReadFalse) {
+        this.articleReadFalse = articleReadFalse;
     }
 
     public String getArticleContent() {
@@ -68,12 +68,12 @@ public class ArticleBean {
         this.articleContent = articleContent;
     }
 
-    public int getArticleLike() {
-        return articleLike;
+    public int getArticleLikeFalse() {
+        return articleLikeFalse;
     }
 
-    public void setArticleLike(int articleLike) {
-        this.articleLike = articleLike;
+    public void setArticleLikeFalse(int articleLikeFalse) {
+        this.articleLikeFalse = articleLikeFalse;
     }
 
     public String getArticleId() {

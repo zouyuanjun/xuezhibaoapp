@@ -43,13 +43,15 @@ public class MyPointsAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((MyViewHolder) holder).tvTime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
         ((MyViewHolder) holder).tvPointstitle.setText(mDatas.get(position).getTrackContent());
-        String num=mDatas.get(position).getPointnum().substring(1);
-        if (mDatas.get(position).getTrackType()==3){
+        String num=mDatas.get(position).getNumber().substring(1);
+        if (mDatas.get(position).getTrackType()!=11){
             ((MyViewHolder) holder).tvPointsnum.setTextColor(Color.parseColor("#f87d28"));
+            ((MyViewHolder) holder).tvPointsnum.setText("+"+mDatas.get(position).getNumber());
         }else {
             ((MyViewHolder) holder).tvPointsnum.setTextColor(Color.parseColor("#666666"));
+            ((MyViewHolder) holder).tvPointsnum.setText(mDatas.get(position).getNumber());
         }
-        ((MyViewHolder) holder).tvPointsnum.setText(mDatas.get(position).getPointnum());
+
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

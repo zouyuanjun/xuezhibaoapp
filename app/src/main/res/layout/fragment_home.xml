@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.design.widget.CoordinatorLayout
+<android.support.design.widget.CoordinatorLayout xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,6 +14,7 @@
             android:layout_height="46dp"
             android:background="@color/appcolor">
             <ImageView
+                android:visibility="gone"
                 android:gravity="center"
                 android:layout_marginLeft="16dp"
                 android:id="@+id/im_scan"
@@ -23,6 +24,7 @@
                 android:background="@drawable/home_btn_scavenging"
                 />
             <RelativeLayout
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginLeft="14dp"
@@ -61,6 +63,15 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:background="@drawable/home_btn_setup"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="学之宝"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="17sp"
+                android:textColor="@color/white"/>
             <LinearLayout
                 android:id="@+id/ll_message"
                 android:layout_width="44dp"
@@ -104,13 +115,27 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/banner"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <ImageView
-                android:id="@+id/im_test"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:src="@drawable/home_pic_evaluation"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
+                android:layout_height="120dp" />
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/im_test"
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:src="@drawable/home_pic_evaluation"
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
+
+                <ImageView
+                    android:id="@+id/im_btn_sign"
+                    android:layout_width="84dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/home_btn_signin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
             <LinearLayout
                 android:id="@+id/ll_more_video"
                 android:layout_width="match_parent"

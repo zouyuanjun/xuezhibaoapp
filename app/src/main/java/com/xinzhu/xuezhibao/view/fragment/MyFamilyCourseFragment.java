@@ -13,12 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bravin.btoast.BToast;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
+import com.xinzhu.xuezhibao.adapter.CourseJobFoledAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoCourseAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoFeedbackAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoTaskAdapter;
@@ -36,6 +38,7 @@ import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.CourseFeedbackActivity;
 import com.xinzhu.xuezhibao.view.activity.CourseTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCourseFeedBackActivity;
+import com.xinzhu.xuezhibao.view.activity.MyJobActivity;
 import com.xinzhu.xuezhibao.view.activity.TeacherDetailActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyCourseInterface;
 import com.zou.fastlibrary.bean.NetWorkMessage;
@@ -59,7 +62,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
     RecyclerView rvItem;
     RvJiaojiaoCourseAdapter rvJiaojiaoCourseAdapter;
     RvJiaojiaoTeacherAdapter rvJiaojiaoTeacherAdapter;
-    RvJiaojiaoTaskAdapter rvJiaojiaoTaskAdapter;
+    CourseJobFoledAdapter rvJiaojiaoTaskAdapter;
     RvJiaojiaoFeedbackAdapter rvJiaojiaoFeedbackAdapter;
     Unbinder unbinder;
     @BindView(R.id.refreshLayout)
@@ -67,7 +70,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
     WeakReference<Context> mContext;
     List<CourseBean> courseBeanArrayList = new ArrayList<>();
     List<TeacherBean> teacherBeanArrayList = new ArrayList<>();
-    List<MyjobBean> taskBeanArrayList = new ArrayList<>();
+    List<CourseBean> taskBeanArrayList = new ArrayList<>();
     List<CourseFeedbackBean> feedbackBeanArrayList = new ArrayList<>();
     MyCoursePresenter myCoursePresenter;
     int page = 1;
@@ -140,20 +143,17 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
                 startActivity(intent);
             }
         });
-        rvJiaojiaoTaskAdapter.setOnItemClickListener(new RvJiaojiaoTaskAdapter.OnItemClickListener() {
+        rvJiaojiaoTaskAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getContext(), CourseTaskActivity.class);
-                intent.putExtra(Constants.INTENT_ID, taskBeanArrayList.get(position).getJobReplyId());
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getContext(), MyJobActivity.class);
+                intent.putExtra(Constants.INTENT_ID, taskBeanArrayList.get(position).getCurriculumId());
+                intent.putExtra(Constants.INTENT_ID2, taskBeanArrayList.get(position).getCurriculumTitle());
+                intent.putExtra(Constants.INTENT_ID3, taskBeanArrayList.get(position).getCount());
                 intent.putExtra("TYPE", 2);
                 startActivity(intent);
             }
-
-            @Override
-            public void onItemLongClick(View view, int position) {
-
-            }
-        });
+        }) ;
         rvJiaojiaoTeacherAdapter.setOnItemClickListener(new RvJiaojiaoTeacherAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -203,7 +203,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
         }
         myCoursePresenter = new MyCoursePresenter(this);
         mContext = new WeakReference(MyApplication.getContext());
-        rvJiaojiaoTaskAdapter = new RvJiaojiaoTaskAdapter(mContext.get(), taskBeanArrayList);
+        rvJiaojiaoTaskAdapter = new CourseJobFoledAdapter( taskBeanArrayList);
         rvJiaojiaoCourseAdapter = new RvJiaojiaoCourseAdapter(mContext, courseBeanArrayList);
         rvJiaojiaoTeacherAdapter = new RvJiaojiaoTeacherAdapter(mContext.get(), teacherBeanArrayList);
         rvJiaojiaoFeedbackAdapter = new RvJiaojiaoFeedbackAdapter(mContext.get(), feedbackBeanArrayList);
@@ -266,7 +266,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
         } else if (MYCLASS == 2) {
             myCoursePresenter.getTeacher(page, 1);
         } else if (MYCLASS == 3) {
-            myCoursePresenter.getjob(page, 1);
+            myCoursePresenter.getjobfoled(page, 1);
         } else if (MYCLASS == 4) {
             myCoursePresenter.getcoursefeedback(page, 1);
         }
@@ -338,7 +338,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
     }
 
     @Override
-    public void getMyjob(List<MyjobBean> mDatas) {
+    public void getMyjob(List<CourseBean> mDatas) {
         taskBeanArrayList.addAll(mDatas);
         if (null != rvJiaojiaoTaskAdapter && null != refreshLayout) {
             rvJiaojiaoTaskAdapter.notifyDataSetChanged();

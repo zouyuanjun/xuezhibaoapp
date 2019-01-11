@@ -9,14 +9,14 @@ public class MyPointsBean {
     int trackType;
     String trackContent;
     long createTime;
-    String pointnum;
+    String number;
 
-    public String getPointnum() {
-        return pointnum;
+    public String getNumber() {
+        return number;
     }
 
-    public void setPointnum(String pointnum) {
-        this.pointnum = pointnum;
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public MyPointsBean() {

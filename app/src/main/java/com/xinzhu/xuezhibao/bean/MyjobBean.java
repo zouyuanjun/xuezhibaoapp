@@ -3,7 +3,7 @@ package com.xinzhu.xuezhibao.bean;
 import java.io.Serializable;
 import java.util.List;
 
-public class MyjobBean implements Serializable{
+public class MyjobBean implements Serializable {
     String jobReplyId;
     String jobTitle;
     long createTime;
@@ -14,6 +14,52 @@ public class MyjobBean implements Serializable{
     String replyContent;
     List<FeedbackPictureBean> accessoryList;
     List<FeedbackPictureBean> jobList;
+    String teacherName;
+    String teacherImage;
+    String teacherEvaluation;
+    String teacherScore;
+    long editTime;
+
+    public long getEditTime() {
+        return editTime;
+    }
+
+    public void setEditTime(long editTime) {
+        this.editTime = editTime;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getTeacherImage() {
+        return teacherImage;
+    }
+
+    public void setTeacherImage(String teacherImage) {
+        this.teacherImage = teacherImage;
+    }
+
+    public String getTeacherEvaluation() {
+        return teacherEvaluation;
+    }
+
+    public void setTeacherEvaluation(String teacherEvaluation) {
+        this.teacherEvaluation = teacherEvaluation;
+    }
+
+    public String getTeacherScore() {
+        return teacherScore;
+    }
+
+    public void setTeacherScore(String teacherScore) {
+        this.teacherScore = teacherScore;
+    }
+
     public List<FeedbackPictureBean> getAccessoryList() {
         return accessoryList;
     }
@@ -29,6 +75,7 @@ public class MyjobBean implements Serializable{
     public void setJobList(List<FeedbackPictureBean> jobList) {
         this.jobList = jobList;
     }
+
     public String getReplyContent() {
         return replyContent;
     }

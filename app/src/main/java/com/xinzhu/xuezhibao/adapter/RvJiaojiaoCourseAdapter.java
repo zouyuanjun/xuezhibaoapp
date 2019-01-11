@@ -57,7 +57,7 @@ public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
             ((ViewHolder) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
             ((ViewHolder) holder).tvTeacher.setText("主讲："+mDatas.get(position).getSpeakerTeacher());
             ((ViewHolder) holder).tvAll.setText("共"+mDatas.get(position).getSumHour() + "节");
-            ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply() + "");
+            ((ViewHolder) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApplyFalse() + "");
             ((ViewHolder) holder).tvAlready.setText("/学习" + mDatas.get(position).getConsumeHour()+"节");
             Glide.with(mContext.get()).load(mDatas.get(position).getCurriculumPicture()).into(((ViewHolder) holder).simpleDraweeView);
             if (onItemClickListener != null) {
@@ -84,7 +84,7 @@ public class RvJiaojiaoCourseAdapter extends RecyclerView.Adapter {
         }else if (holder instanceof ViewHolder2){
             ((ViewHolder2) holder).tvItemTitle.setText(mDatas.get(position).getCurriculumTitle());
             ((ViewHolder2) holder).tvTeacher.setText("主讲："+mDatas.get(position).getSpeakerTeacher());
-            ((ViewHolder2) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApply()+"");
+            ((ViewHolder2) holder).tvReadnum.setText(mDatas.get(position).getCurriculumApplyFalse()+"");
 
             if (!StringUtil.isEmpty(mDatas.get(position).getDictionaryName())){
                 ((ViewHolder2) holder).tvClass.setVisibility(View.VISIBLE);

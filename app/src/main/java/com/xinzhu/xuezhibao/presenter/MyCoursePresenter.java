@@ -97,7 +97,7 @@ public class MyCoursePresenter {
                         myCourseInterface.nodata();
                     }
                 } else if (what == 4) {
-                    List<MyjobBean> mDatas = JSON.parseArray(data, MyjobBean.class);
+                    List<CourseBean> mDatas = JSON.parseArray(data, CourseBean.class);
                     if (null != mDatas && mDatas.size() > 0) {
                         myCourseInterface.getMyjob(mDatas);
                     } else {
@@ -106,6 +106,14 @@ public class MyCoursePresenter {
                 } else if (what == 5) {
                     MyjobBean mDatas = JsonUtils.stringToObject(data, MyjobBean.class);
                     myJobDetailInterpace.getjobbyid(mDatas);
+                }if (what == 7) {
+                    List<CourseBean> mDatas = JSON.parseArray(data, CourseBean.class);
+                    if (null != mDatas && mDatas.size() > 0) {
+                        myCourseInterface.getMyjob(mDatas);
+                    } else {
+                        myCourseInterface.nodata();
+                    }
+
                 }
             } else {
                 if (null != myCourseInterface) {
@@ -146,6 +154,12 @@ public class MyCoursePresenter {
     public void getjob(int page, int type) {
         String data = JsonUtils.keyValueToString2("pageNo", page, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "/app/my-Job", handler, 4);
+    }
+
+    //获取作业分类
+    public void getjobfoled(int page, int type) {
+        String data = JsonUtils.keyValueToString2("pageNo", page, "token", Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/my-apply", handler, 7);
     }
 //获取单个作业详情
     public void getjobbyid(String jobId) {

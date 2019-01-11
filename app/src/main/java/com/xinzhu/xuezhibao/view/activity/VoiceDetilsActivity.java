@@ -223,11 +223,11 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
     public void getVoicedetail(VideoVoiceBean videoVoiceBean) {
         tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
         tvDetails.loadDataWithBaseURL(null, videoVoiceBean.getVideoDetails(), "text/html", "UTF-8", null);
-        tvReadnum.setText("播放：" + videoVoiceBean.getVideoLook());
+        tvReadnum.setText("播放：" + videoVoiceBean.getVideoLookFalse());
         tvTitle.setText(videoVoiceBean.getVideoTitle());
         mMusicView.setTitleText(videoVoiceBean.getVideoTitle());
-        tvLike.setText(videoVoiceBean.getVideoLike());
-        likenum=Integer.parseInt(videoVoiceBean.getVideoLike());
+        tvLike.setText(videoVoiceBean.getVideoLikeFalse());
+        likenum=Integer.parseInt(videoVoiceBean.getVideoLikeFalse());
 
         mMusicView.startPlayMusic(videoVoiceBean.getVideoUrl());
     }

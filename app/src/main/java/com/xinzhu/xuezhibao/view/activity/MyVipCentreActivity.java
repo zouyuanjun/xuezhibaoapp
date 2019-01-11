@@ -134,7 +134,7 @@ public class MyVipCentreActivity extends BaseActivity implements PayInterface {
     @OnClick(R.id.tv_recharge)
     public void onViewClicked() {
 
-        final PopupWindow popupWindow = CreatPopwindows.creatMMpopwindows(this, R.layout.pop_pay);
+        final PopupWindow popupWindow = CreatPopwindows.creatpopwindows(this, R.layout.pop_pay);
         View view = popupWindow.getContentView();
         RadioGroup radioGroup = view.findViewById(R.id.rg_pay);
         TextView textView = view.findViewById(R.id.tv_cancle);

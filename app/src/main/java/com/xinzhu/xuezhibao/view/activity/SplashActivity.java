@@ -139,7 +139,7 @@ public class SplashActivity extends BaseActivity implements SplashInterface {
 
             @Override
             public void onFinish() {
-
+                goToActivity(SplashActivity.this, MainActivity.class);
             }
         };
         timer.start();

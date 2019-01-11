@@ -56,9 +56,9 @@ public class VideoVoiceListAdapter extends BaseQuickAdapter<VideoVoiceBean,Video
     @Override
     protected void convert(MyViewHolder helper, VideoVoiceBean item) {
         ((MyViewHolder) helper).tvItemTitle.setText(item.getVideoTitle());
-        ((MyViewHolder) helper).tvDianzan.setText(item.getVideoLike());
+        ((MyViewHolder) helper).tvDianzan.setText(item.getVideoLikeFalse());
         ((MyViewHolder) helper).tvItemTime.setText(TimeUtil.getWholeTime2(item.getCreateTime()));
-        ((MyViewHolder) helper).tv_readnum.setText(item.getVideoLook());
+        ((MyViewHolder) helper).tv_readnum.setText(item.getVideoLookFalse());
         if (null == item.getVideoPicture()) {
             RequestOptions requestOptions = RequestOptions.frameOf(0);
             requestOptions.set(FRAME_OPTION, MediaMetadataRetriever.OPTION_CLOSEST);

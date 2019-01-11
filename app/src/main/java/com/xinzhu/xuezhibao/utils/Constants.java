@@ -7,7 +7,7 @@ public class Constants {
     public static final String APP_ID = "wxc56b70bd3c1c491f";
     public static IWXAPI api;   //第三方和微信通信的接口
   public static String URL="http://192.168.1.114:8080/";
-  //  public static String URL = "http://app.xuezhiben.com";
+  //  public static String URL = "http://app.xuezhiben.com/";
   //  public static String URL = "http://demoapp.xuezhiben.com/";
     public static String APP_VERSION = "1.0.0";
     public static String AlipayAccount = "";
@@ -18,9 +18,9 @@ public class Constants {
     public static int SETTING_CANNOTIFITION = 1;
     public static String TOKEN = "";
     public static String INTENT_ID = "id";
-     public static String INTENT_ID2 = "title";
-  public static String INTENT_ID3 = "type";
-  public static String INTENT_ID4 = "type2";
+    public static String INTENT_ID2 = "title";
+    public static String INTENT_ID3 = "type";
+    public static String INTENT_ID4 = "type2";
     public static String FROMAPP = "fromapp";
     public static String INTENT_COURSE_CLASS = "COURSE";
     public static String INTENT_EDITITEM = "COURSE";    //修改个人资料时传入要修改的项目

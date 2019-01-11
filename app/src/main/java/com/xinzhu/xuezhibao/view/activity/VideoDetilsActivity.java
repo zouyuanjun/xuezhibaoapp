@@ -367,7 +367,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             stopplaytime = System.currentTimeMillis();
             Constants.PLAYTIME = Constants.PLAYTIME + stopplaytime - startplaytime;
             Log.d("观看时间" + Constants.PLAYTIME + "jieshu" + stopplaytime + "kaishi" + startplaytime);
-            if (Constants.PLAYTIME > 1 * 60 * 1000) {
+            if (Constants.PLAYTIME > 15 * 60 * 1000) {
                 videoVoiceDetailPresenter.playtime();
             }
         }
@@ -422,10 +422,10 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             cslBuy.setVisibility(View.GONE);
         }
         tvTeacher.setText(videoVoiceBean.getVideoTeacher());
-        tvLike.setText(videoVoiceBean.getVideoLike());
-        tvReadnum.setText("播放量：" + videoVoiceBean.getVideoLook());
+        tvLike.setText(videoVoiceBean.getVideoLikeFalse());
+        tvReadnum.setText("播放量：" + videoVoiceBean.getVideoLookFalse());
         try {
-            likenum = Integer.parseInt(videoVoiceBean.getVideoLike());
+            likenum = Integer.parseInt(videoVoiceBean.getVideoLikeFalse());
         }catch (Exception e){
 
         }

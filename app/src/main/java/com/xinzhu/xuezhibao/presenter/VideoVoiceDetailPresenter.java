@@ -123,9 +123,7 @@ public class VideoVoiceDetailPresenter {
 
     //报告看了多久的视频
     public void playtime() {
-        String data = JsonUtils.keyValueToString2("dictionaryId", 24, "token", Constants.TOKEN);
-        long time = Constants.PLAYTIME / 1000 / 60;
-        data = JsonUtils.addKeyValue(data, "time", time);
-        Network.getnetwork().postJson(data, Constants.URL + "/app/complete-my-task", handler, 7);
+        String data = JsonUtils.keyValueToString2("stateType", 1, "token", Constants.TOKEN);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/finish-task", handler, 7);
     }
 }

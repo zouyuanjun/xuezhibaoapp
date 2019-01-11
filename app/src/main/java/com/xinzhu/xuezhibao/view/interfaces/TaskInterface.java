@@ -10,7 +10,6 @@ import java.util.List;
  */
 
 public interface TaskInterface extends publiceviewinterface{
-    void get100task(List<MyTaskBean> taskBeans);
     void get2task(List<MyTaskBean> taskBeans);
     void get1task(List<MyTaskBean> taskBeans);
     void nomoredata();

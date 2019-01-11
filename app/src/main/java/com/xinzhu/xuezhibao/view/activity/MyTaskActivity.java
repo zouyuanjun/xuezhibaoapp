@@ -52,17 +52,14 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
     TabLayout tabLayout;
     @BindView(R.id.my_taskrv)
     RecyclerView myTaskrv;
-    List<MyTaskBean> taskBean100List = new ArrayList<>();
     List<MyTaskBean> taskBean2List = new ArrayList<>();
     List<MyTaskBean> taskBean1List = new ArrayList<>();
-    TaskListAdapter taskList100Adapter;
     TaskListAdapter taskList1Adapter;
     TaskListAdapter taskList2Adapter;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     int POSITION = 0;
     TaskPresenter taskPresenter;
-    int page100 = 1;
     int page1 = 1;
     int page2 = 1;
     @BindView(R.id.im_nodata)
@@ -90,25 +87,12 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
         myTaskrv.setLayoutManager(linearLayoutManager);
         taskList1Adapter = new TaskListAdapter(new WeakReference(MyApplication.getContext()), taskBean1List);
         taskList2Adapter = new TaskListAdapter(new WeakReference(MyApplication.getContext()), taskBean2List);
-        taskList100Adapter = new TaskListAdapter(new WeakReference(MyApplication.getContext()), taskBean100List);
-        myTaskrv.setAdapter(taskList100Adapter);
+        myTaskrv.setAdapter(taskList1Adapter);
         taskPresenter = new TaskPresenter(this);
         taskPresenter.get2task(page2);
         taskPresenter.get1task(page1);
-        taskPresenter.get100task(page100);
         taskPresenter.isclochin();
         sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
-        taskList100Adapter.setOnItemClickListener(new TaskListAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(MyTaskActivity.this, MyTaskDetailActivity.class);
-                intent.putExtra(Constants.INTENT_ID, taskBean100List.get(position));
-                startActivityForResult(intent, 1);
-            }
-            @Override
-            public void onItemLongClick(View view, int position) {
-            }
-        });
         taskList1Adapter.setOnItemClickListener(new TaskListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -141,20 +125,13 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
             public void onTabSelected(TabLayout.Tab tab) {
                 POSITION = tab.getPosition();
                 if (POSITION == 0) {
-                    if (taskBean100List.size() == 0) {
-                        imNodata.setVisibility(View.VISIBLE);
-                    } else {
-                        imNodata.setVisibility(View.GONE);
-                    }
-                    myTaskrv.setAdapter(taskList100Adapter);
-                } else if (POSITION == 1) {
                     if (taskBean1List.size() == 0) {
                         imNodata.setVisibility(View.VISIBLE);
                     } else {
                         imNodata.setVisibility(View.GONE);
                     }
                     myTaskrv.setAdapter(taskList1Adapter);
-                } else if (POSITION == 2) {
+                } else if (POSITION == 1) {
                     if (taskBean2List.size() == 0) {
                         imNodata.setVisibility(View.VISIBLE);
                     } else {
@@ -177,11 +154,9 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                if (POSITION == 0) {
-                    taskPresenter.get100task(page100);
-                } else if (POSITION == 1) {
+                 if (POSITION == 0) {
                     taskPresenter.get1task(page1);
-                } else if (POSITION == 2) {
+                } else if (POSITION == 1) {
                     taskPresenter.get2task(page2);
                 }
             }
@@ -190,14 +165,10 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 if (POSITION == 0) {
-                    taskBean100List.clear();
-                    page100 = 1;
-                    taskPresenter.get100task(page100);
-                } else if (POSITION == 1) {
                     taskBean1List.clear();
                     page1 = 1;
                     taskPresenter.get1task(page1);
-                } else if (POSITION == 2) {
+                } else if (POSITION == 1) {
                     taskBean2List.clear();
                     page2 = 1;
                     taskPresenter.get2task(page2);
@@ -210,10 +181,6 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && null != data) {
-            taskBean100List.clear();
-            page100 = 1;
-            taskPresenter.get100task(page100);
-            taskList100Adapter.notifyDataSetChanged();
             taskBean1List.clear();
             page1 = 1;
             taskPresenter.get1task(page1);
@@ -222,24 +189,14 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
 
     @OnClick(R.id.tv_signin)
     public void onViewClicked() {
-        goToActivity(this,ShareActivity.class);
         if (canshock){
             canshock=false;
             taskPresenter.clockin();
         }else {
             BToast.success(MyTaskActivity.this).text("今日已签到，明天再来吧").show();
+            goToActivity(this,ShareActivity.class);
         }
 
-    }
-
-    @Override
-    public void get100task(List<MyTaskBean> taskBeans) {
-        page100++;
-        imNodata.setVisibility(View.GONE);
-        taskBean100List.addAll(taskBeans);
-        taskList100Adapter.notifyDataSetChanged();
-        refreshLayout.finishLoadMore();
-        refreshLayout.finishRefresh();
     }
 
     @Override

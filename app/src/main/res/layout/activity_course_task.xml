@@ -91,14 +91,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_course" />
 
-            <TextView
+            <com.zou.fastlibrary.ui.ShapeCornerBgView
                 android:id="@+id/tv_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="20dp"
                 android:layout_marginEnd="16dp"
+                app:appBgColor="@color/white"
+                app:appRadius="@dimen/dp_4"
+                app:appBorderWidth="1dp"
+                app:appBorder="true"
+                app:appBorderColor="@color/color_black_666666"
                 android:text="未完成"
                 android:textColor="@color/color_black_666666"
-                android:textSize="16sp"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/tv_time" />
 
@@ -117,56 +122,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_time" />
 
-            <LinearLayout
-                android:visibility="gone"
-                android:background="@drawable/fujian"
-                android:id="@+id/llfujian"
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/gd_img"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_task">
 
-                <TextView
-                    android:id="@+id/tv_download"
-                    android:layout_marginLeft="@dimen/sp_16"
-                    android:layout_marginRight="@dimen/sp_16"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:drawableLeft="@drawable/task_icon_enclosure"
-                    android:drawablePadding="@dimen/dp_10"
-                    android:gravity="center_vertical"
-                    android:layout_weight="1"
-                    android:text="学习附件" />
-                <ImageView
-                    android:id="@+id/img_download_ioc"
-                    android:layout_marginRight="@dimen/sp_16"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/task_btn_download_nor"/>
-            </LinearLayout>
+            </android.support.v7.widget.RecyclerView>
 
             <LinearLayout
                 android:id="@+id/linearLayout15"
                 android:layout_width="0dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="15dp"
+                android:layout_height="15dp"
+                android:layout_marginTop="12dp"
                 android:background="@color/fenge"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/llfujian"></LinearLayout>
+                app:layout_constraintTop_toBottomOf="@+id/gd_img"></LinearLayout>
 
             <android.support.constraint.ConstraintLayout
+                android:id="@+id/constraintLayout4"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="32dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout15">
@@ -188,6 +171,15 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_repimglist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_tasktext">
+
+                </android.support.v7.widget.RecyclerView>
                 <ImageView
                     android:id="@+id/im_committask"
                     android:layout_width="wrap_content"
@@ -232,6 +224,125 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/im_2" />
             </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:visibility="gone"
+                android:background="@drawable/ffffffrad8"
+                android:id="@+id/constraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout26">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv_photo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:placeholderImage="@drawable/my_icon_original"
+                    app:roundAsCircle="true" />
+
+                <TextView
+                    android:id="@+id/tv_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:text="家长WA"
+                    android:textColor="@color/appcolor"
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/sdv_photo"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_creattime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    android:text="18.06.25 12:52"
+                    android:textColor="@color/color_grey_999999"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toEndOf="@+id/sdv_photo"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_userName" />
+
+                <TextView
+                    android:id="@+id/tv_comment_detils"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="哈哈哈哈哈战fgsdfgsdgsdfsdfsdfsdfsdfsfsdfsdf壕里看"
+                    android:textColor="@color/color_black_333333"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/sdv_photo"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_creattime"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@color/itemfenge"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"></LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView37"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="36dp"
+                    android:text="作业评分："
+                    android:textColor="@color/color_black_666666"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_source"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="9"
+                    android:textColor="@color/appcolor"
+                    android:textSize="17sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView37"
+                    app:layout_constraintStart_toEndOf="@+id/textView37"
+                    app:layout_constraintTop_toTopOf="@+id/textView37" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout26"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginTop="16dp"
+                android:background="@color/fenge"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+                <TextView
+                    android:visibility="gone"
+                    android:gravity="center_vertical"
+                    android:id="@+id/tv_teacher1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="老师评价"
+                    android:textColor="@color/color_black_666666"
+                    android:textSize="13sp"/>
+            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 

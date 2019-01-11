@@ -20,13 +20,14 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class MyFamilyCourseActivity extends BaseTopTabActivity {
     CustomNavigatorBar appbar;
-TabLayout tabLayout;
+    TabLayout tabLayout;
     TextView tvmessage;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    //    super.onCreate(savedInstanceState, R.layout.activity_jiajiao);
-        inittab("课程", "老师", "作业", "反馈");
+        //    super.onCreate(savedInstanceState, R.layout.activity_jiajiao);
+        inittab("课程", "老师", "作业与总结", "反馈");
         initfragment(MyFamilyCourseFragment.newInstance(1), MyFamilyCourseFragment.newInstance(2), MyFamilyCourseFragment.newInstance(3), MyFamilyCourseFragment.newInstance(4));
         bingview();
         appbar = findViewById(R.id.appbar);
@@ -45,12 +46,13 @@ TabLayout tabLayout;
         textView.setText("反馈");
 
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void netWorkMessage(MessageNum messageEvent) {
-        if (Integer.parseInt(messageEvent.getMessage())>0){
+        if (Integer.parseInt(messageEvent.getMessage()) > 0) {
             tvmessage.setText(messageEvent.getMessage());
             tvmessage.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvmessage.setVisibility(View.GONE);
         }
 

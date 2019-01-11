@@ -1,5 +1,7 @@
 package com.xinzhu.xuezhibao.bean;
 
+import com.xinzhu.xuezhibao.view.activity.SplashActivity;
+
 import java.io.Serializable;
 
 public class MyTaskBean implements Serializable {
@@ -9,6 +11,24 @@ public class MyTaskBean implements Serializable {
 int stateType;
 String taskContent;
 String myTaskId;
+    String count;
+    String taskNumber;
+
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getTaskNumber() {
+        return taskNumber;
+    }
+
+    public void setTaskNumber(String taskNumber) {
+        this.taskNumber = taskNumber;
+    }
 
     public String getMyTaskId() {
         return myTaskId;

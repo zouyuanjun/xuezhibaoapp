@@ -42,8 +42,10 @@ import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.HomeListActivity;
 import com.xinzhu.xuezhibao.view.activity.LoginActivity;
+import com.xinzhu.xuezhibao.view.activity.MyTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SettingActivity;
+import com.xinzhu.xuezhibao.view.activity.ShareActivity;
 import com.xinzhu.xuezhibao.view.activity.TestIntroduceActivity;
 import com.xinzhu.xuezhibao.view.activity.VideoDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.VoiceDetilsActivity;
@@ -56,7 +58,6 @@ import com.youth.banner.listener.OnBannerListener;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.WebActivity;
 import com.zou.fastlibrary.utils.EditTextUtil;
-import com.zou.fastlibrary.utils.ImageUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StringUtil;
 
@@ -117,6 +118,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     int whith;
     int height;
     List<String> mDatas = new ArrayList<>();
+    boolean canshock = false;
+    @BindView(R.id.im_btn_sign)
+    ImageView imBtnSign;
+
     @Override
     protected int setContentView() {
         return R.layout.fragment_home;
@@ -145,7 +150,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                if (StringUtil.isEmpty(Constants.TOKEN)){
+                if (StringUtil.isEmpty(Constants.TOKEN)) {
                     DialogUtils.loginDia(getActivity());
                     return;
                 }
@@ -269,7 +274,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             case R.id.im_test:
                 if (Constants.TOKEN.isEmpty()) {
                     shoudia();
-                } else{
+                } else {
                     Intent intent11 = new Intent(getContext(), TestIntroduceActivity.class);
                     startActivity(intent11);
                 }
@@ -330,7 +335,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             homeVideoAdapter.setOnItemClickListener(new HomeVideoAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    if (StringUtil.isEmpty(Constants.TOKEN)){
+                    if (StringUtil.isEmpty(Constants.TOKEN)) {
                         DialogUtils.loginDia(getActivity());
                         return;
                     }
@@ -363,7 +368,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 homeVoiceAdapter.setOnItemClickListener(new HomeVoiceAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
-                        if (StringUtil.isEmpty(Constants.TOKEN)){
+                        if (StringUtil.isEmpty(Constants.TOKEN)) {
                             DialogUtils.loginDia(getActivity());
                             return;
                         }
@@ -397,7 +402,7 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             homeArticleAdapter.setOnItemClickListener(new HomeArticleAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    if (StringUtil.isEmpty(Constants.TOKEN)){
+                    if (StringUtil.isEmpty(Constants.TOKEN)) {
                         DialogUtils.loginDia(getActivity());
                         return;
                     }
@@ -434,12 +439,12 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                         @Override
                         public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                             //  imLogo.setImageBitmap(resource);
-                           whith=resource.getWidth();
-                           height=resource.getHeight();
+                            whith = resource.getWidth();
+                            height = resource.getHeight();
                             ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
-                            int width=(int)((getContext().getResources().getDisplayMetrics().widthPixels));
+                            int width = (int) ((getContext().getResources().getDisplayMetrics().widthPixels));
                             layoutParams.width = width;
-                            layoutParams.height = (width/whith)*height;
+                            layoutParams.height = (width / whith) * height;
                             //      Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+context.getResources().getDisplayMetrics().density);
                             banner.setLayoutParams(layoutParams);
 
@@ -449,6 +454,29 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                     });
 
         }
+    }
+
+    @Override
+    public void ischock(String data) {
+        if (data.equals("true")) {
+            canshock = true;
+            imBtnSign.setVisibility(View.GONE);
+        } else {
+            imBtnSign.setVisibility(View.VISIBLE);
+            canshock = true;
+        }
+    }
+
+    @Override
+    public void chocksuccessful() {
+        if (null!=imBtnSign){
+            canshock = false;
+            imBtnSign.setVisibility(View.GONE);
+            BToast.success(getContext()).text("签到成功").show();
+            Intent intent=new Intent(getContext(),ShareActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     @Override
@@ -488,6 +516,14 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             startActivityForResult(new Intent(getContext(), QRActivity.class), 1);
         } else {
             EasyPermissions.requestPermissions(getActivity(), "使用扫一扫功能需要允许相机权限哦！", 1, Manifest.permission.CAMERA);
+        }
+    }
+
+    @OnClick(R.id.im_btn_sign)
+    public void onViewClicked() {
+        if (canshock){
+            canshock=false;
+            homepagePresenter.clockin();
         }
     }
 }

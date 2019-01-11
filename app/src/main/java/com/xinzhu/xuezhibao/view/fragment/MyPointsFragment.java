@@ -62,9 +62,9 @@ public class MyPointsFragment extends LazyLoadFragment implements PointsInterfac
             if (POSITION == 0) {
                 myPointsPersenter.getalldata(page);
             } else if (POSITION == 1) {
-                myPointsPersenter.getdata(1, 3);
+                myPointsPersenter.getdata(1, 1);
             } else if (POSITION == 2) {
-                myPointsPersenter.getdata(1, 5);
+                myPointsPersenter.getdata(1, 2);
             }
         }
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getContext());
@@ -151,9 +151,9 @@ public class MyPointsFragment extends LazyLoadFragment implements PointsInterfac
         if (POSITION == 0) {
             myPointsPersenter.getalldata(page);
         } else if (POSITION == 1) {
-            myPointsPersenter.getdata(page, 3);
+            myPointsPersenter.getdata(page, 1);
         } else if (POSITION == 2) {
-            myPointsPersenter.getdata(page, 5);
+            myPointsPersenter.getdata(page, 2);
         }
     }
 }

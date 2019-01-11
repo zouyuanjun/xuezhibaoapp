@@ -57,39 +57,41 @@ public class ShareActivity extends BaseActivity {
             String result = (String) msg.obj;
             Log.d(result);
             int code = JsonUtils.getIntValue(result, "Code");
-            if (code == 100) {
+            int what=msg.what;
+            if (what==1){
+                if (code == 100) {
+                    String url = JsonUtils.getStringValue(result, "Data");
+                    url=JsonUtils.getStringValue(url,"qrAddress");
+                    if (StringUtil.isEmpty(url)) {
+                        return;
+                    }
+                    Glide.with(MyApplication.getContext())
+                            .asBitmap()
+                            .load(url)
+                            .into(new SimpleTarget<Bitmap>() {
+                                @Override
+                                public void onResourceReady(@NonNull Bitmap photo, @Nullable Transition<? super Bitmap> transition) {
+                                    int with=photo.getWidth();
+                                    int higt=photo.getHeight();
+                                    Log.d(with+"sd"+higt);
+                                    Canvas canvas = new Canvas(photo);// 初始化画布绘制的图像到icon上
+                                    Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);// 设置画笔
+                                    textPaint.setTextSize(40);// 字体大小
+                                    textPaint.setTypeface(Typeface.DEFAULT );// 采用默认的宽度
+                                    textPaint.setColor(Color.parseColor("#ff5436"));// 采用的颜色
+                                    // textPaint.setFakeBoldText(true);
 
-
-                String url = JsonUtils.getStringValue(result, "Data");
-                url=JsonUtils.getStringValue(url,"qrAddress");
-                if (StringUtil.isEmpty(url)) {
-                    return;
+                                    canvas.drawText(TimeUtil.getWholeTime(System.currentTimeMillis())+"", with/2-85, higt/2, textPaint);// 绘制上去字，开始未知x,y采用那只笔绘制
+                                    canvas.save(Canvas.ALL_SAVE_FLAG);
+                                    canvas.restore();
+                                    imgShare.setImageBitmap(photo);
+                                    ImageUtils.saveBitmapFile(photo, path, "share.jpg");
+                                    photo=null;
+                                }
+                            });
                 }
-                Glide.with(MyApplication.getContext())
-                        .asBitmap()
-                        .load(url)
-                        .into(new SimpleTarget<Bitmap>() {
-                            @Override
-                            public void onResourceReady(@NonNull Bitmap photo, @Nullable Transition<? super Bitmap> transition) {
-                                int with=photo.getWidth();
-                                int higt=photo.getHeight();
-                                Log.d(with+"sd"+higt);
-                                Canvas canvas = new Canvas(photo);// 初始化画布绘制的图像到icon上
-                                Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.DEV_KERN_TEXT_FLAG);// 设置画笔
-                                textPaint.setTextSize(40);// 字体大小
-                                textPaint.setTypeface(Typeface.DEFAULT );// 采用默认的宽度
-                                textPaint.setColor(Color.parseColor("#ff5436"));// 采用的颜色
-                               // textPaint.setFakeBoldText(true);
-
-                                canvas.drawText(TimeUtil.getWholeTime(System.currentTimeMillis())+"", with/2-85, higt/2, textPaint);// 绘制上去字，开始未知x,y采用那只笔绘制
-                                canvas.save(Canvas.ALL_SAVE_FLAG);
-                                canvas.restore();
-                                imgShare.setImageBitmap(photo);
-                                ImageUtils.saveBitmapFile(photo, path, "share.jpg");
-                                photo=null;
-                            }
-                        });
             }
+
 
         }
     };
@@ -124,7 +126,7 @@ public class ShareActivity extends BaseActivity {
         final PopupWindow popupWindow = CreatPopwindows.creatpopwindows(this, R.layout.pop_share);
         View view = popupWindow.getContentView();
         TextView takephoto = view.findViewById(R.id.tv_timeline);
-        TextView selectphoto = view.findViewById(R.id.tv_friends);
+        TextView tv_fridend = view.findViewById(R.id.tv_friends);
         TextView other = view.findViewById(R.id.tv_other);
         TextView cancle = view.findViewById(R.id.tv_cancel);
         takephoto.setOnClickListener(new View.OnClickListener() {
@@ -132,19 +134,22 @@ public class ShareActivity extends BaseActivity {
             public void onClick(View view) {
                 WX_Share.sharePicByFile(ShareActivity.this, path + "share.jpg", 1);
                 popupWindow.dismiss();
+                shareimg();
             }
         });
-        selectphoto.setOnClickListener(new View.OnClickListener() {
+        tv_fridend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 WX_Share.sharePicByFile(ShareActivity.this, path + "share.jpg", 2);
                 popupWindow.dismiss();
+                shareimg();
             }
         });
         other.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WX_Share.sharePhotoToWX(ShareActivity.this, "", path + "share.jpg");
+                shareimg();
                 popupWindow.dismiss();
             }
         });
@@ -155,5 +160,10 @@ public class ShareActivity extends BaseActivity {
             }
         });
         popupWindow.showAtLocation(parentview, Gravity.BOTTOM, 0, ScreenUtil.getNavigationBarHeight(ShareActivity.this));
+    }
+
+    public void shareimg(){
+        String data=JsonUtils.keyValueToString2("stateType",2,"token",Constants.TOKEN);
+        Network.getnetwork().postJson(data,Constants.URL+"/app/finish-task",handler,2);
     }
 }

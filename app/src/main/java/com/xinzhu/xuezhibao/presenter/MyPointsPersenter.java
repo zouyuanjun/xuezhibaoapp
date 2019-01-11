@@ -54,17 +54,9 @@ public class MyPointsPersenter extends BasePresenter {
                         if (null!=list&&list.size()>0){
                             List<MyPointsBean> list2=new ArrayList<>();
                             for (MyPointsBean myPointsBean:list){
-                                String content=myPointsBean.getTrackContent();
-                                int index=content.indexOf("+");
-                                if (index>0){
-
-                                }else {
-                                    index=content.indexOf("-");
+                                if (myPointsBean.getTrackType()==11){
+                                    myPointsBean.setNumber("-"+myPointsBean.getNumber());
                                 }
-                                String title=content.substring(0,index);
-                                String num=content.substring(index);
-                                myPointsBean.setTrackContent(title);
-                                myPointsBean.setPointnum(num);
                                 list2.add(myPointsBean);
                             }
                             pointsInterface.getdata(list2);

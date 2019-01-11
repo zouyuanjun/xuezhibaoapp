@@ -215,9 +215,9 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
                 tvBuycourse.setBgColor(Color.parseColor("#f2f2f2"));
                 tvBuycourse.setTextColor(Color.parseColor("#666666"));
             }
-            likenum = courseBean.getCurriculumLike();
+            likenum = courseBean.getCurriculumLikeFalse();
             tvLike.setText(likenum + "");
-            tvAlreadybuynum.setText(courseBean.getCurriculumApply() + "人已购买");
+            tvAlreadybuynum.setText(courseBean.getCurriculumApplyFalse() + "人已购买");
             tvAllclass.setText("共"+ courseBean.getSumHour() + "节");
         }
     }

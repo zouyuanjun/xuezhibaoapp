@@ -67,7 +67,7 @@
         android:layout_marginEnd="4dp"
         app:layout_constraintEnd_toStartOf="@+id/tv_readnum"
         app:layout_constraintTop_toTopOf="@+id/simpleDraweeView"
-        app:srcCompat="@drawable/course_icon_people" />
+        android:background="@drawable/course_icon_people" />
 
     <TextView
         android:id="@+id/tv_readnum"

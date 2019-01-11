@@ -42,6 +42,7 @@
         app:layout_constraintTop_toTopOf="@+id/textView10" />
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_marginEnd="16dp"
@@ -51,8 +52,31 @@
         app:srcCompat="@drawable/home_btn_more" />
 
     <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/linearLayout20"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/itemfenge"
         app:layout_constraintBottom_toBottomOf="parent"></LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_allnum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="/3"
+        android:textColor="@color/color_black_666666"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_completenum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textColor="@color/appcolor"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout20"
+        app:layout_constraintEnd_toStartOf="@+id/tv_allnum"
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

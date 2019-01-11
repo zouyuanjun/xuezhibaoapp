@@ -39,7 +39,7 @@ public class HomeVoiceAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         ((RecyclerHolder) holder).title.setText(mDatas.get(position).getVideoTitle());
-        ((RecyclerHolder) holder).readnum.setText(mDatas.get(position).getVideoLook());
+        ((RecyclerHolder) holder).readnum.setText(mDatas.get(position).getVideoLookFalse());
         ((RecyclerHolder) holder).im_video.setImageURI(mDatas.get(position).getVideoPicture());
         ((RecyclerHolder) holder).im_ioc.setImageResource(R.drawable.home_icon_listenin);
 

@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
@@ -43,7 +42,6 @@ import com.xinzhu.xuezhibao.view.interfaces.ArticleInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
-import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
 import com.xinzhu.xuezhibao.utils.WebViewUtil;
@@ -218,11 +216,11 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     public void getarticledetils(ArticleBean articleBean) {
         if (null != articleBean) {
             tvTitle.setText(articleBean.getArticleTitle());
-            tvReadnum.setText("阅读：" + articleBean.getArticleRead());
+            tvReadnum.setText("阅读：" + articleBean.getArticleReadFalse());
             tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(articleBean.getCreateTime()));
             tvDetails.loadDataWithBaseURL(null, articleBean.getArticleContent(), "text/html", "UTF-8", null);
-            tvLike.setText(articleBean.getArticleLike() + "");
-            likenum = articleBean.getArticleLike();
+            tvLike.setText(articleBean.getArticleLikeFalse() + "");
+            likenum = articleBean.getArticleLikeFalse();
         }
 
 

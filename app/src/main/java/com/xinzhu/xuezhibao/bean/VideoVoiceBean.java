@@ -3,8 +3,8 @@ package com.xinzhu.xuezhibao.bean;
 public class VideoVoiceBean {
     String videoPicture;
     String videoTitle;
-    String videoLook;
-    String videoLike;
+    String videoLookFalse;
+    String videoLikeFalse;
     long createTime;
     String videoDetails;
     String videoTeacher;
@@ -75,20 +75,20 @@ public class VideoVoiceBean {
         this.videoTitle = videoTitle;
     }
 
-    public String getVideoLook() {
-        return videoLook;
+    public String getVideoLookFalse() {
+        return videoLookFalse;
     }
 
-    public void setVideoLook(String videoLook) {
-        this.videoLook = videoLook;
+    public void setVideoLookFalse(String videoLookFalse) {
+        this.videoLookFalse = videoLookFalse;
     }
 
-    public String getVideoLike() {
-        return videoLike;
+    public String getVideoLikeFalse() {
+        return videoLikeFalse;
     }
 
-    public void setVideoLike(String videoLike) {
-        this.videoLike = videoLike;
+    public void setVideoLikeFalse(String videoLikeFalse) {
+        this.videoLikeFalse = videoLikeFalse;
     }
 
     public long getCreateTime() {
