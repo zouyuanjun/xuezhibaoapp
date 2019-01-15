@@ -32,6 +32,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wx.goodview.GoodView;
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.ArticleBean;
@@ -171,12 +172,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                     showdia();
                 } else {
                     if (islike) {
-                        islike = false;
-                        likenum--;
-                        tvLike.setText(likenum + "");
-                        articlePresenter.cancellike(articleid);
-                        imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
-                        tvLike.setTextColor(Color.parseColor("#666666"));
+                        BToast.success(MyApplication.getContext()).text("已点赞").show();
                     } else {
                         mGoodView.setImage(R.drawable.videodetails_btn_like_sel);
                         mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);

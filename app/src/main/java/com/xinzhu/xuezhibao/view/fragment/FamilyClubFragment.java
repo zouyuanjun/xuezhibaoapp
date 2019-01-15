@@ -2,6 +2,7 @@ package com.xinzhu.xuezhibao.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.PotionsGoodsAdapter2;
 import com.xinzhu.xuezhibao.bean.GoodsBean;
@@ -35,6 +39,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
+/**
+ * 家长会
+ */
 public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInterface {
 
     Unbinder unbinder;
@@ -61,6 +68,8 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
     public List<GoodsBean> goodsBeanList = new ArrayList<>();
     @BindView(R.id.scb_viplv)
     ShapeCornerBgView scbViplv;
+    @BindView(R.id.refreshLayout)
+    SmartRefreshLayout refreshLayout;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,7 +129,7 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
         potionsGoodsAdapter.setOnItemClickListener(new PotionsGoodsAdapter2.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (StringUtil.isEmpty(Constants.TOKEN)){
+                if (StringUtil.isEmpty(Constants.TOKEN)) {
                     DialogUtils.loginDia(getActivity());
                     return;
                 }
@@ -137,6 +146,22 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
         rvShop.setAdapter(potionsGoodsAdapter);
         goodsBeanList.clear();
         myoGoodsPresenter.getGoodsList(1, 1, 100000);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                myoGoodsPresenter.getGoodsList(1, 1, 100000);
+                goodsBeanList.clear();
+                if (null != Constants.userBasicInfo) {
+                    sdvPhoto.setImageURI(Constants.userBasicInfo.getImage());
+                    tvName.setText(Constants.userBasicInfo.getNickName());
+                    scbViplv.setText(Constants.userBasicInfo.getDictionaryName());
+                    tvPointsnum.setText(Constants.userBasicInfo.getIntegral() + "");
+                }
+                potionsGoodsAdapter.notifyDataSetChanged();
+                refreshLayout.finishRefresh(2000);
+
+            }
+        });
         return rootView;
     }
 
@@ -182,6 +207,7 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
                 goodsBeanList.add(list.get(i));
             }
             potionsGoodsAdapter.notifyDataSetChanged();
+            refreshLayout.finishRefresh();
         }
 
     }
@@ -203,6 +229,11 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
 
     @Override
     public void getcomment(List<GoodsComment> list) {
+
+    }
+
+    @Override
+    public void getGoodsDetailfail() {
 
     }
 }

@@ -64,7 +64,6 @@ public class VideoFolderFragment extends LazyLoadFragment implements VideoFolder
     SmartRefreshLayout refreshLayout;
     VideoVoiceListPresenter videoVoiceListPresenter;
     AlipayPresenter alipayPresenter;
-    boolean isfirstload = true;
     @BindView(R.id.img_nodata)
     ImageView imgNodata;
     int POSITION;
@@ -104,22 +103,6 @@ public class VideoFolderFragment extends LazyLoadFragment implements VideoFolder
 
     private void loaddata() {
         videoVoiceListPresenter.getVideoFolder(paypage, 1);
-//        if (isfirstload) {
-//            if (POSITION == 2) {
-//                videoVoiceListPresenter.getVideoFolder(paypage, 0);
-//            } else {
-//
-//            }
-//            isfirstload = false;
-//        } else {
-//            if (POSITION == 2) {
-//                videoVoiceListPresenter.getVideoFolder(paypage, 0);
-//            } else {
-//                videoVoiceListPresenter.getVideoFolder(paypage, 1);
-//            }
-//
-//        }
-
     }
 
     @Override
@@ -134,17 +117,15 @@ public class VideoFolderFragment extends LazyLoadFragment implements VideoFolder
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvVideocourselist.setLayoutManager(linearLayoutManager3);
         payadapter = new VideoFolderAdapter(R.layout.item_video_folder, payBeanList,1);
-//        if (POSITION==2){ //免费视频
-//            payadapter = new VideoFolderAdapter(R.layout.item_video_folder, payBeanList,0);
-//        }else { //收费视频
-//
-//        }
-
         payadapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, final View view, final int position) {
                 if (view.getId() == R.id.shapeCornerBgView) {
                     if (payBeanList.get(position).getIsBuy()==1){
+                        return;
+                    }
+                    if (StringUtil.isEmpty(Constants.TOKEN)) {
+                        DialogUtils.loginDia(getActivity());
                         return;
                     }
                     final PopupWindow popupWindow = CreatPopwindows.creatpopwindows(getActivity(), R.layout.pop_pay);

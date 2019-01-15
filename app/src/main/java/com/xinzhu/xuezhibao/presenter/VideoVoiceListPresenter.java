@@ -153,9 +153,8 @@ public class VideoVoiceListPresenter {
 
     //获取视频文件夹
     public void getVideoFolder(int page, int videoTypeType) {
-        String data = JsonUtils.keyValueToString2("pageNo", page, "videoType", 1);
+        String data = JsonUtils.keyValueToString2("pageNo", page, "token", Constants.TOKEN);
         data = JsonUtils.addKeyValue(data, "videoTypeType", videoTypeType);
-        data = JsonUtils.addKeyValue(data, "token", Constants.TOKEN);
         Network.getnetwork().postJson(data, Constants.URL + "guest/select-video-types", handler, 9);
     }
 

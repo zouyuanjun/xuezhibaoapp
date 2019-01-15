@@ -27,6 +27,7 @@ import com.lljjcoder.style.citypickerview.CityPickerView;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.SelectPhotoUtils;
+import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.JsonUtils;
@@ -38,8 +39,12 @@ import com.zou.fastlibrary.utils.TimeUtil;
 import org.devio.takephoto.app.TakePhoto;
 import org.devio.takephoto.app.TakePhotoActivity;
 import org.devio.takephoto.model.TResult;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -124,6 +129,7 @@ public class UserBaseActivity extends TakePhotoActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userbase);
+        EventBus.getDefault().register(this);
         mPicker.init(this);
         ButterKnife.bind(this);
         activity = this;
@@ -166,6 +172,11 @@ public class UserBaseActivity extends TakePhotoActivity {
         return super.getTakePhoto();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void netWorkMessage(NetWorkMessage messageEvent) {
+        String s=messageEvent.getMessage();
+        BToast.error(UserBaseActivity.this).text(s).show();
+    }
     @Override
     public void takeSuccess(TResult result) {
         super.takeSuccess(result);
@@ -223,8 +234,10 @@ public class UserBaseActivity extends TakePhotoActivity {
                 TimePickerView pvTime = new TimePickerBuilder(this, new OnTimeSelectListener() {
                     @Override
                     public void onTimeSelect(Date date, View v) {//选中事件回调
-                        tvStudennage.setText(TimeUtil.getWholeTime(date));
-                        Constants.userBasicInfo.setStudentAge(TimeUtil.getWholeTime(date));
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                        String datestring=sdf.format(date);
+                        tvStudennage.setText(datestring);
+                        Constants.userBasicInfo.setStudentAge(datestring);
                         Constants.userBasicInfo.setToken(Constants.TOKEN);
                         String string=JsonUtils.objectToString(Constants.userBasicInfo);
                         Network.getnetwork().postJson(string,Constants.URL+"/app/update-member",handler,2);

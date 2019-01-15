@@ -49,7 +49,7 @@ public class MyPointsFragment extends LazyLoadFragment implements PointsInterfac
 
     @Override
     protected int setContentView() {
-        return R.layout.fragment_onlylist;
+        return R.layout.fragment_points;
     }
 
     @Override

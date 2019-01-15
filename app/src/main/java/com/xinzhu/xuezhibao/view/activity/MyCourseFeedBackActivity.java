@@ -20,6 +20,9 @@ import com.zou.fastlibrary.utils.StringUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 课程反馈页面
+ */
 public class MyCourseFeedBackActivity extends BaseActivity {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;

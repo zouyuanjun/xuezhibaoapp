@@ -1,6 +1,7 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -156,9 +157,17 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                 }
                 if (position < mybannerImgBean.size()) {
                     if (mybannerImgBean.get(position).getNewPlace() == 1) {
-                        Uri uri = Uri.parse(mybannerImgBean.get(position).getLinkAddress());
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
+                        try {
+                            Uri uri = Uri.parse(mybannerImgBean.get(position).getLinkAddress());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }catch (ActivityNotFoundException e){
+                            Intent shortcutIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mybannerImgBean.get(position).getLinkAddress()));
+                            shortcutIntent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                            startActivity(shortcutIntent);
+
+                        }
+
                     } else {
                         Intent intent = new Intent(getContext(), WebActivity.class);
                         intent.putExtra("URL", mybannerImgBean.get(position).getLinkAddress());
@@ -188,6 +197,10 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             qBadgeView.bindTarget(llMessage).setBadgeNumber(0).setBadgeGravity(Gravity.END | Gravity.TOP);
             messagecount = JMessageClient.getAllUnReadMsgCount();
             qBadgeView.setBadgeNumber(messagecount);
+        }
+        //未登录就隐藏签到按钮
+        if (StringUtil.isEmpty(Constants.TOKEN)){
+            imBtnSign.setVisibility(View.GONE);
         }
         homepagePresenter.initdata();
     }

@@ -21,6 +21,7 @@ import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.StringUtil;
+import com.zou.fastlibrary.utils.TimeUtil;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -91,6 +92,16 @@ public class TestBeforeActivity extends BaseActivity {
             }
         });
         editText.setText(Constants.userBasicInfo.getNickName());
+        String data;
+        try {
+            data=TimeUtil.getWholeTime(Long.parseLong(Constants.userBasicInfo.getStudentAge()));
+        }catch (NumberFormatException e){
+            data="1999";
+        }
+
+        int age1=Integer.parseInt(data.substring(0,4));
+        edAge.setText(2019-age1+"岁");
+        edPhone.setText(Constants.userBasicInfo.getAccount());
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

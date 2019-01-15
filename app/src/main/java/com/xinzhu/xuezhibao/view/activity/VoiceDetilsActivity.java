@@ -33,6 +33,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wx.goodview.GoodView;
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
@@ -173,12 +174,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
                     showdia();
                 } else {
                     if (islike) {
-                        likenum--;
-                        tvLike.setText(likenum+"");
-                        islike = false;
-                        likeCollectPresenter.cancellike(videoid, "3");
-                        imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
-                        tvLike.setTextColor(Color.parseColor("#666666"));
+                        BToast.success(MyApplication.getContext()).text("已点赞").show();
                     } else {
                         likenum++;
                         tvLike.setText(likenum+"");

@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -104,6 +105,8 @@ public class ShareActivity extends BaseActivity {
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent=new Intent(ShareActivity.this,MyTaskActivity.class);
+                startActivity(intent);
                 finish();
             }
         });
@@ -160,6 +163,14 @@ public class ShareActivity extends BaseActivity {
             }
         });
         popupWindow.showAtLocation(parentview, Gravity.BOTTOM, 0, ScreenUtil.getNavigationBarHeight(ShareActivity.this));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent=new Intent(ShareActivity.this,MyTaskActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     public void shareimg(){

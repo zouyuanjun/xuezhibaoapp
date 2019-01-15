@@ -34,7 +34,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyJobActivity extends BaseActivity {
+/**
+ * 作业列表activity
+ */
+public class MyJobListActivity extends BaseActivity {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
     @BindView(R.id.tv_jobname)

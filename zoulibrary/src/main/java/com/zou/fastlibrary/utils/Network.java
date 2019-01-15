@@ -246,7 +246,7 @@ public class Network {
                 }
 
                 if (!b) {
-                    Log.d(s);
+                    Log.d("返回码不存在"+s);
                     EventBus.getDefault().post(new NetWorkMessage("服务器出错了"));
                     return;
                 }

@@ -1,5 +1,6 @@
 package com.xinzhu.xuezhibao.view.fragment;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -126,9 +127,16 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                 }
                 if (position < bannerImgBeans.size()) {
                     if (bannerImgBeans.get(position).getNewPlace() == 1) {
-                        Uri uri = Uri.parse(bannerImgBeans.get(position).getLinkAddress());
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        startActivity(intent);
+                        try {
+                            Uri uri = Uri.parse(bannerImgBeans.get(position).getLinkAddress());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }catch (ActivityNotFoundException e){
+                            Intent shortcutIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(bannerImgBeans.get(position).getLinkAddress()));
+                            shortcutIntent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                            startActivity(shortcutIntent);
+
+                        }
                     } else {
                         Intent intent = new Intent(getContext(), WebActivity.class);
                         intent.putExtra("URL", bannerImgBeans.get(position).getLinkAddress());

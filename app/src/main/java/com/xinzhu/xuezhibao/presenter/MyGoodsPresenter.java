@@ -49,7 +49,11 @@ public class MyGoodsPresenter extends BasePresenter {
                         GoodsBean goodsBean = JsonUtils.stringToObject(data, GoodsBean.class);
                         if (null != goodsBean) {
                             myorderInterface.getGoodsDetail(goodsBean);
+                        }else {
+                            myorderInterface.getGoodsDetailfail();
                         }
+                    }else {
+                        myorderInterface.getGoodsDetailfail();
                     }
                 } else if (what == 3) {
                     if (code == 100) {

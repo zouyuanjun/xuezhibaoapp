@@ -146,7 +146,7 @@
             android:exported="true"
             android:theme="@style/SplashStyle"></activity>
         <activity android:name=".view.activity.VideoListActivity" />
-        <activity android:name=".view.activity.MyJobActivity" />
+        <activity android:name=".view.activity.MyJobListActivity" />
         <activity android:name=".view.activity.PhotoViewActivity" />
 
 

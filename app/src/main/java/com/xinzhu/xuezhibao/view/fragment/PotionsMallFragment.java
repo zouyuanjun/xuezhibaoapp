@@ -185,4 +185,9 @@ public class PotionsMallFragment extends LazyLoadFragment implements MyGoodsInte
     public void getcomment(List<GoodsComment> list) {
 
     }
+
+    @Override
+    public void getGoodsDetailfail() {
+
+    }
 }

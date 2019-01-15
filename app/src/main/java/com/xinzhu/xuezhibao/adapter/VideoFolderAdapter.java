@@ -52,6 +52,8 @@ public class VideoFolderAdapter extends BaseQuickAdapter<VideoFolder, VideoFolde
         helper.textView19.setText("(共"+item.getCount()+"节)");
         if (item.getIsBuy()==1){
             helper.shapeCornerBgView.setText("已购买");
+        }else {
+            helper.shapeCornerBgView.setText("全套购买");
         }
         if (type==0){
             helper.shapeCornerBgView.setText("已赠送");

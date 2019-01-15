@@ -23,12 +23,10 @@ import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CourseJobFoledAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoCourseAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoFeedbackAdapter;
-import com.xinzhu.xuezhibao.adapter.RvJiaojiaoTaskAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiaojiaoTeacherAdapter;
 import com.xinzhu.xuezhibao.bean.CourseBean;
 import com.xinzhu.xuezhibao.bean.CourseFeedbackBean;
 import com.xinzhu.xuezhibao.bean.MessageNum;
-import com.xinzhu.xuezhibao.bean.MyjobBean;
 import com.xinzhu.xuezhibao.bean.TeacherBean;
 import com.xinzhu.xuezhibao.immodule.JGApplication;
 import com.xinzhu.xuezhibao.immodule.view.ChatActivity;
@@ -36,12 +34,10 @@ import com.xinzhu.xuezhibao.presenter.MyCoursePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.view.activity.CourseDetailActivity;
 import com.xinzhu.xuezhibao.view.activity.CourseFeedbackActivity;
-import com.xinzhu.xuezhibao.view.activity.CourseTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.MyCourseFeedBackActivity;
-import com.xinzhu.xuezhibao.view.activity.MyJobActivity;
+import com.xinzhu.xuezhibao.view.activity.MyJobListActivity;
 import com.xinzhu.xuezhibao.view.activity.TeacherDetailActivity;
 import com.xinzhu.xuezhibao.view.interfaces.MyCourseInterface;
-import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.utils.Log;
 
 import org.greenrobot.eventbus.EventBus;
@@ -146,7 +142,7 @@ public class MyFamilyCourseFragment extends LazyLoadFragment implements MyCourse
         rvJiaojiaoTaskAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(getContext(), MyJobActivity.class);
+                Intent intent = new Intent(getContext(), MyJobListActivity.class);
                 intent.putExtra(Constants.INTENT_ID, taskBeanArrayList.get(position).getCurriculumId());
                 intent.putExtra(Constants.INTENT_ID2, taskBeanArrayList.get(position).getCurriculumTitle());
                 intent.putExtra(Constants.INTENT_ID3, taskBeanArrayList.get(position).getCount());

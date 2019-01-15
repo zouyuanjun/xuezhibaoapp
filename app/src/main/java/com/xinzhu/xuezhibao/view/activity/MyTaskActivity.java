@@ -81,9 +81,12 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
         goodView = new GoodView(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(MyApplication.getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        if (null!=Constants.userBasicInfo){
+            tvUsername.setText(Constants.userBasicInfo.getNickName());
+            tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
+            sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
+        }
 
-        tvUsername.setText(Constants.userBasicInfo.getNickName());
-        tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
         myTaskrv.setLayoutManager(linearLayoutManager);
         taskList1Adapter = new TaskListAdapter(new WeakReference(MyApplication.getContext()), taskBean1List);
         taskList2Adapter = new TaskListAdapter(new WeakReference(MyApplication.getContext()), taskBean2List);
@@ -92,7 +95,6 @@ public class MyTaskActivity extends BaseActivity implements TaskInterface {
         taskPresenter.get2task(page2);
         taskPresenter.get1task(page1);
         taskPresenter.isclochin();
-        sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
         taskList1Adapter.setOnItemClickListener(new TaskListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {

@@ -35,6 +35,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.wx.goodview.GoodView;
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.bean.CommentBean;
@@ -205,7 +206,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
             tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(courseBean.getCreateTime()));
             webView.loadDataWithBaseURL(null, courseBean.getCurriculumExplain(), "text/html", "UTF-8", null);
             tvTitle.setText(courseBean.getCurriculumTitle());
-            tvCourseteacher.setText(courseBean.getSpeakerTeacher());
+            tvCourseteacher.setText(courseBean.getDictionaryName());
             tvPrice.setText(courseBean.getCurriculumPrice());
             Glide.with(context).load(courseBean.getCurriculumPicture()).
                     into(standardGSYVideoPlayer);
@@ -312,12 +313,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
                     showdia();
                 } else {
                     if (islike) {
-                        islike = false;
-                        likenum--;
-                        tvLike.setText(likenum + "");
-                        likeCollectPresenter.cancellike(courseid, "4");
-                        imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
-                        tvLike.setTextColor(Color.parseColor("#666666"));
+                        BToast.success(MyApplication.getContext()).text("已点赞").show();
                     } else {
                         islike = true;
                         likenum++;

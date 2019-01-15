@@ -47,13 +47,13 @@
 
     <ImageView
         android:id="@+id/im_dataisnull"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="228dp"
+        android:layout_width="107dp"
+        android:layout_height="143dp"
+        android:layout_marginTop="104dp"
         android:background="@drawable/blank"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.561"
+        app:layout_constraintHorizontal_bias="0.544"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

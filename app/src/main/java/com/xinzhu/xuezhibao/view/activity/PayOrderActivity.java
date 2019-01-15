@@ -22,7 +22,9 @@ import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+/*
+积分商品下单activity
+ */
 public class PayOrderActivity extends BaseActivity implements PayOrderInterface {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;
@@ -123,7 +125,7 @@ public class PayOrderActivity extends BaseActivity implements PayOrderInterface 
     }
     @Override
     public void paysuccessful() {
-        BToast.error(this).text("下单成功").show();
+        BToast.success(this).text("下单成功").show();
         Constants.userBasicInfo.setIntegral(Constants.userBasicInfo.getIntegral()-Integer.parseInt(goodsBean.getProductPrice()));
         finish();
     }

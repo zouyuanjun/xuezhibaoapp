@@ -77,6 +77,7 @@
     </com.zou.fastlibrary.ui.CustomNavigatorBar>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/tv_recharge"
         android:layout_width="168dp"
         android:layout_height="35dp"

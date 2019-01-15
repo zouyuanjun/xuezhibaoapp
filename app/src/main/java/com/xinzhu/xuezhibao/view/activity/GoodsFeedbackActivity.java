@@ -17,9 +17,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -36,8 +38,10 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 import com.zou.fastlibrary.activity.BaseActivity;
+import com.zou.fastlibrary.bean.NetWorkMessage;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
+import com.zou.fastlibrary.utils.CreatPopwindows;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
@@ -55,6 +59,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import pub.devrel.easypermissions.EasyPermissions;
 
+/**
+ *商品评价页面
+ */
 public class GoodsFeedbackActivity extends BaseActivity {
     Context mContext;
     List<String> mSelected = new ArrayList<>();   //已选择的照片
@@ -69,7 +76,6 @@ public class GoodsFeedbackActivity extends BaseActivity {
     boolean im1canuse = true;
     boolean im2canuse = true;
     boolean im3canuse = true;
-    String selectDictionaryid = "";  //选中的反馈类型字典ID,初始化设置为第一个类型
     List<FeedBackDictionaryBean> feedBackDictionaryBeanList;
     boolean cancommint = true;
     @BindView(R.id.tv_canselectcount)
@@ -80,6 +86,9 @@ public class GoodsFeedbackActivity extends BaseActivity {
             super.handleMessage(msg);
             String result = (String) msg.obj;
             Log.d(result);
+            if(null!=loadingpop&&loadingpop.isShowing()){
+                loadingpop.dismiss();
+            }
             int what = msg.what;
             if (what == 1) {
                 cancommint = true;
@@ -117,7 +126,7 @@ public class GoodsFeedbackActivity extends BaseActivity {
     @BindView(R.id.im_3)
     ImageView im3;
     OrderBean orderBean;
-
+PopupWindow loadingpop;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         map.clear();
@@ -176,6 +185,8 @@ public class GoodsFeedbackActivity extends BaseActivity {
                     data.put("productGrade",ratingBar.getNumStars()+"");
                     data.put("logisticsGrade",ratingBar2.getNumStars()+"");
                     cancommint = false;
+                    loadingpop = CreatPopwindows.creatWWpopwindows(GoodsFeedbackActivity.this, R.layout.pop_loading);
+                    loadingpop.showAtLocation(view, Gravity.CENTER, 0, 0);
                     Network.getnetwork().uploadimg(data, Constants.URL + "/guest/insert-order-evaluate", mSelected, handler, 1);
                     // Network.getnetwork().uploadimg(data,"http://192.168.1.200:8080/upload",mSelected,handler);
                 }
@@ -336,5 +347,19 @@ public class GoodsFeedbackActivity extends BaseActivity {
         return data;
     }
 
+    @Override
+    public void netWorkMessage(NetWorkMessage messageEvent) {
+        super.netWorkMessage(messageEvent);
+        if(null!=loadingpop&&loadingpop.isShowing()){
+            loadingpop.dismiss();
+        }
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null!=loadingpop&&loadingpop.isShowing()){
+            loadingpop.dismiss();
+        }
+    }
 }

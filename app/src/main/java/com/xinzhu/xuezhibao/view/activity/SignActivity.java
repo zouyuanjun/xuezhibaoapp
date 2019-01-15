@@ -160,7 +160,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
             case R.id.bt_getcode:
                 phone = etPhone.getText().toString();
                 if (StringUtil.isEmpty(phone)) {
-                    BToast.error(view.getContext()).text("请填写手机号").show();
+                    BToast.error(view.getContext()).text("请填写手机号。").show();
                 } else {
                     sendcode(phone);
                 }
@@ -170,13 +170,13 @@ public class SignActivity extends BaseActivity implements SignInterface {
                 code = etCode.getText().toString();
                 password = etPassword.getText().toString();
                 if (StringUtil.isEmpty(phone) || StringUtil.isEmpty(code) || StringUtil.isEmpty(password)) {
-                    BToast.error(view.getContext()).text("请填写完整信息再注册").show();
+                    BToast.error(view.getContext()).text("请填写完整信息再注册。").show();
                 } else if (!isconsent) {
-                    BToast.error(view.getContext()).text("必须同意学之宝用户协议才可以注册哦").show();
+                    BToast.error(view.getContext()).text("必须同意学之宝用户协议才可以注册哦。").show();
                 } else if (!passwordisture) {
-                    BToast.error(view.getContext()).text("请确认密码是否一样").show();
+                    BToast.error(view.getContext()).text("请确认密码是否一样。").show();
                 } else if (password.length() < 6) {
-                    BToast.error(view.getContext()).text("密码必须大于6位").show();
+                    BToast.error(view.getContext()).text("密码必须大于6位。").show();
                 } else if (cansignin) {
                     cansignin = false;
                     signPresenter.sign(new SignBean(phone, password, code));
@@ -200,7 +200,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
                 signPresenter.sendcode(phone, 1);
             }
         } else {
-            BToast.error(SignActivity.this).text("请填写正确的11位手机号").show();
+            BToast.error(SignActivity.this).text("请填写正确的11位手机号。").show();
 
         }
     }
@@ -218,7 +218,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
 
     @Override
     public void isexist() {
-        BToast.error(context).text("用户已存在,请直接登陆").show();
+        BToast.error(context).text("用户已存在,请直接登陆。").show();
     }
 
     @Override
@@ -228,7 +228,7 @@ public class SignActivity extends BaseActivity implements SignInterface {
     @Override
     public void signinfail(int code, String tip) {
         cansignin = true;
-        BToast.info(context).target(etCode).text("注册失败，错误码" + code + tip).show();
+        BToast.info(context).target(etCode).text("注册失败，错误码：" + code + tip).show();
     }
 
     @Override

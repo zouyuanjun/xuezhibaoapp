@@ -11,4 +11,5 @@ public interface MyGoodsInterface extends publiceviewinterface {
     void getGoodsDetail(GoodsBean goodsBean);
     void getgrade(float grade);
     void getcomment(List<GoodsComment> list);
+    void getGoodsDetailfail();
 }

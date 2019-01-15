@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.bravin.btoast.BToast;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -253,6 +254,11 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
             page++;
         }
 
+    }
+
+    @Override
+    public void getGoodsDetailfail() {
+        BToast.error(GoodsDetailActivity.this).text("商品数据不存在，可能已下架").show();
     }
 
     @OnClick({R.id.im_back, R.id.tv_pay})

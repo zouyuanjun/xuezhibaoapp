@@ -67,10 +67,9 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 courseBeanList.clear();
+                rvJiaojiaoCourseAdapter.notifyDataSetChanged();
                 page=1;
                 if (POSITION == 0) {
-                    myCoursePresenter.mygetcourse(page);
-                } else {
                     myCoursePresenter.mygetcourse(page);
                 }
                 refreshlayout.finishRefresh(2000);
@@ -80,8 +79,6 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
             @Override
             public void onLoadMore(RefreshLayout refreshlayout) {
                 if (POSITION == 0) {
-                    myCoursePresenter.mygetcourse(page);
-                } else {
                     myCoursePresenter.mygetcourse(page);
                 }
                 refreshlayout.finishLoadMore(2000);
@@ -160,11 +157,14 @@ public class MyCourseFragment extends LazyLoadFragment implements MyCourseInterf
 
     @Override
     public void nodata() {
-        refreshLayout.finishLoadMore();
-        if (courseBeanList.size()==0){
-            imDataisnull.setVisibility(View.VISIBLE);
+        if (null!=refreshLayout){
+            refreshLayout.finishLoadMore();
+            if (courseBeanList.size()==0){
+                imDataisnull.setVisibility(View.VISIBLE);
+            }
+            refreshLayout.finishLoadMoreWithNoMoreData();
         }
-        refreshLayout.finishLoadMoreWithNoMoreData();
+
     }
 
     @Override

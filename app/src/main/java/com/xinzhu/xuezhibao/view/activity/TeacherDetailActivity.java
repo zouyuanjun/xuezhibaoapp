@@ -39,6 +39,7 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 import com.wx.goodview.GoodView;
+import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.CommentAdapter;
 import com.xinzhu.xuezhibao.adapter.RvJiatingCourseAdapter;
@@ -240,12 +241,7 @@ public class TeacherDetailActivity extends BaseActivity implements TeacherInterf
         switch (view.getId()) {
             case R.id.im_like:
                 if (islike) {
-                    likenum--;
-                    tvLikenum.setText(likenum + "");
-                    islike = false;
-                    likeCollectPresenter.cancellike(teacherId, "5");
-                    imLike.setImageResource(R.drawable.videodetails_btn_like_nor);
-                    tvLikenum.setTextColor(Color.parseColor("#666666"));
+                    BToast.success(MyApplication.getContext()).text("已点赞").show();
                 } else {
                     mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
                     mGoodView.show(view);

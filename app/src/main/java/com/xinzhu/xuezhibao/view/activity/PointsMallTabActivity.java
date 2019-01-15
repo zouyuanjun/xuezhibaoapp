@@ -1,6 +1,8 @@
 package com.xinzhu.xuezhibao.view.activity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,6 +36,9 @@ import butterknife.ButterKnife;
 
 import static com.xinzhu.xuezhibao.MyApplication.getContext;
 
+/**
+ * 积分商城页面
+ */
 public class PointsMallTabActivity extends BaseActivity {
     @BindView(R.id.bn_pointsmall)
     Banner banner;
@@ -73,9 +78,24 @@ Handler handler=new Handler(){
             banner.setOnBannerListener(new OnBannerListener() {
                 @Override
                 public void OnBannerClick(int position) {
-                    Intent intent = new Intent(getContext(), WebActivity.class);
-                    intent.putExtra("URL", bannerImgBeans.get(position).getLinkAddress());
-                    startActivity(intent);
+                    if (position < bannerImgBeans.size()) {
+                        if (bannerImgBeans.get(position).getNewPlace() == 1) {
+                            try {
+                                Uri uri = Uri.parse(bannerImgBeans.get(position).getLinkAddress());
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(intent);
+                            }catch (ActivityNotFoundException e){
+                                Intent shortcutIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(bannerImgBeans.get(position).getLinkAddress()));
+                                shortcutIntent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
+                                startActivity(shortcutIntent);
+                            }
+                        } else {
+                            Intent intent = new Intent(getContext(), WebActivity.class);
+                            intent.putExtra("URL", bannerImgBeans.get(position).getLinkAddress());
+                            // intent.putExtra("URL", "http://soft.imtt.qq.com/browser/tes/feedback.html");
+                            startActivity(intent);
+                        }
+                    }
                 }
             });
             List<String> mDatas = new ArrayList<>();
