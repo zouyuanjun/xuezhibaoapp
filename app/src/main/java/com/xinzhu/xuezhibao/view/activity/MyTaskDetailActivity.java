@@ -26,6 +26,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 任务详情页面
+ */
 public class MyTaskDetailActivity extends BaseActivity implements GetTaskInterface {
     @BindView(R.id.appbar)
     CustomNavigatorBar appbar;

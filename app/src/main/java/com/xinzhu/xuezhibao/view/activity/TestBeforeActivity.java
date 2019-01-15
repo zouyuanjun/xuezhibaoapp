@@ -100,7 +100,7 @@ public class TestBeforeActivity extends BaseActivity {
         }
 
         int age1=Integer.parseInt(data.substring(0,4));
-        edAge.setText(2019-age1+"岁");
+        edAge.setText(2019-age1+"");
         edPhone.setText(Constants.userBasicInfo.getAccount());
         radiogroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

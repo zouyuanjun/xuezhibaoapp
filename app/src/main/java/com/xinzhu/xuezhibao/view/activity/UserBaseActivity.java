@@ -146,7 +146,7 @@ public class UserBaseActivity extends TakePhotoActivity {
             tvStudennage.setText(data);
             tvFathername.setText(Constants.userBasicInfo.getFatherName());
             tvMothername.setText(Constants.userBasicInfo.getMotherName());
-            tvAddress.setText(Constants.userBasicInfo.getCity()+"-"+Constants.userBasicInfo.getCounty());
+            tvAddress.setText(Constants.userBasicInfo.getProvince()+"-"+Constants.userBasicInfo.getCity()+"-"+Constants.userBasicInfo.getCounty());
             sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
         }
         appbar.setLeftImageOnClickListener(new View.OnClickListener() {

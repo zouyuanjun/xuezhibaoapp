@@ -126,7 +126,7 @@ Handler handler;
                         tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
                         sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
                         tvMyjifen.setText(Constants.userBasicInfo.getIntegral()+"");
-                        Log.d("更新了用户信息");
+                        Log.d("更新了用户信息"+result);
                     }
 
                 }
