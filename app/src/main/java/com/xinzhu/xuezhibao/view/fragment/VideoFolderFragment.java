@@ -91,6 +91,9 @@ public class VideoFolderFragment extends LazyLoadFragment implements VideoFolder
     @Override
     public void onResume() {
         super.onResume();
+        if (null != loadingPop && loadingPop.isShowing()) {
+            loadingPop.dismiss();
+        }
         paypage=1;
         payBeanList.clear();
         loaddata();
@@ -259,7 +262,7 @@ public class VideoFolderFragment extends LazyLoadFragment implements VideoFolder
         if (null != loadingPop && loadingPop.isShowing()) {
             loadingPop.dismiss();
         }
-        BToast.success(getContext()).text("支付失败").show();
+        BToast.error(getContext()).text("支付失败").show();
     }
 
     @Override
@@ -284,13 +287,13 @@ public class VideoFolderFragment extends LazyLoadFragment implements VideoFolder
             } else {
                 alipayPresenter.checkWxPay();
             }
-        } else if (code == 1) {
+        } else if (code == 1||code==-2) {
             BToast.error(getContext()).text("取消支付").show();
         } else {
             if (null != loadingPop && loadingPop.isShowing()) {
                 loadingPop.dismiss();
             }
-            BToast.error(getContext()).text("微信支付异常").show();
+            BToast.error(getContext()).text("微信支付失败").show();
         }
     }
 }

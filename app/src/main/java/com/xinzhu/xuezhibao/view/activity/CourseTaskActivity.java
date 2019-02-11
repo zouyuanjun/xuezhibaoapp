@@ -135,6 +135,7 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
             imCommittask.setVisibility(View.GONE);
             constraintLayout4.setVisibility(View.GONE);
             tvTasktext.setText(myjobBean.getReplyContent());
+            tvTasktext.setVisibility(View.VISIBLE);
         } else if (myjobBean.getState() == 4) {
             tvStatus.setText("已完成");
             tvStatus.setTextColor(Color.parseColor("#12cd8e"));
@@ -143,6 +144,7 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
             constraintLayout4.setVisibility(View.VISIBLE);
             tvTeacher1.setVisibility(View.VISIBLE);
             tvTasktext.setText(myjobBean.getReplyContent());
+            tvTasktext.setVisibility(View.VISIBLE);
             tvCommentDetils.setText(myjobBean.getTeacherEvaluation());
             tvUserName.setText(myjobBean.getTeacherName());
             sdvPhoto.setImageURI(myjobBean.getTeacherImage());

@@ -155,6 +155,9 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailInte
 
     @Override
     public void getorderdetail(OrderBean orderBean) {
+        if (StringUtil.isEmpty(orderBean.getAddress())){
+cslAddress.setVisibility(View.GONE);
+        }
         tvAddress.setText(orderBean.getAddress());
         tvPhone.setText(orderBean.getNickname() + "  " + orderBean.getLinkPhone());
         if (StringUtil.isEmpty(orderBean.getShipmentsTime() + "")) {

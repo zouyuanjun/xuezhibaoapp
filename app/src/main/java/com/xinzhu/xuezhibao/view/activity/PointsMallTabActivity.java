@@ -27,6 +27,7 @@ import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
+import com.zou.fastlibrary.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,10 @@ Handler handler=new Handler(){
                 @Override
                 public void OnBannerClick(int position) {
                     if (position < bannerImgBeans.size()) {
+
+                        if (StringUtil.isEmpty(bannerImgBeans.get(position).getLinkAddress())){
+                            return;
+                        }
                         if (bannerImgBeans.get(position).getNewPlace() == 1) {
                             try {
                                 Uri uri = Uri.parse(bannerImgBeans.get(position).getLinkAddress());

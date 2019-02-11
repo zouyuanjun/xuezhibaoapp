@@ -147,6 +147,7 @@ public class MyJobListActivity extends BaseActivity {
         AnimationDrawable animationDrawable = (AnimationDrawable) imLoading.getDrawable();
         animationDrawable.start();
         list.clear();
+        rvJiaojiaoTaskAdapter.notifyDataSetChanged();
         page = 1;
         getjob(1);
     }

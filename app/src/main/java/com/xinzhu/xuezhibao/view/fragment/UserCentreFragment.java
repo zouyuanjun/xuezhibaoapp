@@ -102,7 +102,7 @@ Handler handler;
             tvLoginbutton.setVisibility(View.VISIBLE);
             tvLognout.setVisibility(View.GONE);
             sdMyphoto.setImageResource(R.drawable.my_icon_original);
-        } else {
+        } else if (null!=Constants.userBasicInfo){
             tvLoginbutton.setVisibility(View.GONE);
             llUser.setVisibility(View.VISIBLE);
             clJifen.setVisibility(View.VISIBLE);
@@ -222,7 +222,7 @@ Handler handler;
                 SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());
                 SharedPreferences.Editor editor=sharedPreferences.edit();
                 editor.remove("PHONE");
-                editor.remove("PASSWORD");
+                editor.remove("token");
                 editor.commit();
                 Intent intent5 = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent5);

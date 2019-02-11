@@ -42,8 +42,6 @@ public class PayOrderActivity extends BaseActivity implements PayOrderInterface 
     ImageView imageView24;
     @BindView(R.id.csl_address)
     ConstraintLayout cslAddress;
-    @BindView(R.id.linearLayout28)
-    LinearLayout linearLayout28;
     @BindView(R.id.tv_ordertype)
     TextView tvOrdertype;
     @BindView(R.id.linearLayout24)
@@ -83,6 +81,9 @@ public class PayOrderActivity extends BaseActivity implements PayOrderInterface 
             imageView19.setImageURI(goodsBean.getProductImg());
             tvTitle.setText(goodsBean.getProductName());
             tvTotleprice.setText(goodsBean.getProductPrice() + "积分");
+            if (goodsBean.getProductVirtual()==1){
+                cslAddress.setVisibility(View.GONE);
+            }
         }
         myOrederPresenter = new MyOrederPresenter(this);
         myOrederPresenter.getdefendaddress();
@@ -103,7 +104,7 @@ public class PayOrderActivity extends BaseActivity implements PayOrderInterface 
                 startActivityForResult(intent,1);
                 break;
             case R.id.tv_affirmpay:
-                if (null == myaddressid) {
+                if (null == myaddressid&&goodsBean.getProductVirtual()!=1) {
                     BToast.error(this).text("请先选择地址").show();
                     return;
                 }

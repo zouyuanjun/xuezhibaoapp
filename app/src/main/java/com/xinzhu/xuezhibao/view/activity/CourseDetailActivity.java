@@ -165,6 +165,9 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     @Override
     protected void onResume() {
         super.onResume();
+        if (null != loadingPop && loadingPop.isShowing()) {
+            loadingPop.dismiss();
+        }
         likeCollectPresenter.islike(courseid, "4");
         likeCollectPresenter.iscollect(courseid, "4");
     }
@@ -524,13 +527,13 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
             }else {
                 alipayPresenter.checkWxPay();
             }
-        }else if (code==1){
+        }else if (code==1||code==-2){
             BToast.error(this).text("取消支付").show();
         }else {
             if (null != loadingPop && loadingPop.isShowing()) {
                 loadingPop.dismiss();
             }
-            BToast.error(this).text("微信支付异常").show();
+            BToast.error(this).text("微信支付失败").show();
         }
     }
     @Override

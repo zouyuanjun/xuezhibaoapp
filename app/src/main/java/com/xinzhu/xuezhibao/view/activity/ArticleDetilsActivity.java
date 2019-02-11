@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,18 +20,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
-import com.bravin.btoast.BToast;
-import com.tencent.smtt.sdk.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bravin.btoast.BToast;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.tencent.smtt.sdk.WebView;
 import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
@@ -39,13 +39,13 @@ import com.xinzhu.xuezhibao.bean.ArticleBean;
 import com.xinzhu.xuezhibao.bean.CommentBean;
 import com.xinzhu.xuezhibao.presenter.ArticlePresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.WebViewUtil;
 import com.xinzhu.xuezhibao.view.interfaces.ArticleInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
 import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
-import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -109,6 +109,8 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
     LinearLayout linearLayout14;
     @BindView(R.id.linearLayout12)
     LinearLayout linearLayout12;
+    @BindView(R.id.im_loading)
+    ImageView imLoading;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,6 +124,8 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
         tvDetails.loadDataWithBaseURL(null, "正在加载", "text/html", "UTF-8", null);
         mGoodView = new GoodView(this);
         init();
+        AnimationDrawable drawable= (AnimationDrawable) imLoading.getDrawable();
+        drawable.start();
     }
 
     @Override
@@ -217,9 +221,8 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
             tvDetails.loadDataWithBaseURL(null, articleBean.getArticleContent(), "text/html", "UTF-8", null);
             tvLike.setText(articleBean.getArticleLikeFalse() + "");
             likenum = articleBean.getArticleLikeFalse();
+            imLoading.setVisibility(View.GONE);
         }
-
-
 
 
     }
@@ -281,7 +284,7 @@ public class ArticleDetilsActivity extends BaseActivity implements ArticleInterf
                 @Override
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
-                    if (StringUtil.isEmpty(commend)){
+                    if (StringUtil.isEmpty(commend)) {
                         BToast.error(ArticleDetilsActivity.this).text("请填写内容").show();
                         return;
                     }

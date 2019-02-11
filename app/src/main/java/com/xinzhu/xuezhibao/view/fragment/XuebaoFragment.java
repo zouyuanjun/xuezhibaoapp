@@ -125,6 +125,9 @@ public class XuebaoFragment extends LazyLoadFragment implements XuebaoInterface 
                     DialogUtils.loginDia(getActivity());
                     return;
                 }
+                if (StringUtil.isEmpty(bannerImgBeans.get(position).getLinkAddress())){
+                    return;
+                }
                 if (position < bannerImgBeans.size()) {
                     if (bannerImgBeans.get(position).getNewPlace() == 1) {
                         try {

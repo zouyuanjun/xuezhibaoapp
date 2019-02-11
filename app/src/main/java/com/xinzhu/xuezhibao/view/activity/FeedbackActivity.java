@@ -42,6 +42,7 @@ import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.ui.ShapeCornerBgView;
 import com.zou.fastlibrary.utils.JSON;
 import com.zou.fastlibrary.utils.JsonUtils;
+import com.zou.fastlibrary.utils.Log;
 import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.StringUtil;
 
@@ -350,7 +351,7 @@ public class FeedbackActivity extends BaseActivity {
         for (int i = 0; i < Selected.size(); i++) {
             Uri uri = Selected.get(i);
             File file = new File(getRealFilePath(mContext, uri));
-
+            Log.d(file.getPath());
             FileInputStream fis = null;
             try {
                 fis = new FileInputStream(file.getPath());

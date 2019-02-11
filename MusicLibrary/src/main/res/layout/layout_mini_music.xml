@@ -24,11 +24,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text=""
         android:textColor="#333333"
         android:textSize="@dimen/music_layout_title_textSize"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_control_btn"
         app:layout_constraintTop_toTopOf="parent" />
 

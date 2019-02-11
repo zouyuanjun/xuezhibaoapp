@@ -29,22 +29,16 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.bumptech.glide.load.resource.bitmap.VideoDecoder.FRAME_OPTION;
-
+//视频和音频课程列表adapter
 public class VideoVoiceListAdapter extends BaseQuickAdapter<VideoVoiceBean,VideoVoiceListAdapter.MyViewHolder> {
     protected Context mContext;
     protected List<VideoVoiceBean> mDatas;
-    int TYPE = 0; //标记是否视频课程列表
+    int TYPE = 0; //标记是否视频课程列表，2：视频列表，否则音频列表
     int PayVideo=0; //是否是收费视频，决定是否要显示试看标签
     public VideoVoiceListAdapter(WeakReference<Context> mContext,@NonNull List<VideoVoiceBean> mDatas) {
         super(R.layout.item_list,mDatas);
         this.mContext = mContext.get();
         this.mDatas = mDatas;
-    }
-    public VideoVoiceListAdapter(Context mContext, @NonNull List<VideoVoiceBean> mDatas, int TYPE) {
-        super(R.layout.item_list,mDatas);
-        this.mContext = mContext;
-        this.mDatas = mDatas;
-        this.TYPE = TYPE;
     }
     public VideoVoiceListAdapter(Context mContext, @NonNull List<VideoVoiceBean> mDatas, int TYPE,int PayVideo) {
         super(R.layout.item_list,mDatas);

@@ -56,13 +56,35 @@
                     android:background="@drawable/home_icon_research"
                     />
             </RelativeLayout>
-            <ImageView
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/im_setting"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:background="@drawable/home_btn_setup"/>
+            <android.support.constraint.ConstraintLayout
+                android:layout_width="60dp"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/im_btn_sign"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="28dp"
+                    android:background="@drawable/home_btn_signin"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.zou.fastlibrary.ui.ShapeCornerBgView
+                    android:visibility="gone"
+                    android:id="@+id/scb_notsignin"
+                    android:layout_width="28dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="4dp"
+                    android:text="未签"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    app:appRadius="7dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </android.support.constraint.ConstraintLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,7 +106,13 @@
                     android:layout_height="25dp"
                     android:background="@drawable/home_icon_notice"/>
             </LinearLayout>
-
+            <ImageView
+                android:layout_marginRight="10dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/im_setting"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/home_btn_setup"/>
         </LinearLayout>
     </android.support.design.widget.AppBarLayout>
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -126,14 +154,7 @@
                     android:src="@drawable/home_pic_evaluation"
                     app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
 
-                <ImageView
-                    android:id="@+id/im_btn_sign"
-                    android:layout_width="84dp"
-                    android:layout_height="44dp"
-                    android:background="@drawable/home_btn_signin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+
             </android.support.constraint.ConstraintLayout>
 
             <LinearLayout

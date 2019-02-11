@@ -24,7 +24,7 @@ import cn.jpush.im.api.BasicCallback;
 
 public class LoginPresenter {
     LoginInterface loginInterface;
-SplashInterface splashInterface;
+    SplashInterface splashInterface;
 
     public LoginPresenter(SplashInterface splashInterface) {
         this.splashInterface = splashInterface;
@@ -32,70 +32,64 @@ SplashInterface splashInterface;
 
     String myphone;
     String mypassword;
-    Handler handler=new Handler(){
+    Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             int what = msg.what;
             String result = (String) msg.obj;
             com.zou.fastlibrary.utils.Log.d(result);
-            int code=-999;
+            int code = -999;
             String tip = null;
             try {
                 code = JsonUtils.getIntValue(result, "Code");
-                tip=JsonUtils.getStringValue(result,"Tips");
-            }catch (com.alibaba.fastjson.JSONException e){
+                tip = JsonUtils.getStringValue(result, "Tips");
+            } catch (com.alibaba.fastjson.JSONException e) {
                 com.zou.fastlibrary.utils.Log.d("异常了");
-                if (null!=loginInterface){
+                if (null != loginInterface) {
                     loginInterface.servererr();
-                }else if (null!=splashInterface){
+                } else if (null != splashInterface) {
                     splashInterface.servererr();
                 }
             }
             if (code == -100) {
-                if (null!=loginInterface){
+                if (null != loginInterface) {
                     loginInterface.networkerr();
-                }else if (null!=splashInterface){
+                } else if (null != splashInterface) {
                     splashInterface.networkerr();
                 }
                 return;
             }
             if (code == -200) {
-                if (null!=loginInterface){
+                if (null != loginInterface) {
                     loginInterface.networktimeout();
-                }else if (null!=splashInterface){
+                } else if (null != splashInterface) {
                     splashInterface.networktimeout();
                 }
                 return;
             }
             if (what == 1) {
-                if (code==100){
+                if (code == 100) {
                     try {
-                        String data=JsonUtils.getStringValue(result,"Data");
-                        Constants.TOKEN=JsonUtils.getStringValue(data,"token");
-                        SettingUtil.TOKEN=Constants.TOKEN;
-                        Constants.userBasicInfo=JsonUtils.stringToObject(data,UserBasicInfo.class);
+                        String data = JsonUtils.getStringValue(result, "Data");
+                        Constants.TOKEN = JsonUtils.getStringValue(data, "token");
+                        SettingUtil.TOKEN = Constants.TOKEN;
+                        Constants.userBasicInfo = JsonUtils.stringToObject(data, UserBasicInfo.class);
                         Constants.userBasicInfo.setToken(Constants.TOKEN);
                         loginInterface.loginsuccessful();
-                        SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());
-                        DataKeeper.save(sharedPreferences,"PHONE",myphone);
-                        DataKeeper.save(sharedPreferences,"PASSWORD",mypassword);
-                    }catch (Exception e){
-                        loginInterface.loginfail(code,tip);
+                        SharedPreferences sharedPreferences = DataKeeper.getRootSharedPreferences(MyApplication.getContext());
+                        DataKeeper.save(sharedPreferences, "PHONE", myphone);
+                        DataKeeper.save(sharedPreferences, "token", Constants.TOKEN);
+                    } catch (Exception e) {
+                        loginInterface.loginfail(code, tip);
                     }
-                }else {
-                    loginInterface.loginfail(code,tip);
+                } else {
+                    loginInterface.loginfail(code, tip);
                 }
-            }else if (what == 2) {
-                if (code==100){
-                    String data=JsonUtils.getStringValue(result,"Data");
-                    Constants.TOKEN=JsonUtils.getStringValue(data,"token");
-                    SettingUtil.TOKEN=Constants.TOKEN;
-                    Constants.userBasicInfo= JsonUtils.stringToObject(data,UserBasicInfo.class);
-                    Constants.userBasicInfo.setToken(Constants.TOKEN);
-                    SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());
-                    DataKeeper.save(sharedPreferences,"PHONE",myphone);
-                    DataKeeper.save(sharedPreferences,"PASSWORD",mypassword);
+            } else if (what == 3) {  //自动登陆更新用户信息
+                if (code == 100) {
+                    String data = JsonUtils.getStringValue(result, "Data");
+                    Constants.userBasicInfo = JsonUtils.stringToObject(data, UserBasicInfo.class);
                     splashInterface.login();
                 }else {
                     splashInterface.loginfall();
@@ -108,39 +102,38 @@ SplashInterface splashInterface;
     public LoginPresenter(LoginInterface loginInterface) {
         this.loginInterface = loginInterface;
     }
-    public void phonelogin(final String phone, final String password ){
-        myphone=phone;
-        mypassword=password;
+
+    public void phonelogin(final String phone, final String password) {
+        myphone = phone;
+        mypassword = password;
         JMessageClient.login(phone, "xzb123456", new BasicCallback() {
             @Override
             public void gotResult(int responseCode, String responseMessage) {
-                Log.d("JIM登陆响应",responseCode+responseMessage);
+                Log.d("JIM登陆响应", responseCode + responseMessage);
                 if (responseCode == 0) {
                     //注册时更新头像
                 }
             }
         });
-        String data=JsonUtils.keyValueToString("account",phone);
-        data=JsonUtils.addKeyValue(data,"password",password);
-        Network.getnetwork().postJson(data,Constants.URL+"/app/login",handler,1);
+        String data = JsonUtils.keyValueToString("account", phone);
+        data = JsonUtils.addKeyValue(data, "password", password);
+        Network.getnetwork().postJson(data, Constants.URL + "/app/login", handler, 1);
     }
-    public void slpashlogin(final String phone, final String password ){
-        myphone=phone;
-        mypassword=password;
+
+    public void slpashlogin(final String phone) {
+        myphone = phone;
         JMessageClient.login(phone, "xzb123456", new BasicCallback() {
             @Override
             public void gotResult(int responseCode, String responseMessage) {
-                Log.d("JIM登陆响应",responseCode+responseMessage);
+                Log.d("JIM登陆响应", responseCode + responseMessage);
                 if (responseCode == 0) {
                     //注册时更新头像
                 }
             }
         });
-        String data=JsonUtils.keyValueToString("account",phone);
-        data=JsonUtils.addKeyValue(data,"password",password);
-        Network.getnetwork().postJson(data,Constants.URL+"/app/login",handler,2);
     }
-    public void wxlogin(Context context){
+
+    public void wxlogin(Context context) {
         Constants.api = WXAPIFactory.createWXAPI(context, Constants.APP_ID, false);
         Constants.api.registerApp(Constants.APP_ID);
         final SendAuth.Req req = new SendAuth.Req();
@@ -148,17 +141,22 @@ SplashInterface splashInterface;
         req.state = "fentuanyizhuang";
         Constants.api.sendReq(req);
     }
-    public void autologin(){
-        SharedPreferences sharedPreferences=DataKeeper.getRootSharedPreferences(MyApplication.getContext());
-        String phone=sharedPreferences.getString("PHONE","");
-        String password=sharedPreferences.getString("PASSWORD","");
-        if (phone.isEmpty()||password.isEmpty()){
+
+    public void autologin() {
+        SharedPreferences sharedPreferences = DataKeeper.getRootSharedPreferences(MyApplication.getContext());
+        String phone = sharedPreferences.getString("PHONE", "");
+        String token = sharedPreferences.getString("token", "");
+        if (phone.isEmpty() || token.isEmpty()) {
             splashInterface.loginfall();
-        }else {
-            slpashlogin(phone,password);
+        } else {
+            Constants.TOKEN = token;
+            slpashlogin(phone);
+            String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
+            Network.getnetwork().postJson(data, Constants.URL + "/app/find-by-account", handler, 3);
         }
     }
-    public void cancelmessage(){
+
+    public void cancelmessage() {
         handler.removeCallbacksAndMessages(null);
     }
 }

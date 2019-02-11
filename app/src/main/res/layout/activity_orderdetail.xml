@@ -25,7 +25,7 @@
     </com.zou.fastlibrary.ui.CustomNavigatorBar>
 
     <android.support.constraint.ConstraintLayout
-android:visibility="gone"
+        android:visibility="gone"
         android:id="@+id/csl_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

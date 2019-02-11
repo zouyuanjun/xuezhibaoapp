@@ -72,5 +72,5 @@
     <string name="btn_text_speak">按住录音</string>
     <string name="btn_send">发送</string>
 
-
+<string name="custom_beahvoir">com.xinzhu.xuezhibao.view.custom.Behavior_Text</string>
 </resources>

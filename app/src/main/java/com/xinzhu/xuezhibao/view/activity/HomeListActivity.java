@@ -10,6 +10,7 @@ import android.view.View;
 import com.xinzhu.xuezhibao.R;
 import com.xinzhu.xuezhibao.adapter.ListViewPageAdapter;
 import com.xinzhu.xuezhibao.view.fragment.ArticleListFragment;
+import com.xinzhu.xuezhibao.view.fragment.AudioFreeFolderFragment;
 import com.xinzhu.xuezhibao.view.fragment.HomeVideoVoiceListFragment;
 import com.xinzhu.xuezhibao.view.fragment.VideoFolderFragment;
 import com.xinzhu.xuezhibao.view.fragment.VideoFreeFolderFragment;
@@ -34,7 +35,7 @@ public class HomeListActivity extends BaseActivity {
     ViewPager vpItemlist;
     ArrayList<Fragment> fragmentList = new ArrayList<>();
     String[] title = {"热门", "最新", "我的收藏"};
-    String[] videotitle = {"热门", "最新", "全部", "我的收藏"};
+    String[] videotitle = {"全部", "热门", "最新", "我的收藏"};
     int TYPE = 0;
     ListViewPageAdapter listViewPageAdapter;
 
@@ -51,19 +52,20 @@ public class HomeListActivity extends BaseActivity {
         if (TYPE == 1) {
             appbar.setMidText("视频公开课");
             fragmentList.clear();
-            fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
-            fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
             fragmentList.add(new VideoFreeFolderFragment());
+            fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
+            fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(1));
 
             listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, videotitle, 1);
         } else if (TYPE == 2) {
             appbar.setMidText("音频公开课");
             fragmentList.clear();
+            fragmentList.add(new AudioFreeFolderFragment());
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
             fragmentList.add(HomeVideoVoiceListFragment.newInstance(2));
-            listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, title, 2);
+            listViewPageAdapter = new ListViewPageAdapter(getSupportFragmentManager(), fragmentList, videotitle, 2);
         } else if (TYPE == 3) {
             appbar.setMidText("亲子文章");
             fragmentList.clear();

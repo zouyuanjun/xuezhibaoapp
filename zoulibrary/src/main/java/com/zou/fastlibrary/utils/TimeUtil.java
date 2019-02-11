@@ -215,6 +215,9 @@ public class TimeUtil {
 		return details[0] + "-" + details[1] + "-"
 		+ details[2]  ;
 	}
+	public static String getWholeTime3(long date) {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date(date));
+	}
 	/**获取完整时间 yy-mm-dd-hh时mm分
 	 * @param date
 	 * @return

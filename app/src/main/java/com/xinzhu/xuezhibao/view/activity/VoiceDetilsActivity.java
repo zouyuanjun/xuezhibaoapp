@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -19,19 +20,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
-import com.bravin.btoast.BToast;
-import com.tencent.smtt.sdk.WebView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bravin.btoast.BToast;
 import com.hrb.library.MiniMusicView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.tencent.smtt.sdk.WebView;
 import com.wx.goodview.GoodView;
 import com.xinzhu.xuezhibao.MyApplication;
 import com.xinzhu.xuezhibao.R;
@@ -41,6 +41,7 @@ import com.xinzhu.xuezhibao.bean.VideoVoiceBean;
 import com.xinzhu.xuezhibao.presenter.LikeCollectPresenter;
 import com.xinzhu.xuezhibao.presenter.VideoVoiceDetailPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
+import com.xinzhu.xuezhibao.utils.WebViewUtil;
 import com.xinzhu.xuezhibao.view.interfaces.LikeCollectInterface;
 import com.xinzhu.xuezhibao.view.interfaces.VideoVoiceDetailInterface;
 import com.zou.fastlibrary.activity.BaseActivity;
@@ -48,7 +49,6 @@ import com.zou.fastlibrary.ui.CustomDialog;
 import com.zou.fastlibrary.ui.CustomNavigatorBar;
 import com.zou.fastlibrary.utils.StringUtil;
 import com.zou.fastlibrary.utils.TimeUtil;
-import com.xinzhu.xuezhibao.utils.WebViewUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.LinkedList;
@@ -105,6 +105,9 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
     int likenum;  //点赞数
     int commentnum; //评论数
     GoodView mGoodView;
+    @BindView(R.id.im_loading)
+    ImageView imLoading;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,6 +151,8 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
             }
         });
         mMusicView.setmContext(new WeakReference<Context>(this));
+        AnimationDrawable drawable = (AnimationDrawable) imLoading.getDrawable();
+        drawable.start();
     }
 
     @Override
@@ -160,7 +165,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mMusicView.isHasebingserver()){
+        if (mMusicView.isHasebingserver()) {
             mMusicView.stopPlayMusic();
         }
 
@@ -177,9 +182,9 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
                         BToast.success(MyApplication.getContext()).text("已点赞").show();
                     } else {
                         likenum++;
-                        tvLike.setText(likenum+"");
+                        tvLike.setText(likenum + "");
                         tvLike.setTextColor(Color.parseColor("#f87d28"));
-                        mGoodView.setTextInfo("+1",Color.parseColor("#f87d28"),25);
+                        mGoodView.setTextInfo("+1", Color.parseColor("#f87d28"), 25);
                         mGoodView.show(view);
                         islike = true;
                         likeCollectPresenter.like(videoid, "3");
@@ -217,19 +222,20 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
 
     @Override
     public void getVoicedetail(VideoVoiceBean videoVoiceBean) {
-        tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
+        tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime3(videoVoiceBean.getCreateTime()));
         tvDetails.loadDataWithBaseURL(null, videoVoiceBean.getVideoDetails(), "text/html", "UTF-8", null);
         tvReadnum.setText("播放：" + videoVoiceBean.getVideoLookFalse());
         tvTitle.setText(videoVoiceBean.getVideoTitle());
         mMusicView.setTitleText(videoVoiceBean.getVideoTitle());
         tvLike.setText(videoVoiceBean.getVideoLikeFalse());
-        likenum=Integer.parseInt(videoVoiceBean.getVideoLikeFalse());
-
+        likenum = Integer.parseInt(videoVoiceBean.getVideoLikeFalse());
         mMusicView.startPlayMusic(videoVoiceBean.getVideoUrl());
+        imLoading.setVisibility(View.GONE);
     }
+
     @Override
     public void getcomment(List<CommentBean> mDatas, int total) {
-        commentnum=total;
+        commentnum = total;
         tvCommentNum.setText("全部评论(" + total + ")");
         commentBeanArrayList.addAll(mDatas);
         if (commentAdapter != null) {
@@ -306,7 +312,7 @@ public class VoiceDetilsActivity extends BaseActivity implements VideoVoiceDetai
                 @Override
                 public void onClick(View view) {
                     String commend = editText.getText().toString();
-                    if (StringUtil.isEmpty(commend)){
+                    if (StringUtil.isEmpty(commend)) {
                         BToast.error(VoiceDetilsActivity.this).text("请填写内容").show();
                         return;
                     }

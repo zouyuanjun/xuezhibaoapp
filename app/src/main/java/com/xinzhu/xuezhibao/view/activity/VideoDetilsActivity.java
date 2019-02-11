@@ -183,6 +183,9 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     @Override
     protected void onResume() {
         super.onResume();
+        if (null != loadingPop && loadingPop.isShowing()) {
+            loadingPop.dismiss();
+        }
         videoVoiceDetailPresenter.getVideoDetail(videoid);
         likeCollectPresenter.islike(videoid, "2");
         likeCollectPresenter.iscollect(videoid, "2");
@@ -637,6 +640,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     @Subscribe
     public void PayMessage(PayResultMessage messageEvent) {
         int code = messageEvent.getCode();
+        Log.d("微信支付返回码"+messageEvent.getCode());
         if (code == 0) {
             if (StringUtil.isEmpty(Constants.wxOrdernum)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -646,13 +650,13 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
             } else {
                 alipayPresenter.checkWxPay();
             }
-        } else if (code == 1) {
+        } else if (code == 1||code==-2) {
             BToast.error(this).text("取消支付").show();
         } else {
             if (null != loadingPop && loadingPop.isShowing()) {
                 loadingPop.dismiss();
             }
-            BToast.error(this).text("微信支付异常").show();
+            BToast.error(this).text("微信支付失败").show();
         }
     }
 

@@ -203,14 +203,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <com.tencent.smtt.sdk.WebView
-                android:id="@+id/web_goodsdetail"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+                <FrameLayout
+                    android:id="@+id/framelayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                ></com.tencent.smtt.sdk.WebView>
+
+                </FrameLayout>
+                <com.tencent.smtt.sdk.WebView
+                    android:visibility="gone"
+                    android:id="@+id/web_goodsdetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp"
+
+                    ></com.tencent.smtt.sdk.WebView>
+            </LinearLayout>
+
+
 
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>

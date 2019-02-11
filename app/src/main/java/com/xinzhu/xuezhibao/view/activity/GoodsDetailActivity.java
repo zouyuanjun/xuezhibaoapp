@@ -8,16 +8,17 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.bravin.btoast.BToast;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
@@ -32,6 +33,7 @@ import com.xinzhu.xuezhibao.presenter.MyGoodsPresenter;
 import com.xinzhu.xuezhibao.utils.Constants;
 import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.xinzhu.xuezhibao.utils.WebViewUtil;
+import com.xinzhu.xuezhibao.view.fragment.GoodsdetailFragment;
 import com.xinzhu.xuezhibao.view.helputils.GlideImageLoader;
 import com.xinzhu.xuezhibao.view.interfaces.MyGoodsInterface;
 import com.youth.banner.Banner;
@@ -89,7 +91,9 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     CollapsingToolbarLayout clltab;
     @BindView(R.id.im_back)
     ImageView imBack;
-
+    @BindView(R.id.framelayout)
+    FrameLayout framelayout;
+GoodsdetailFragment fragment;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +104,8 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
         setSupportActionBar(toolbar);
         setContentView(R.layout.activity_goodsdetail);
         ButterKnife.bind(this);
+        webGoodsdetail.setWebViewClient(new WebViewUtil.MyWebViewClient(this, webGoodsdetail));
+        webGoodsdetail.loadDataWithBaseURL(null, "正在加载...", "text/html", "UTF-8", null);
         googdsid = getIntent().getStringExtra(Constants.INTENT_ID);
         myGoodsPresenter = new MyGoodsPresenter(this);
         myGoodsPresenter.getGoodDetail(googdsid);
@@ -119,7 +125,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
         banner.setDelayTime(2500);
         //设置指示器位置（当banner模式中有指示器时）
         banner.setIndicatorGravity(BannerConfig.CENTER);
-        webGoodsdetail.setWebViewClient(new WebViewUtil.MyWebViewClient(this, webGoodsdetail));
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         rvGoodsevaluate.setLayoutManager(linearLayoutManager);
@@ -130,10 +136,10 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
             public void onTabSelected(TabLayout.Tab tab) {
                 int POSITION = tab.getPosition();
                 if (POSITION == 0) {
-                    webGoodsdetail.setVisibility(View.VISIBLE);
+                    framelayout.setVisibility(View.VISIBLE);
                     ns_pingjia.setVisibility(View.GONE);
                 } else {
-                    webGoodsdetail.setVisibility(View.GONE);
+                    framelayout.setVisibility(View.GONE);
                     ns_pingjia.setVisibility(View.VISIBLE);
                 }
             }
@@ -169,18 +175,16 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
                 int Offset = Math.abs(verticalOffset); //目的是将负数转换为绝对正数；
                 //标题栏的渐变
                 toolbar.setBackgroundColor(changeAlpha(getResources().getColor(R.color.appcolor)
-                        , Offset*1f / appBarLayout.getTotalScrollRange()));
+                        , Offset * 1f / appBarLayout.getTotalScrollRange()));
                 /**
                  * 当前最大高度便宜值除以2 在减去已偏移值 获取浮动 先显示在隐藏
                  */
-                if (Offset < appBarLayout.getTotalScrollRange() ) {
-                    float floate =(Offset*1f/appBarLayout.getTotalScrollRange());
+                if (Offset < appBarLayout.getTotalScrollRange()) {
+                    float floate = (Offset * 1f / appBarLayout.getTotalScrollRange());
                     toolbar.setAlpha(floate);
                     toolbar.setNavigationIcon(R.drawable.back);
-                    imBack.setAlpha(1-floate);
+                    imBack.setAlpha(1 - floate);
                 }
-
-
 
 
             }
@@ -220,6 +224,16 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
     @Override
     public void getGoodsDetail(GoodsBean goodsBean) {
         this.goodsBean = goodsBean;
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+if (null==fragment){
+    fragment=new GoodsdetailFragment();
+    Bundle args = new Bundle();
+    args.putString(Constants.INTENT_ID, goodsBean.getProductDetails());
+    fragment.setArguments(args);
+}
+transaction.add(R.id.framelayout,fragment);
+transaction.show(fragment);
+transaction.commit();
         toolbar.setTitle(goodsBean.getProductName());
         tvGoodstitle.setText(goodsBean.getProductName());
         tvGoodsprice.setText(goodsBean.getProductPrice() + "积分");
@@ -258,7 +272,7 @@ public class GoodsDetailActivity extends BaseActivity implements MyGoodsInterfac
 
     @Override
     public void getGoodsDetailfail() {
-        BToast.error(GoodsDetailActivity.this).text("商品数据不存在，可能已下架").show();
+
     }
 
     @OnClick({R.id.im_back, R.id.tv_pay})

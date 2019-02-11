@@ -198,8 +198,8 @@ public class FamilyClubFragment extends LazyLoadFragment implements MyGoodsInter
     @Override
     public void getGoodsList(List<GoodsBean> list) {
         int b = list.size();
-        if (b > 3) {
-            b = 3;   //最多只展示4个商品
+        if (b > 6) {
+            b = 6;   //最多只展示4个商品
         }
         if (null != potionsGoodsAdapter) {
             goodsBeanList.clear();

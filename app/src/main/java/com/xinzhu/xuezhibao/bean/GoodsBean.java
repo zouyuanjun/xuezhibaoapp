@@ -13,8 +13,16 @@ public class GoodsBean implements Serializable {
     String sellNumber;
     List<FeedbackPictureBean> accessoryList;
 String productPrice;
-
+int productVirtual;
     public GoodsBean() {
+    }
+
+    public int getProductVirtual() {
+        return productVirtual;
+    }
+
+    public void setProductVirtual(int productVirtual) {
+        this.productVirtual = productVirtual;
     }
 
     public String getProductDetails() {

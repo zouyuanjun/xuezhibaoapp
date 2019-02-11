@@ -113,9 +113,9 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
             adapter.notifyDataSetChanged();
         }
         if (TYPE == 1) {
-            if (POSITION == 0) {
+            if (POSITION == 1) {
                 homeVideoVoiceListPresenter.getHotVideo(page);
-            } else if (POSITION == 1) {
+            } else if (POSITION == 2) {
                 homeVideoVoiceListPresenter.getNewVideo(page);
             } else if (POSITION == 3) {
                 if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
@@ -126,11 +126,11 @@ public class HomeVideoVoiceListFragment extends LazyLoadFragment implements Home
 
             }
         } else if (TYPE == 2) {
-            if (POSITION == 0) {
+            if (POSITION == 1) {
                 homeVideoVoiceListPresenter.getHotVoice(page);
-            } else if (POSITION == 1) {
-                homeVideoVoiceListPresenter.getNewVoice(page);
             } else if (POSITION == 2) {
+                homeVideoVoiceListPresenter.getNewVoice(page);
+            } else if (POSITION == 3) {
                 if (null == Constants.TOKEN || Constants.TOKEN.isEmpty()) {
 
                 } else {

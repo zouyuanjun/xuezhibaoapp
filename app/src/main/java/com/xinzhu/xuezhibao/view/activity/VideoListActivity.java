@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * 精品视频
+ * 视频或音频列表页
  */
 public class VideoListActivity extends BaseActivity implements VideoFragmentInterface {
     @BindView(R.id.appbar)
@@ -49,7 +49,7 @@ public class VideoListActivity extends BaseActivity implements VideoFragmentInte
     ImageView imgNodata;
     String videoid;
     String title;
-    int type;
+    int type;  //标记是否为收费视频或音频
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,11 +63,14 @@ public class VideoListActivity extends BaseActivity implements VideoFragmentInte
         LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(VideoListActivity.this);
         linearLayoutManager3.setOrientation(LinearLayoutManager.VERTICAL);
         rvVideocourselist.setLayoutManager(linearLayoutManager3);
-        if (type==1){
+        if (type==1){ //免费视频，不显示是否试看标签
             payadapter = new VideoVoiceListAdapter(new WeakReference<>(VideoListActivity.this).get(), payBeanList, 2,0);
 
-        }else {
+        }else if (type==2){
             payadapter = new VideoVoiceListAdapter(new WeakReference<>(VideoListActivity.this).get(), payBeanList, 2,2);
+
+        }else {
+            payadapter = new VideoVoiceListAdapter(new WeakReference<>(VideoListActivity.this).get(), payBeanList, 2,0);
 
         }
          rvVideocourselist.setAdapter(payadapter);
@@ -86,7 +89,13 @@ public class VideoListActivity extends BaseActivity implements VideoFragmentInte
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String id = payBeanList.get(position).getVideoId();
-                Intent intent = new Intent(VideoListActivity.this, VideoDetilsActivity.class);
+                Intent intent;
+                if (type==3){
+                     intent = new Intent(VideoListActivity.this, VoiceDetilsActivity.class);
+                }else {
+                    intent = new Intent(VideoListActivity.this, VideoDetilsActivity.class);
+                }
+
                 intent.putExtra(Constants.INTENT_ID, id);
                 startActivity(intent);
             }

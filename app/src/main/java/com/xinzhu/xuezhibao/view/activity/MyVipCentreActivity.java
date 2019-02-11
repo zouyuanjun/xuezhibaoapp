@@ -127,6 +127,9 @@ public class MyVipCentreActivity extends BaseActivity implements PayInterface {
             sdMyphoto.setImageURI(Constants.userBasicInfo.getImage());
             tvViplv.setText(Constants.userBasicInfo.getDictionaryName());
         }
+        if (null != loadingPop && loadingPop.isShowing()) {
+            loadingPop.dismiss();
+        }
 
     }
 
@@ -216,13 +219,13 @@ public class MyVipCentreActivity extends BaseActivity implements PayInterface {
             }else {
                 alipayPresenter.checkWxPay();
             }
-        }else if (code==1){
+        }else if (code==1||code==-2){
             BToast.error(this).text("取消支付").show();
         }else {
             if (null != loadingPop && loadingPop.isShowing()) {
                 loadingPop.dismiss();
             }
-            BToast.error(this).text("微信支付异常").show();
+            BToast.error(this).text("微信支付失败").show();
         }
     }
 }

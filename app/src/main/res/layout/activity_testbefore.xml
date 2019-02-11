@@ -31,7 +31,7 @@
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="8dp"
         android:text="继续"
         android:textColor="@color/white"
@@ -39,7 +39,7 @@
         app:appRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_phone" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout27" />
 
     <TextView
         android:id="@+id/textView5"
@@ -65,61 +65,118 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
-    <EditText
-        android:id="@+id/editText"
+    <LinearLayout
+        android:id="@+id/ll1"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/ffffffrad8"
-        android:hint="孩子昵称"
-        android:inputType="textPersonName"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textColor="@color/color_black_333333"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView31" />
-
-    <EditText
-        android:id="@+id/ed_age"
-        android:layout_width="0dp"
-        android:layout_height="44dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/ffffffrad8"
-        android:hint="孩子年龄"
-        android:inputType="number"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textColor="@color/color_black_333333"
-        android:textSize="13sp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/textView31">
 
-    <EditText
-        android:id="@+id/ed_phone"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:text="孩子年龄："
+            android:textColor="@color/color_black_333333"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ffffffrad8"
+            android:inputType="number"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/color_black_333333"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText" />
+        />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll3"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/ffffffrad8"
-        android:hint="联系电话"
-        android:inputType="phone"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textColor="@color/color_black_333333"
-        android:textSize="13sp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout17" />
+        app:layout_constraintTop_toBottomOf="@+id/ll1"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:text="孩子年龄："
+            android:textColor="@color/color_black_333333"
+            android:textSize="13sp"/>
+        <EditText
+            android:id="@+id/ed_age"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:background="@drawable/ffffffrad8"
+            android:inputType="number"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/color_black_333333"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText" /> />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout27"
+        android:layout_width="0dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/ffffffrad8"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout17">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:text="联系电话："
+            android:textColor="@color/color_black_333333"
+            android:textSize="13sp" />
+
+        <EditText
+            android:id="@+id/ed_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/ffffffrad8"
+            android:inputType="phone"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@color/color_black_333333"
+            android:textSize="13sp" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/linearLayout17"
@@ -132,14 +189,15 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ed_age">
+        app:layout_constraintTop_toBottomOf="@+id/ll3">
         <TextView
             android:layout_marginLeft="16dp"
             android:layout_gravity="center_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/color_black_333333"
             android:textSize="13sp"
-            android:hint="孩子性别"/>
+            android:text="孩子性别"/>
 
         <RadioGroup
             android:id="@+id/radiogroup"

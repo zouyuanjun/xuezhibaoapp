@@ -129,7 +129,7 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:text="学生年龄"
+            android:text="出生日期"
             android:textColor="@color/color_black_333333"
             android:textSize="15sp" />
 
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginRight="16dp"
-            android:hint="请输入年龄"
+            android:hint="请选择出生日期"
             android:inputType="number"
             android:layout_weight="1"
             android:background="@color/white"

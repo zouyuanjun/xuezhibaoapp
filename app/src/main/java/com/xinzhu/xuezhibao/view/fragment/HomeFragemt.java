@@ -4,9 +4,12 @@ import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,7 +46,6 @@ import com.xinzhu.xuezhibao.utils.DialogUtils;
 import com.xinzhu.xuezhibao.view.activity.ArticleDetilsActivity;
 import com.xinzhu.xuezhibao.view.activity.HomeListActivity;
 import com.xinzhu.xuezhibao.view.activity.LoginActivity;
-import com.xinzhu.xuezhibao.view.activity.MyTaskActivity;
 import com.xinzhu.xuezhibao.view.activity.QRActivity;
 import com.xinzhu.xuezhibao.view.activity.SettingActivity;
 import com.xinzhu.xuezhibao.view.activity.ShareActivity;
@@ -57,9 +59,13 @@ import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.zou.fastlibrary.ui.CustomDialog;
+import com.zou.fastlibrary.ui.ShapeCornerBgView;
 import com.zou.fastlibrary.ui.WebActivity;
+import com.zou.fastlibrary.utils.DataKeeper;
 import com.zou.fastlibrary.utils.EditTextUtil;
+import com.zou.fastlibrary.utils.JsonUtils;
 import com.zou.fastlibrary.utils.Log;
+import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.StringUtil;
 
 import java.lang.ref.WeakReference;
@@ -122,6 +128,16 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     boolean canshock = false;
     @BindView(R.id.im_btn_sign)
     ImageView imBtnSign;
+    Handler handler = new Handler() {
+    };
+    @BindView(R.id.scb_notsignin)
+    ShapeCornerBgView scbNotsignin;
+    @BindView(R.id.ll_more_video)
+    LinearLayout llMoreVideo;
+    @BindView(R.id.ll_more_voice)
+    LinearLayout llMoreVoice;
+    @BindView(R.id.ll_more_article)
+    LinearLayout llMoreArticle;
 
     @Override
     protected int setContentView() {
@@ -155,13 +171,16 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
                     DialogUtils.loginDia(getActivity());
                     return;
                 }
+                if (StringUtil.isEmpty(mybannerImgBean.get(position).getLinkAddress())){
+                    return;
+                }
                 if (position < mybannerImgBean.size()) {
                     if (mybannerImgBean.get(position).getNewPlace() == 1) {
                         try {
                             Uri uri = Uri.parse(mybannerImgBean.get(position).getLinkAddress());
                             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                             startActivity(intent);
-                        }catch (ActivityNotFoundException e){
+                        } catch (ActivityNotFoundException e) {
                             Intent shortcutIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(mybannerImgBean.get(position).getLinkAddress()));
                             shortcutIntent.setClassName("com.android.browser", "com.android.browser.BrowserActivity");
                             startActivity(shortcutIntent);
@@ -198,10 +217,6 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             messagecount = JMessageClient.getAllUnReadMsgCount();
             qBadgeView.setBadgeNumber(messagecount);
         }
-        //未登录就隐藏签到按钮
-        if (StringUtil.isEmpty(Constants.TOKEN)){
-            imBtnSign.setVisibility(View.GONE);
-        }
         homepagePresenter.initdata();
     }
 
@@ -233,7 +248,20 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     public void onEvent(LoginStateChangeEvent event) {
         LoginStateChangeEvent.Reason message = event.getReason();
         if (message.name().equals("user_logout")) {
-            BToast.error(getContext()).text("您从其他客户端登陆，本客户端已下线").show();
+            BToast.error(getContext()).text("您从其他客户端登陆，本机将退出").show();
+            String data = JsonUtils.keyValueToString("token", Constants.TOKEN);
+            Looper.prepare();
+            Network.getnetwork().postJson(data, Constants.URL + "/app/login-out", new Handler(), 1);
+            Constants.TOKEN = "";
+            SharedPreferences sharedPreferences = DataKeeper.getRootSharedPreferences(MyApplication.getContext());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("PHONE");
+            editor.remove("token");
+            editor.commit();
+            Intent intent5 = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent5);
+            Constants.userBasicInfo = null;
+            Log.d("程序退出");
         }
     }
 
@@ -472,21 +500,20 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
     @Override
     public void ischock(String data) {
         if (data.equals("true")) {
-            canshock = true;
-            imBtnSign.setVisibility(View.GONE);
+            canshock = false;
+            scbNotsignin.setVisibility(View.GONE);
         } else {
-            imBtnSign.setVisibility(View.VISIBLE);
+            scbNotsignin.setVisibility(View.VISIBLE);
             canshock = true;
         }
     }
 
     @Override
     public void chocksuccessful() {
-        if (null!=imBtnSign){
+        if (null != imBtnSign) {
             canshock = false;
-            imBtnSign.setVisibility(View.GONE);
             BToast.success(getContext()).text("签到成功").show();
-            Intent intent=new Intent(getContext(),ShareActivity.class);
+            Intent intent = new Intent(getContext(), ShareActivity.class);
             startActivity(intent);
         }
 
@@ -534,9 +561,16 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
 
     @OnClick(R.id.im_btn_sign)
     public void onViewClicked() {
-        if (canshock){
-            canshock=false;
+        if (StringUtil.isEmpty(Constants.TOKEN)){
+            shoudia();
+            return;
+        }
+        if (canshock) {
+            canshock = false;
             homepagePresenter.clockin();
+        }else {
+            Intent intent = new Intent(getContext(), ShareActivity.class);
+            startActivity(intent);
         }
     }
 }
