@@ -10,6 +10,9 @@ import com.zou.fastlibrary.utils.Network;
 import com.zou.fastlibrary.utils.SettingUtil;
 import com.zou.fastlibrary.utils.StringUtil;
 
+/**
+ * 用于报告app使用时间
+ */
 public class LivelyServer extends Service {
 long starttime;
 long stoptime;
@@ -49,7 +52,7 @@ boolean exit=true;
             if (!StringUtil.isEmpty(SettingUtil.TOKEN)){
                 String data = JsonUtils.keyValueToString2("dictionaryId", 25, "token", SettingUtil.TOKEN);
                 data = JsonUtils.addKeyValue(data, "time", SettingUtil.USERTIME);
-                Network.getnetwork().postJson(data, "http://app.xuezhiben.com" + "/app/complete-my-task", null, 6);
+                Network.getnetwork().postJson(data, "http://demoapp.xuezhiben.com" + "/app/complete-my-task", null, 6);
             }
         }
 
