@@ -325,7 +325,14 @@ boolean hasebingserver=false;
     public void setProgress(int progress) {
         if (!mIsAddView && seekBar != null) {
             seekBar.setProgress(progress);
-            crrenttime.setText((progress/1000)/60+":"+(progress/1000)%60);
+            int ss=(progress/1000)%60;
+            String s="";
+if (ss<10){
+    s="0"+ss;
+}else {
+    s=ss+"";
+}
+            crrenttime.setText((progress/1000)/60+":"+s);
         }
     }
 

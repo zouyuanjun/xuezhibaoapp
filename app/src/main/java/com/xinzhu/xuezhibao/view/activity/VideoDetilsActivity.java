@@ -399,7 +399,7 @@ public class VideoDetilsActivity extends BaseActivity implements VideoVoiceDetai
     @Override
     public void getVideodetail(VideoVoiceBean videoVoiceBean) {
         this.videoVoiceBean = videoVoiceBean;
-        tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime2(videoVoiceBean.getCreateTime()));
+        tvCreattime.setText("发布时间：" + TimeUtil.getWholeTime3(videoVoiceBean.getCreateTime()));
         tvDetails.loadDataWithBaseURL(null, videoVoiceBean.getVideoDetails(), "text/html", "UTF-8", null);
         tvTitle.setText(videoVoiceBean.getVideoTitle());
         if (videoVoiceBean.getVideoType() == 1) {

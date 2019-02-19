@@ -40,7 +40,7 @@ public class TrickAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvTricktime.setText(TimeUtil.getWholeTime2(Long.parseLong(mDatas.get(position).getCreateTime())));
+        ((MyViewHolder) holder).tvTricktime.setText(TimeUtil.getWholeTime3(Long.parseLong(mDatas.get(position).getCreateTime())));
         ((MyViewHolder) holder).tvEvent.setText(mDatas.get(position).getTrackContent());
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {

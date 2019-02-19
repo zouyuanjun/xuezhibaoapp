@@ -126,7 +126,7 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
         this.myjobBean = myjobBean;
         tvTask.setText(myjobBean.getJobContent());
         tvTitle.setText(myjobBean.getJobTitle());
-        tvTime.setText("发布时间：" + TimeUtil.getWholeTime2(myjobBean.getCreateTime()));
+        tvTime.setText("发布时间：" + TimeUtil.getWholeTime3(myjobBean.getCreateTime()));
         tvCourse.setText(myjobBean.getCurriculumTitle());
         if (myjobBean.getState() == 3) {
             tvStatus.setText("待审批");
@@ -149,7 +149,7 @@ public class CourseTaskActivity extends BaseActivity implements MyJobDetailInter
             tvUserName.setText(myjobBean.getTeacherName());
             sdvPhoto.setImageURI(myjobBean.getTeacherImage());
             tvSource.setText(myjobBean.getTeacherScore());
-            tvCreattime.setText(TimeUtil.getWholeTime2(myjobBean.getEditTime()));
+            tvCreattime.setText(TimeUtil.getWholeTime3(myjobBean.getEditTime()));
         }
         if (myjobBean.getState() > 2) {
             if (null != myjobBean.getAccessoryList() && myjobBean.getAccessoryList().size() > 0) {

@@ -473,26 +473,28 @@ public class HomeFragemt extends LazyLoadFragment implements HomepageInterface {
             mybannerImgBean.add(bannerImgBean);
         }
         if (null != banner) {
-            Glide.with(MyApplication.getContext())
-                    .asBitmap()
-                    .load(mDatas.get(0))
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                            //  imLogo.setImageBitmap(resource);
-                            whith = resource.getWidth();
-                            height = resource.getHeight();
-                            ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
-                            int width = (int) ((getContext().getResources().getDisplayMetrics().widthPixels));
-                            layoutParams.width = width;
-                            layoutParams.height = (width / whith) * height;
-                            //      Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+context.getResources().getDisplayMetrics().density);
-                            banner.setLayoutParams(layoutParams);
-
-                            banner.setImages(mDatas);
-                            banner.start();
-                        }
-                    });
+            banner.setImages(mDatas);
+            banner.start();
+//            Glide.with(MyApplication.getContext())
+//                    .asBitmap()
+//                    .load(mDatas.get(0))
+//                    .into(new SimpleTarget<Bitmap>() {
+//                        @Override
+//                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+//                            //  imLogo.setImageBitmap(resource);
+//                            whith = resource.getWidth();
+//                            height = resource.getHeight();
+//                            ViewGroup.LayoutParams layoutParams = banner.getLayoutParams();
+//                            int width = (int) ((getContext().getResources().getDisplayMetrics().widthPixels));
+//                            layoutParams.width = width;
+//                            layoutParams.height = (width / whith) * height;
+//                            //      Log.d(layoutParams.width+"高度是"+layoutParams.height+"原始"+height+"级"+context.getResources().getDisplayMetrics().density);
+//                            banner.setLayoutParams(layoutParams);
+//
+//                            banner.setImages(mDatas);
+//                            banner.start();
+//                        }
+//                    });
 
         }
     }

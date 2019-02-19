@@ -57,7 +57,7 @@ public class GoodsCommentAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvCreattime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
+        ((MyViewHolder) holder).tvCreattime.setText(TimeUtil.getWholeTime3(mDatas.get(position).getCreateTime()));
         ((MyViewHolder) holder).tvCommentDetils.setText(mDatas.get(position).getContent());
         ((MyViewHolder) holder).tv_userName.setText(mDatas.get(position).getNickname());
         ((MyViewHolder) holder).sdvPhoto.setImageURI(mDatas.get(position).getImage());

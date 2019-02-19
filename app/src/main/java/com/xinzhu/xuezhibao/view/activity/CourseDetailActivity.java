@@ -206,7 +206,7 @@ public class CourseDetailActivity extends BaseActivity implements CoursePlayInte
     public void getCoursedetail(CourseBean courseBean) {
         this.mycourse = courseBean;
         if (null != tvAllclass) {
-            tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime2(courseBean.getCreateTime()));
+            tvCreattime.setText("发布时间:" + TimeUtil.getWholeTime3(courseBean.getCreateTime()));
             webView.loadDataWithBaseURL(null, courseBean.getCurriculumExplain(), "text/html", "UTF-8", null);
             tvTitle.setText(courseBean.getCurriculumTitle());
             tvCourseteacher.setText(courseBean.getDictionaryName());

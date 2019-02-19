@@ -113,7 +113,7 @@ public class OrderDetailActivity extends BaseActivity implements OrderDetailInte
                 tvOrderstatue.setText("待评价");
             }
             tvOrdernum.setText("订单编号：" + orderBean.getOrderNum());
-            tvOrdertime.setText("下单时间: " + TimeUtil.getWholeTime2(orderBean.getCreateTime()));
+            tvOrdertime.setText("下单时间: " + TimeUtil.getWholeTime3(orderBean.getCreateTime()));
 
             if (!(orderBean.getType().equals("1") || orderBean.getType().equals("2"))) {
                 cslAddress.setVisibility(View.VISIBLE);
@@ -161,7 +161,7 @@ cslAddress.setVisibility(View.GONE);
         tvAddress.setText(orderBean.getAddress());
         tvPhone.setText(orderBean.getNickname() + "  " + orderBean.getLinkPhone());
         if (StringUtil.isEmpty(orderBean.getShipmentsTime() + "")) {
-            tvDeliverGoodstime.setText("发货时间:" + TimeUtil.getWholeTime2(orderBean.getShipmentsTime()));
+            tvDeliverGoodstime.setText("发货时间:" + TimeUtil.getWholeTime3(orderBean.getShipmentsTime()));
         }
 
     }

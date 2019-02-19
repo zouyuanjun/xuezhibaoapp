@@ -41,7 +41,7 @@ public class RvJiaojiaoTaskAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((ViewHolder) holder).textView14.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
+        ((ViewHolder) holder).textView14.setText(TimeUtil.getWholeTime3(mDatas.get(position).getCreateTime()));
         if (mDatas.get(position).getState()==2){
             ((ViewHolder) holder).tvStatus.setText("待完成");
             ((ViewHolder) holder).tvStatus.setTextColor(Color.parseColor("#666666"));

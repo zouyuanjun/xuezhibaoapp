@@ -41,7 +41,7 @@ public class MyPointsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
-        ((MyViewHolder) holder).tvTime.setText(TimeUtil.getWholeTime2(mDatas.get(position).getCreateTime()));
+        ((MyViewHolder) holder).tvTime.setText(TimeUtil.getWholeTime3(mDatas.get(position).getCreateTime()));
         ((MyViewHolder) holder).tvPointstitle.setText(mDatas.get(position).getTrackContent());
         String num=mDatas.get(position).getNumber().substring(1);
         if (mDatas.get(position).getTrackType()!=11){
